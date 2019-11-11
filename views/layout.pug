@@ -5,31 +5,38 @@ html
     meta(http-equiv='X-UA-Compatible' content='IE=edge, chrome=1')
     meta(content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport')
     title= title
-    link(rel='stylesheet', href='/nm/bootstrap/dist/css/bootstrap.css')
+    link(rel='stylesheet', href='/nm/bootstrap/dist/css/bootstrap.min.css')
     link(rel='stylesheet', type='text/css', href='/nm/slick-slider/slick/slick.css')
     link(rel='stylesheet', type='text/css', href='/nm/slick-slider/slick/slick-theme.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
 
   body
-    .container-fluid(style='margin-top:56px;')
-      nav.navbar.navbar-expand-lg.navbar-light.bg-white.fixed-top
-        a.navbar-brand(href="#") Navbar
-        button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation")
-          span.navbar-toggler-icon
-        #navbarSupportedContent.collapse.navbar-collapse
-          ul.navbar-nav.mr-auto
-            li.nav-item.active
-              a.nav-link(href="#")
-                | Home
-                span.sr-only (current)
-            li.nav-item
-              a.nav-link(href="#") Link
-          .form-inline.my-2.my-lg-0
-            ul.navbar-nav
+    .container-fluid.pz_bg
+      .container
+        nav.navbar.navbar-expand-lg.navbar-light.bg-white.top_bar
+          img.position-fixed(src='/images/pz_logo.png', style='top:20px; cursor:pointer; z-index:10', onclick='location.href="/"')
+          #navbarSupportedContent.collapse.navbar-collapse
+            ul.navbar-nav.ml-auto
               li.nav-item
-                a.nav-link(href='#') 로그인
+                a.nav-link.nav-font(href='#') LOGIN
+              li.nav-item.my-3(style='background:url(/images/vertical_bar.svg); width:5px;')
               li.nav-item
-                a.nav-link(href='#') 회원가입
+                a.nav-link.nav-font(href='#') JOIN
+              li.nav-item
+                a.nav-link.p-1(href='#')
+                  img(src='/images/nav_top_1_insta.png', alt='Instagram')
+              li.nav-item
+                a.nav-link.p-1(href='#')
+                  img(src='/images/nav_top_2_youtube.png', alt='Youtube')
+              li.nav-item
+                a.nav-link.p-1(href='#')
+                  img(src='/images/nav_top_3_pin.png', alt='Pinterest')
+              li.nav-item
+                a.nav-link.p-1(href='#')
+                  img(src='/images/nav_top_4_band.png', alt='Band')
+              li.nav-item(style='line-height:28px;')
+                a.nav-link.p-1(href='#')
+                  img(src='/images/nav_toggle.svg', width=22)
       block content
 
 

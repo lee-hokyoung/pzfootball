@@ -1,41 +1,99 @@
 extends layout
 block content
   // slick-slider
-  .container(style='max-width:960px')
+  .container.bg-white(style='width:970px')
     .main-slider
       .d-flex.justify-content-center
-        img.d-none.d-sm-block(src='/images/banner_88pc.png', alt='pc')
+        img.d-none.d-sm-block(src='/images/pz_main_slide_01.png', alt='pc')
         img.w-100.d-block.d-sm-none(src='/images/banner_88m.png', alt='m')
       .d-flex.justify-content-center
-        img.d-none.d-sm-block(src='/images/banner_djpc.png', alt='pc')
+        img.d-none.d-sm-block(src='/images/pz_main_slide_02.png', alt='pc')
         img.w-100.d-block.d-sm-none(src='/images/banner_djm.png', alt='m')
       .d-flex.justify-content-center
-        img.d-none.d-sm-block(src='/images/banner_mngpc.png', alt='pc')
+        img.d-none.d-sm-block(src='/images/pz_main_slide_03.png', alt='pc')
         img.w-100.d-block.d-sm-none(src='/images/banner_mngm.png', alt='m')
   // 달력선택 부분
-  .container
-    .calendar-slider
-      - var day = ['일', '월', '화', '수', '목', '금', '토'];
-      - var today = new Date();
-      - var d = 0;
-      while d < 14
-        //.col
-        .pr-2
-          - var date = new Date();
-          - date.setDate(today.getDate() + d++)
-          button.btn.rounded.w-100.btn-date(type='button',
-          class=date.getDay()===0?'text-danger':date.getDay()===6?'text-primary':'',
-          class=d===1?'btn-primary':'btn-light')
-            .h5.m-0 #{date.getDate()}
-            .small #{day[date.getDay()]}
+  - var size = 14;
+  - var day = ['일', '월', '화', '수', '목', '금', '토'];
+  - var today = new Date();
+  div(style='position:sticky; z-index:5; top:56px;')
+    .container.py-3.bg-white
+      //.d-flex.justify-content-between
+      //  .game-icon-wrap
+      .mx-auto.d-flex.justify-content-between(style='width:730px;')
+        .game-icons-wrap(style='width:230px;')
+          a.mr-3(href='#')
+            img(src='/images/game_2match.png')
+          a.mr-3(href='#', style='top:-16px; position:relative;')
+            img(src='/images/game_3match.png')
+          a(href='#')
+            img(src='/images/game_ground.png')
+        .calendar-slider(style='width:350px;')
+          - var d = 0;
+          while d < size
+            //.col
+            .pr-2
+              - var date = new Date();
+              - date.setDate(today.getDate() + d++)
+              button.btn.rounded.btn-date.font-italic(type='button', onclick='fnSelectDate(this)',
+              class=date.getDay()===0?'text-danger':date.getDay()===6?'text-primary':'',
+              class=d===1?'btn-primary':'', data-date=date)
+                .h6.m-0 #{date.getDate()}
+                .small #{day[date.getDay()]}
+        div(style='line-height:50px;')
+          a(href='#')
+           img(src='/images/calendar_btn.png')
   // 경기장 리스트
-  .container-fluid
-    ul.list-group.mt-3
-      - var n = 0
-      while n < 10
-        li.list-group-item.bg-light #{++n}
+  .container.bg-white
+    .ground-list-slider
+      - var d = 0;
+      while d < size
+        - var date = new Date();
+        - date.setDate(today.getDate() + d++)
+        section.ground-list(data-date=date)
+          ul.list-group.list-group-flush.text-center
+            each game, idx in list
+              //a.mx-auto(href='#', style='width:790px;', class=idx%2===0?'bg-light':'')
+              li.list-group-item.list-group-item-light.py-1.px-0.mx-auto(style='width:790px; border:none !important', class=idx%2===0?'bg-light':'')
+                .d-flex.justify-content-between
+                  .d-block(style='width:15%;')
+                    small.font-weight-bold.text-secondary TIME
+                    h5.text-orange #{game.label_time}
+                  .text-left(style='flex:1')
+                    small.text-secondary.font-weight-bold #{game.label_title}
+                    .d-flex.justify-content-start
+                      .match-wrap.text-center.pt-1
+                        img(src=idx%2===1?'/images/match_2.png':'/images/match_3.png')
+                        b #{idx%2===1?'2파':'3파'}
+                      .text-left.text-dark
+                        small.pl-2.tagList(class=game.sex===1?'male text-primary':game.sex===-1?'female text-danger':'mix') #{game.label_sex}
+                      .grade_icon.ml-2(data-grade=game.match_grade) 실력
+                      if(game.ladder===1)
+                        .ladder_icon.ml-2 승점
+                  div(style='width:20%;')
+                    if(game.apply_status === 'hurry')
+                      button.btn.btn-status.text-white.p-0(data-status='hurry')
+                        h5.m-0.py-1 마감임박
+                        .text-warning.bg-white.mx-auto.font-weight-bold(style='border-radius:1rem; width:100px; font-size:13px;') #{game.remain_cnt}자리 남음
+                        small.position-relative(style='top:-3px;') #{game.label_cash}
+                    else if(game.apply_status === 'available')
+                      button.btn.btn-status.text-white.p-0(data-status='available')
+                        h5.m-0.py-1 신청가능
+                        .text-primary.bg-white.mx-auto.font-weight-bold(style='border-radius:1rem; width:100px; font-size:13px;') #{game.remain_cnt}자리 남음
+                        small.position-relative(style='top:-3px;') #{game.label_cash}
+                    else if(game.apply_status === 'full')
+                      button.btn.btn-status.text-white(data-status='full')
+                        small.m-0 마  감
+
+
+    //ul.list-group.mt-3
+    //  - var n = 0
+    //  while n < 10
+    //    li.list-group-item.bg-light #{++n}
 
 block append_js
   script(src='/nm/slick-slider/slick/slick.min.js', type='text/javascript')
   script(src='/javascripts/main.js', type='text/javascript')
+  script.
+    console.log('schedule : ', !{JSON.stringify(list)});
 

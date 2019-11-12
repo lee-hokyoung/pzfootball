@@ -1,20 +1,21 @@
 $(document).ready(function () {
   // 메인 슬라이더
   $('.main-slider').slick({
-    dots:true,
-    arrows:false,
-    fade:true
+    dots: true,
+    arrows: false,
+    fade: true
   });
   // 날짜 선택하는 부분
   $('.calendar-slider').slick({
-    slidesToShow:7,
-    slidesToScroll:7,
-    arrows:true,
-    infinite:false,
+    slidesToShow: 7,
+    slidesToScroll: 7,
+    arrows: true,
+    infinite: false,
   });
+  // 경기 리스트 슬라이더
   $('.ground-list-slider').slick({
-    arrows:false
-  }).on('afterChange', function(event, slick, currentSlide){
+    arrows: false
+  }).on('afterChange', function (event, slick, currentSlide) {
     // list swipe 발생시 이벤트
     console.log(event, slick, currentSlide);
     let obj = document.querySelector('.ground-list-slider .slick-active section');
@@ -25,20 +26,30 @@ $(document).ready(function () {
     xhr.open('GET', '/schedule/' + m + '/' + d);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = function () {
-      if (this.readyState === XMLHttpRequest.DONE && this.status === 200){
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
         let res = JSON.parse(this.response);
         console.log('res : ', res);
       }
     };
     xhr.send();
   });
-
+  // datetime picker
+  $("#datepicker").datepicker().on('show', function(e){
+    let table = document.querySelector('table.table-condensed');
+    console.log('table : ', table);
+    table.setAttribute('data-after', '2019.11');
+  });
+  $('img[alt="전체달력"]').on('click', function (v) {
+    console.log('v : ', v.currentTarget.dataset.date);
+    $('#datepicker').datepicker('show');
+  });
 });
+
 // 날짜 선택 이벤트
-function fnSelectDate(btn){
+function fnSelectDate(btn) {
   // css 적용
-  document.querySelectorAll('.btn-date').forEach(function(v){
-    if(v.classList.contains('btn-primary')) {
+  document.querySelectorAll('.btn-date').forEach(function (v) {
+    if (v.classList.contains('btn-primary')) {
       v.classList.remove('btn-primary');
       // v.classList.add('btn-light');
       v.classList.remove('active');

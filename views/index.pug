@@ -23,11 +23,11 @@ block content
       .mx-auto.d-flex.justify-content-between(style='width:730px;')
         .game-icons-wrap(style='width:230px;')
           a.mr-3(href='#')
-            img(src='/images/game_2match.png')
+            img(src='/images/game_2match.png', alt='2파전')
           a.mr-3(href='#', style='top:-16px; position:relative;')
-            img(src='/images/game_3match.png')
+            img(src='/images/game_3match.png', alt='3파전')
           a(href='#')
-            img(src='/images/game_ground.png')
+            img(src='/images/game_ground.png', alt='구장')
         .calendar-slider(style='width:350px;')
           - var d = 0;
           while d < size
@@ -40,9 +40,13 @@ block content
               class=d===1?'btn-primary':'', data-date=date)
                 .h6.m-0 #{date.getDate()}
                 .small #{day[date.getDay()]}
-        div(style='line-height:50px;')
-          a(href='#')
-           img(src='/images/calendar_btn.png')
+        div.position-relative(style='line-height:50px;')
+          - var today = new Date();
+          - var m = today.getMonth() + 1;
+          - var d = today.getDate();
+          - var y = today.getFullYear();
+          img(src='/images/calendar_btn.png', alt='전체달력', data-date=y + '.' + m)
+          input#datepicker.ml-3.position-absolute(type='text', value=m + '-' + d + '-' + y)
   // 경기장 리스트
   .container.bg-white
     .ground-list-slider
@@ -54,7 +58,7 @@ block content
           ul.list-group.list-group-flush.text-center
             each game, idx in list
               //a.mx-auto(href='#', style='width:790px;', class=idx%2===0?'bg-light':'')
-              li.list-group-item.list-group-item-light.py-1.px-0.mx-auto(style='width:790px; border:none !important', class=idx%2===0?'bg-light':'')
+              li.list-group-item.list-group-item-light.py-1.px-0.mx-auto(style='width:730px; border:none !important', class=idx%2===0?'bg-light':'')
                 .d-flex.justify-content-between
                   .d-block(style='width:15%;')
                     small.font-weight-bold.text-secondary TIME
@@ -70,7 +74,7 @@ block content
                       .grade_icon.ml-2(data-grade=game.match_grade) 실력
                       if(game.ladder===1)
                         .ladder_icon.ml-2 승점
-                  div(style='width:20%;')
+                  div(style='width:160px;')
                     if(game.apply_status === 'hurry')
                       button.btn.btn-status.text-white.p-0(data-status='hurry')
                         h5.m-0.py-1 마감임박

@@ -22,7 +22,7 @@ body {padding: 0; margin:0}
     /*-webkit-background-size: 600px 300px;*/
     /*background-size: 600px 300px;*/
 /*}*/
-.top_bar{position:fixed; width:970px; height:56px;z-index: 10;}
+.top_bar{position:fixed; max-width:970px; width:100%; height:56px;z-index: 10;}
 .top_bar:before{content:''; position:absolute; background: url('/images/bar_top.png') no-repeat; z-index: 1; width:970px; height:6px; top:0px; left:0px;}
 .navbar-nav .nav-font{font-size:0.7rem; line-height:24px; font-weight: 500;}
 .container{max-width:970px;}
@@ -92,10 +92,24 @@ input#datepicker{visibility:collapse; width:0px; height:5px; right:-10px; top:10
 .datepicker .datepicker-days table tr td:hover{background:transparent;}
 .datepicker-dropdown:before, .datepicker-dropdown:after{content:none;}
 /*.datepicker .datepicker-days table tr td.active{background:transparent;}*/
+
+.mobile_slide{
+    background-repeat: no-repeat !important;
+    height: 300px;
+    background-size:contain !important;
+    background-position: center center !important;
+}
+.mobile-menu-wrap, .ground-list ul li{max-width:730px; width:100%;}
 @media (min-width: 576px) {
     .main-slider .slick-list{
         border-radius:1rem;
     }
     .m-row{margin:0 -15px;}
     .m-row .col{padding:0 15px;}
+}
+@media(max-width: 575px){
+    .mobile-menu-wrap{
+        flex-direction: column;
+    }
+    .slick-prev, .slick-next, .slick-dots{display:none !important;}
 }

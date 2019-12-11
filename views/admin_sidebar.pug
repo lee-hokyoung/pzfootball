@@ -1,0 +1,46 @@
+.sidebar(data-color="white" data-active-color="danger")
+	//
+		Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+	.logo
+		a.simple-text.logo-mini(href="/")
+			.logo-image-small
+				i.fa.fa-user
+		a.simple-text.logo-normal(href="/") PB UNION
+			//
+				<div class="logo-image-big">
+				<img src="/nm/paper-dashboard-2/assets/img/logo-big.png">
+				</div>
+	.sidebar-wrapper
+		ul.nav
+			li(class=active==='application'?'active':'')
+				a(href="/admin/application/list")
+					i.nc-icon.nc-diamond
+					p 지원자 리스트
+			//li
+			//	a(href="./icons.html")
+			//		i.nc-icon.nc-diamond
+			//		p Icons
+			//li
+			//	a(href="./map.html")
+			//		i.nc-icon.nc-pin-3
+			//		p Maps
+			//li
+			//	a(href="./notifications.html")
+			//		i.nc-icon.nc-bell-55
+			//		p Notifications
+			//li
+			//	a(href="./user.html")
+			//		i.nc-icon.nc-single-02
+			//		p User Profile
+			//li
+			//	a(href="./tables.html")
+			//		i.nc-icon.nc-tile-56
+			//		p Table List
+			//li
+			//	a(href="./typography.html")
+			//		i.nc-icon.nc-caps-small
+			//		p Typography
+			//li.active-pro
+			//	a(href="./upgrade.html")
+			//		i.nc-icon.nc-spaceship
+			//		p Upgrade to PRO

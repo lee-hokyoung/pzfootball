@@ -27,12 +27,22 @@ app.set('view engine', 'pug');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/nm', express.static(path.join(__dirname, 'node_modules')));
+app.use(express.static(path.join(__dirname, 'public'), {maxAge:'1d'}));
+app.use('/nm', express.static(path.join(__dirname, 'node_modules'), {maxAge:'1d'}));
+
+app.use(session({
+  secret: process.env.COOKIE_SECRET,
+  resave: false,
+  saveUninitialized: true,
+  cookie: {secure: false, httpOnly: true}
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

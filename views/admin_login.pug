@@ -1,0 +1,23 @@
+extends admin_layout
+block content
+	.content
+		.row
+			.col-lg-4.col-md-6.ml-auto.mr-auto
+				form.form(method="post" action="/admin/login")
+					.card.card-login
+						.card-header
+							.card-header
+								h3.header.text-center Login
+						.card-body
+							.input-group
+								.input-group-prepend
+									span.input-group-text
+										i.nc-icon.nc-single-02
+								input.form-control(type="text", name='user_id' placeholder="Id")
+							.input-group
+								.input-group-prepend
+									span.input-group-text
+										i.nc-icon.nc-key-25
+								input.form-control(type="password", name='user_pw', placeholder="Password")
+						.card-footer
+							button.btn.btn-warning.btn-round.btn-block.mb-3(type='submit') LOGIN

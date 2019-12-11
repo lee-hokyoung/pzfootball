@@ -1,5 +1,4 @@
 exports.isLoggedIn = (req, res, next) => {
-  console.log('ll : ', req.isAuthenticated());
   if(req.isAuthenticated()){
     next();
   }else{
@@ -7,9 +6,10 @@ exports.isLoggedIn = (req, res, next) => {
   }
 };
 exports.isNotLoggedIn = (req, res, next) => {
+  console.log(req.isAuthenticated());
   if(!req.isAuthenticated()){
     next();
   }else{
-    res.redirect('/admin/application/list');
+    res.redirect('/admin');
   }
 };

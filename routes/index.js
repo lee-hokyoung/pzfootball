@@ -5,7 +5,6 @@ const MatchModel = require('../model/match');
 /* GET home page. */
 router.get('/', async (req, res, next) => {
   let list = await MatchModel.find({});
-  console.log('list : ', list);
   res.render('index', {
     list: list
   });

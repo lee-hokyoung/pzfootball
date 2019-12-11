@@ -1,0 +1,18 @@
+extends admin_layout
+block content
+	.content
+		.row
+			.table
+				table.table.table-responsive
+					thead
+						tr
+							th #
+							th 아이디
+							th 이름
+							th
+					tbody
+						each user, idx in list
+							tr
+								td #{idx + 1}
+								td #{user.user_id}
+								td #{user.user_name}

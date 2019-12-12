@@ -2,17 +2,23 @@ extends admin_layout
 block content
 	.content
 		.row
-			.table
-				table.table.table-responsive
-					thead
-						tr
-							th #
-							th 아이디
-							th 이름
-							th
-					tbody
-						each user, idx in list
-							tr
-								td #{idx + 1}
-								td #{user.user_id}
-								td #{user.user_name}
+			.col-12
+				.card
+					.card-header
+					.card-body
+						.table-responsive
+							table.table
+								thead
+									tr
+										th #
+										th 아이디
+										th 이름
+										th 가입일시
+										th
+								tbody
+									each user, idx in list
+										tr
+											td #{idx + 1}
+											td #{user.user_id}
+											td #{user.user_name}
+											td #{user.created_at.toLocaleString('ko')}

@@ -13,11 +13,6 @@ router.get('/', middle.isLoggedIn, async(req, res) => {
 router.get('/login', middle.isNotLoggedIn, (req, res) => {
   res.render('admin_login')
 });
-router.get('/logout', middle.isLoggedIn, (req, res) => {
-  req.logout();
-  req.session.destroy();
-  res.render('admin_login');
-});
 router.post('/login', middle.isNotLoggedIn, (req, res, next) => {
   passport.authenticate('local', (authError, user, info)=>{
     console.log('info : ', info);
@@ -41,12 +36,19 @@ router.post('/login', middle.isNotLoggedIn, (req, res, next) => {
     });
   })(req, res, next);
 });
-
+router.get('/logout', middle.isLoggedIn, (req, res) => {
+  req.logout();
+  req.session.destroy();
+  res.render('admin_login');
+});
 // 회원관리
 router.get('/user/list', middle.isLoggedIn, async (req, res) => {
   let list = await User.find({});
+  let user = req.session.passport.user;
+  console.log('user list : ', user);
   res.render('admin_user', {
     active:'user',
+    user:user,
     list:list
   })
 });

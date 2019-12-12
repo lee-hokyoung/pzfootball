@@ -13,7 +13,6 @@ const userModel = require('../model/user');
 module.exports = (passport) => {
   // 세션에 아이디를 저장
   passport.serializeUser((user, done) => {
-    console.log('serializeUser user : ', user);
     done(null, user.user_id);
   });
   // 세션에 저장한 아이디를 통해 사용자 정보 객체 불러오기
@@ -24,7 +23,6 @@ module.exports = (passport) => {
         user_id: 1,
         user_name: 1,
       });
-    console.log('user : ', user);
     try {
       done(null, user);
     } catch (e) {

@@ -11,6 +11,9 @@ require('dotenv').config();
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const adminRouter = require('./routes/admin');
+const adminMatchRouter = require('./routes/admin_match');
+const adminGroundRouter = require('./routes/admin_ground');
+const middle = require('./routes/middle');
 
 const app = express();
 
@@ -29,19 +32,21 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'), {maxAge:'1d'}));
 app.use('/nm', express.static(path.join(__dirname, 'node_modules'), {maxAge:'1d'}));
+
 app.use(session({
   secret: process.env.COOKIE_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {secure: false, httpOnly: true}
 }));
-
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
+app.use('/admin/match', middle.isAdmin, adminMatchRouter);
+app.use('/admin/ground', middle.isAdmin, adminGroundRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

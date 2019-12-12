@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const Match = require('../model/match');
+const Ground = require('../model/ground');
 
-router.get('/list', async(req, res) => {
+router.get('/', async(req, res) => {
   let user = req.session.passport.user;
-  let list = await Match.aggregate([
+  let list = await Ground.aggregate([
     {$match:{}}
   ]);
-  res.render('admin_match',{
-    active:'match',
+  res.render('admin_ground',{
+    active:'ground',
     user:user,
     list:list
   });

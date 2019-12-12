@@ -1,18 +1,14 @@
 const User = require('../model/user');
 
 exports.isLoggedIn = (req, res, next) => {
-  console.log('is log : ', req.isAuthenticated());
   if(req.isAuthenticated()){
-    console.log('log');
     next();
   }else{
     res.redirect('/admin/login');
   }
 };
 exports.isNotLoggedIn = (req, res, next) => {
-  console.log('is not log : ', req.isAuthenticated());
   if(!req.isAuthenticated()){
-    console.log('not log');
     next();
   }else{
     res.redirect('/admin/login');

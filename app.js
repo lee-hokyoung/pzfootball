@@ -12,6 +12,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const adminRouter = require('./routes/admin');
 const adminMatchRouter = require('./routes/admin_match');
+const adminGroundRouter = require('./routes/admin_ground');
 const middle = require('./routes/middle');
 
 const app = express();
@@ -45,7 +46,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
 app.use('/admin/match', middle.isAdmin, adminMatchRouter);
-
+app.use('/admin/ground', middle.isAdmin, adminGroundRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

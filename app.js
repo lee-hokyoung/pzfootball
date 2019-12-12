@@ -11,6 +11,8 @@ require('dotenv').config();
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const adminRouter = require('./routes/admin');
+const adminMatchRouter = require('./routes/admin_match');
+const middle = require('./routes/middle');
 
 const app = express();
 
@@ -42,6 +44,7 @@ app.use(passport.session());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
+app.use('/admin/match', middle.isAdmin, adminMatchRouter);
 
 
 // catch 404 and forward to error handler

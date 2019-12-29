@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="1fbfd5fa-c8f0-45c0-960e-5533b984464f" name="puzzle football" url="http://52.78.1.53">
+        <fileTransfer host="52.78.1.53" port="22" privateKey="D:\OneDrive\key_pair\puzzle football\puzzlefootball.pem" rootFolder="/home/ubuntu" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

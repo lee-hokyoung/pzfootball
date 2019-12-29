@@ -1,6 +1,8 @@
-node_modules
+node_modules/
+bin/
+docs/
 package.json
 yarn.lock
-bin
 public/images/*
 .idea/*
+/public/assets/

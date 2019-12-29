@@ -1,0 +1,50 @@
+h5.info-text  경기장 시설 정보
+	.row.justify-content-center
+		.col-lg-10
+			.row
+				.col-sm-3
+					.choice(data-toggle="wizard-checkbox")
+						input(type="checkbox" name="jobb" value="shower")
+						.icon
+							i.nc-icon.nc-ruler-pencil
+						h6 샤워장
+				.col-sm-3
+					.choice(data-toggle="wizard-checkbox")
+						input(type="checkbox" name="jobb" value="shoesRental")
+						.icon
+							i.nc-icon.nc-laptop
+						h6 풋살화 대여
+				.col-sm-3
+					.choice(data-toggle="wizard-checkbox")
+						input(type="checkbox" name="jobb" value="uniformRental")
+						.icon
+							i.nc-icon.nc-atom
+						h6 운동복 대여
+				.col-sm-3
+					.choice(data-toggle="wizard-checkbox")
+						input(type="checkbox" name="jobb" value="freeParking")
+						.icon
+							i.nc-icon.nc-atom
+						h6 무료 주차장
+			hr
+			.row
+				.col-md-2
+					label 경기장 가로 길이
+					.input-group
+						.input-group-prepend
+							span.input-group-text
+						input.form-control(type="text", name="groundSizeX")
+				.col-md-2
+					label 경기장 세로 길이
+					.input-group
+						.input-group-prepend
+							span.input-group-text
+						input.form-control(type="text", name="groundSizeY")
+			hr
+			.row
+				.col-md-12
+					label 특이사항
+					.input-group
+						.input-group-prepend
+							span.input-group-text
+						textarea.form-control(type="text", name="groundSizeX")

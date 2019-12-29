@@ -1,3 +1,12 @@
+$(document).ready(function () {
+  // Initialise the wizard
+  demo.initWizard();
+  $('.card.card-wizard').addClass('active');
+  // setTimeout(function () {
+  //   $('.card.card-wizard').addClass('active');
+  // }, 600);
+});
+
 $('#groundModal').on('shown.bs.modal', function (e) {
   map.relayout();
 });
@@ -21,7 +30,7 @@ var infowindow = new kakao.maps.InfoWindow({zIndex:1});
 
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces() {
-
+  console.log('search place ');
   var keyword = document.getElementById('keyword').value;
 
   if (!keyword.replace(/^\s+|\s+$/g, '')) {

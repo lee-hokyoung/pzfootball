@@ -1,8 +1,7 @@
-node_modules/
-bin/
-docs/
+node_modules
 package.json
 yarn.lock
+bin
 public/images/*
 .idea/*
-/public/assets/
+public/stylesheets/dom.min.css

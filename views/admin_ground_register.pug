@@ -1,0 +1,39 @@
+extends admin_layout
+block content
+	.content
+		.col-md-10.mr-auto.ml-auto
+			.wizard-container
+				#wizardProfile.card.card-wizard(data-color="primary")
+					form#wizardForm(action="" method="")
+						// You can switch " data-color="primary" "  with one of the next bright colors: "green", "orange", "red", "blue"
+						.card-header.text-center
+							.wizard-navigation
+								ul
+									li.nav-item
+										a.nav-link.active(href="#location" data-toggle="tab" role="tab" aria-controls="location" aria-selected="true")
+											i.nc-icon.nc-pin-3
+											|  경기장 위치 선택
+									li.nav-item
+										a.nav-link(href="#facility" data-toggle="tab" role="tab" aria-controls="facility" aria-selected="true")
+											i.nc-icon.nc-support-17
+											| 경기장 시설정보 입력
+									li.nav-item
+										a.nav-link(href="#images" data-toggle="tab" role="tab" aria-controls="images" aria-selected="true")
+											i.nc-icon.nc-image
+											| 경기장 이미지 등록
+						.card-body
+							.tab-content
+								#location.tab-pane.show.active
+									include ground/location
+								#facility.tab-pane
+									include ground/facility
+								#images.tab-pane
+									include ground/image
+						.card-footer
+							.pull-right
+								input.btn.btn-next.btn-fill.btn-rose.btn-wd(type="button" name="next" value="Next")
+								input.btn.btn-finish.btn-fill.btn-rose.btn-wd(type="button" name="finish" value="Finish")
+							.pull-left
+								input.btn.btn-previous.btn-fill.btn-default.btn-wd(type="button" name="previous" value="Previous")
+							.clearfix
+

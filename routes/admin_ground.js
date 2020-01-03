@@ -10,7 +10,14 @@ router.get('/', async(req, res) => {
   res.render('admin_ground',{
     active:'ground',
     user:user,
-    list:list
+    list:list,
+    title:'경기장 관리'
+  });
+});
+router.get('/register', async(req, res) => {
+  res.render('admin_ground_register', {
+    active:'ground',
+    title:'경기장 등록'
   });
 });
 

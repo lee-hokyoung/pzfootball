@@ -7,13 +7,33 @@ block content
 					.card-header
 						h4.card-title 경기장 관리
 					.card-body
-						.row
+						ul.list-group.list-group-flush
+							li.list-group-item.list-group-item-primary
+								.row
+									.col-2 경기장 이름
+									.col-3 주소
+									.col-6 시설정보
 							if(list.length > 0)
-								each ground in list
-									.col-md-4
-										h5 #{ground.name}
+								each ground, idx in list
+									li.list-group-item(class=idx%2===0?'':'list-group-item-secondary')
+										.row
+											.col-2
+												a(href='/admin/ground/register/' + ground._id) #{ground.groundName}
+											.col-3 #{ground.groundAddress.road}
+											- var facility_arr = [];
+											if(ground.facility.shower)
+												- facility_arr.push('샤워장');
+											if(ground.facility.freeParking)
+												- facility_arr.push('무료 주차장');
+											if(ground.facility.shoesRental)
+												- facility_arr.push('풋살화 대여');
+											if(ground.facility.uniformRental)
+												- facility_arr.push('운동복 대여');
+											.col-6 #{facility_arr.join(', ')}
 							else
 								.col-12
 									p 등록된 경기장이 없습니다.
 					.card-footer
 						a.btn.btn-primary(href='/admin/ground/register') 경기장 등록
+		script.
+			console.log(!{JSON.stringify(list)});

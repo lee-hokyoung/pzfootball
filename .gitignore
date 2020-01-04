@@ -5,3 +5,4 @@ bin
 public/images/*
 .idea/*
 public/stylesheets/dom.min.css
+public/assets/

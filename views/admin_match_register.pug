@@ -13,7 +13,27 @@ block content
 							.row
 								.col-md-4
 									.card-title 경기장 선택
-									select.selectpicker(data-style="btn btn-danger btn-block" title="Single Select" data-toggle='')
+									select.selectpicker(data-size="7" data-style="btn btn-primary btn-round" title="경기장 선택")
 										each item in ground
 											option(value=item._id) !{item.groundName}
+								.col-md-4
+									.card-title 경기시간 설정
+									.form-group
+										input.form-control.datetimepicker(type='text')
 					.card-footer
+block append_js
+	script.
+		$('.datetimepicker').datetimepicker({
+			icons: {
+				time: "fa fa-clock-o",
+				date: "fa fa-calendar",
+				up: "fa fa-chevron-up",
+				down: "fa fa-chevron-down",
+				previous: 'fa fa-chevron-left',
+				next: 'fa fa-chevron-right',
+				today: 'fa fa-screenshot',
+				clear: 'fa fa-trash',
+				close: 'fa fa-remove'
+			},
+			format:'HH:mm'
+		});

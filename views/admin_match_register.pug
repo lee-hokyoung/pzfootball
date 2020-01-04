@@ -1,0 +1,19 @@
+extends admin_layout
+block content
+	.content
+		.row
+			.col-12
+				.card
+					.card-header
+						.d-flex.justify-content-between
+							h4.card-title 경기일정 등록
+							a.btn.btn-primary(href='/admin/match/list') 목록으로
+					.card-body
+						.card-content
+							.row
+								.col-md-4
+									.card-title 경기장 선택
+									select.selectpicker(data-style="btn btn-danger btn-block" title="Single Select" data-toggle='')
+										each item in ground
+											option(value=item._id) !{item.groundName}
+					.card-footer

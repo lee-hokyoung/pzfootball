@@ -30,7 +30,8 @@ app.set('view engine', 'pug');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public'), {maxAge:'1d'}));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/assets', express.static(path.join(__dirname, 'public/assets'), {maxAge:'30d'}));
 app.use('/nm', express.static(path.join(__dirname, 'node_modules'), {maxAge:'1d'}));
 
 app.use(session({

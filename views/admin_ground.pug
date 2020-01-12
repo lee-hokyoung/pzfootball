@@ -18,7 +18,7 @@ block content
 									li.list-group-item(class=idx%2===0?'':'list-group-item-secondary')
 										.row
 											.col-2
-												a(href='/admin/ground/register/' + ground._id) #{ground.groundName}
+												a(href='/admin/ground/read/' + ground._id) #{ground.groundName}
 											.col-3 #{ground.groundAddress.road}
 											- var facility_arr = [];
 											if(ground.facility.shower)
@@ -35,5 +35,3 @@ block content
 									p 등록된 경기장이 없습니다.
 					.card-footer
 						a.btn.btn-primary(href='/admin/ground/register') 경기장 등록
-		script.
-			console.log(!{JSON.stringify(list)});

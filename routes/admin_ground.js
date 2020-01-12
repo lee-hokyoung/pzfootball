@@ -14,12 +14,18 @@ router.get('/', async (req, res) => {
     title: '경기장 관리'
   });
 });
+router.get('/:id', async(req, res) => {
+  let doc = await Ground.findOne({_id:req.params.id});
+  res.json(doc);
+});
 router.get('/register/:id?', async (req, res) => {
   let ground = null;
+  let user = req.session.passport.user;
   if(req.params.id) ground = await Ground.findOne({_id:req.params.id});
   res.render('admin_ground_register', {
     active: 'ground',
     title: '경기장 등록',
+    user:user,
     ground:ground
   });
 });

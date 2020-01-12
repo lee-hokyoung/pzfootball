@@ -1,0 +1,108 @@
+extends admin_layout
+block content
+	.content
+		.row
+			.col-12
+				.card
+					.card-header
+						.d-flex.justify-content-between
+							h4.card-title 경기일정 등록
+							a.btn.btn-primary(href='/admin/match/list') 목록으로
+					.card-body
+						.card-content
+							.row
+								.col-md-4
+									h6.py-3.m-0 경기장 선택
+									select.form-control#selectGround
+										option(value='', disabled, selected) 경기장을 선택해 주세요.
+										option(disabled) - - - - - - - - - - - - - - - - - - - - -
+										each item in ground
+											option(value=item._id) !{item.groundName}
+							.row
+								.col-md-8
+									h6.py-3.m-0 경기일 선택
+										// 달력선택 부분
+										- var size = 14;
+										- var day = ['일', '월', '화', '수', '목', '금', '토'];
+										- var today = new Date();
+									.d-flex.justify-content-between
+										- var d = 0;
+										while d < size
+											.pr-2
+												- var date = new Date();
+												- date.setDate(today.getDate() + d++)
+												button.btn.rounded.btn-date.font-italic.m-0(type='button', class=date.getDay()===0?'text-danger':date.getDay()===6?'text-primary':'', class=d===1?'btn-primary':'', data-date=date)
+													.h6.m-0 #{date.getDate()}
+													.small #{day[date.getDay()]}
+							.row
+								.col-md-12
+									h6.py-3.m-0
+									ul.list-group.list-group-flush
+										li.list-group-item.list-group-item-primary
+											.row
+												.col #
+												.col-1 시간
+												.col-3 타입
+												.col-2 실력
+												.col-2 성별
+												.col-1 인원수
+												.col-1 금액
+												.col-1
+										// each item in list
+										#match_list
+										li.list-group-item
+											.row
+												.col #
+												.col-1
+													.form-group
+														input.form-control.py-1#matchTime(type='text', name='match_time')
+												.col-3
+													.form-check-radio.form-check-inline
+														label.form-check-label
+															input.form-check-input(type="radio", name='match_type', value='2')
+															span.form-check-sign 2파전
+													.form-check-radio.form-check-inline
+														label.form-check-label
+															input.form-check-input(type="radio", name="match_type", value='3')
+															span.form-check-sign 3파전
+													.form-check.form-check-inline
+														label.form-check-label
+															input.form-check-input(type="checkbox", name="ladder")
+															span.form-check-sign 승점제 경기
+												.col-2
+													.form-check-radio.form-check-inline
+														label.form-check-label
+															input.form-check-input(type="radio", name="match_grade", value='1')
+															span.form-check-sign 상
+													.form-check-radio.form-check-inline
+														label.form-check-label
+															input.form-check-input(type="radio", name="match_grade", value='2')
+															span.form-check-sign 중
+													.form-check-radio.form-check-inline
+														label.form-check-label
+															input.form-check-input(type="radio", name="match_grade", value='3')
+															span.form-check-sign 하
+												.col-2
+													.form-check-radio.form-check-inline
+														label.form-check-label
+															input.form-check-input(type="radio", name="sex", value='1')
+															span.form-check-sign 남성
+													.form-check-radio.form-check-inline
+														label.form-check-label
+															input.form-check-input(type="radio", name="sex", value='-1')
+															span.form-check-sign 여성
+													.form-check-radio.form-check-inline
+														label.form-check-label
+															input.form-check-input(type="radio", name="sex", value='0')
+															span.form-check-sign 혼성
+												.col-1
+													.form-group
+														input.form-control.py-1(type='text', name='personnel')
+												.col-1
+													.form-group
+														input.form-control.py-1(type='text', name='match_price')
+												.col-1
+													button.btn.btn-primary.btn-sm.m-0#registerMatch(type='button') 등록
+					.card-footer
+block append_js
+	script(src='/javascripts/match.js')

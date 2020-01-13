@@ -198,8 +198,12 @@ function removeAllChildNods(el) {
 // 검색결과를 클릭했을 때 위치정보를 저장해주는 함수
 function fnSetLocation(el) {
   let name = el.querySelector("h5").innerText;
-  let jibun = el.querySelector(".jibun").innerText;
-  let road = el.querySelector(".road").innerText;
+  let jibun = el.querySelector(".jibun")
+    ? el.querySelector(".jibun").innerText
+    : el.querySelector(".info span").innerText;
+  let road = el.querySelector(".road")
+    ? el.querySelector(".road").innerText
+    : el.querySelector(".info span").innerText;
   document.getElementById("groundName").value = name;
   document.getElementById("groundAddr").value = road;
   document.querySelector('input[name="jibun"]').value = jibun;

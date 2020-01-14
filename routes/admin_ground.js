@@ -15,10 +15,10 @@ router.get("/", async (req, res) => {
   });
 });
 // 경기장 읽기
-// router.get("/read/:id", async (req, res) => {
-//   let doc = await Ground.findOne({ _id: req.params.id });
-//   res.json(doc);
-// });
+router.get("/read/:id", async (req, res) => {
+  let doc = await Ground.findOne({ _id: req.params.id });
+  res.json(doc);
+});
 // 경기장 수정 or 등록 화면
 router.get("/register/:id?", async (req, res) => {
   let ground = null;

@@ -7,7 +7,7 @@ block content
           .card-header
             .d-flex.justify-content-between
               h4.card-title 경기일정 등록
-              a.btn.btn-primary(href='/admin/match/list') 목록으로
+              //- a.btn.btn-primary(href='/admin/match/list') 목록으로
           .card-body
             .card-content
               .row
@@ -131,10 +131,10 @@ block content
                               span.form-check-sign 혼성
                         .col-1
                           .form-group
-                            input.form-control.py-1(type='text', name='personnel')
+                            input.form-control.py-1(type='number', name='personnel')
                         .col-1
                           .form-group
-                            input.form-control.py-1(type='text', name='match_price')
+                            input.form-control.py-1(type='number', name='match_price')
                         .col-1
                           button.btn.btn-primary.btn-sm.m-0#registerMatch(type='button') 등록
           .card-footer

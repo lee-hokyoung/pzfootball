@@ -18,8 +18,9 @@ const matchSchema = new Schema({
   match_grade: String, // 실력
   ladder: Number, // 승점제 유무, 1: 승점제, 0: 승점제 x
   sex: Number, // 성별 1: 남성매치, -1: 여성매치, 0: 혼성매치
-  personnel: String, // 정원
-  match_price: String, // 금액
+  personnel: Number, // 정원
+  apply_member: Number, // 신청자 수
+  match_price: Number, // 금액
   apply_status: String
 });
 module.exports = mongoose.model("Match", matchSchema, "match");

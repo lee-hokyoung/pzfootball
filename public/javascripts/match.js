@@ -443,7 +443,43 @@ function fnUpdate(_id) {
   button.className = "btn btn-sm btn-success m-0";
   button.setAttribute("title", "수정");
   button.addEventListener("click", function() {
-    alert("수정완료");
+    let updateForm = {};
+    let target_row = document.querySelector('.row[data-id="' + _id + '"]');
+    updateForm["match_time"] = target_row.querySelector(
+      'input[name="match_time"]'
+    ).value;
+    updateForm["match_type"] = target_row.querySelector(
+      'input[name="match_type_' + _id + '"]:checked'
+    ).value;
+    updateForm["ladder"] = target_row.querySelector('input[name="ladder"]')
+      .checked
+      ? 1
+      : 0;
+    updateForm["match_grade"] = target_row.querySelector(
+      'input[name="match_grade_' + _id + '"]:checked'
+    ).value;
+    updateForm["sex"] = target_row.querySelector(
+      'input[name="sex_' + _id + '"]:checked'
+    ).value;
+    updateForm["personnel"] = target_row.querySelector(
+      'input[name="personnel"]'
+    ).value;
+    updateForm["match_price"] = target_row.querySelector(
+      'input[name="match_price"]'
+    ).value;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("PUT", "/admin/match/" + _id, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function() {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        alert("정상적으로 수정되었습니다");
+        // location.reload();
+      } else {
+        return false;
+      }
+    };
+    xhr.send(JSON.stringify(updateForm));
   });
   let icon = document.createElement("i");
   icon.className = "nc-icon nc-check-2";
@@ -451,10 +487,10 @@ function fnUpdate(_id) {
   col_8.appendChild(button);
 
   button = document.createElement("button");
-  button.className = "btn btn-sm btn-warning m-0";
+  button.className = "btn btn-sm btn-danger m-0";
   button.setAttribute("title", "취소");
   button.addEventListener("click", function() {
-    alert("수정 취소");
+    fnDelete(_id);
   });
   icon = document.createElement("i");
   icon.className = "nc-icon nc-simple-remove";
@@ -472,7 +508,21 @@ function fnUpdate(_id) {
   r.appendChild(col_8);
 }
 function fnDelete(id) {
-  if (confirm("삭제하시겠습니까?")) {
-    alert("삭제");
+  if (confirm("삭제하면 복구할 수 없습니다. 계속하시겠습니까?")) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("DELETE", "/admin/match/" + id, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function() {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        fnDeleteRow(id);
+        alert("정상적으로 삭제되었습니다");
+      } else {
+        return false;
+      }
+    };
+    xhr.send();
   }
+}
+function fnDeleteRow(id) {
+  document.querySelector('div[data-id="' + id + '"]').parentNode.remove();
 }

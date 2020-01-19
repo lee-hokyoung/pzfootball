@@ -11,14 +11,14 @@ router.get("/", async (req, res) => {
     active: "ground",
     user: user,
     list: list,
-    title: "경기장 관리"
+    title: "퍼즐풋볼 - 경기장 관리"
   });
 });
 // 경기장 읽기
-// router.get("/read/:id", async (req, res) => {
-//   let doc = await Ground.findOne({ _id: req.params.id });
-//   res.json(doc);
-// });
+router.get("/read/:id", async (req, res) => {
+  let doc = await Ground.findOne({ _id: req.params.id });
+  res.json(doc);
+});
 // 경기장 수정 or 등록 화면
 router.get("/register/:id?", async (req, res) => {
   let ground = null;
@@ -29,7 +29,7 @@ router.get("/register/:id?", async (req, res) => {
   }
   res.render("admin_ground_register", {
     active: "ground",
-    title: "경기장 등록",
+    title: "퍼즐풋볼 - 경기장 등록",
     user: user,
     ground: ground
   });

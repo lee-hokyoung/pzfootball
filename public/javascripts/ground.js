@@ -25,7 +25,6 @@ let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces() {
-  console.log("search place ");
   let keyword = document.getElementById("keyword").value;
   if (!keyword.replace(/^\s+|\s+$/g, "")) {
     alert("키워드를 입력해주세요!");
@@ -96,7 +95,6 @@ function displayPlaces(places) {
 }
 // 검색결과 항목을 Element로 반환하는 함수입니다
 function getListItem(index, places) {
-  console.log("place : ", places);
   let el = document.createElement("li"),
     itemStr =
       '<span class="markerbg marker_' +

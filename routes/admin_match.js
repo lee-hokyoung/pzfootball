@@ -24,10 +24,6 @@ router.get("/register/:date?/:ground_id?", async (req, res) => {
   let user = req.session.passport.user;
   let ground = await Ground.find({});
   let match_list = [];
-  console.log("date : ", date);
-  // console.log("date : ", new Date(date).toISOString().slice(0, 10));
-  // let locale_date = new Date(date).toISOString().slice(0, 10);
-  // console.log("locale date : ", new Date(locale_date));
   if (ground_id !== "") {
     match_list = await Match.aggregate([
       {

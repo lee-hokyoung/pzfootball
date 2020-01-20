@@ -98,15 +98,16 @@ block content
                           button.btn.btn-status.text-white.p-0(data-status='hurry')
                             h5.m-0.py-1 마감임박
                             .text-warning.bg-white.mx-auto.font-weight-bold(style='border-radius:1rem; width:100px; font-size:13px;') #{remains}자리 남음
-                            small.position-relative(style='top:-3px;') #{game.label_cash}
+                            small.position-relative(style='top:-3px;') #{new Intl.NumberFormat().format(game.match_price)}원
                         else if(status === 'available')
                           button.btn.btn-status.text-white.p-0(data-status='available')
                             h5.m-0.py-1 신청가능
                             .text-primary.bg-white.mx-auto.font-weight-bold(style='border-radius:1rem; width:100px; font-size:13px;') #{remains}자리 남음
-                            small.position-relative(style='top:-3px;') #{game.label_cash}
+                            small.position-relative(style='top:-3px;') #{new Intl.NumberFormat().format(game.match_price)}원
                         else if(status === 'full')
                           button.btn.btn-status.text-white(data-status='full')
                             small.m-0 마  감
+
               else
                 li.list-group-item.list-group-item-light.py-1.px-0.mx-auto
                   .row.w-100.m-0

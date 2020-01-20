@@ -30,7 +30,6 @@ async function fnGetMatchList(date) {
     },
     { $unwind: "$ground_info" }
   ]);
-  console.log("result : ", result);
   return result;
 }
 module.exports = router;

@@ -1,0 +1,36 @@
+link(rel='stylesheet', href='/stylesheets/login_modal.css')
+#loginModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true")
+  .modal-dialog
+    .modal-content
+      .modal-header
+        button.close(type="button" data-dismiss="modal" aria-hidden="true")
+          i.nc-icon.nc-simple-remove
+      .modal-body
+        form.form(method="" action="")
+          .card.card-login
+            .card-header
+              .card-header
+                h3.header.text-center Login
+            .card-body
+              .input-group
+                .input-group-prepend
+                  span.input-group-text
+                    i.nc-icon.nc-single-02
+                input.form-control(type="text" placeholder="First Name...")
+              .input-group
+                .input-group-prepend
+                  span.input-group-text
+                    i.nc-icon.nc-key-25
+                input.form-control(type="password" placeholder="Password")
+              br
+              .form-group
+                .form-check
+                  label.form-check-label
+                    input.form-check-input(type="checkbox" value="" checked="")
+                    span.form-check-sign
+                    |                         Subscribe to newsletter
+            .card-footer
+              a.btn.btn-warning.btn-round.btn-block.mb-3(href="#pablo") Get Started
+
+      .modal-footer.justify-content-center
+        button.btn.btn-info.btn-round(type="button" data-dismiss="modal") Sounds good!

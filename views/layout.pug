@@ -19,7 +19,7 @@ html
           #navbarSupportedContent.collapse.navbar-collapse
             ul.navbar-nav.ml-auto
               li.nav-item
-                a.nav-link.nav-font(href='#') LOGIN
+                a.nav-link.nav-font(href='#', data-toggle='modal', data-target='#loginModal') LOGIN
               li.nav-item.my-3(style='background:url(/images/vertical_bar.svg); width:5px;')
               li.nav-item
                 a.nav-link.nav-font(href='#') JOIN
@@ -39,6 +39,8 @@ html
                 a.nav-link.p-1(href='#')
                   img(src='/images/nav_toggle.svg', width=22)
       block content
+      // login modal
+      include modals/login
     script(src='/nm/jquery/dist/jquery.min.js', type='text/javascript')
     script(src='/nm/bootstrap/dist/js/bootstrap.bundle.min.js', type='text/javascript')
     script(src='/nm/slick-slider/slick/slick.min.js', type='text/javascript')

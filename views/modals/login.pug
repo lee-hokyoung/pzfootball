@@ -2,35 +2,48 @@ link(rel='stylesheet', href='/stylesheets/login_modal.css')
 #loginModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true")
   .modal-dialog
     .modal-content
-      .modal-header
-        button.close(type="button" data-dismiss="modal" aria-hidden="true")
-          i.nc-icon.nc-simple-remove
-      .modal-body
-        form.form(method="" action="")
-          .card.card-login
-            .card-header
-              .card-header
+      form.form(onsubmit="return fnSubmit();")
+        .modal-header
+          button.close(type="button" data-dismiss="modal" aria-hidden="true")
+            i.fas.fa-times
+        .modal-body
+          .card.card-login.border-0
+            .card-header.border-0.bg-white
+              .card-header.border-0.bg-white
                 h3.header.text-center Login
             .card-body
               .input-group
                 .input-group-prepend
                   span.input-group-text
-                    i.nc-icon.nc-single-02
-                input.form-control(type="text" placeholder="First Name...")
+                    i.fas.fa-user
+                input.form-control#user_id(type="text" placeholder="ID")
               .input-group
                 .input-group-prepend
                   span.input-group-text
-                    i.nc-icon.nc-key-25
-                input.form-control(type="password" placeholder="Password")
-              br
-              .form-group
-                .form-check
-                  label.form-check-label
-                    input.form-check-input(type="checkbox" value="" checked="")
-                    span.form-check-sign
-                    |                         Subscribe to newsletter
-            .card-footer
-              a.btn.btn-warning.btn-round.btn-block.mb-3(href="#pablo") Get Started
+                    i.fas.fa-key
+                input.form-control#user_pw(type="password" placeholder="Password")
+            .card-footer.bg-white.border-0
+        .modal-footer.justify-content-center
+          button.btn.btn-info.btn-round(type="submit") Login
+script.
+  function fnSubmit(){
+    let user_id = document.querySelector('#user_id');
+    let user_pw = document.querySelector('#user_pw');
+    if(user_id.value === '' || user_pw.value === '') return false;
 
-      .modal-footer.justify-content-center
-        button.btn.btn-info.btn-round(type="button" data-dismiss="modal") Sounds good!
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/users/login', true);
+    xhr.setRequestHeader('Content-Type','application/json');
+    xhr.onreadystatechange = function(){
+      if(this.readyState === XMLHttpRequest.DONE && this.status === 200){
+        let res = JSON.parse(this.response);
+        console.log('res : ', res);
+        if(res.code === 1){
+          alert('login');
+        }else{
+          alert(res.message);
+        }
+      }
+    }
+    xhr.send(JSON.stringify({user_id:user_id.value, user_pw:user_pw.value}));
+  }

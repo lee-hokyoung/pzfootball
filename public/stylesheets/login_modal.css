@@ -1,2 +1,6 @@
-#login_modal {
+#loginModal .modal-dialog {
+  width: 340px;
+}
+#loginModal span i.fas {
+  width: 20px;
 }

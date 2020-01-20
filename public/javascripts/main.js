@@ -103,7 +103,7 @@ $(function() {
           '<li class="list-group-item list-group-item-light py-1 px-0 mx-auto ' +
           (idx % 2 === 0 ? "bg-light" : "") +
           '" style="border:none !important">' +
-          '<div class="row w-100">' +
+          '<div class="row w-100 m-0">' +
           '<div class="col-4 col-md-2 d-block">' +
           '<small class="font-weight-bold text-secondary">TIME</small>' +
           '<h5 class="text-orange">' +
@@ -116,7 +116,9 @@ $(function() {
           "</small>" +
           '<div class="d-flex justify-content-start">' +
           '<div class="match-wrap text-center pt-1">' +
-          '<img src="/images/match_3.png">' +
+          '<img src="/images/match_' +
+          game.match_type +
+          '.png">' +
           "<b>" +
           game.match_type +
           "파</b>" +
@@ -144,7 +146,9 @@ $(function() {
         html +=
           "</div>" +
           "</div>" +
-          '<div class="col col-md-3">' +
+          '<div class="col col-md-3 p-0" style="width:160px;" data-cnt="' +
+          remain +
+          '">' +
           '<button class="btn btn-status text-white p-0" data-status="' +
           status +
           '" tabindex="0">' +
@@ -155,8 +159,15 @@ $(function() {
             ? "신청가능"
             : "마  감") +
           "</h5>" +
-          '<div class="text-warning bg-white mx-auto font-weight-bold" style="border-radius:1rem; width:100px; font-size:13px;">' +
+          '<div class="' +
+          (status === "hurry"
+            ? "text-warning"
+            : status === "available"
+            ? "text-primary"
+            : "") +
+          ' bg-white mx-auto font-weight-bold" style="border-radius:1rem; width:100px; font-size:13px;">' +
           remain +
+          (remain > 0 ? "자리 남음" : "") +
           "</div>" +
           '<small class="position-relative" style="top:-3px;">' +
           new Intl.NumberFormat().format(game.match_price) +
@@ -174,12 +185,12 @@ $(function() {
         "<p>아직 등록된 일정이 없습니다.  </p>" +
         "</div></div></li>";
     }
-
     document.querySelector(
       'div[data-slick-index="' + currentSlide + '"] ul'
     ).innerHTML = html;
   }
 });
+
 //  날짜 선택 이벤트
 function fnSelectDate(btn) {
   //  css 적용

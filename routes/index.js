@@ -1,12 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const Match = require("../model/match");
+const passport = require("passport");
 
 /* GET home page. */
 router.get("/", async (req, res, next) => {
   let list = await fnGetMatchList();
+  console.log("user : ", req.session.passport);
+  let user_info = req.session.passport;
   res.render("index", {
-    list: list
+    list: list,
+    user_info: user_info
   });
 });
 

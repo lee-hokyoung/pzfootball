@@ -1,4 +1,4 @@
-link(rel='stylesheet', href='/stylesheets/login_modal.css')
+link(rel='stylesheet', href='/stylesheets/custom_modal.css')
 #loginModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true")
   .modal-dialog
     .modal-content
@@ -39,7 +39,9 @@ script.
         let res = JSON.parse(this.response);
         console.log('res : ', res);
         if(res.code === 1){
-          alert('login');
+          // 모달창 닫기
+          $('#loginModal').modal('hide');
+          
         }else{
           alert(res.message);
         }

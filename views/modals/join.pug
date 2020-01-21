@@ -1,0 +1,162 @@
+link(rel='stylesheet', href='/stylesheets/custom_modal.css')
+#joinModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="joinModalLabel" aria-hidden="true")
+  .modal-dialog
+    .modal-content
+      form.form(onsubmit="return fnJoin();")
+        .modal-header
+          button.close(type="button" data-dismiss="modal" aria-hidden="true")
+            i.fas.fa-times
+        .modal-body
+          .card.card-login.border-0
+            .card-header.border-0.bg-white
+              .card-header.border-0.bg-white
+                h3.header.text-center Join
+            .card-body
+              .form-group
+                label ID
+                .input-group
+                  .input-group-prepend
+                    span.input-group-text
+                      i.fas.fa-user
+                  input.form-control(type="text" placeholder="ID", name='user_id')
+              .form-group
+                label 비밀번호
+                .input-group
+                  .input-group-prepend
+                    span.input-group-text
+                      i.fas.fa-key
+                  input.form-control(type="password" placeholder="Password", name='user_pw')
+                .input-group
+                  .input-group-prepend
+                    span.input-group-text
+                      i.fas.fa-key
+                  input.form-control(type="password" placeholder="Password confirm", name='user_pw_chk')
+              .form-group
+                label 기본정보
+                .input-group
+                  .input-group-prepend
+                    span.input-group-text
+                      i.fas.fa-puzzle-piece
+                  input.form-control(type="text" placeholder="이름", name='user_name')
+                .input-group
+                  .input-group-prepend
+                    span.input-group-text
+                      i.fas.fa-puzzle-piece
+                  input.form-control(type="text" placeholder="닉네임", name='user_nickname')
+                .input-group
+                  .input-group-prepend
+                    span.input-group-text
+                      i.fas.fa-venus-mars
+                  input.form-control(type="text" placeholder="성별", name='gender')
+                .input-group
+                  .input-group-prepend
+                    span.input-group-text
+                      i.fas.fa-birthday-cake
+                  input.form-control(type="text" placeholder="생년월일 6자리 ex) 840101", name='birth')
+              .form-group
+                label 이메일 인증   
+                .input-group
+                  .input-group-prepend
+                    span.input-group-text
+                      i.fas.fa-envelope
+                  input.form-control(type="text" placeholder="E-mail", name='user_email')
+                .text-center.my-3
+                  button.btn.btn-primary(type='button', onclick='fnCheckEmail()') E-mail check
+              .form-group
+                label 인증번호 입력
+                .input-group
+                  .input-group-prepend
+                    span.input-group-text
+                      i.fas.fa-check-circle
+                  input.form-control(type="text" placeholder="인증번호 입력", name='email_verify_number')
+            .card-footer.bg-white.border-0
+        .modal-footer.justify-content-center
+          button.btn.btn-info.btn-round(type="submit") Login
+script.
+  // 이메일 인증
+  function fnCheckEmail(){
+    let user_email = document.querySelector('input[name="user_email"]');
+    if(user_email.value === ''){
+      alert('메일 주소를 입력해주세요');
+      user_email.focus();
+      return false;
+    }
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/users/mail_verify', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function(){
+      if(this.readyState === XMLHttpRequest.DONE && this.status === 200){
+        let res = JSON.parse(this.response);
+        if(res.code !== 1){
+          alert(res.message);
+        }else{
+          alert('메일을 성공적으로 전송했습니다. 메일 확인 후 아래 인증번호란에 입력해주세요')
+        }
+      }
+    }
+    xhr.send(JSON.stringify({user_email:user_email.value}));
+  }
+  // 회원가입
+  function fnJoin(){
+    let user_id = document.querySelector('input[name="user_id"]');
+    let user_pw = document.querySelector('input[name="user_pw"]');
+    let user_pw_chk = document.querySelector('input[name="user_pw_chk"]');
+    let user_name = document.querySelector('input[name="user_name"]');
+    let user_nickname = document.querySelector('input[name="user_nickname"]');
+    let gender = document.querySelector('input[name="gender"]');
+    let birth = document.querySelector('input[name="birth"]');
+    let user_email = document.querySelector('input[name="user_email"]');
+    let email_verify_number = document.querySelector('input[name="email_verify_number"]');
+    if(user_id.value === ''){
+      alert('아이디를 입력해주세요');
+      user_id.focus();
+      return false;
+    }
+    if(user_pw.value === ""){
+      alert('비밀번호를 입력해주세요');
+      user_pw.focus();
+      return false;
+    }
+    if(user_pw.value !== user_pw_chk.value){
+      alert('비밀번호 입력값이 서로 다릅니다');
+      user_pw.focus();
+      return false;
+    }
+    if(user_name.value === ''){
+      alert('이름을 입력해주세요');
+      user_name.focus();
+      return false;
+    }
+    if(email_verify_number.value === ''){
+      alert('이메일 인증번호를 입력해주세요');
+      email_verify_number.focus();
+      return false;
+    }
+    let formData = {};
+    formData['user_id'] = user_id.value;
+    formData['user_pw'] = user_pw.value;
+    formData['user_name'] = user_name.value;
+    formData['user_nickname'] = user_nickname.value;
+    formData['gender'] = gender.value;
+    formData['birth'] = gender.value;
+    formData['user_email'] = user_email.value;
+    formData['email_verify_number'] = email_verify_number.value;
+    console.log('formData : ', formData);
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/users/register', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function(){
+      if(this.readyState === XMLHttpRequest.DONE && this.status === 200){
+        let res = JSON.parse(this.response);
+        if(res.code === 1){
+          console.log('res : ', res);
+          return false;
+        }else{
+          alert(res.message);
+          return false;
+        }
+      }
+    }
+    xhr.send(JSON.stringify(formData));
+  }

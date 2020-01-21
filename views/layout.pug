@@ -19,11 +19,18 @@ html
           img.position-fixed(src='/images/pz_logo.png', style='top:20px; cursor:pointer; z-index:10', onclick='location.href="/"')
           #navbarSupportedContent.collapse.navbar-collapse
             ul.navbar-nav.ml-auto
-              li.nav-item
-                a.nav-link.nav-font(href='#', data-toggle='modal', data-target='#loginModal') LOGIN
-              li.nav-item.my-3(style='background:url(/images/vertical_bar.svg); width:5px;')
-              li.nav-item
-                a.nav-link.nav-font(href='#') JOIN
+              if(user_info)
+                li.nav-item 
+                  p.nav-link.nav-font.text-primary.m-0 #{user_info.user} 님 반갑습니다.
+                li.nav-item.my-3(style='background:url(/images/vertical_bar.svg); width:5px;')
+                li.nav-item
+                  a.nav-link.nav-font(href='/users/logout') LOGOUT
+              else
+                li.nav-item
+                  a.nav-link.nav-font(href='#', data-toggle='modal', data-target='#loginModal') LOGIN
+                li.nav-item.my-3(style='background:url(/images/vertical_bar.svg); width:5px;')
+                li.nav-item
+                  a.nav-link.nav-font(href='#', data-toggle='modal', data-target='#joinModal') JOIN
               li.nav-item
                 a.nav-link.p-1(href='https://www.instagram.com/puzzlefootball_/', target='_blank')
                   img(src='/images/nav_top_1_insta.png', alt='퍼즐풋볼 인스타그램')
@@ -42,6 +49,7 @@ html
       block content
       // login modal
       include modals/login
+      include modals/join
     script(src='/nm/jquery/dist/jquery.min.js', type='text/javascript')
     script(src='/nm/bootstrap/dist/js/bootstrap.bundle.min.js', type='text/javascript')
     script(src='/nm/slick-slider/slick/slick.min.js', type='text/javascript')

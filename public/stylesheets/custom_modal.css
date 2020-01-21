@@ -1,0 +1,8 @@
+#loginModal .modal-dialog,
+#joinModal .modal-dialog {
+  width: 340px;
+}
+#loginModal span i.fas,
+#joinModal span i.fas {
+  width: 20px;
+}

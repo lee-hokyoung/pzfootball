@@ -9,6 +9,7 @@ const passportConfig = require("./passport");
 require("dotenv").config();
 
 const indexRouter = require("./routes/index");
+const matchRouter = require("./routes/match");
 const usersRouter = require("./routes/users");
 const adminRouter = require("./routes/admin");
 const adminMatchRouter = require("./routes/admin_match");
@@ -52,6 +53,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/", indexRouter);
+app.use("/match", matchRouter);
 app.use("/users", usersRouter);
 app.use("/admin", adminRouter);
 app.use("/admin/match", middle.isAdmin, adminMatchRouter);

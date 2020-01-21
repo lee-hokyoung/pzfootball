@@ -13,7 +13,7 @@ const userModel = require("../model/user");
 module.exports = passport => {
   // 세션에 아이디를 저장
   passport.serializeUser((user, done) => {
-    console.log("serializeUser user : ", user);
+    // console.log("serializeUser user : ", user);
     done(null, {
       user_id: user.user_id,
       user_name: user.user_name,
@@ -31,7 +31,7 @@ module.exports = passport => {
         admin: 1
       }
     );
-    console.log("deserial uesr : ", user);
+    // console.log("deserial uesr : ", user);
     try {
       done(null, user);
     } catch (e) {

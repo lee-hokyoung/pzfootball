@@ -148,6 +148,8 @@ $(function() {
           "</div>" +
           '<div class="col col-md-3 p-0" style="width:160px;" data-cnt="' +
           remain +
+          '" data-id="' +
+          game._id +
           '">' +
           '<button class="btn btn-status text-white p-0" data-status="' +
           status +
@@ -209,3 +211,13 @@ function fnSelectDate(btn) {
   let slick_idx = slick.dataset.slickIndex;
   $(".ground-list-slider").slick("slickGoTo", slick_idx);
 }
+
+// 매치 버튼 클릭 이벤트
+$(document).on(
+  "click",
+  'button[data-status="available"], button[data-status="hurry"]',
+  function() {
+    let match_id = $(this)[0].parentNode.dataset.id;
+    location.href = "/match/" + match_id;
+  }
+);

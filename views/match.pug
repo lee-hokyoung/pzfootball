@@ -1,6 +1,87 @@
 extends layout
 block content
-
+  #detail_page.container.bg-white(style='padding-top:56px;')
+    .detail-slider
+      -var ground_images = match_info.ground_info.ground_images
+      if(ground_images.ground_images_1)
+        .detail_img_wrap(style='background-image:url("' + ground_images.ground_images_1 + '")')
+      if(ground_images.ground_images_2)
+        .detail_img_wrap(style='background-image:url("' + ground_images.ground_images_2 + '")')
+      if(ground_images.ground_images_3)
+        .detail_img_wrap(style='background-image:url("' + ground_images.ground_images_3 + '")')
+    .section
+      - day_list = ['일', '월', '화', '수', '목', '금', '토'];
+      - match_date = new Date(match_info.match_date);
+      h4 #{match_date.getFullYear()}년 #{match_date.getMonth() + 1}월 #{match_date.getDate()}일 #{day_list[match_date.getDay()]}요일 #{match_info.match_time}
+      h3.text-primary #{match_info.ground_info.groundName}
+      p #{match_info.ground_info.groundAddress.jibun}
+      .address_wrap.pb-3
+        button.btn.btn-link(href='#') 주소 복사하기
+        button.btn.btn-link(href='#') 지도 보기
+        button.btn.btn-link(href='#') 가는 길 보기
+      h6.description 참가비
+      h5.text-primary #{new Intl.NumberFormat('ko').format(match_info.match_price)}원
+    .section
+      .match_percent_wrap
+        h6 
+          span.description #{day_list[match_date.getDay()]}요일 #{match_info.match_time.slice(0,2)}시 
+          strong #{match_info.ground_info.groundName} 
+          span.description 의 경기는
+        h5
+          strong.text-danger 80% 
+          span.h5 확률로 정상 진행되고 있습니다.
+    .section
+      .match_process_wrap
+        h5 진행방식
+        .d-flex.justify-content-between
+          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_5vs5.svg")')
+            p 5vs5 매치
+          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_male.svg")')
+            p 남성매치
+          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_every.svg")')
+            p 일반
+          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_turf.svg")')
+            p 풋살화
+          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_minmax.svg")')
+            p 8~15명
+      .ground_description_wrap
+        strong 특이사항
+        ul
+          li 일반 매치는 실력에 상관없이 누구나 참여하실 수 있습니다.
+    .section
+      .ground_facility_wrap
+        h4 구장 시설
+        .d-flex.justify-content-between
+          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_size.svg")')
+            p #{match_info.ground_info.facility.size.x} x #{match_info.ground_info.facility.size.y}m
+          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_shower.svg")')
+            p 샤워장
+          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_parking_free.svg")')
+            p 무료주차
+          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_rentalshoes.svg")')
+            p 풋살화 대여
+          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_rentalwear.svg")')
+            p 운동복 대여
+      .ground_description_wrap
+        strong 구장 특이사항
+        p #{match_info.ground_info.description}
+    .section
+      .col-md-6.mx-auto
+        button.btn.btn-primary.w-100.py-3 신청하기
+    //- .section
+    //-   .d-flex.justify-content-start
+    //-     img(src='', width='200px')
+    //-     div
+    //-       p.description 매니저
+    //-       h5 홍길동
+      
+           
 block append_js
   script.
-    console.log(!{JSON.stringify(match_info)})
+    $(".detail-slider").slick({
+      dots: true,
+      arrows: false,
+      fade: true
+    });
+    console.log('match info : ', !{JSON.stringify(match_info)});
+    console.log('ground_images : ', !{JSON.stringify(ground_images)})

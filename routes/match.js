@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 
 /* GET home page. */
 router.get("/:id", async (req, res, next) => {
+  let user_info = req.session.passport;
   let match_info = await Match.aggregate([
     { $match: { _id: mongoose.Types.ObjectId(req.params.id) } },
     {
@@ -19,7 +20,8 @@ router.get("/:id", async (req, res, next) => {
   ]);
   res.render("match", {
     title: "퍼즐풋볼 - 매치",
-    match_info: match_info
+    match_info: match_info[0],
+    user_info: user_info
   });
 });
 

@@ -6,7 +6,6 @@ const passport = require("passport");
 /* GET home page. */
 router.get("/", async (req, res, next) => {
   let list = await fnGetMatchList();
-  console.log("user : ", req.session.passport);
   let user_info = req.session.passport;
   res.render("index", {
     list: list,

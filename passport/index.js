@@ -14,12 +14,17 @@ module.exports = passport => {
   // 세션에 아이디를 저장
   passport.serializeUser((user, done) => {
     console.log("serializeUser user : ", user);
-    done(null, user.user_id);
+    done(null, {
+      user_id: user.user_id,
+      user_name: user.user_name,
+      user_nickname: user.user_nickname,
+      user_email: user.user_email
+    });
   });
   // 세션에 저장한 아이디를 통해 사용자 정보 객체 불러오기
-  passport.deserializeUser(async (user_id, done) => {
+  passport.deserializeUser(async (_user, done) => {
     let user = await userModel.findOne(
-      { user_id: user_id },
+      { user_id: _user.user_id },
       {
         user_id: 1,
         user_name: 1,

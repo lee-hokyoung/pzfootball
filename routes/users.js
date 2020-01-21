@@ -59,7 +59,6 @@ router.post("/login", middle.isNotSignIn, (req, res, next) => {
 router.post("/mail_verify", async (req, res) => {
   let user_email = req.body.user_email;
   let exEmail = await User.findOne({ user_email: user_email });
-  console.log("ex mail : ", exEmail);
   if (exEmail) {
     return res.json({ code: 0, message: "이미 등록된 이메일입니다" });
   }
@@ -107,7 +106,6 @@ router.post("/register", async (req, res) => {
   if (exUser) {
     return res.json({ code: 0, message: "이미 사용 중인 아이디가 있습니다" });
   }
-  console.log("body : ", req.body);
   let result = await User.create({
     user_id: req.body.user_id,
     user_pw: req.body.user_pw,

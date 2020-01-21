@@ -7,7 +7,7 @@ body {
   padding: 0;
 }
 .pz_bg {
-  background: url(/images/back_reverse.png) repeat;
+  /* background: url(/images/back_reverse.png) repeat; */
   -webkit-background-size: 300px;
   background-size: 300px;
 }

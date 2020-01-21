@@ -21,7 +21,7 @@ html
             ul.navbar-nav.ml-auto
               if(user_info)
                 li.nav-item 
-                  p.nav-link.nav-font.text-primary.m-0 #{user_info.user} 님 반갑습니다.
+                  p.nav-link.nav-font.text-primary.m-0 #{user_info.user.user_name} 님 반갑습니다.
                 li.nav-item.my-3(style='background:url(/images/vertical_bar.svg); width:5px;')
                 li.nav-item
                   a.nav-link.nav-font(href='/users/logout') LOGOUT

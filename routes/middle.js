@@ -18,7 +18,7 @@ exports.isNotLoggedIn = (req, res, next) => {
 exports.isAdmin = async (req, res, next) => {
   if (req.isAuthenticated()) {
     let user = req.session.passport.user;
-    let user_info = await User.findOne({ user_id: user });
+    let user_info = await User.findOne({ user_id: user.user_id });
     // console.log('user info : ', user_info);
     if (user_info.admin) {
       req.session.admin = true;

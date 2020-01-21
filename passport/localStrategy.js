@@ -9,7 +9,7 @@ module.exports = passport => {
         passwordField: "user_pw"
       },
       async (user, password, done) => {
-        console.log("user : ", user, ", pw : ", password, ", done : ", done);
+        console.log("local user : ", user);
         try {
           const exUser = await User.findOne({ user_id: user });
           if (exUser) {

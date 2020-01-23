@@ -22,6 +22,10 @@ link(rel='stylesheet', href='/stylesheets/custom_modal.css')
                   span.input-group-text
                     i.fas.fa-key
                 input.form-control#user_pw(type="password" placeholder="Password")
+              .sns_login_wrap.py-3.text-center
+                h6.text-center SNS 로그인
+                a(href='/auth/kakao')
+                  img(src='/images/kakao_login.png')
             .card-footer.bg-white.border-0
         .modal-footer.justify-content-center
           button.btn.btn-info.btn-round(type="submit") Login
@@ -41,7 +45,7 @@ script.
         if(res.code === 1){
           // 모달창 닫기
           $('#loginModal').modal('hide');
-          
+
         }else{
           alert(res.message);
         }

@@ -1,5 +1,5 @@
 link(rel='stylesheet', href='/stylesheets/custom_modal.css')
-#joinModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="joinModalLabel" aria-hidden="true")
+#joinModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="joinModalLabel" aria-hidden="true", width='640px;')
   .modal-dialog
     .modal-content
       form.form(onsubmit="return fnJoin();")
@@ -12,63 +12,69 @@ link(rel='stylesheet', href='/stylesheets/custom_modal.css')
               .card-header.border-0.bg-white
                 h3.header.text-center Join
             .card-body
-              .form-group
-                label ID
-                .input-group
-                  .input-group-prepend
-                    span.input-group-text
-                      i.fas.fa-user
-                  input.form-control(type="text" placeholder="ID", name='user_id')
-              .form-group
-                label 비밀번호
-                .input-group
-                  .input-group-prepend
-                    span.input-group-text
-                      i.fas.fa-key
-                  input.form-control(type="password" placeholder="Password", name='user_pw')
-                .input-group
-                  .input-group-prepend
-                    span.input-group-text
-                      i.fas.fa-key
-                  input.form-control(type="password" placeholder="Password confirm", name='user_pw_chk')
-              .form-group
-                label 기본정보
-                .input-group
-                  .input-group-prepend
-                    span.input-group-text
-                      i.fas.fa-puzzle-piece
-                  input.form-control(type="text" placeholder="이름", name='user_name')
-                .input-group
-                  .input-group-prepend
-                    span.input-group-text
-                      i.fas.fa-puzzle-piece
-                  input.form-control(type="text" placeholder="닉네임", name='user_nickname')
-                .input-group
-                  .input-group-prepend
-                    span.input-group-text
-                      i.fas.fa-venus-mars
-                  input.form-control(type="text" placeholder="성별", name='gender')
-                .input-group
-                  .input-group-prepend
-                    span.input-group-text
-                      i.fas.fa-birthday-cake
-                  input.form-control(type="text" placeholder="생년월일 6자리 ex) 840101", name='birth')
-              .form-group
-                label 이메일 인증   
-                .input-group
-                  .input-group-prepend
-                    span.input-group-text
-                      i.fas.fa-envelope
-                  input.form-control(type="text" placeholder="E-mail", name='user_email')
-                .text-center.my-3
-                  button.btn.btn-primary(type='button', onclick='fnCheckEmail()') E-mail check
-              .form-group
-                label 인증번호 입력
-                .input-group
-                  .input-group-prepend
-                    span.input-group-text
-                      i.fas.fa-check-circle
-                  input.form-control(type="text" placeholder="인증번호 입력", name='email_verify_number')
+              .row
+                .col-md-6
+                  .form-group
+                    label ID
+                    .input-group
+                      .input-group-prepend
+                        span.input-group-text
+                          i.fas.fa-user
+                      input.form-control(type="text" placeholder="ID", name='user_id')
+                  .form-group
+                    label 비밀번호
+                    .input-group
+                      .input-group-prepend
+                        span.input-group-text
+                          i.fas.fa-key
+                      input.form-control(type="password" placeholder="Password", name='user_pw')
+                    .input-group
+                      .input-group-prepend
+                        span.input-group-text
+                          i.fas.fa-key
+                      input.form-control(type="password" placeholder="Password confirm", name='user_pw_chk')
+                  .form-group
+                    label 기본정보
+                    .input-group
+                      .input-group-prepend
+                        span.input-group-text
+                          i.fas.fa-puzzle-piece
+                      input.form-control(type="text" placeholder="이름", name='user_name')
+                    .input-group
+                      .input-group-prepend
+                        span.input-group-text
+                          i.fas.fa-puzzle-piece
+                      input.form-control(type="text" placeholder="닉네임", name='user_nickname')
+                    .input-group
+                      .input-group-prepend
+                        span.input-group-text
+                          i.fas.fa-venus-mars
+                      input.form-control(type="text" placeholder="성별", name='gender')
+                    .input-group
+                      .input-group-prepend
+                        span.input-group-text
+                          i.fas.fa-birthday-cake
+                      input.form-control(type="text" placeholder="생년월일 6자리 ex) 840101", name='birth')
+                  .form-group
+                    label 이메일 인증   
+                    .input-group
+                      .input-group-prepend
+                        span.input-group-text
+                          i.fas.fa-envelope
+                      input.form-control(type="text" placeholder="E-mail", name='user_email')
+                    .text-center.my-3
+                      button.btn.btn-primary(type='button', onclick='fnCheckEmail()') E-mail check
+                  .form-group
+                    label 인증번호 입력
+                    .input-group
+                      .input-group-prepend
+                        span.input-group-text
+                          i.fas.fa-check-circle
+                      input.form-control(type="text" placeholder="인증번호 입력", name='email_verify_number')
+                .col-md-6
+                  h4 SNS 간편 회원가입
+                  a(href='/auth/kakao')
+                    img(src='/images/kakao_login.png', alt='카카오 아이디로 로그인')
             .card-footer.bg-white.border-0
         .modal-footer.justify-content-center
           button.btn.btn-info.btn-round(type="submit") Login

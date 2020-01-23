@@ -10,3 +10,7 @@
   width: 640px;
   max-width: 640px;
 }
+.sns_login_wrap img {
+  width: 220px;
+  margin-bottom: 0.5rem;
+}

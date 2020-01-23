@@ -10,5 +10,12 @@ router.get(
     res.redirect("/");
   }
 );
-
+router.get("/naver", passport.authenticate("naver"));
+router.get(
+  "/naver/callback",
+  passport.authenticate("naver", { failureRedirect: "/" }),
+  async (req, res) => {
+    res.redirect("/");
+  }
+);
 module.exports = router;

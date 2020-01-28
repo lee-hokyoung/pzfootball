@@ -20,7 +20,8 @@ module.exports = passport => {
       user_id: user.user_id,
       user_name: user.user_name,
       user_nickname: user.user_nickname,
-      user_email: user.user_email
+      user_email: user.user_email,
+      point: user.point
     });
   });
   // 세션에 저장한 아이디를 통해 사용자 정보 객체 불러오기
@@ -30,7 +31,8 @@ module.exports = passport => {
       {
         user_id: 1,
         user_name: 1,
-        admin: 1
+        admin: 1,
+        point: 1
       }
     );
     // console.log("deserial uesr : ", user);

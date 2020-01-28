@@ -14,6 +14,7 @@ const UserSchema = new Schema({
   provider: String,
   profile_image: String,
   thumbnail_image: String,
+  point: Number,
   created_at: { type: Date, default: Date.now }
 });
 module.exports = mongoose.model("User", UserSchema);

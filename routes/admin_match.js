@@ -63,4 +63,12 @@ router.delete("/:id", async (req, res) => {
   let result = await Match.deleteOne({ _id: req.params.id });
   res.json(result);
 });
+// 경기결과 관리
+router.get("/result/manage", async (req, res) => {
+  let list = await Match.find({});
+  res.render("admin_match_result_manage", {
+    active: "match_result",
+    title: "경기결과 관리"
+  });
+});
 module.exports = router;

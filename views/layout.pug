@@ -47,6 +47,7 @@ html
               li.nav-item(style='line-height:28px;')
                 a.nav-link.p-1(href='#')
                   img(src='/images/nav_toggle.svg', width=22)
+          input#isLoggedIn(type='hidden', data-isLogin=(user_info?'true':'false'))
       block content
       // login modal
       include modals/login
@@ -58,3 +59,4 @@ html
     script(src='/nm/moment/moment.js', type='text/javascript')
     script(src='/nm/perfect-scrollbar/dist/perfect-scrollbar.min.js', type='text/javascript')
     block append_js
+    

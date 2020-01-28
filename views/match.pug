@@ -16,7 +16,7 @@ block content
       h3.text-primary #{match_info.ground_info.groundName}
       p #{match_info.ground_info.groundAddress.jibun}
       .address_wrap.pb-3
-        button.btn.btn-link(href='#') 주소 복사하기
+        button.btn.btn-link.copy(data-copy=match_info.ground_info.groundAddress.jibun) 주소 복사하기
         button.btn.btn-link(href='#') 지도 보기
         button.btn.btn-link(href='#') 가는 길 보기
       h6.description 참가비
@@ -54,30 +54,42 @@ block content
         .d-flex.justify-content-between
           .bg-light.border-radius(style='background-image:url("/assets/svg/ic_size.svg")')
             p #{match_info.ground_info.facility.size.x} x #{match_info.ground_info.facility.size.y}m
-          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_shower.svg")')
+          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_shower.svg")', class=(match_info.ground_info.facility.shower?'':'facility_opacity'))
             p 샤워장
-          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_parking_free.svg")')
+          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_parking_free.svg")', class=(match_info.ground_info.facility.freeParking?'':'facility_opacity'))
             p 무료주차
-          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_rentalshoes.svg")')
+          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_rentalshoes.svg")', class=(match_info.ground_info.facility.shoesRental?'':'facility_opacity'))
             p 풋살화 대여
-          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_rentalwear.svg")')
+          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_rentalwear.svg")', class=(match_info.ground_info.facility.uniformRental?'':'facility_opacity'))
             p 운동복 대여
       .ground_description_wrap
         strong 구장 특이사항
         p #{match_info.ground_info.description}
     .section
       .col-md-6.mx-auto
-        button.btn.btn-primary.w-100.py-3 신청하기
-    //- .section
-    //-   .d-flex.justify-content-start
-    //-     img(src='', width='200px')
-    //-     div
-    //-       p.description 매니저
-    //-       h5 홍길동
-      
-           
+        button.btn.btn-primary.w-100.py-3(onclick='fnApplyGame()') 신청하기
+  #modalMatchConfirm.modal.fade(tabindex="-1" role="dialog" aria-labelledby="matchConfirmModalLabel" aria-hidden="true")
+    .modal-dialog
+      .modal-content
+        .modal-header
+          h6 매치 정보 확인
+        .modal-body
+          .form-group
+            label 보유포인트
+            input.form-control#user_point(readonly)
+          .form-group
+            label 차감포인트
+            input.form-control(value=new Intl.NumberFormat('ko').format(match_info.match_price), readonly)
+        .modal-footer
+          button.btn.btn-primary(onclick='fnConfirmMatch()') 확인
+          button.btn.btn-danger(data-dismiss='modal') 취소
+
+
+
 block append_js
   script(src='/javascripts/detail.js', type='text/javascript')
   script.
+    let match_info = !{JSON.stringify(match_info)};
     console.log('match info : ', !{JSON.stringify(match_info)});
-    console.log('ground_images : ', !{JSON.stringify(ground_images)})
+    console.log('ground_images : ', !{JSON.stringify(ground_images)});
+    console.log('user info : ', !{JSON.stringify(user_info)})

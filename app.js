@@ -32,7 +32,7 @@ app.set("view engine", "pug");
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: false, limit: "50mb" }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public"), { maxAge: "" }));
 app.use(
   "/assets",
   express.static(path.join(__dirname, "public/assets"), { maxAge: "30d" })

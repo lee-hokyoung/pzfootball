@@ -272,6 +272,9 @@ input#datepicker {
   text-align: center;
   width: 100%;
 }
+.facility_opacity {
+  opacity: 0.3;
+}
 @media (min-width: 576px) {
   .main-slider .slick-list {
     border-radius: 1rem;

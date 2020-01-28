@@ -117,4 +117,13 @@ router.post("/register", async (req, res) => {
   });
   res.json(result);
 });
+// 포인트 조회
+router.get("/point", middle.isLoggedIn, async (req, res) => {
+  let user_info = req.session.passport;
+  let point = await User.findOne(
+    { user_id: user_info.user.user_id },
+    { point: 1 }
+  );
+  res.json(point);
+});
 module.exports = router;

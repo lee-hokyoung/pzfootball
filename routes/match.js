@@ -25,6 +25,13 @@ router.get("/:id", async (req, res, next) => {
     user_info: user_info
   });
 });
+router.get("/price/:id", async (req, res) => {
+  let price = await Match.findOne(
+    { _id: mongoose.Types.ObjectId(req.params.id) },
+    { match_price: 1 }
+  );
+  res.json(price);
+});
 // 경기 신청
 router.post("/apply", async (req, res) => {
   let match_id = req.body.match_id;

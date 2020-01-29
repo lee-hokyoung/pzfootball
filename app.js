@@ -32,14 +32,29 @@ app.set("view engine", "pug");
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: false, limit: "50mb" }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public"), { maxAge: "" }));
+app.use(
+  "/public_js",
+  express.static(path.join(__dirname, "public/javascripts"), {
+    maxAge: ""
+  })
+);
+app.use(
+  "/public_css",
+  express.static(path.join(__dirname, "public/stylesheets"), {
+    maxAge: ""
+  })
+);
+app.use(
+  "/images",
+  express.static(path.join(__dirname, "public/images"), { maxAge: "30d" })
+);
 app.use(
   "/assets",
   express.static(path.join(__dirname, "public/assets"), { maxAge: "30d" })
 );
 app.use(
   "/nm",
-  express.static(path.join(__dirname, "node_modules"), { maxAge: "1d" })
+  express.static(path.join(__dirname, "node_modules"), { maxAge: "30d" })
 );
 
 app.use(

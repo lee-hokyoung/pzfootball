@@ -126,4 +126,32 @@ router.get("/point", middle.isLoggedIn, async (req, res) => {
   );
   res.json(point);
 });
+// 포인트 충전
+router.post("/point/charge", middle.isLoggedIn, async (req, res) => {
+  try {
+    let user_id = req.session.passport.user.user_id;
+    // 현재 포인트 조회
+    let user_info = await User.findOne({ user_id: user_id });
+    let current_user_point = Number(user_info.point);
+    let request_point = Number(req.body.point);
+    let after_charge_point = current_user_point + request_point;
+    let result = await User.updateOne(
+      {
+        user_id: req.session.passport.user.user_id
+      },
+      { $set: { point: after_charge_point } }
+    );
+    res.json({
+      code: 1,
+      message: "정상적으로 충전되었습니다.",
+      result: result
+    });
+  } catch (err) {
+    res.json({
+      code: 0,
+      message: "충전 실패! 관리자에게 문의해주세요.",
+      err: err
+    });
+  }
+});
 module.exports = router;

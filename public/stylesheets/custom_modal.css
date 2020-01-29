@@ -1,0 +1,16 @@
+#loginModal .modal-dialog,
+#joinModal .modal-dialog {
+  width: 340px;
+}
+#loginModal span i.fas,
+#joinModal span i.fas {
+  width: 20px;
+}
+#joinModal .modal-dialog {
+  width: 640px;
+  max-width: 640px;
+}
+.sns_login_wrap img {
+  width: 220px;
+  margin-bottom: 0.5rem;
+}

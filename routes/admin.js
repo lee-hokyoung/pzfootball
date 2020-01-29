@@ -38,6 +38,7 @@ router.post("/login", middle.isNotLoggedIn, (req, res, next) => {
       console.log("not user");
       return res.redirect("/admin/login");
     }
+    console.log("admin user : ", user);
     return req.login(user, async loginError => {
       if (loginError) {
         console.error(loginError);

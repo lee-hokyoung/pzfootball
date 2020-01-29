@@ -9,6 +9,8 @@ const passportConfig = require("./passport");
 require("dotenv").config();
 
 const indexRouter = require("./routes/index");
+const authRouter = require("./routes/auth");
+const matchRouter = require("./routes/match");
 const usersRouter = require("./routes/users");
 const adminRouter = require("./routes/admin");
 const adminMatchRouter = require("./routes/admin_match");
@@ -30,7 +32,7 @@ app.set("view engine", "pug");
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: false, limit: "50mb" }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public"), { maxAge: "" }));
 app.use(
   "/assets",
   express.static(path.join(__dirname, "public/assets"), { maxAge: "30d" })
@@ -52,6 +54,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/", indexRouter);
+app.use("/auth", authRouter);
+app.use("/match", matchRouter);
 app.use("/users", usersRouter);
 app.use("/admin", adminRouter);
 app.use("/admin/match", middle.isAdmin, adminMatchRouter);

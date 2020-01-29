@@ -1,0 +1,57 @@
+link(rel='stylesheet', href='/stylesheets/custom_modal.css')
+#loginModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true")
+  .modal-dialog
+    .modal-content
+      form.form(onsubmit="return fnSubmit();")
+        .modal-header
+          button.close(type="button" data-dismiss="modal" aria-hidden="true")
+            i.fas.fa-times
+        .modal-body
+          .card.card-login.border-0
+            .card-header.border-0.bg-white
+              .card-header.border-0.bg-white
+                h3.header.text-center Login
+            .card-body
+              .input-group
+                .input-group-prepend
+                  span.input-group-text
+                    i.fas.fa-user
+                input.form-control#user_id(type="text" placeholder="ID")
+              .input-group
+                .input-group-prepend
+                  span.input-group-text
+                    i.fas.fa-key
+                input.form-control#user_pw(type="password" placeholder="Password")
+              .sns_login_wrap.py-3.text-center
+                h6 SNS 로그인
+                a(href='/auth/kakao')
+                  img(src='/images/kakao_login.png', alt='카카오 아이디로 로그인')
+                a(href='/auth/naver')
+                  img(src='/images/naver_login.png', alt='네이버 아이디로 로그인')
+            .card-footer.bg-white.border-0
+        .modal-footer.justify-content-center
+          button.btn.btn-info.btn-round(type="submit") Login
+script.
+  function fnSubmit(){
+    let user_id = document.querySelector('#user_id');
+    let user_pw = document.querySelector('#user_pw');
+    if(user_id.value === '' || user_pw.value === '') return false;
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', '/users/login', true);
+    xhr.setRequestHeader('Content-Type','application/json');
+    xhr.onreadystatechange = function(){
+      if(this.readyState === XMLHttpRequest.DONE && this.status === 200){
+        let res = JSON.parse(this.response);
+        console.log('res : ', res);
+        if(res.code === 1){
+          // 모달창 닫기
+          $('#loginModal').modal('hide');
+
+        }else{
+          alert(res.message);
+        }
+      }
+    }
+    xhr.send(JSON.stringify({user_id:user_id.value, user_pw:user_pw.value}));
+  }

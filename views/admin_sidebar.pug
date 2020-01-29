@@ -1,26 +1,30 @@
 .sidebar(data-color="brown" data-active-color="danger")
-	//
-		Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
-	.logo
-		a.simple-text.logo-mini(href="/")
-			.logo-image-small
-				i.fa.fa-user
-		a.simple-text.logo-normal(href="/") 퍼즐풋볼
-			//
-				<div class="logo-image-big">
-				<img src="/nm/paper-dashboard-2/assets/img/logo-big.png">
-				</div>
-	.sidebar-wrapper
-		ul.nav
-			li(class=active==='user'?'active':'')
-				a(href="/admin/user/list")
-					i.nc-icon.nc-circle-10
-					p 회원관리
-			li(class=active==='ground'?'active':'')
-				a(href="/admin/ground")
-					i.nc-icon.nc-map-big
-					p 경기장 관리
-			li(class=active === 'match' ? 'active' : '')
-				a(href="/admin/match/register")
-					i.nc-icon.nc-watch-time
-					p 경기일정 등록
+  //
+    Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+  .logo
+    a.simple-text.logo-mini(href="/")
+      .logo-image-small
+        i.fa.fa-user
+    a.simple-text.logo-normal(href="/") 퍼즐풋볼
+      //
+        <div class="logo-image-big">
+        <img src="/nm/paper-dashboard-2/assets/img/logo-big.png">
+        </div>
+  .sidebar-wrapper
+    ul.nav
+      li(class=active==='user'?'active':'')
+        a(href="/admin/user/list")
+          i.nc-icon.nc-circle-10
+          p 회원관리
+      li(class=active==='ground'?'active':'')
+        a(href="/admin/ground")
+          i.nc-icon.nc-map-big
+          p 경기장 관리
+      li(class=active === 'match' ? 'active' : '')
+        a(href="/admin/match/register")
+          i.nc-icon.nc-watch-time
+          p 경기일정 등록
+      li(class=active === 'match_result' ? 'active' : '')
+        a(href='/admin/match/result/manage')
+          i.nc-icon.nc-trophy
+          p 경기결과 관리

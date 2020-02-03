@@ -132,7 +132,7 @@ router.post("/point/charge", middle.isLoggedIn, async (req, res) => {
     let user_id = req.session.passport.user.user_id;
     // 현재 포인트 조회
     let user_info = await User.findOne({ user_id: user_id });
-    let current_user_point = Number(user_info.point);
+    let current_user_point = Number(user_info.point || 0);
     let request_point = Number(req.body.point);
     let after_charge_point = current_user_point + request_point;
     let result = await User.updateOne(

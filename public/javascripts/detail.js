@@ -66,6 +66,7 @@ function fnConfirmMatch() {
   let formData = {};
   let match_id = match_info._id;
   formData["match_id"] = match_id;
+  formData["member_cnt"] = Number($("#selectMember").val());
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "/match/apply", true);
   xhr.setRequestHeader("Content-Type", "application/json");
@@ -74,7 +75,7 @@ function fnConfirmMatch() {
       let res = JSON.parse(this.response);
       if (res.code === 1) {
         alert("정상적으로 신청했습니다.");
-        $("#modalMatchConfirm").modal("hide");
+        location.reload();
       } else {
         alert(res.message);
       }

@@ -1,0 +1,39 @@
+extends layout
+block content
+  #mypage-wrap.container.bg-white
+    .row
+      .col-md-6
+        .card
+          .card-header
+            label.title ID
+            p #{user.user_id}
+          .card-body
+            label.title 보유 포인트
+            .point-wrap.d-flex.justify-content-start
+              p #{new Intl.NumberFormat('ko').format(user.point) || 0}
+              button.btn.btn-primary(data-toggle='modal', data-target='#modalChargePoint') 충전하기
+      .col-md-6
+        .card
+          .card-header
+            .d-flex.justify-content-between
+              label.title 내 경기 일정
+              a.text-info(href='#users/match/list') 더 보기
+          .card-body
+            ul.list-group.list-group-flush
+              li.list-group-item.text-center
+                .row
+                  .col-3 날짜
+                  .col-2 시간
+                  .col 경기장
+              each match in match_list
+                a(href='#users/match/' + match._id)
+                  li.list-group-item.list-group-item-action.text-center
+                    .row
+                      .col-3 #{match.match_date.slice(5)}
+                      .col-2 #{match.match_time}
+                      .col #{match.ground_info.groundName}
+  include modals/chargePoint
+block append_js
+  script(src='/public_js/mypage.js')
+  script.
+    console.log(!{JSON.stringify(match_list)})

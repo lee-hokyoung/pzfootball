@@ -40,13 +40,13 @@ exports.isSingIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     next();
   } else {
-    res.redirect("/users/login");
+    res.redirect("/");
   }
 };
 exports.isNotSignIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
     next();
   } else {
-    res.redirect("/users/login");
+    res.redirect("/");
   }
 };

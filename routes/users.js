@@ -3,6 +3,7 @@ const router = express.Router();
 const middle = require("../routes/middle");
 const passport = require("passport");
 const User = require("../model/user");
+const Match = require("../model/match");
 const nodemailer = require("nodemailer");
 const Mail = require("../model/mail");
 
@@ -153,5 +154,28 @@ router.post("/point/charge", middle.isLoggedIn, async (req, res) => {
       err: err
     });
   }
+});
+router.get("/mypage", middle.isSingIn, async (req, res) => {
+  let user_info = req.session.passport;
+  let user_id = user_info.user.user_id;
+  let user = await User.findOne({ user_id: user_id });
+  let match_list = await Match.aggregate([
+    { $match: { apply_member: user_id } },
+    {
+      $lookup: {
+        from: "ground",
+        localField: "ground_id",
+        foreignField: "_id",
+        as: "ground_info"
+      }
+    },
+    { $unwind: "$ground_info" }
+  ]);
+  res.render("mypage", {
+    title: "내 정보",
+    user_info: user_info,
+    user: user,
+    match_list: match_list
+  });
 });
 module.exports = router;

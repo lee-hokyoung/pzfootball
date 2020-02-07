@@ -4,8 +4,10 @@ const middle = require("../routes/middle");
 const passport = require("passport");
 const User = require("../model/user");
 const Match = require("../model/match");
+const Club = require("../model/club");
 const nodemailer = require("nodemailer");
 const Mail = require("../model/mail");
+const mongoose = require("mongoose");
 
 /* GET users listing. */
 router.get("/", function(req, res, next) {
@@ -177,5 +179,17 @@ router.get("/mypage", middle.isSingIn, async (req, res) => {
     user: user,
     match_list: match_list
   });
+});
+router.get("/myClub", middle.isSingIn, async (req, res) => {
+  let _id = req.session.passport.user._id;
+  try {
+    let club = await Club.findOne({
+      club_member: mongoose.Types.ObjectId(_id)
+    });
+    res.json({ code: 1, result: club });
+  } catch (err) {
+    console.error(err);
+    res.json({ code: 0, message: "조회 실패, 관리자에게 문의바랍니다." });
+  }
 });
 module.exports = router;

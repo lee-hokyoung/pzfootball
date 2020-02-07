@@ -1,0 +1,46 @@
+const express = require("express");
+const router = express.Router();
+const middle = require("../routes/middle");
+const passport = require("passport");
+const User = require("../model/user");
+const Match = require("../model/match");
+const Club = require("../model/club");
+const mongoose = require("mongoose");
+
+//  클럽 생성 페이지
+router.get("/create", middle.isSingIn, (req, res) => {
+  let user_info = req.session.passport;
+  res.render("club_create", {
+    title: "클럽 생성",
+    user_info: user_info
+  });
+});
+//  클럽 생성
+router.post("/create", middle.isSingIn, async (req, res) => {
+  //  이미 가입된 클럽이 있는지 확인
+  let user_info = req.session.passport.user;
+  try {
+    let exClub = await Club.findOne({
+      club_member: mongoose.Types.ObjectId(user_info._id)
+    });
+    if (exClub)
+      return res.json({
+        code: 0,
+        message: "이미 가입되어 있는 클럽이 있습니다."
+      });
+    let insertData = {
+      club_name: req.body.club_name,
+      club_mark: req.body.club_mark,
+      club_desc: req.body.club_desc,
+      club_region: req.body.club_region,
+      club_reader: user_info.user_id,
+      club_member: [mongoose.Types.ObjectId(user_info._id)]
+    };
+    let result = await Club.create(insertData);
+    res.json({ code: 1, result: result });
+  } catch (err) {
+    console.error(err);
+    res.json({ code: 0, message: "등록 실패! 관리자에게 문의해 주세요" });
+  }
+});
+module.exports = router;

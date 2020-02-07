@@ -278,7 +278,8 @@ input#datepicker {
 .division {
   border-top: 1px solid lightgray;
 }
-#mypage-wrap {
+#mypage-wrap,
+#club_page {
   height: 100vh;
   padding: 10rem 2rem;
 }
@@ -291,6 +292,11 @@ input#datepicker {
   font-size: 0.8rem;
   margin-left: 1rem;
   height: 30px;
+}
+#mypage-wrap .card,
+#club_page .card {
+  margin-bottom: 1rem;
+  box-shadow: 0px 5px 10px 5px lightgray;
 }
 @media (min-width: 576px) {
   .main-slider .slick-list {

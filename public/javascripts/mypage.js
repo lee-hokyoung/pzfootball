@@ -50,3 +50,55 @@ function fnConfirmChargePoint() {
   };
   xhr.send(JSON.stringify(formData));
 }
+
+//  클럽 가입
+function fnJoinClub() {
+  //  1. 클럽 가입 여부 확인
+  //  2. 클럽 리스트 페이지로 이동
+}
+
+//  클럽 생성
+async function fnCreateClub() {
+  //  1. 클럽 가입 여부 확인
+  console.log("start async");
+  let res = JSON.parse(await fnCheckMyClub());
+  console.log("resut : ", res);
+  if (res.code === 1) {
+    if (res.result) {
+      alert("이미 가입한 클럽이 있습니다.");
+      return false;
+    } else {
+      //  2. 클럽 생성 페이지로 이동
+      location.href = "/clubs/create";
+    }
+  } else {
+    alert(res.message);
+    return false;
+  }
+}
+
+//  클럽 가입 여부 확인
+async function fnCheckMyClub() {
+  return new Promise(function(resolve, reject) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "/users/myClub", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onload = function() {
+      if (this.status >= 200 && this.status < 300) {
+        resolve(xhr.response);
+      } else {
+        reject({
+          status: this.status,
+          statusText: xhr.statusText
+        });
+      }
+    };
+    xhr.onerror = function() {
+      reject({
+        status: this.status,
+        statusText: xhr.statusText
+      });
+    };
+    xhr.send();
+  });
+}

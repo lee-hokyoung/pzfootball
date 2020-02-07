@@ -12,6 +12,20 @@ block content
             .point-wrap.d-flex.justify-content-start
               p #{new Intl.NumberFormat('ko').format(user.point) || 0}
               button.btn.btn-primary(data-toggle='modal', data-target='#modalChargePoint') 충전하기
+        .card
+          .card-header
+            .d-flex.justify-content-between
+              label.title 내 클럽
+          .card-body
+            if(myClub)
+
+            else
+              .row
+                .col-8
+                  span 아직 가입한 클럽이 없습니다.
+                .col-4
+                  button.btn.btn-link.text-primary(onclick='fnJoinClub()') 가입
+                  button.btn.btn-link.text-success(onclick='fnCreateClub()') 생성
       .col-md-6
         .card
           .card-header

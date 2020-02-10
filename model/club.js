@@ -7,7 +7,7 @@ const clubSchema = new Schema({
   club_mark: String, // 클럽 마크(엠블럼)
   club_desc: String, // 클럽 소개
   club_region: String, // 클럽 지역
-  club_reader: String, // 클럽 리더
+  club_reader: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // 클럽 리더
   club_history: [{ type: mongoose.Schema.Types.ObjectId, ref: "Match" }], // 클럽 경기 history
   club_member: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // 클럽 멤버
   updated: { type: Date, default: Date.now }

@@ -1,0 +1,38 @@
+extends admin_layout
+block content
+  .content
+    .row
+      .col-12
+        .card
+          .card-header
+            h4.card-title 클럽관리
+          .card-body
+            .table-responsive
+              table.table
+                thead
+                  tr
+                    th #
+                    th
+                    th 클럽명
+                    th 클럽지역
+                    th 클럽리더
+                    th 
+                tbody
+                  - var idx = 0;
+                  each club in club_list
+                    tr
+                      td !{++idx}
+                      td
+                        .img-container
+                          img(src=club.club_mark !== "" ? club.club_mark : "/images/pz_logo.png", width="70px")
+                      td !{club.club_name}
+                      td !{club.club_region}
+                      td !{club.reader_info.user_name}
+                      td 
+                        button.btn.btn-link.btn-danger.btn-round.btn-icon(onclick='fnRemoveClub("' + club._id + '")')
+                          i.nc-icon.nc-simple-remove
+          .card-footer
+block append_js
+  script(src='/public_js/admin_club.js')
+  script.
+    console.log('admin : ', !{JSON.stringify(club_list)})

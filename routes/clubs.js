@@ -33,7 +33,7 @@ router.post("/create", middle.isSignedIn, async (req, res) => {
       club_mark: req.body.club_mark,
       club_desc: req.body.club_desc,
       club_region: req.body.club_region,
-      club_reader: user_info.user_id,
+      club_reader: mongoose.Types.ObjectId(user_info._id),
       club_member: [mongoose.Types.ObjectId(user_info._id)]
     };
     let result = await Club.create(insertData);

@@ -3,40 +3,39 @@ block content
   #club_page.container.bg-white
     .row
       .col
-        form(name='clubForm', onsubmit='return fnRegisterClub();')      
-          .card
-            .card-header
-              labe.title 클럽 만들기
-            .card-body
-              .row
-                .col-md-6
-                  .fileinput.fileinput-new.text-center(data-provides="fileinput")
-                    .fileinput-new.thumbnail.img-raised.m-3
-                      img(src='/images/pz_logo.png', alt='퍼즐 풋볼 로고')
-                    .fileinput-preview.fileinput-exists.thumbnail.img-raised.m-3(data-trigger="fileinput" style="width: 200px; height: 150px;", name='club_mark')
-                    div
-                      span.btn.btn-success.btn-file
-                        span.fileinput-new 클럽 마크 등록
-                        span.fileinput-exists Change
-                        input(type="file" name="...")
-                      a.btn.btn-danger.fileinput-exists.ml-3(href="#" data-dismiss="fileinput") Remove
-              .row
-                .col-md-6
-                  .form-group
-                    label 클럽명
-                    input.form-control(name='club_name')
-                .col-md-6
-                  .form-group
-                    label 활동지역
-                    input.form-control(name='club_region')
-              .row
-                .col
-                  .form-group
-                    label 클럽 소개
-                    textarea.form-control(name='club_desc', rows=5)
-            .card-footer
-              .d-flex.justify-content-center
-                button.btn.btn-primary(type='submit') 등록
-                a.btn.btn-info.ml-3(href='/clubs/list') 클럽 목록 보기              
+        .card
+          .card-header
+            labe.title 클럽 만들기
+          .card-body
+            .row
+              .col-md-6
+                .fileinput.fileinput-new.text-center(data-provides="fileinput")
+                  .fileinput-new.thumbnail.img-raised.m-3
+                    img(src='/images/pz_logo.png', alt='퍼즐 풋볼 로고')
+                  .fileinput-preview.fileinput-exists.thumbnail.img-raised.m-3(data-trigger="fileinput" style="width: 200px; height: 150px;", name='club_mark')
+                  div
+                    span.btn.btn-success.btn-file
+                      span.fileinput-new 클럽 마크 등록
+                      span.fileinput-exists Change
+                      input(type="file" name="...")
+                    a.btn.btn-danger.fileinput-exists.ml-3(href="#" data-dismiss="fileinput") Remove
+            .row
+              .col-md-6
+                .form-group
+                  label 클럽명
+                  input.form-control(name='club_name')
+              .col-md-6
+                .form-group
+                  label 활동지역
+                  input.form-control(name='club_region')
+            .row
+              .col
+                .form-group
+                  label 클럽 소개
+                  textarea.form-control(name='club_desc', rows=5)
+          .card-footer
+            .d-flex.justify-content-center
+              button.btn.btn-primary(type='button', onclick='fnRegisterClub()') 등록
+              a.btn.btn-info.ml-3(href='/clubs/list') 클럽 목록 보기              
 block append_js
   script(src='/public_js/club.js')

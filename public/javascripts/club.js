@@ -1,8 +1,8 @@
 function fnRegisterClub() {
   let club_mark = document.querySelector('div[name="club_mark"] img');
   let club_name = document.querySelector('input[name="club_name"]');
-  let club_region = document.querySelectorAll('input[name="club_region"]');
-  let club_desc = document.querySelectorAll('input[name="club_desc"]');
+  let club_region = document.querySelector('input[name="club_region"]');
+  let club_desc = document.querySelector('textarea[name="club_desc"]');
   if (!club_name.value) {
     alert("클럽명을 입력해주세요");
     return false;

@@ -162,7 +162,7 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
   let user_id = user_info.user.user_id;
   let user = await User.findOne({ user_id: user_id });
   let match_list = await Match.aggregate([
-    { $match: { apply_member: user_id } },
+    { $match: { "apply_member.reader": user_id } },
     {
       $lookup: {
         from: "ground",
@@ -176,7 +176,6 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
   let myClub = await Club.findOne({
     club_member: mongoose.Types.ObjectId(user_info.user._id)
   });
-  console.log("my club : ", myClub);
   res.render("mypage", {
     title: "내 정보",
     user_info: user_info,

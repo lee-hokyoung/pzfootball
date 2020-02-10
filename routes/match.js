@@ -54,8 +54,15 @@ router.post("/apply", async (req, res) => {
   // 신청자 + 신청명수 Array 만들기
   let apply_list = [];
   for (var i = 0; i < req.body.member_cnt; i++) {
-    if (i === 0) apply_list.push(user_info.user_id);
-    else apply_list.push(user_info.user_id + "_" + i);
+    if (i === 0)
+      apply_list.push({ reader: user_info.user_id, member: user_info.user_id });
+    else
+      apply_list.push({
+        reader: user_info.user_id,
+        member: user_info.user_id + "_" + i
+      });
+    // if (i === 0) apply_list.push({reader:user_info.user_id, member:user_info.user_id + +"" + i});
+    // else apply_list.push(user_info.user_id + "_" + i);
   }
   // 경기 신청
   let match_result = await Match.updateOne(
@@ -75,6 +82,28 @@ router.post("/apply", async (req, res) => {
     result: match_result,
     message: "성공적으로 신청했습니다."
   });
+});
+router.put("/:id", async (req, res) => {
+  let origin = req.body.origin;
+  let change = req.body.change;
+  try {
+    let result = await Match.updateOne(
+      { _id: req.params.id, "apply_member.member": origin },
+      { $set: { "apply_member.$.member": change } }
+    );
+    res.json({
+      code: 1,
+      message: "정상적으로 수정되었습니다.",
+      result: result
+    });
+  } catch (err) {
+    console.error(err);
+    res.json({
+      code: 0,
+      message: "수정 실패! 관리자에게 문의해주세요",
+      err: err
+    });
+  }
 });
 
 module.exports = router;

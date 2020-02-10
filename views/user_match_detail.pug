@@ -1,5 +1,8 @@
 extends layout
 block content
+  style.
+    //- #apply-list-wrap li{line-height:38px;}
+    #apply-list-wrap li [class*="col-"] {margin:auto 0;}
   #match_detail.container.bg-white
     .row
       .col
@@ -21,6 +24,28 @@ block content
                   if(ground_images.ground_images_3)
                     .detail_img_wrap(style='background-image:url("' + ground_images.ground_images_3 + '")')
             h6 정원 : !{match_info.personnel} / 신청 : !{match_info.apply_member.length}
+            #apply-list-wrap.my-3.py-3
+              label.title 신청자 리스트 (팀원의 이름을 입력해주세요)
+              ul.list-group.list-group-flush.mt-3
+                - var idx = 0
+                each item in match_info.apply_member
+                  li.list-group-item
+                    .row
+                      .col(style='max-width:40px;') #{++idx}
+                      .col-6
+                        if(user_info.user.user_id !== item.reader)
+                          - var name_length = item.member.length;
+                          - var n = 0
+                          span #{item.member.slice(0,1)} 
+                          while n < name_length - 2
+                            | *
+                            - n++
+                          | #{item.member.slice(item.member.length - 1)}
+                        else
+                          .d-flex.justify-content-start
+                            input.form-control(type='text', value=item.member, data-origin=item.member, style='max-width:200px;')
+                            button.btn.btn-link.d-none(onclick='fnUpdateMemberName(this)')
+                              i.fa.fa-check
             p 경기정보
             h6 주소 : !{match_info.ground_info.groundAddress.road}
             table.table.table-bordered
@@ -32,9 +57,13 @@ block content
 
 block append_js
   script.
+    let match_info = !{JSON.stringify(match_info)}
+  script(src='/public_js/match_detail.js')
+  script.
     $(".detail-slider").slick({
       dots: true,
       arrows: false,
       fade: true
     });
     console.log('match info : ', !{JSON.stringify(match_info)});
+    console.log('usr info : ', !{JSON.stringify(user_info)});

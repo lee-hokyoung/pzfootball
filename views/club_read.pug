@@ -11,6 +11,9 @@ block content
               img(src=club.club_mark)
             else
               img(src='/images/pz_logo.png', width='80px;')
+            .d-block.border.p-3.rounded
+              h6.my-3 클럽 소개
+              .bordered #{club.club_desc}
             #club-member
               ul.list-group.list-group-flush
                 li.list-group-item

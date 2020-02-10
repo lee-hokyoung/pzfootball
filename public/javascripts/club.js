@@ -11,7 +11,7 @@ function fnRegisterClub() {
   formData["club_mark"] = club_mark ? club_mark.src : "";
   formData["club_name"] = club_name.value;
   formData["club_region"] = club_region.value || "";
-  formData["club_decs"] = club_desc.value || "";
+  formData["club_desc"] = club_desc.value || "";
 
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "/clubs/create", true);

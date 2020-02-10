@@ -65,10 +65,21 @@ router.delete("/:id", async (req, res) => {
 });
 // 경기결과 관리
 router.get("/result/manage", async (req, res) => {
-  let list = await Match.find({});
+  let today = new Date();
+  let match_list = await Match.aggregate([
+    { $match: { apply_member: { $gt: [] } } }
+  ]);
   res.render("admin_match_result_manage", {
     active: "match_result",
-    title: "경기결과 관리"
+    title: "경기결과 관리",
+    match_list: match_list
   });
+});
+// 경기 정보 읽기
+router.get("/:id", async (req, res) => {
+  let match = await Match.aggregate([
+    { $match: { _id: mongoose.Types.ObjectId(req.params.id) } }
+  ]);
+  res.json(match[0]);
 });
 module.exports = router;

@@ -279,7 +279,9 @@ input#datepicker {
   border-top: 1px solid lightgray;
 }
 #mypage-wrap,
-#club_page {
+#club_page,
+#club_list,
+#match_detail {
   height: 100vh;
   padding: 10rem 2rem;
 }
@@ -294,9 +296,24 @@ input#datepicker {
   height: 30px;
 }
 #mypage-wrap .card,
-#club_page .card {
+#club_page .card,
+#club_list .card,
+#match_detail .card {
   margin-bottom: 1rem;
   box-shadow: 0px 5px 10px 5px lightgray;
+}
+#mypage-wrap label.title,
+#club_list label.title,
+#match_detail label.title {
+  margin: 0;
+}
+#club_list ul li.list-group-item-action {
+  line-height: 50px;
+}
+#match_detail .detail_img_wrap {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 @media (min-width: 576px) {
   .main-slider .slick-list {

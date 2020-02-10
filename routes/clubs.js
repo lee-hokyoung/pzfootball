@@ -8,7 +8,7 @@ const Club = require("../model/club");
 const mongoose = require("mongoose");
 
 //  클럽 생성 페이지
-router.get("/create", middle.isSingIn, (req, res) => {
+router.get("/create", middle.isSignedIn, (req, res) => {
   let user_info = req.session.passport;
   res.render("club_create", {
     title: "클럽 생성",
@@ -16,7 +16,7 @@ router.get("/create", middle.isSingIn, (req, res) => {
   });
 });
 //  클럽 생성
-router.post("/create", middle.isSingIn, async (req, res) => {
+router.post("/create", middle.isSignedIn, async (req, res) => {
   //  이미 가입된 클럽이 있는지 확인
   let user_info = req.session.passport.user;
   try {
@@ -42,5 +42,37 @@ router.post("/create", middle.isSingIn, async (req, res) => {
     console.error(err);
     res.json({ code: 0, message: "등록 실패! 관리자에게 문의해 주세요" });
   }
+});
+//  클럽 리스트
+router.get("/list", middle.isSignedIn, async (req, res) => {
+  let user_info = req.session.passport;
+  let club_list = await Club.find({});
+  res.render("club_list", {
+    user_info: user_info,
+    title: "퍼즐풋볼 - 클럽 리스트",
+    club_list: club_list
+  });
+});
+//  클럽 보기
+router.get("/:id", middle.isSignedIn, async (req, res) => {
+  let user_info = req.session.passport;
+  let club = await Club.aggregate([
+    {
+      $match: { _id: mongoose.Types.ObjectId(req.params.id) }
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "club_member",
+        foreignField: "_id",
+        as: "user_info"
+      }
+    }
+  ]);
+  res.render("club_read", {
+    title: "퍼즐풋볼 - 클럽",
+    club: club[0],
+    user_info: user_info
+  });
 });
 module.exports = router;

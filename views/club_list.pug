@@ -1,0 +1,37 @@
+extends layout
+block content
+  #club_list.container.bg-white
+    .row
+      .col
+        .card
+          .card-header
+            label.title 클럽
+          .card-body
+            ul.list-group.list-group-flush
+              li.list-group-item.list-group-item-primary
+                .row
+                  .col-2 #                    
+                  .col-4 클럽명
+                  .col-2 회원수
+                  .col-4 최근 경기
+              each club in club_list
+                a(href='/clubs/' + club._id)
+                  li.list-group-item.list-group-item-action
+                    .row
+                      .col-2 
+                        if(club.club_mark !== '')
+                          img(src=club.club_mark, width='50px')
+                        else
+                          img(src='/images/pz_logo.png', width='50px')
+                      .col-4 !{club.club_name}
+                      .col-2 !{club.club_member.length}
+                      if(club.club_history.length > 0)
+                        .col-4 승승승
+                      else
+                        .col-4 없음
+                  
+          .card-footer
+
+block append_js
+  script.
+    console.log('list : ', !{JSON.stringify(club_list)});

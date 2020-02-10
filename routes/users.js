@@ -157,7 +157,7 @@ router.post("/point/charge", middle.isLoggedIn, async (req, res) => {
     });
   }
 });
-router.get("/mypage", middle.isSingIn, async (req, res) => {
+router.get("/mypage", middle.isSignedIn, async (req, res) => {
   let user_info = req.session.passport;
   let user_id = user_info.user.user_id;
   let user = await User.findOne({ user_id: user_id });
@@ -173,14 +173,19 @@ router.get("/mypage", middle.isSingIn, async (req, res) => {
     },
     { $unwind: "$ground_info" }
   ]);
+  let myClub = await Club.findOne({
+    club_member: mongoose.Types.ObjectId(user_info.user._id)
+  });
+  console.log("my club : ", myClub);
   res.render("mypage", {
     title: "내 정보",
     user_info: user_info,
     user: user,
-    match_list: match_list
+    match_list: match_list,
+    myClub: myClub
   });
 });
-router.get("/myClub", middle.isSingIn, async (req, res) => {
+router.get("/myClub", middle.isSignedIn, async (req, res) => {
   let _id = req.session.passport.user._id;
   try {
     let club = await Club.findOne({
@@ -191,5 +196,26 @@ router.get("/myClub", middle.isSingIn, async (req, res) => {
     console.error(err);
     res.json({ code: 0, message: "조회 실패, 관리자에게 문의바랍니다." });
   }
+});
+//  유저 매치 정보
+router.get("/match/:id", middle.isSignedIn, async (req, res) => {
+  let user_info = req.session.passport;
+  let match_info = await Match.aggregate([
+    { $match: { _id: mongoose.Types.ObjectId(req.params.id) } },
+    {
+      $lookup: {
+        from: "ground",
+        localField: "ground_id",
+        foreignField: "_id",
+        as: "ground_info"
+      }
+    },
+    { $unwind: "$ground_info" }
+  ]);
+  res.render("user_match_detail", {
+    match_info: match_info[0],
+    user_info: user_info,
+    title: "퍼즐풋볼 - 매치 정보"
+  });
 });
 module.exports = router;

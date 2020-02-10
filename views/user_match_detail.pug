@@ -1,0 +1,40 @@
+extends layout
+block content
+  #match_detail.container.bg-white
+    .row
+      .col
+        .card
+          .card-header
+            label.title 매치 정보
+          .card-body
+            - var d = new Date(match_info.match_date)
+            h5 !{d.getMonth() + 1}월 !{d.getDate()}일 !{match_info.match_time}
+            h4 !{match_info.ground_info.groundName}
+            .row
+              .col-8.mx-auto
+                .detail-slider
+                  -var ground_images = match_info.ground_info.ground_images
+                  if(ground_images.ground_images_1)
+                    .detail_img_wrap(style='background-image:url("' + ground_images.ground_images_1 + '")')
+                  if(ground_images.ground_images_2)
+                    .detail_img_wrap(style='background-image:url("' + ground_images.ground_images_2 + '")')
+                  if(ground_images.ground_images_3)
+                    .detail_img_wrap(style='background-image:url("' + ground_images.ground_images_3 + '")')
+            h6 정원 : !{match_info.personnel} / 신청 : !{match_info.apply_member.length}
+            p 경기정보
+            h6 주소 : !{match_info.ground_info.groundAddress.road}
+            table.table.table-bordered
+              tr
+                td !{match_info.match_type}파전
+                td !{match_info.match_grade === 1?'실력':'일반'}
+                td !{new Intl.NumberFormat('ko').format(match_info.match_price)}원
+                td !{match_info.sex === 1?'남성매치':match_info.sex===-1?'여성매치':'혼성매치'}
+
+block append_js
+  script.
+    $(".detail-slider").slick({
+      dots: true,
+      arrows: false,
+      fade: true
+    });
+    console.log('match info : ', !{JSON.stringify(match_info)});

@@ -16,9 +16,25 @@ block content
           .card-header
             .d-flex.justify-content-between
               label.title 내 클럽
+              a.text-primary(href='/clubs/list') 전체보기
           .card-body
             if(myClub)
-
+              ul.list-group.list-group-flush.text-center
+                li.list-group-item.list-group-item-primary
+                  .row
+                    .col-2 마크
+                    .col-7 클럽명
+                    .col-3 회원수
+                li.list-group-item.list-group-item-action
+                  a(href='/clubs/' + myClub._id)
+                    .row
+                      .col-2
+                        if(myClub.club_mark === "")
+                          img(src='/images/pz_logo.png', width='100%')
+                        else
+                          img(src=myClub.club_mark, width='100%')
+                      .col-7 !{myClub.club_name}
+                      .col-3 !{myClub.club_member.length} 명
             else
               .row
                 .col-8
@@ -34,20 +50,24 @@ block content
               a.text-info(href='#users/match/list') 더 보기
           .card-body
             ul.list-group.list-group-flush
-              li.list-group-item.text-center
+              li.list-group-item.list-group-item-primary.text-center
                 .row
                   .col-3 날짜
                   .col-2 시간
                   .col 경기장
-              each match in match_list
-                a(href='#users/match/' + match._id)
-                  li.list-group-item.list-group-item-action.text-center
-                    .row
-                      .col-3 #{match.match_date.slice(5)}
-                      .col-2 #{match.match_time}
-                      .col #{match.ground_info.groundName}
+              if(match_list.length > 0)
+                each match in match_list
+                  a(href='/users/match/' + match._id)
+                    li.list-group-item.list-group-item-action.text-center
+                      .row
+                        .col-3 #{match.match_date.slice(5)}
+                        .col-2 #{match.match_time}
+                        .col #{match.ground_info.groundName}
+              else
+                li.list-group-item 일정이 없습니다.
   include modals/chargePoint
 block append_js
   script(src='/public_js/mypage.js')
   script.
-    console.log(!{JSON.stringify(match_list)})
+    console.log('user_info : ', !{JSON.stringify(user_info)});
+    console.log('my club : ', !{JSON.stringify(myClub)});

@@ -17,6 +17,7 @@ module.exports = passport => {
   passport.serializeUser((user, done) => {
     // console.log("serializeUser user : ", user);
     done(null, {
+      _id: user._id,
       user_id: user.user_id,
       user_name: user.user_name,
       user_nickname: user.user_nickname,

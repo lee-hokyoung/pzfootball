@@ -1,0 +1,36 @@
+extends layout
+block content
+  #club_page.container
+    .row
+      .col
+        .card
+          .card-header
+            label.title #{club.club_name}
+          .card-body
+            if(club.club_mark !== '')
+              img(src=club.club_mark)
+            else
+              img(src='/images/pz_logo.png', width='80px;')
+            #club-member
+              ul.list-group.list-group-flush
+                li.list-group-item
+                  .row
+                    .col-1 #
+                    .col-2  
+                    .col-3 회원
+                - var idx = 0;
+                each item in club.user_info
+                  a(href='#')
+                    li.list-group-item.list-group-item-action
+                      .row(data-id=item._id)
+                        .col-1 #{++idx}
+                        .col-2
+                          if(item.profile_image !== '')
+                            img(src=item.profile_image, width='40px')
+                          else
+                            img(src="/images/logo-small.png", width='40px')
+                        .col-3 #{item.user_name}
+          .card-footer
+block append_js
+  script.
+    console.log('club : ', !{JSON.stringify(club)})

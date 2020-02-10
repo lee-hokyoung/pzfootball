@@ -36,7 +36,7 @@ exports.isAdmin = async (req, res, next) => {
 };
 
 // 사용자 관련 미들웨어
-exports.isSingIn = (req, res, next) => {
+exports.isSignedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     next();
   } else {

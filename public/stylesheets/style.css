@@ -315,6 +315,16 @@ input#datepicker {
   background-repeat: no-repeat;
   background-position: center center;
 }
+.game-icons-wrap .dropdown-menu ul li {
+  padding: 0.5rem;
+  font-size: 0.75rem;
+}
+#apply-list-wrap ul li {
+  font-size: 0.8rem;
+}
+#apply-list-wrap ul li input {
+  font-size: 0.8rem;
+}
 @media (min-width: 576px) {
   .main-slider .slick-list {
     border-radius: 1rem;

@@ -48,18 +48,29 @@ router.post("/apply", async (req, res) => {
   //   { _id: mongoose.Types.ObjectId(match_id) },
   //   { apply_member: 1 }
   // );
-  if (match_info.apply_member.indexOf(user_info.user_id) > -1) {
+  if (
+    // apply_member 의 형식이 {reader:'', member:''} 로 되어있어서 인덱싱을 위해서 중간에 map을 통해 한번 걸러줌
+    match_info.apply_member
+      .map(m => {
+        return m.reader;
+      })
+      .indexOf(user_info.user_id) > -1
+  ) {
     return res.json({ code: 9, message: "이미 신청한 경기입니다" });
   }
   // 신청자 + 신청명수 Array 만들기
   let apply_list = [];
   for (var i = 0; i < req.body.member_cnt; i++) {
     if (i === 0)
-      apply_list.push({ reader: user_info.user_id, member: user_info.user_id });
+      apply_list.push({
+        reader: user_info.user_id,
+        member: user_info.user_name,
+        _id: user_info._id
+      });
     else
       apply_list.push({
         reader: user_info.user_id,
-        member: user_info.user_id + "_" + i
+        member: user_info.user_name + "_" + i
       });
     // if (i === 0) apply_list.push({reader:user_info.user_id, member:user_info.user_id + +"" + i});
     // else apply_list.push(user_info.user_id + "_" + i);

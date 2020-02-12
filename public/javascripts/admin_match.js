@@ -19,19 +19,26 @@ function fnShowResultModal(id) {
         li_html += "</div>";
         li_html += "<div class='col-3'>" + v.member;
         li_html += "</div>";
-        li_html += "<div class='col-4'>";
-        li_html +=
-          winner_list.indexOf(v.member) > -1
-            ? "승리"
-            : loser_list.indexOf(v.meber) > -1
-            ? "패배"
-            : "";
-        li_html += "</div>";
-        li_html += "<div class='col-4 d-flex justify-content-start'>";
-        li_html += "<button class='btn btn-link btn-primary'>승리";
-        li_html += "</button>";
-        li_html += "<button class='btn btn-link btn-danger'>패배";
-        li_html += "</button>";
+        li_html += "<div class='col-8'>";
+
+        li_html += '<div class="row">';
+        for (var m = 0; m < parseInt(res.match_type); m++) {
+          li_html += '<div class="col-4">';
+          li_html +=
+            '<div class="btn-group btn-group-toggle" data-toggle="buttons">';
+
+          li_html += '<label class="btn btn-primary btn-link m-0">';
+          li_html += '<input type="radio" autocomplete="off">승리';
+          li_html += "</label>";
+
+          li_html += '<label class="btn btn-danger btn-link m-0">';
+          li_html += '<input type="radio" autocomplete="off">패배';
+          li_html += "</label>";
+
+          li_html += "</div>";
+          li_html += "</div>";
+        }
+
         li_html += "</div>";
         li_html += "</div>";
         li_html += "</li>";

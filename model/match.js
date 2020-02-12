@@ -19,7 +19,17 @@ const matchSchema = new Schema({
   ladder: Number, // 승점제 유무, 1: 승점제, 0: 승점제 x
   sex: Number, // 성별 1: 남성매치, -1: 여성매치, 0: 혼성매치
   personnel: Number, // 정원
-  apply_member: [{ reader: String, member: String }],
+  apply_member: [
+    {
+      reader: String,
+      member: String,
+      _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        default: new mongoose.Types.ObjectId()
+      }
+    }
+  ],
   // apply_member: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // 신청자 list
   match_price: Number, // 금액
   apply_status: String,

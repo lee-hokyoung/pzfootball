@@ -176,7 +176,7 @@ input#datepicker {
   border: none;
 }
 .datepicker .datepicker-days {
-  background-image: url(/images/calendar_back.jpg);
+  background-image: url(/images/calendar_back.png);
   background-size: 284px 227px;
   background-repeat: no-repeat;
   background-position: 0px 0px;

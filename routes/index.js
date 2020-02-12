@@ -1,18 +1,28 @@
 const express = require("express");
 const router = express.Router();
 const Match = require("../model/match");
+const Ground = require("../model/ground");
 const passport = require("passport");
 
 /* GET home page. */
 router.get("/", async (req, res, next) => {
   let list = await fnGetMatchList();
   let user_info = req.session.passport;
+  let ground_list = await Ground.find({}, { groundName: 1 });
   res.render("index", {
     list: list,
+    user_info: user_info,
+    ground_list: ground_list
+  });
+});
+router.get("/search", async (req, res) => {
+  let user_info = req.session.passport;
+  let query = req.query;
+  console.log("query : ", query);
+  res.render("index", {
     user_info: user_info
   });
 });
-
 router.get("/schedule/:date", async (req, res) => {
   let list = await fnGetMatchList(req.params.date);
   res.json(list);

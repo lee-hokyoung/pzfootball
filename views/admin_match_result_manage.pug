@@ -35,15 +35,28 @@ block content
                           button.btn.btn-link.btn-success(onclick='fnShowResultModal("' + match._id + '")') 결과 입력
           .card-footer
   #resultModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='resultModalLabel', aria-hidden='true')
-    .modal-dialog.modal-lg
+    .modal-dialog.modal-lg1
       .modal-content
         form.form(onsubmit='return fnRegisterResult();')
           .modal-header.bg-primary
             button.close.p-1(type="button" data-dismiss="modal" aria-hidden="true")
               span.nc-icon.nc-simple-remove.text-white
           .modal-body
-            
-          .modal-footer
+            .row#mvp_user
+              .col-3.my-auto
+                label.m-0(for='#mvp_user') MVP 선수
+              .col-9
+                select.form-control
+            .row
+              .col-12
+                ul.list-group.list-group-flush
+                  li.list-group-item
+                    .row
+                      .col-1 #
+                      .col-3 이름
+                      .col-4 결과
+                      .col-4
+                  #user_list
 block append_js
   script(src='/public_js/admin_match.js')
   script.

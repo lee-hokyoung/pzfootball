@@ -67,7 +67,16 @@ router.delete("/:id", async (req, res) => {
 router.get("/result/manage", async (req, res) => {
   let today = new Date();
   let match_list = await Match.aggregate([
-    { $match: { apply_member: { $gt: [] } } }
+    { $match: { apply_member: { $gt: [] } } },
+    {
+      $lookup: {
+        from: "ground",
+        localField: "ground_id",
+        foreignField: "_id",
+        as: "ground_info"
+      }
+    },
+    { $unwind: "$ground_info" }
   ]);
   res.render("admin_match_result_manage", {
     active: "match_result",
@@ -81,5 +90,40 @@ router.get("/:id", async (req, res) => {
     { $match: { _id: mongoose.Types.ObjectId(req.params.id) } }
   ]);
   res.json(match[0]);
+});
+// 경기 결과 입력
+router.put("/result/:id", async (req, res) => {
+  let match = await Match.findOne({
+    _id: mongoose.Types.ObjectId(req.params.id)
+  });
+  // 경기결과 입력을 위해
+  let list = [],
+    data = req.body;
+  for (var key in data) {
+    if (key !== "mvp_id") list.push({ _id: key, val: data[key] });
+  }
+  try {
+    await Match.updateOne(
+      { _id: mongoose.Types.ObjectId(req.params.id) },
+      { $set: { mvp: mongoose.Types.ObjectId(req.body.mvp_id) } }
+    );
+    for await (var item of list) {
+      await Match.updateOne(
+        {
+          _id: mongoose.Types.ObjectId(req.params.id),
+          "apply_member._id": mongoose.Types.ObjectId(item._id)
+        },
+        { $set: { "apply_member.$.result": item.val } }
+      );
+    }
+    res.json({ code: 1, message: "정상적으로 수정되었습니다." });
+  } catch (err) {
+    console.error(err);
+    res.json({
+      code: 0,
+      err: err,
+      message: "수정 실패! 관리자에게 문의해주세요"
+    });
+  }
 });
 module.exports = router;

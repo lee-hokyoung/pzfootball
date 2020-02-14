@@ -102,3 +102,41 @@ async function fnCheckMyClub() {
     xhr.send();
   });
 }
+
+// 개인정보 수정
+function fnSaveUserInfo() {
+  let user_name = document.querySelector('input[name="user_name"]');
+  let user_nickname = document.querySelector('input[name="user_nickname"]');
+  let user_email = document.querySelector('input[name="user_email"]');
+  if (user_name.value === "") {
+    alert("이름을 입력해주세요");
+    user_name.focus();
+    return false;
+  }
+  if (user_nickname.value === "") {
+    alert("닉네임을 입력해주세요");
+    user_nickname.focus();
+    return false;
+  }
+  if (user_email.value === "") {
+    alert("이메일을 입력해주세요");
+    user_email.focus();
+    return false;
+  }
+  let formData = {};
+  formData["user_name"] = user_name.value;
+  formData["user_nickname"] = user_nickname.value;
+  formData["user_email"] = user_email.value;
+
+  let xhr = new XMLHttpRequest();
+  xhr.open("PUT", "/users/mypage/user_info", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function() {
+    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      let res = JSON.parse(this.response);
+      alert(res.message);
+      if (res.code === 1) location.reload();
+    }
+  };
+  xhr.send(JSON.stringify(formData));
+}

@@ -8,12 +8,22 @@ block content
             h4.card-title 경기결과 관리
           .card-body
             .table-responsive
-              table.table
+              table.table.text-center
+                colgroup
+                  col(width='50px', about='#')
+                  col(width='150px', about='경기일')
+                  col(width='150px', about='타임')
+                  col(width='300px', about='경기장')
+                  col(width='100px', about='실력')
+                  col(width='100px', about='성별')
+                  col(width='100px', about='인원수')
+                  col(width='100px', about='결과')
                 thead
                   tr
                     th #
                     th 경기일
                     th 타임
+                    th 경기장
                     th 실력
                     th 성별
                     th 인원수
@@ -25,6 +35,7 @@ block content
                       td #{++idx}
                       td #{match.match_date}
                       td #{match.match_time}
+                      td #{match.ground_info.groundName}
                       td #{match.grade === 1 ? '실력':'일반'}
                       td #{match.sex === 1 ? '남성매치':match.sex === -1 ? '여성매치':'혼성매치'}
                       td #{match.apply_member ? match.apply_member.length : 0}
@@ -60,6 +71,9 @@ block content
                           .col-4 2차전
                           .col-4 3차전
                   #user_list
+          .modal-footer
+             button.btn.btn-sm.btn-link.btn-success(type='button', onclick='fnSaveResult()') 저장
+             button.btn.btn-sm.btn-link.btn-danger(type='button', data-dismiss='modal') 닫기
 block append_js
   script(src='/public_js/admin_match.js')
   script.

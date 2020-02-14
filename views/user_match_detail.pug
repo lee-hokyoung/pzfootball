@@ -43,7 +43,7 @@ block content
                           | #{item.member.slice(item.member.length - 1)}
                         else
                           .d-flex.justify-content-start
-                            input.form-control(type='text', value=item.member, data-origin=item.member, style='max-width:200px;')
+                            input.form-control(type='text', value=item.member||"", data-origin=item.member||"", data-id=item._id, style='max-width:200px;')
                             button.btn.btn-link.d-none(type='button', tabindex='-1')
                               i.fa.fa-check(style='color:red')
             p 경기정보

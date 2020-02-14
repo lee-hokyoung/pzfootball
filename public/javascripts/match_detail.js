@@ -11,9 +11,10 @@ $("input[data-origin]").on("keyup", function() {
 $("input[data-origin]").on("blur", function() {
   let inpObj = $(this);
   let origin = inpObj.data("origin");
+  let id = inpObj.data("id");
   let change = inpObj.val();
   if (origin !== change) {
-    let formData = { origin: origin, change: change };
+    let formData = { origin: origin, change: change, id: id };
     let match_id = match_info._id;
     let xhr = new XMLHttpRequest();
     xhr.open("PUT", "/match/" + match_id, true);

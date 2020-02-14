@@ -157,6 +157,7 @@ router.post("/point/charge", middle.isLoggedIn, async (req, res) => {
     });
   }
 });
+// 마이페이지 화면
 router.get("/mypage", middle.isSignedIn, async (req, res) => {
   let user_info = req.session.passport;
   let user_id = user_info.user.user_id;
@@ -184,6 +185,46 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
     myClub: myClub
   });
 });
+// 마이페이지 내 정보 수정
+router.put("/mypage/user_info", async (req, res) => {
+  try {
+    let user_info = req.session.passport;
+    let user_id = user_info.user.user_id;
+    let result = await User.updateOne(
+      { user_id: user_id },
+      {
+        $set: {
+          user_name: req.body.user_name,
+          user_nickname: req.body.user_nickname,
+          user_email: req.body.user_email
+        }
+      }
+    );
+    if (result.ok === 1) {
+      req.session.passport.user.user_nickname = req.body.user_nickname;
+      req.session.passport.user.user_email = req.body.user_email;
+      res.json({
+        code: 1,
+        message: "정상적으로 수정했습니다",
+        result: result
+      });
+    } else {
+      res.json({
+        code: 0,
+        message: "수정 실패! 관리자에게 문의해주세요",
+        result: result
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    res.json({
+      code: 0,
+      message: "수정 실패! 관리자에게 문의해주세요",
+      err: err
+    });
+  }
+});
+// 내 클럽 조회
 router.get("/myClub", middle.isSignedIn, async (req, res) => {
   let _id = req.session.passport.user._id;
   try {

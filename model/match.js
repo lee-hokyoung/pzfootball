@@ -21,22 +21,23 @@ const matchSchema = new Schema({
   personnel: Number, // 정원
   apply_member: [
     {
-      reader: String,
-      member: String,
       _id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        default: new mongoose.Types.ObjectId()
-      }
+        ref: "User"
+      },
+      reader: String,
+      member: String,
+      result: Array
     }
   ],
   // apply_member: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // 신청자 list
   match_price: Number, // 금액
   apply_status: String,
   isPlay: { type: Boolean, default: false },
-  match_result: {
-    winner: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    loser: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }]
-  }
+  mvp: { type: mongoose.Schema.ObjectId, ref: "User" }
+  // match_result: {
+  //   winner: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  //   loser: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }]
+  // }
 });
 module.exports = mongoose.model("Match", matchSchema, "match");

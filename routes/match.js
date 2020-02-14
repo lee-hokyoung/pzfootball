@@ -63,12 +63,13 @@ router.post("/apply", async (req, res) => {
   for (var i = 0; i < req.body.member_cnt; i++) {
     if (i === 0)
       apply_list.push({
+        _id: user_info._id,
         reader: user_info.user_id,
-        member: user_info.user_name,
-        _id: user_info._id
+        member: user_info.user_name
       });
     else
       apply_list.push({
+        _id: new mongoose.Types.ObjectId(),
         reader: user_info.user_id,
         member: user_info.user_name + "_" + i
       });
@@ -95,11 +96,14 @@ router.post("/apply", async (req, res) => {
   });
 });
 router.put("/:id", async (req, res) => {
-  let origin = req.body.origin;
+  let member_id = req.body.id;
   let change = req.body.change;
   try {
     let result = await Match.updateOne(
-      { _id: req.params.id, "apply_member.member": origin },
+      {
+        _id: req.params.id,
+        "apply_member._id": mongoose.Types.ObjectId(member_id)
+      },
       { $set: { "apply_member.$.member": change } }
     );
     res.json({

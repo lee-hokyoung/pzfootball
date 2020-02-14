@@ -18,7 +18,6 @@ router.get("/", async (req, res, next) => {
 router.get("/search", async (req, res) => {
   let user_info = req.session.passport;
   let query = req.query;
-  console.log("query : ", query);
   res.render("index", {
     user_info: user_info
   });

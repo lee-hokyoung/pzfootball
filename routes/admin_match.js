@@ -107,7 +107,7 @@ router.put("/result/:id", async (req, res) => {
       { _id: mongoose.Types.ObjectId(req.params.id) },
       { $set: { mvp: mongoose.Types.ObjectId(req.body.mvp_id) } }
     );
-    for await (var item of list) {
+    for (var item of list) {
       await Match.updateOne(
         {
           _id: mongoose.Types.ObjectId(req.params.id),

@@ -1,6 +1,8 @@
 extends layout
 block content
   // slick-slider
+  - var today = new Date();
+  - var month = today.getMonth() + 1;
   .container.bg-white
     .main-slider
       .d-flex.justify-content-center
@@ -8,6 +10,7 @@ block content
           .title-wrap.left
             h3 General Game
             h1 일반매치
+            button.btn.btn-round Let's GO
           img(src='/images/pz_main_slide_01.png', alt='pc')
         .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/main_slide_1_m.png)')
         //img.w-100.d-block.d-sm-none(src='/images/main_slide_1_m.png', alt='m')
@@ -21,7 +24,7 @@ block content
       .d-flex.justify-content-center
         .d-none.d-sm-block
           .title-wrap.rank-title.center
-            h4 2019.12
+            h4 #{today.getFullYear()}.#{month < 10 ? '0' + month:month}
             h2 순위표 바로가기
             .text-light /
             h5 Go to then Rank
@@ -30,7 +33,6 @@ block content
   // 달력선택 부분
   - var size = 14;
   - var day = ['일', '월', '화', '수', '목', '금', '토'];
-  - var today = new Date();
   div(style='position:sticky; z-index:5; top:56px;')
     .container.py-3.bg-white
       //.d-flex.justify-content-between

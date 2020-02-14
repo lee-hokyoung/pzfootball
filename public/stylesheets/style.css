@@ -325,6 +325,9 @@ input#datepicker {
 #apply-list-wrap ul li input {
   font-size: 0.8rem;
 }
+.fileinput img {
+  width: 100%;
+}
 @media (min-width: 576px) {
   .main-slider .slick-list {
     border-radius: 1rem;

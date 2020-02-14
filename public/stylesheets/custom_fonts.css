@@ -1,0 +1,112 @@
+@font-face {
+  font-family: DXSpdM;
+  src: url("/assets/fonts/DXSpdM-KSCpc-EUC-H.woff") format("woff");
+}
+@font-face {
+  font-family: HUJingo340;
+  src: url("/assets/fonts/HUJingo340.woff") format("woff");
+}
+@font-face {
+  font-family: NanumGothic;
+  src: url("/assets/fonts/NanumGothic-Bold.woff") format("woff");
+  font-style: normal;
+  font-weight: bold;
+}
+@font-face {
+  font-family: NanumGothic;
+  src: url("/assets/fonts/NanumGothic-ExtraBold.woff") format("woff");
+  font-style: normal;
+  font-weight: bolder;
+}
+@font-face {
+  font-family: NanumGothic;
+  src: url("/assets/fonts/NanumGothic-Regular.woff") format("woff");
+  font-style: normal;
+  font-weight: normal;
+}
+h4,
+h5,
+h6,
+.h4,
+.h5,
+.h6,
+label,
+span,
+p,
+input {
+  font-family: NanumGothic-Regular, sans-serif;
+  font-weight: normal;
+}
+h3,
+.h3,
+strong,
+section.ground-list {
+  font-family: NanumGothic-Bold, sans-serif;
+  font-weight: bold;
+}
+h1,
+h2,
+.h1,
+.h2 {
+  font-family: NanumGothic-ExtraBold, sans-serif;
+  font-weight: bolder;
+}
+.calendar-slider,
+.calendar-slider .h6,
+.calendar-slider .small {
+  font-family: DXSpdM, sans-serif;
+  font-weight: normal;
+  font-size: 0.85rem;
+}
+.main-slider .title-wrap {
+  position: absolute;
+  text-align: center;
+}
+.main-slider .title-wrap h1,
+.main-slider .title-wrap h2,
+.main-slider .title-wrap h3,
+.main-slider .title-wrap h4,
+.main-slider .title-wrap h5 {
+  font-family: DXSpdM;
+  color: white;
+  text-shadow: 3px 3px 3px #4c4141;
+}
+.main-slider .title-wrap.left {
+  top: 150px;
+  left: 250px;
+}
+.main-slider .title-wrap.right {
+  top: 150px;
+  right: 250px;
+}
+.main-slider .title-wrap.center {
+  top: 130px;
+  left: 410px;
+}
+.main-slider .title-wrap.center h2 {
+  font-size: 2.3rem;
+  font-weight: 300;
+  margin-bottom: 0;
+}
+.main-slider .title-wrap.center h4 {
+  text-align: left;
+  transform: scale(1, 1.2);
+  margin-bottom: 0;
+  font-size: 1.3rem;
+}
+.main-slider .title-wrap.center h5 {
+  color: lightgray;
+  text-shadow: none;
+  transform: scale(0.8, 1);
+  margin-bottom: 0;
+}
+.main-slider .title-wrap h1 {
+  font-size: 3.2rem;
+  font-weight: 400;
+}
+.main-slider .title-wrap h3 {
+  margin-bottom: 0;
+  font-size: 1.5rem;
+  transform: scale(1, 1.35);
+  font-weight: normal;
+}

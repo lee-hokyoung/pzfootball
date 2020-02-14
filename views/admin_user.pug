@@ -1,24 +1,40 @@
 extends admin_layout
 block content
-	.content
-		.row
-			.col-12
-				.card
-					.card-header
-					.card-body
-						.table-responsive
-							table.table
-								thead
-									tr
-										th #
-										th 아이디
-										th 이름
-										th 가입일시
-										th
-								tbody
-									each user, idx in list
-										tr
-											td #{idx + 1}
-											td #{user.user_id}
-											td #{user.user_name}
-											td #{user.created_at.toLocaleString('ko')}
+  .content
+    .row
+      .col-12
+        .card
+          .card-header
+          .card-body
+            .table-responsive
+              table.table.text-center
+                colgroup
+                  col(width='50', about='#')
+                  col(width='150', about='아이디')
+                  col(width='150', about='이름')
+                  col(width='150', about='닉네임')
+                  col(width='150', about='보유포인트')
+                  //- col(width='150', about='입금확인')
+                  col(width='200', about='가입일시')
+                thead
+                  tr
+                    th #
+                    th 아이디
+                    th 이름
+                    th 닉네임
+                    th 보유포인트
+                    //- th 입금확인
+                    th 가입일시
+                tbody
+                  each user, idx in list
+                    tr
+                      td #{idx + 1}
+                      td #{user.user_id}
+                      td #{user.user_name}
+                      td #{user.user_nickname}
+                      td #{new Intl.NumberFormat().format(user.point || 0)}
+                      //- td
+                      //-   .btn-group
+                      //-     input.form-control(type='text', style='width:150px;')
+                      //-     button.btn.btn-sm.btn-success 저장
+                      td #{user.created_at.toLocaleString('ko')}

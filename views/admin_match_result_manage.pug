@@ -40,10 +40,14 @@ block content
                       td #{match.sex === 1 ? '남성매치':match.sex === -1 ? '여성매치':'혼성매치'}
                       td #{match.apply_member ? match.apply_member.length : 0}
                       td
-                        if(match.isPlay)
-                          a.btn.btn-link.btn-info(href='#') 결과 확인
-                        else
-                          button.btn.btn-link.btn-success(onclick='fnShowResultModal("' + match._id + '")') 결과 입력
+                        //- if(match.isPlay)
+                        //-   a.btn.btn-link.btn-info(href='#') 결과 확인
+                        //- else
+                        button.btn.btn-link(onclick='fnShowResultModal("' + match._id + '")', class=match.isPlay===true?"btn-info":"btn-success") 
+                          if(match.isPlay) 
+                            | 결과 확인
+                          else 
+                            | 결과 입력
           .card-footer
   #resultModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='resultModalLabel', aria-hidden='true')
     .modal-dialog.modal-lg
@@ -76,5 +80,3 @@ block content
              button.btn.btn-sm.btn-link.btn-danger(type='button', data-dismiss='modal') 닫기
 block append_js
   script(src='/public_js/admin_match.js')
-  script.
-    console.log('match_list : ', !{JSON.stringify(match_list)})

@@ -39,17 +39,18 @@ block content
       //  .game-icon-wrap
       .mx-auto.d-flex.justify-content-between.mobile-menu-wrap
         .game-icons-wrap.mx-auto(style='width:230px;')
-          a.mr-3(href='#')
+          button.btn.btn-link.p-0.mr-3(type='button', data-game='2')
             img(src='/images/game_2match.png', alt='2파전')
-          a.mr-3(href='#', style='top:-16px; position:relative;')
+          button.btn.btn-link.p-0.mr-3(type='button', data-game='3', style='top:-16px; position:relative;')
             img(src='/images/game_3match.png', alt='3파전')
-          a(href='#', role='button', id='dropdownGroundList', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+          button#dropdownGroundList.btn.btn-link.p-0(href='#', role='button',data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
             img(src='/images/game_ground.png', alt='구장')
-          .dropdown-menu.p-0(aria-labelledby='dropdownGroundList')
-            ul.list-group.list-group-flush
-              each ground in ground_list
-                a(href='#')
-                  li.list-group-item.list-group-item-action #{ground.groundName}
+            .dropdown-menu.p-0(aria-labelledby='dropdownGroundList')
+              ul.list-group.list-group-flush
+                li.list-group-item.list-group-item-action(data-id='') 전체
+                each ground in ground_list
+                  a(href='#')
+                    li.list-group-item.list-group-item-action(data-id=ground._id) #{ground.groundName}
         .calendar-slider.w-100.mx-auto(style='max-width:350px;')
           - var d = 0;
           while d < size
@@ -58,6 +59,7 @@ block content
               - var date = new Date();
               - date.setDate(today.getDate() + d++)
               button.btn.rounded.btn-date.font-italic(type='button', onclick='fnSelectDate(this)',
+              class=d===1?'active':'',
               class=date.getDay()===0?'text-danger':date.getDay()===6?'text-primary':'text-secondary',
               class=d===1?'btn-primary':'', data-date=date)
                 .h6.m-0 #{date.getDate()}

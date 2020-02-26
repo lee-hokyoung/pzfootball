@@ -7,7 +7,7 @@ block content
     #mypage-wrap li [class*="col-"] {margin:auto 0;} 
   #mypage-wrap.container.bg-white
     .row
-      .col-md-6
+      .col-md-5
         .card
           .card-header
             label.title ID
@@ -59,7 +59,7 @@ block content
                 .col-4
                   button.btn.btn-link.text-primary(onclick='fnJoinClub()') 가입
                   button.btn.btn-link.text-success(onclick='fnCreateClub()') 생성
-      .col-md-6
+      .col-md-7
         .card
           .card-header
             .d-flex.justify-content-between
@@ -69,19 +69,21 @@ block content
             ul.list-group.list-group-flush
               li.list-group-item.list-group-item-primary.text-center
                 .row
-                  .col-2 날짜
-                  .col-2 시간
-                  .col 경기장
+                  .col 날짜
+                  .col 시간
+                  .col-5 경기장
                   .col-2 신청수
+                  .col-2 상태
               if(match_list.length > 0)
                 each match in match_list
                   a(href='/users/match/' + match._id)
                     li.list-group-item.list-group-item-action.text-center
                       .row
-                        .col-2 #{match.match_date.slice(5)}
-                        .col-2 #{match.match_time}
-                        .col #{match.ground_info.groundName}
+                        .col #{match.match_date.slice(5)}
+                        .col #{match.match_time}
+                        .col-5 #{match.ground_info.groundName}
                         .col-2 #{match.apply_member.length} / #{match.personnel}
+                        .col-2 #{match.isPlay?"종료":"진행중"}
               else
                 li.list-group-item 일정이 없습니다.
   include modals/chargePoint

@@ -65,7 +65,6 @@ router.delete("/:id", async (req, res) => {
 });
 // 경기결과 관리
 router.get("/result/manage", async (req, res) => {
-  let today = new Date();
   let match_list = await Match.aggregate([
     { $match: { apply_member: { $gt: [] } } },
     {
@@ -105,7 +104,7 @@ router.put("/result/:id", async (req, res) => {
   try {
     await Match.updateOne(
       { _id: mongoose.Types.ObjectId(req.params.id) },
-      { $set: { mvp: mongoose.Types.ObjectId(req.body.mvp_id) } }
+      { $set: { mvp: mongoose.Types.ObjectId(req.body.mvp_id), isPlay: true } }
     );
     for (var item of list) {
       await Match.updateOne(

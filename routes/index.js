@@ -6,7 +6,8 @@ const passport = require("passport");
 
 /* GET home page. */
 router.get("/", async (req, res, next) => {
-  let list = await fnGetMatchList();
+  let today = new Date();
+  let list = await fnGetMatchList(today.toISOString().slice(0, 10), req.query);
   let user_info = req.session.passport;
   let ground_list = await Ground.find({}, { groundName: 1 });
   res.render("index", {
@@ -23,15 +24,16 @@ router.get("/search", async (req, res) => {
   });
 });
 router.get("/schedule/:date", async (req, res) => {
-  let list = await fnGetMatchList(req.params.date);
+  let list = await fnGetMatchList(req.params.date, req.query);
   res.json(list);
 });
 // 경기 일정 가져오는 함수
-async function fnGetMatchList(date) {
-  let today = new Date();
-  let d = date || today.toISOString().slice(0, 10);
+async function fnGetMatchList(date, query) {
+  // let today = new Date();
+  // let d = date || today.toISOString().slice(0, 10);
+  console.log("query : ", query);
   let result = await Match.aggregate([
-    { $match: { match_date: d } },
+    { $match: { match_date: date } },
     {
       $lookup: {
         from: "ground",

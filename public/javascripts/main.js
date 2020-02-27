@@ -1,4 +1,5 @@
 $(function() {
+  let curr_list = [];
   //  메인 슬라이더
   $(".main-slider").slick({
     dots: true,
@@ -30,6 +31,8 @@ $(function() {
       xhr.onreadystatechange = function() {
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
           let res = JSON.parse(this.response);
+          curr_list = res;
+          console.log("res : ", curr_list);
           fnGenerateGroundList(res, currentSlide);
         } else if (this.readyState === XMLHttpRequest.HEADERS_RECEIVED) {
           let ul = document.querySelector(
@@ -221,3 +224,15 @@ $(document).on(
     location.href = "/match/" + match_id;
   }
 );
+
+// 경기 타입 클릭 이벤트
+$(".game-icons-wrap button.mr-3").on("click", function() {
+  let game_type = $(this).data("game");
+  let queryString = "?game_type=" + game_type;
+  history.pushState(null, "game filter", queryString);
+});
+$("#dropdownGroundList li").on("click", function() {
+  let ground_id = $(this).data("id");
+  let queryString = "?ground_id=" + ground_id;
+  history.pushState(null, "game filter", queryString);
+});

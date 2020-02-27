@@ -8,8 +8,8 @@ function fnShowResultModal(id) {
       $("#resultModal").modal("show");
       $("#resultModal").data("id", id);
       console.log("res : ", res);
-      let winner_list = res.match_result.winner;
-      let loser_list = res.match_result.loser;
+      // let winner_list = res.match_result.winner;
+      // let loser_list = res.match_result.loser;
       let html = "",
         li_html = "";
       html += "<option value=''>mvp를 선택해 주세요</option>";

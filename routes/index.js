@@ -3,6 +3,7 @@ const router = express.Router();
 const Match = require("../model/match");
 const Ground = require("../model/ground");
 const passport = require("passport");
+const mongoose = require("mongoose");
 
 /* GET home page. */
 router.get("/", async (req, res, next) => {
@@ -29,11 +30,13 @@ router.get("/schedule/:date", async (req, res) => {
 });
 // 경기 일정 가져오는 함수
 async function fnGetMatchList(date, query) {
-  // let today = new Date();
-  // let d = date || today.toISOString().slice(0, 10);
-  console.log("query : ", query);
+  let match_query = {};
+  match_query["match_date"] = date;
+  if (query.game_type) match_query["match_type"] = query.game_type;
+  if (query.ground_id)
+    match_query["ground_id"] = mongoose.Types.ObjectId(query.ground_id);
   let result = await Match.aggregate([
-    { $match: { match_date: date } },
+    { $match: match_query },
     {
       $lookup: {
         from: "ground",

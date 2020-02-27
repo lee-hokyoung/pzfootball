@@ -65,6 +65,7 @@ router.delete("/:id", async (req, res) => {
 });
 // 경기결과 관리
 router.get("/result/manage", async (req, res) => {
+  let user = req.session.passport.user;
   let match_list = await Match.aggregate([
     { $match: { apply_member: { $gt: [] } } },
     {
@@ -80,6 +81,7 @@ router.get("/result/manage", async (req, res) => {
   res.render("admin_match_result_manage", {
     active: "match_result",
     title: "경기결과 관리",
+    user: user,
     match_list: match_list
   });
 });

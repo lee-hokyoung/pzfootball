@@ -183,14 +183,30 @@ input#datepicker {
   width: 284px;
   height: 227px;
 }
+.datepicker .datepicker-days:before{
+  content:'<';
+  position: absolute;
+  left: 208px;
+  top: 12.5px;
+  color: white;
+  cursor: pointer;
+}
+.datepicker .datepicker-days:after{
+  content:'>';
+  position: absolute;
+  right: 13px;
+  top: 12.5px;
+  color: white;
+  cursor: pointer;
+}
 .datepicker .datepicker-days thead {
   visibility: collapse;
 }
 .datepicker .datepicker-days table:after {
   content: attr(data-after);
   position: absolute;
-  top: -32px;
-  right: 17px;
+  top: -31.5px;
+  right: 15px;
   letter-spacing: -1px;
   color: white;
   font-size: 14px;
@@ -199,11 +215,15 @@ input#datepicker {
   width: 280px;
   height: 180px;
   position: relative;
-  top: 39.5px;
+  top: 41.5px;
 }
 .datepicker .datepicker-days table tr td {
   width: 40px;
   font-weight: 500;
+}
+.datepicker .datepicker-days table tr td.disabled, 
+.datepicker table tr td.new, .datepicker table tr td.old{
+  color:#999 !important;
 }
 .datepicker .datepicker-days table tr td:first-child {
   color: darkred;

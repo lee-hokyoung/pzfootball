@@ -28,7 +28,6 @@ $(".ground-list-slider")
     draggable: false
   })
   .on("afterChange", function(event, slick, currentSlide) {
-    console.log("current slide : ", currentSlide);
     // list swipe 발생시 이벤트
     let obj = document.querySelector(
       ".ground-list-slider .slick-active section"
@@ -63,9 +62,11 @@ $(".ground-list-slider")
     xhr.send();
   });
 //  datetime picker
+let today = new Date();
 $("#datepicker")
   .datepicker({
-    startDate: new Date()
+    startDate: new Date(),
+    endDate: today.addDays(27)
   })
   .on("show", function(e) {
     let today = new Date();
@@ -78,23 +79,32 @@ $("#datepicker")
   });
 //  달력 이동 함수
 function fnChangeCalendar(e) {
+  let today = new Date();
+  let now_month = today.getMonth();
   let dateAfter = document.querySelector(".table-condensed");
   let now = new Date(dateAfter.getAttribute("data-after").replace(".", "-"));
   if (e.target.className === "datepicker-days") {
+    // 이전 달력으로 이동할 때
     if (e.offsetX < 215) {
       now.setMonth(now.getMonth() - 1);
       let month =
         now.getMonth() + 1 < 10
           ? "0" + (now.getMonth() + 1)
           : now.getMonth() + 1;
+      console.log("month : ", month);
+      if (parseInt(month) <= parseInt(now_month)) return false;
       dateAfter.setAttribute("data-after", now.getFullYear() + "-" + month);
       $("#datepicker").datepicker("setDate", new Date(now));
-    } else if (e.offsetX > 267) {
+    }
+    // 다음 달력으로 이동할 떄
+    else if (e.offsetX > 267) {
       now.setMonth(now.getMonth() + 1);
       let month =
         now.getMonth() + 1 < 10
           ? "0" + (now.getMonth() + 1)
           : now.getMonth() + 1;
+      console.log("month : ", month);
+      if (parseInt(month) > parseInt(now_month) + 2) return false;
       dateAfter.setAttribute("data-after", now.getFullYear() + "-" + month);
       $("#datepicker").datepicker("setDate", new Date(now));
     }

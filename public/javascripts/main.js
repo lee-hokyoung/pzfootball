@@ -91,7 +91,6 @@ function fnChangeCalendar(e) {
         now.getMonth() + 1 < 10
           ? "0" + (now.getMonth() + 1)
           : now.getMonth() + 1;
-      console.log("month : ", month);
       if (parseInt(month) <= parseInt(now_month)) return false;
       dateAfter.setAttribute("data-after", now.getFullYear() + "-" + month);
       $("#datepicker").datepicker("setDate", new Date(now));
@@ -103,7 +102,6 @@ function fnChangeCalendar(e) {
         now.getMonth() + 1 < 10
           ? "0" + (now.getMonth() + 1)
           : now.getMonth() + 1;
-      console.log("month : ", month);
       if (parseInt(month) > parseInt(now_month) + 2) return false;
       dateAfter.setAttribute("data-after", now.getFullYear() + "-" + month);
       $("#datepicker").datepicker("setDate", new Date(now));

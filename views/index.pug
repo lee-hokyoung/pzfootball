@@ -59,7 +59,7 @@ block content
               button.btn.rounded.btn-date.font-italic(type='button', onclick='fnSelectDate(this)',
               class=d===1?'active':'',
               class=date.getDay()===0?'text-danger':date.getDay()===6?'text-primary':'text-secondary',
-              class=d===1?'btn-primary':'', data-date=date.toLocaleDateString('kr'))
+              class=d===1?'btn-primary':'', data-date=date.toISOString().slice(0,10))
                 .h6.m-0 #{date.getDate()}
                 .small #{day[date.getDay()]}
         .position-relative.mx-auto(style='line-height:50px;')

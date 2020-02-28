@@ -12,7 +12,9 @@ let curr_list = [];
 $(".main-slider").slick({
   dots: true,
   arrows: false,
-  fade: true
+  fade: true,
+  autoplay: true,
+  autoplaySpeed: 2000
 });
 //  날짜 선택하는 부분
 $(".calendar-slider").slick({

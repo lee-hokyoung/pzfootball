@@ -5,12 +5,13 @@ const mongoose = require("mongoose");
 
 // 클럽 리스트 가져오기
 router.get("/list", async (req, res) => {
+  let user = req.session.passport.user;
   let club_list = await Club.aggregate([
     { $match: {} },
     {
       $lookup: {
         from: "users",
-        localField: "club_reader",
+        localField: "club_leader",
         foreignField: "_id",
         as: "reader_info"
       }
@@ -19,6 +20,7 @@ router.get("/list", async (req, res) => {
   ]);
   res.render("admin_club_list", {
     active: "club",
+    user: user,
     club_list: club_list,
     title: "퍼즐풋볼 - 클럽관리"
   });

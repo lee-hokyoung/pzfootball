@@ -8,7 +8,7 @@ block content
             h4.card-title 클럽관리
           .card-body
             .table-responsive
-              table.table
+              table.table.text-center
                 thead
                   tr
                     th #
@@ -16,6 +16,7 @@ block content
                     th 클럽명
                     th 클럽지역
                     th 클럽리더
+                    th 인원
                     th 
                 tbody
                   - var idx = 0;
@@ -28,6 +29,7 @@ block content
                       td !{club.club_name}
                       td !{club.club_region}
                       td !{club.reader_info.user_name}
+                      td !{club.club_member.length}
                       td 
                         button.btn.btn-link.btn-danger.btn-round.btn-icon(onclick='fnRemoveClub("' + club._id + '")')
                           i.nc-icon.nc-simple-remove
@@ -35,4 +37,4 @@ block content
 block append_js
   script(src='/public_js/admin_club.js')
   script.
-    console.log('admin : ', !{JSON.stringify(club_list)})
+    console.log('club list : ', !{JSON.stringify(club_list)})

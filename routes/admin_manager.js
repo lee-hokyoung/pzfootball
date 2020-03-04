@@ -8,7 +8,8 @@ router.get("/list", async (req, res) => {
   res.render("admin_manager_list", {
     active: "manager",
     user: user,
-    title: "퍼즐풋볼 - 매니저 관리"
+    title: "퍼즐풋볼 - 매니저 관리",
+    manager_list: []
   });
 });
 module.exports = router;

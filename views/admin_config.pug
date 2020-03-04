@@ -1,0 +1,43 @@
+extends admin_layout
+block content
+  .content
+    .row
+      .col-md-6
+        .card#region-card
+          .card-header 
+            h4.card-title 지역설정
+          .card-body
+            .table-full-width
+              table.table
+                colgroup
+                  col(width='50')
+                  col
+                  col(width='100')
+                thead
+                  tr
+                    th #
+                    th 지역
+                    th
+                tbody
+                  each r, i in region
+                    tr(data-id=r._id)
+                      td #{i + 1}
+                      td.text-left(data-status='read') #{r.name}
+                      td.text-right
+                        button.btn.btn-info.btn-round.btn-icon.btn-icon-mini.btn-neutral(type="button", data-role='edit')
+                          i.nc-icon.nc-ruler-pencil
+                        button.btn.btn-danger.btn-round.btn-icon.btn-icon-mini.btn-neutral(type="button", data-role='remove')
+                          i.nc-icon.nc-simple-remove
+                  tr
+                    td
+                    td
+                      input.form-control(type="text", placeholder='지역명을 입력해주세요')
+                    td.text-center
+                      button.btn.btn-primary.btn-sm.btn-icon.btn-icon-mini(type='button', onclick='fnAddRowRegion()')
+                        i.nc-icon.nc-simple-add
+          .card-footer.text-right
+            button.btn.btn-sm.btn-success(type='button', onclick='fnSaveRegion()') 저장
+block append_js
+  script(src='/public_js/admin_config.js')
+  script.
+    console.log(!{JSON.stringify(region)})

@@ -18,6 +18,7 @@ const adminMatchRouter = require("./routes/admin_match");
 const adminGroundRouter = require("./routes/admin_ground");
 const adminClubRouter = require("./routes/admin_club");
 const adminManagerRouter = require("./routes/admin_manager");
+const adminConfigRouter = require("./routes/admin_config");
 const middle = require("./routes/middle");
 
 const app = express();
@@ -81,6 +82,7 @@ app.use("/admin/match", middle.isAdmin, adminMatchRouter);
 app.use("/admin/ground", middle.isAdmin, adminGroundRouter);
 app.use("/admin/club", middle.isAdmin, adminClubRouter);
 app.use("/admin/manager", middle.isAdmin, adminManagerRouter);
+app.use("/admin/config", middle.isAdmin, adminConfigRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

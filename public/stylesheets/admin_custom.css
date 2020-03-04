@@ -178,6 +178,14 @@ ul.list-group li.list-group-item {
 #user_list li div[class*="col-"] {
   margin: auto 0;
 }
+#region-card table.table td {
+  font-size: 0.75rem;
+  padding: 0;
+}
+#region-card table.table input {
+  font-size: 0.75rem;
+  margin: 0.5rem 0;
+}
 @media (min-width: 992px) {
   .modal-lg {
     max-width: 1200px;

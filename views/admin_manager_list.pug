@@ -2,7 +2,7 @@ extends admin_layout
 block content
   .content
     .row
-      .col-md-4
+      .col-md-12
         .card
           .card-header
             h4.card-title 매니저 관리
@@ -22,14 +22,15 @@ block content
                     .col-md-3.col-3.text-right
                       btn.btn.btn-sm.btn-outline-success.btn-round.btn-icon
                         i.fa.fa-envelope
-             
+    .row
+      .col-md-4
         .card.card-user
           .image
-            img(src="../../assets/img/bg/damir-bosnjak.jpg" alt="...")
+            img(src="/assets/img/bg/damir-bosnjak.jpg" alt="매니저 카드 배경")
           .card-body
             .author
               a(href="#")
-                img.avatar.border-gray(src="../../assets/img/mike.jpg" alt="...")
+                img.avatar.border-gray(src="/assets/img/default-avatar.png" alt="사람 모양")
                 h5.title Chet Faker
               p.description
                 | @chetfaker
@@ -68,12 +69,12 @@ block content
               .row
                 .col-md-5.pr-1
                   .form-group
-                    label Company (disabled)
-                    input.form-control(type="text" disabled="" placeholder="Company" value="Creative Code Inc.")
+                    label id (수정불가)
+                    input.form-control(type="text" disabled="" value="Creative Code Inc.")
                 .col-md-3.px-1
                   .form-group
-                    label Username
-                    input.form-control(type="text" placeholder="Username" value="michael23")
+                    label 이름
+                    input.form-control(type="text" placeholder="Username", name='manager_name' value="michael23")
                 .col-md-4.pl-1
                   .form-group
                     label(for="exampleInputEmail1") Email address

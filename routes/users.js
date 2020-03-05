@@ -22,7 +22,6 @@ router.get("/logout", (req, res) => {
 });
 router.post("/login", middle.isNotSignIn, (req, res, next) => {
   let user_id = req.body.user_id;
-  console.log("body : ", req.body);
   try {
     passport.authenticate("local", (authError, user, info) => {
       if (info) {

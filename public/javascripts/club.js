@@ -1,3 +1,4 @@
+//  클럽 생성하기
 function fnRegisterClub() {
   let club_mark = document.querySelector('div[name="club_mark"] img');
   let club_name = document.querySelector('input[name="club_name"]');
@@ -29,4 +30,19 @@ function fnRegisterClub() {
     }
   };
   xhr.send(JSON.stringify(formData));
+}
+
+//  클럽 가입하기
+function fnJoinClub(club_id) {
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", "/clubs/join", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function() {
+    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      let res = JSON.parse(this.response);
+      alert(res.message);
+      if (res.code === 1) location.reload();
+    }
+  };
+  xhr.send(JSON.stringify({ _id: club_id }));
 }

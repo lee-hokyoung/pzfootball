@@ -13,10 +13,10 @@ router.get("/list", async (req, res) => {
         from: "users",
         localField: "club_leader",
         foreignField: "_id",
-        as: "reader_info"
+        as: "leader_info"
       }
     },
-    { $unwind: "$reader_info" }
+    { $unwind: "$leader_info" }
   ]);
   res.render("admin_club_list", {
     active: "club",

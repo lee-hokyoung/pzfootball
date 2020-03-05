@@ -75,4 +75,27 @@ router.get("/:id", middle.isSignedIn, async (req, res) => {
     user_info: user_info
   });
 });
+//  클럽 가입하기
+router.post("/join", middle.isSignedIn, async (req, res) => {
+  let user_info = req.session.passport;
+  try {
+    let isExist = await Club.findOne(
+      {
+        _id: mongoose.Types.ObjectId(req.body._id),
+        club_member: mongoose.Types.ObjectId(user_info.user._id)
+      },
+      {
+        _id: 1
+      }
+    );
+    if (isExist) {
+      return res.json({ code: 0, message: "이미 가입된 클럽입니다." });
+    }
+    let result = await Club.updateOne(
+      { _id: mongoose.Types.ObjectId(req.body._id) },
+      { $push: { club_member: mongoose.Types.ObjectId(user_info.user._id) } }
+    );
+    res.json({ code: 1, message: "가입되었습니다", result: result });
+  } catch (err) {}
+});
 module.exports = router;

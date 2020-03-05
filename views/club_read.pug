@@ -8,7 +8,7 @@ block content
             label.title #{club.club_name}
           .card-body
             if(club.club_mark !== '')
-              img(src=club.club_mark)
+              img(src=club.club_mark, width='150px;')
             else
               img(src='/images/pz_logo.png', width='80px;')
             .d-block.border.py-1.px-3.mt-3.rounded
@@ -34,6 +34,10 @@ block content
                             img(src="/images/logo-small.png", width='40px')
                         .col-3 #{item.user_name}
           .card-footer
+            if(club.club_member.indexOf(user_info.user._id) === -1)
+              button.btn.btn-primary(onclick='fnJoinClub("' + club._id + '")') 가입하기
 block append_js
+  script(src='/public_js/club.js')
   script.
     console.log('club : ', !{JSON.stringify(club)})
+    console.log('user info : ', !{JSON.stringify(user_info)})

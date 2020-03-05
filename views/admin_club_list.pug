@@ -19,13 +19,12 @@ block content
                     th 인원
                     th 
                 tbody
-                  - var idx = 0;
-                  each club in club_list
+                  each club, idx in club_list
                     tr
-                      td !{++idx}
+                      td !{idx + 1}
                       td
                         .img-container
-                          img(src=club.club_mark !== "" ? club.club_mark : "/images/pz_logo.png", width="70px")
+                          img(src=club.club_mark !== "" ? club.club_mark : "\images\pz_logo.png", width="70px")
                       td !{club.club_name}
                       td !{club.club_region}
                       td !{club.reader_info.user_name}

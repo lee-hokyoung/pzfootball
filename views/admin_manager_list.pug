@@ -7,21 +7,44 @@ block content
           .card-header
             h4.card-title 매니저 관리
           .card-body
-            ul.list-unstyled.team-members
-              each manager in manager_list
-                li
-                  .row
-                    .col-md-2.col-2
-                      .avatar
-                        img.img-circle.img-no-padding.img-responsive(src="../../assets/img/faces/ayo-ogunseinde-2.jpg" alt="Circle Image")
-                    .col-md-7.col-7
-                      | DJ Khaled
-                      br
-                      span.text-muted
-                        small Offline
-                    .col-md-3.col-3.text-right
-                      btn.btn.btn-sm.btn-outline-success.btn-round.btn-icon
-                        i.fa.fa-envelope
+            .table-full-width
+              table.table.text-center
+                colgroup
+                  col(width='30')
+                  col(width='100')
+                  col(width='150')
+                  col(width='100')
+                  col(width='100')
+                  col(width='100')
+                  col(width='50')
+                thead
+                  tr
+                    th #
+                    th 
+                    th 이름
+                    th 성별
+                    th 생년월일
+                    th 연락처
+                    th
+                tbody
+                  each manager, idx in manager_list
+                    tr
+                      td #{idx + 1}
+                      td.img-row
+                        .img-wrapper(style='width:80px; height:80px;')
+                          if(manager.profile_image)
+                            img.img-raised(src=manager.profile_image)
+                          else
+                            img.img-raised(src='/assets/img/default-avatar.png')
+                      td #{manager.manager_name}
+                      td #{manager.gender === "1"?'남성':'여성'}
+                      td #{manager.birth}
+                      td #{manager.manager_phone}
+                      td
+                        button.btn.btn-info.btn-round.btn-icon.btn-icon-mini.btn-neutral(type="button", data-role='read', data-id=manager._id)
+                          i.nc-icon.nc-ruler-pencil
+                        button.btn.btn-danger.btn-round.btn-icon.btn-icon-mini.btn-neutral(type="button", data-role='remove', data-id=manager._id)
+                          i.nc-icon.nc-simple-remove
     .row
       .col-md-4
         .card.card-user
@@ -31,7 +54,7 @@ block content
             .author
               a(href="#")
                 img.avatar.border-gray(src="/assets/img/default-avatar.png" alt="사람 모양")
-                h5.title Chet Faker
+                h5.title(name='manager_name') 
               p.description
                 | @chetfaker
             p.description.text-center
@@ -40,75 +63,99 @@ block content
               |  No diggity
               br
               |  I wanna bag it up"
-          .card-footer
-            hr
-            .button-container
-              .row
-                .col-lg-3.col-md-6.col-6.ml-auto
-                  h5
-                    | 12
-                    br
-                    small Files
-                .col-lg-4.col-md-6.col-6.ml-auto.mr-auto
-                  h5
-                    | 2GB
-                    br
-                    small Used
-                .col-lg-3.mr-auto
-                  h5
-                    | 24,6$
-                    br
-                    small Spent
+          //- .card-footer
+          //-   hr
+          //-   .button-container
+          //-     .row
+          //-       .col-lg-3.col-md-6.col-6.ml-auto
+          //-         h5
+          //-           | 12
+          //-           br
+          //-           small Files
+          //-       .col-lg-4.col-md-6.col-6.ml-auto.mr-auto
+          //-         h5
+          //-           | 2GB
+          //-           br
+          //-           small Used
+          //-       .col-lg-3.mr-auto
+          //-         h5
+          //-           | 24,6$
+          //-           br
+          //-           small Spent
         
       .col-md-8
-        .card
-          .card-header
-            h5.title Edit Profile
-          .card-body
-            form
+        form(onsubmit='return fnEditManager()')
+          .card
+            .card-header
+              .d-flex.justify-content-between
+                h5.title Edit Profile
+                button.btn.btn-primary(type='button' onclick='fnReNewEditor()') 새 글 입력
+            .card-body
               .row
-                .col-md-5.pr-1
+                .col-md-5
                   .form-group
                     label id (수정불가)
-                    input.form-control(type="text" disabled="" value="Creative Code Inc.")
-                .col-md-3.px-1
+                    input.form-control(type="text", name='_id' disabled="")
+                .col-md-3
                   .form-group
                     label 이름
-                    input.form-control(type="text" placeholder="Username", name='manager_name' value="michael23")
-                .col-md-4.pl-1
+                    input.form-control(type="text", name='manager_name')
+                .col-md-4
                   .form-group
-                    label(for="exampleInputEmail1") Email address
-                    input.form-control(type="email" placeholder="Email")
+                    label(style='display:contents') 성별
+                    .mt-2
+                      .d-flex.justify-content-start
+                        .form-check-radio
+                          label.form-check-label(for='gender_1')
+                            input#gender_1.form-check-input(type="radio" name="gender" value="1")
+                            | 남성
+                            span.form-check-sign
+                        .form-check-radio.ml-3
+                          label.form-check-label(for='gender_2')
+                            input#gender_2.form-check-input(type="radio" name="gender" value="2")
+                            | 여성
+                            span.form-check-sign
               .row
-                .col-md-6.pr-1
+                .col-md-4
                   .form-group
-                    label First Name
-                    input.form-control(type="text" placeholder="Company" value="Chet")
-                .col-md-6.pl-1
+                    label 매니저 ID
+                    input.form-control(type='text', name='manager_id')
+                .col-md-4
                   .form-group
-                    label Last Name
-                    input.form-control(type="text" placeholder="Last Name" value="Faker")
+                    label 매니저 PW
+                    input.form-control(type='password', name='manager_pw')
+                .col-md-2
+                  .form-group
+                    label 생년월일
+                    input.form-control(type="text" name='birth', placeholder='ex) 901231')
+                .col-md-2
+                  .form-group
+                    label 연락처
+                    input.form-control(type="text" name='manager_phone')
               .row
-                .col-md-12
+                .col-3
+                  .fileinput.fileinput-new.text-center(data-provides="fileinput")
+                    .fileinput-new.thumbnail
+                      img(src="/assets/img/image_placeholder.jpg" alt="...")
+                    .fileinput-preview.fileinput-exists.thumbnail
+                    div
+                      span.btn.btn-rose.btn-round.btn-file
+                        span.fileinput-new 사진 등록
+                        span.fileinput-exists Change
+                        input(type="file" name="...")
+                      a.btn.btn-danger.btn-round.fileinput-exists(href="#" data-dismiss="fileinput")
+                        i.fa.fa-times
+                        |  Remove
+                .col-4
                   .form-group
-                    label Address
-                    input.form-control(type="text" placeholder="Home Address" value="Melbourne, Australia")
-              .row
-                .col-md-4.pr-1
-                  .form-group
-                    label City
-                    input.form-control(type="text" placeholder="City" value="Melbourne")
-                .col-md-4.px-1
-                  .form-group
-                    label Country
-                    input.form-control(type="text" placeholder="Country" value="Australia")
-                .col-md-4.pl-1
-                  .form-group
-                    label Postal Code
-                    input.form-control(type="number" placeholder="ZIP Code")
-              .row
-                .col-md-12
-                  .form-group
-                    label About Me
-                    textarea.form-control.textarea(rows="4" cols="80") Oh so, your weak rhyme You doubt
+                    label 유저정보 연동
+                    select.selectpicker.form-control.p-0(data-style="btn btn-info btn-round", data-live-search='true', name='user_id' data-size="7")
+                      option(value='', disabled, selected) select user
+                      each user in user_list
+                        option(value=user._id) #{user.user_name}(#{user.user_id})
+                      
+            .card-footer
+              button.btn.btn-success(type='submit') 저장  
 block append_js
+  script(src='/public_js/admin_manager.js')
+  

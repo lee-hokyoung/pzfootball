@@ -161,6 +161,10 @@ ul.list-group li.list-group-item {
 .fileinput .thumbnail {
   max-width: 400px;
 }
+.fileinput .thumbnail.fileinput-new,
+.fileinput .thumbnail.fileinput-exists {
+  max-width: 200px;
+}
 #mvp_user {
   font-size: 0.75rem;
 }
@@ -185,6 +189,19 @@ ul.list-group li.list-group-item {
 #region-card table.table input {
   font-size: 0.75rem;
   margin: 0.5rem 0;
+}
+.bootstrap-select .hidden {
+  display: none;
+}
+.bs-searchbox {
+  padding: 6px 8px;
+}
+.bs-searchbox input.form-control {
+  border-bottom: 1px solid #ddd;
+  border-radius: 5px;
+}
+.bs-searchbox input.form-control:focus {
+  border-bottom: 1px solid #9a9a9a;
 }
 @media (min-width: 992px) {
   .modal-lg {

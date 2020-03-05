@@ -19,6 +19,7 @@ function fnAddRowRegion() {
   button.className = "btn btn-danger btn-sm btn-icon btn-icon-mini";
   button.type = "button";
   button.addEventListener("click", fnRemoveRow);
+  button.tabIndex = -1;
   let i = document.createElement("i");
   i.className = "nc-icon nc-simple-remove";
   button.appendChild(i);

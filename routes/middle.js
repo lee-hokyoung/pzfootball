@@ -1,6 +1,8 @@
 const User = require("../model/user");
+const Manager = require("../model/manager");
+const mongoose = require("mongoose");
 
-// admin 관련 미들웨어
+//  admin 관련 미들웨어
 exports.isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     next();
@@ -35,7 +37,7 @@ exports.isAdmin = async (req, res, next) => {
   }
 };
 
-// 사용자 관련 미들웨어
+//  사용자 관련 미들웨어
 exports.isSignedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     next();
@@ -46,6 +48,28 @@ exports.isSignedIn = (req, res, next) => {
 exports.isNotSignIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
     next();
+  } else {
+    res.redirect("/");
+  }
+};
+
+//  매니저 관련 미들웨어
+exports.isManager = async (req, res, next) => {
+  if (req.isAuthenticated()) {
+    let user = req.session.passport.user;
+    let isManager = await Manager.findOne({
+      user_id: mongoose.Types.ObjectId(user.user_id)
+    });
+    if (isManager) {
+      req.session.manager = true;
+      next();
+    } else {
+      req.logout();
+      req.session.destroy();
+      res.send(
+        '<script>alert("매니저 권한이 없는 아이디입니다."); location.href = "/";</script>;'
+      );
+    }
   } else {
     res.redirect("/");
   }

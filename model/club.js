@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 // 클럽 스키마
 const clubSchema = new Schema({
-  id: mongoose.Schema.Types.ObjectId,
   club_name: { type: String, required: true }, // 클럽명
   club_mark: String, // 클럽 마크(엠블럼)
   club_desc: String, // 클럽 소개

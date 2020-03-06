@@ -28,16 +28,24 @@ block content
                       .row(data-id=item._id)
                         .col-1 #{++idx}
                         .col-2
-                          if(item.profile_image !== '')
+                          if(item.profile_image)
                             img(src=item.profile_image, width='40px')
                           else
-                            img(src="/images/logo-small.png", width='40px')
+                            img(src='/assets/img/default-avatar.png', alt='default avatar', width='40px')
                         .col-3 #{item.user_name}
+                        .col-6.text-right
+                          if(club.club_leader.toString() === user_info.user._id.toString())
+                            if(club.club_leader.toString() !== item._id.toString())
+                              button.btn.btn-danger.btn-sm(onclick='fnExile("' + item._id + '", "' + club._id + '")') 추방
           .card-footer
-            if(club.club_member.indexOf(user_info.user._id) === -1)
-              button.btn.btn-primary(onclick='fnJoinClub("' + club._id + '")') 가입하기
+            - var idx = club.club_member.indexOf(user_info.user._id);
+            if(club.club_leader.toString() !== user_info.user._id.toString())
+              if(club.club_member.toString().indexOf(user_info.user._id) === -1)
+                button.btn.btn-primary(onclick='fnJoinClub("' + club._id + '")') 가입하기
+              else
+                button.btn.btn-danger(onclick='fnSecession("' + club._id + '")') 탈퇴하기
+            
 block append_js
   script(src='/public_js/club.js')
   script.
-    console.log('club : ', !{JSON.stringify(club)})
-    console.log('user info : ', !{JSON.stringify(user_info)})
+    console.log('club : ', !{JSON.stringify(club)});

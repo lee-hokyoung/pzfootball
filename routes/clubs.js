@@ -98,4 +98,45 @@ router.post("/join", middle.isSignedIn, async (req, res) => {
     res.json({ code: 1, message: "가입되었습니다", result: result });
   } catch (err) {}
 });
+//  클럽 탈퇴하기
+router.delete("/:club_id", middle.isSignedIn, async (req, res) => {
+  try {
+    let user_info = req.session.passport;
+    let result = await Club.update(
+      { _id: mongoose.Types.ObjectId(req.params.club_id) },
+      {
+        $pull: { club_member: user_info.user._id }
+      }
+    );
+    res.json({ code: 1, message: "탈퇴하였습니다", result: result });
+  } catch (err) {
+    res.json({ code: 0, message: err.message });
+  }
+});
+router.patch("/exile", middle.isSignedIn, async (req, res) => {
+  try {
+    //  방장 권한 확인
+    let user_info = req.session.passport;
+    let isLeader = await Club.findOne({
+      _id: mongoose.Types.ObjectId(req.body.club_id),
+      club_leader: mongoose.Types.ObjectId(user_info.user._id)
+    });
+    if (!isLeader) {
+      return res.json({ code: 0, message: "추방 권한이 없습니다." });
+    } else {
+      let result = await Club.updateOne(
+        {
+          _id: mongoose.Types.ObjectId(req.body.club_id),
+          club_leader: mongoose.Types.ObjectId(user_info.user._id)
+        },
+        {
+          $pull: { club_member: mongoose.Types.ObjectId(req.body.user_id) }
+        }
+      );
+      return res.json({ code: 1, message: "추방했습니다", result: result });
+    }
+  } catch (err) {
+    res.json({ code: 0, message: err.message });
+  }
+});
 module.exports = router;

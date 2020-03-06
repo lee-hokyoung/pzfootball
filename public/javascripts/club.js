@@ -46,3 +46,37 @@ function fnJoinClub(club_id) {
   };
   xhr.send(JSON.stringify({ _id: club_id }));
 }
+
+//  클럽 탈퇴하기
+function fnSecession(club_id) {
+  if (confirm("정말 탈퇴하시겠습니까?")) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("DELETE", "/clubs/" + club_id);
+    xhr.setRequestHeader("Content-Type", "application/json", true);
+    xhr.onreadystatechange = function() {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        let res = JSON.parse(this.response);
+        alert(res.message);
+        if (res.code === 1) location.reload();
+      }
+    };
+    xhr.send();
+  }
+}
+
+//  클럽 추방
+function fnExile(user_id, club_id) {
+  if (confirm("정말 추방하시겠습니까?")) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("PATCH", "/clubs/exile");
+    xhr.setRequestHeader("Content-Type", "application/json", true);
+    xhr.onreadystatechange = function() {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        let res = JSON.parse(this.response);
+        alert(res.message);
+        if (res.code === 1) location.reload();
+      }
+    };
+    xhr.send(JSON.stringify({ user_id: user_id, club_id: club_id }));
+  }
+}

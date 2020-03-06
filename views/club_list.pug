@@ -14,22 +14,26 @@ block content
                   .col-4 클럽명
                   .col-2 회원수
                   .col-4 최근 경기
-              each club in club_list
-                a(href='/clubs/' + club._id)
-                  li.list-group-item.list-group-item-action
-                    .row
-                      .col-2 
-                        if(club.club_mark !== '')
-                          img(src=club.club_mark, width='50px')
+              if(club_list.length > 0)
+                each club in club_list
+                  a(href='/clubs/' + club._id)
+                    li.list-group-item.list-group-item-action
+                      .row
+                        .col-2 
+                          if(club.club_mark !== '')
+                            img(src=club.club_mark, width='50px')
+                          else
+                            img(src='/images/pz_logo.png', width='50px')
+                        .col-4 !{club.club_name}
+                        .col-2 !{club.club_member.length}
+                        if(club.club_history.length > 0)
+                          .col-4 승승승
                         else
-                          img(src='/images/pz_logo.png', width='50px')
-                      .col-4 !{club.club_name}
-                      .col-2 !{club.club_member.length}
-                      if(club.club_history.length > 0)
-                        .col-4 승승승
-                      else
-                        .col-4 없음
-                  
+                          .col-4 없음
+              else
+                li.list-group-item
+                  .row
+                    .col-12.text-center 아직 등록된 클럽이 없습니다
           .card-footer
 
 block append_js

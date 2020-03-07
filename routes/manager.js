@@ -4,7 +4,7 @@ const passport = require("passport");
 const middle = require("../routes/middle");
 const User = require("../model/user");
 
-router.get("/", async (req, res) => {
+router.get("/", middle.isManager, async (req, res) => {
   let user = req.session.passport.user;
   res.render("manager_dashboard", {
     title: "퍼즐풋볼 - 대시보드",
@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
     active: "dashboard"
   });
 });
-router.get("/match", async (req, res) => {
+router.get("/match", middle.isManager, async (req, res) => {
   let user = req.session.passport.user;
   res.render("manager_match", {
     title: "퍼즐풋볼 - 경기일정 관리",
@@ -20,8 +20,10 @@ router.get("/match", async (req, res) => {
     user: user
   });
 });
-router.post("/manager", middle.isNotLoggedIn, async (req, res, next) => {
-  passport.authenticate("local", (authError, user, info) => {
+router.post("/login", middle.isNotLoggedInByManger, async (req, res, next) => {
+  passport.authenticate("manager", (authError, user, info) => {
+    console.log("authError : ", authError);
+    console.log("info : ", info);
     if (info) {
       let script = `<script>alert("${info.message}"); location.href = "/auth/manager";</script>`;
       return res.send(script);

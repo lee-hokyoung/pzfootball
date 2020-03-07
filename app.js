@@ -84,7 +84,7 @@ app.use("/admin/ground", middle.isAdmin, adminGroundRouter);
 app.use("/admin/club", middle.isAdmin, adminClubRouter);
 app.use("/admin/manager", middle.isAdmin, adminManagerRouter);
 app.use("/admin/config", middle.isAdmin, adminConfigRouter);
-app.use("/manager", middle.isManager, managerRouter);
+app.use("/manager", managerRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -2,6 +2,8 @@ const local = require("./localStrategy");
 const kakao = require("./kakaoStrategy");
 const naver = require("./naverStrategy");
 const userModel = require("../model/user");
+const managerModel = require("../model/manager");
+const mongoose = require("mongoose");
 /*
  *   전체 과정
  *   1. 로그인 요청이 들어옴
@@ -15,28 +17,35 @@ const userModel = require("../model/user");
 module.exports = passport => {
   // 세션에 아이디를 저장
   passport.serializeUser((user, done) => {
-    // console.log("serializeUser user : ", user);
     done(null, {
       _id: user._id,
       user_id: user.user_id,
-      user_name: user.user_name,
-      user_nickname: user.user_nickname,
-      user_email: user.user_email,
-      point: user.point
+      user_name: user.user_name || user.manager_name,
+      user_nickname: user.user_nickname || user.manager_name,
+      user_email: user.user_email || "",
+      point: user.point || 0,
+      isManager: user.manager_id ? true : false
     });
   });
   // 세션에 저장한 아이디를 통해 사용자 정보 객체 불러오기
   passport.deserializeUser(async (_user, done) => {
-    let user = await userModel.findOne(
-      { user_id: _user.user_id },
-      {
-        user_id: 1,
-        user_name: 1,
-        admin: 1,
-        point: 1
-      }
-    );
-    // console.log("deserial uesr : ", user);
+    let user = null;
+    if (_user.isManager) {
+      user = await managerModel.findOne(
+        { _id: mongoose.Types.ObjectId(_user._id) },
+        { manager_id: 1, manager_name: 1 }
+      );
+    } else {
+      user = await userModel.findOne(
+        { user_id: _user.user_id },
+        {
+          user_id: 1,
+          user_name: 1,
+          admin: 1,
+          point: 1
+        }
+      );
+    }
     try {
       done(null, user);
     } catch (e) {

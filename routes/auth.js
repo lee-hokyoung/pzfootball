@@ -18,4 +18,11 @@ router.get(
     res.redirect("/");
   }
 );
+
+//  매니저 관련 로그인 페이지로 이동
+router.get("/manager", async (req, res) => {
+  res.render("manager_login", {
+    title: "퍼즐풋볼 - 매니저 로그인"
+  });
+});
 module.exports = router;

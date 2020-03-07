@@ -1,0 +1,76 @@
+doctype html
+html(lang="en")
+	head
+		meta(charset="utf-8")
+		link(rel="apple-touch-icon" type='image/x-icon' sizes="16x16" href="/assets/img/favicon.ico")
+		link(rel="shortcut icon" href="/assets/img/favicon.ico")
+		meta(http-equiv="X-UA-Compatible" content="IE=edge,chrome=1")
+		title !{title}
+		meta(content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no" name="viewport")
+		// Fonts and icons
+		link(href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200|Jua" rel="stylesheet")
+		link(href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet")
+		// CSS Files
+		link(href="/assets/css/bootstrap.min.css" rel="stylesheet")
+		link(href="/assets/css/paper-dashboard.css" rel="stylesheet")
+		// CSS Just for demo purpose, don't include it in your project
+		link(href="/assets/demo/demo.css" rel="stylesheet")
+		link(href='/public_css/admin_custom.css', rel='stylesheet')
+		link(href='/public_css/admin_font.css', rel='stylesheet')
+	body
+		.wrapper
+			include manager_sidebar
+			.main-panel
+				// Navbar
+				include manager_nav
+				// End Navbar
+				block content
+
+				footer.footer.footer-black.footer-white
+					.container-fluid
+						.row
+							.credits.ml-auto
+								span.copyright
+									| © YWM GROUP made with
+									i.fa.fa-heart.heart
+									|  by Ho.IT
+		// Core JS Files
+		script(src="/assets/js/core/jquery.min.js")
+		script(src="/assets/js/core/popper.min.js")
+		script(src="/assets/js/core/bootstrap.min.js")
+		script(src="/assets/js/plugins/perfect-scrollbar.jquery.min.js")
+		script(src="/assets/js/plugins/moment.min.js")
+		// Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/
+		script(src="/assets/js/plugins/bootstrap-switch.js")
+		// Plugin for Sweet Alert
+		script(src="/assets/js/plugins/sweetalert2.min.js")
+		// Forms Validations Plugin
+		script(src="/assets/js/plugins/jquery.validate.min.js")
+		// Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard
+		script(src="/assets/js/plugins/jquery.bootstrap-wizard.js")
+		// Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select
+		script(src="/assets/js/plugins/bootstrap-selectpicker.js")
+		// Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/
+		script(src="/assets/js/plugins/bootstrap-datetimepicker.js")
+		// DataTables.net Plugin, full documentation here: https://datatables.net/
+		script(src="/assets/js/plugins/jquery.dataTables.min.js")
+		// Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs
+		script(src="/assets/js/plugins/bootstrap-tagsinput.js")
+		// Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput
+		script(src="/assets/js/plugins/jasny-bootstrap.min.js")
+		// Full Calendar Plugin, full documentation here: https://github.com/fullcalendar/fullcalendar
+		script(src="/assets/js/plugins/fullcalendar.min.js")
+		// Vector Map plugin, full documentation here: http://jvectormap.com/documentation/
+		script(src="/assets/js/plugins/jquery-jvectormap.js")
+		// Plugin for the Bootstrap Table
+		script(src="/assets/js/plugins/nouislider.min.js")
+		// Google Maps Plugin
+		//script(src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE")
+		// Chart JS
+		script(src="/assets/js/plugins/chartjs.min.js")
+		// Notifications Plugin
+		script(src="/assets/js/plugins/bootstrap-notify.js")
+		// Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc
+		script(src="/assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript")
+		script(src="/assets/demo/demo.js" type="text/javascript")
+		block append_js

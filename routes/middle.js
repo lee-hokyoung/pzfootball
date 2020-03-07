@@ -71,6 +71,20 @@ exports.isManager = async (req, res, next) => {
       );
     }
   } else {
-    res.redirect("/");
+    res.redirect("/auth/manager");
+  }
+};
+exports.isLoggedInByManager = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    res.redirect("/auth/manager");
+  }
+};
+exports.isNotLoggedInByManger = (req, res, next) => {
+  if (!req.isAuthenticated()) {
+    next();
+  } else {
+    res.redirect("/auth/manager");
   }
 };

@@ -1,0 +1,18 @@
+.sidebar(data-color="brown" data-active-color="danger")
+  //
+    Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+  .logo
+    a.simple-text.logo-mini(href="/")
+      .logo-image-small
+        i.fa.fa-user
+    a.simple-text.logo-normal(href="/") 퍼즐풋볼
+      //
+        <div class="logo-image-big">
+        <img src="/nm/paper-dashboard-2/assets/img/logo-big.png">
+        </div>
+  .sidebar-wrapper
+    ul.nav
+      li(class=active === 'match' ? 'active' : '')
+        a(href='/manager/match')
+          i.nc-icon.nc-trophy
+          p 경기일정 관리

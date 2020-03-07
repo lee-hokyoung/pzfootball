@@ -2,10 +2,11 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const middle = require("../routes/middle");
-const User = require("../model/user");
+const Manager = require("../model/manager");
 
 router.get("/", middle.isManager, async (req, res) => {
   let user = req.session.passport.user;
+
   res.render("manager_dashboard", {
     title: "퍼즐풋볼 - 대시보드",
     user: user,

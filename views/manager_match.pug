@@ -1,2 +1,33 @@
-extends layout
+extends admin_layout
 block content
+	.content
+		.row
+			.col-12
+				.card
+					.card-header
+						.d-flex.justify-content-between
+							h4.card-title 경기일정 관리
+							a.btn.btn-primary(href='/admin/match/register') 일정 등록
+					.card-body
+						.table-responsive
+							table.table
+								thead
+									th #
+									th 장소
+									th 시간
+									th 날짜
+									th 구분
+									th 금액
+								tbody
+									//- each match, idx in list
+									//- 	tr
+									//- 		td #{idx + 1}
+									//- 		td #{match.label_title}
+									//- 		td #{match.label_time}
+									//- 		td
+									//- 		td #{match.label_sex}
+									//- 		td #{match.label_cash}
+					.card-footer
+block append_js
+	script.
+		console.log('list : ', !{JSON.stringify(list)});

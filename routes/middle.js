@@ -58,7 +58,7 @@ exports.isManager = async (req, res, next) => {
   if (req.isAuthenticated()) {
     let user = req.session.passport.user;
     let isManager = await Manager.findOne({
-      user_id: mongoose.Types.ObjectId(user.user_id)
+      user_id: mongoose.Types.ObjectId(user._id)
     });
     if (isManager) {
       req.session.manager = true;

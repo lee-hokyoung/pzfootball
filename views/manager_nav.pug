@@ -19,13 +19,13 @@ nav.navbar.navbar-expand-lg.navbar-absolute.fixed-top.navbar-transparent
 			ul.navbar-nav
 				if(user)
 					li.nav-item
-						a.nav-link.btn-rotate(href="/admin/logout")
+						a.nav-link.btn-rotate(href="/manager/logout")
 							i.nc-icon.nc-button-power.text-success
 							p
 								span.d-lg-none.d-md-block LogOut
 				else
 					li.nav-item
-						a.nav-link.btn-rotate(href="/admin/login")
+						a.nav-link.btn-rotate(href="/auth/manager")
 							i.nc-icon.nc-button-power.text-danger
 							p
 								span.d-lg-none.d-md-block LogIn

@@ -6,7 +6,7 @@ const Manager = require("../model/manager");
 
 router.get("/", middle.isManager, async (req, res) => {
   let user = req.session.passport.user;
-
+  let manager_info = await Manager.findOne();
   res.render("manager_dashboard", {
     title: "퍼즐풋볼 - 대시보드",
     user: user,
@@ -21,10 +21,10 @@ router.get("/match", middle.isManager, async (req, res) => {
     user: user
   });
 });
+
+//  매니저 로그인
 router.post("/login", middle.isNotLoggedInByManger, async (req, res, next) => {
   passport.authenticate("manager", (authError, user, info) => {
-    console.log("authError : ", authError);
-    console.log("info : ", info);
     if (info) {
       let script = `<script>alert("${info.message}"); location.href = "/auth/manager";</script>`;
       return res.send(script);
@@ -45,5 +45,11 @@ router.post("/login", middle.isNotLoggedInByManger, async (req, res, next) => {
       res.redirect("/manager");
     });
   })(req, res, next);
+});
+//  매니저 로그아웃
+router.get("/logout", middle.isLoggedInByManager, (req, res) => {
+  req.logout();
+  req.session.destroy();
+  res.redirect("/auth/manager");
 });
 module.exports = router;

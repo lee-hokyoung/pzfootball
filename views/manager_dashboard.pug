@@ -1,10 +1,109 @@
 extends manager_layout
 block content
-	.content
-		.row
-			.col-12
-				.card
-					.card-header
-					.card-body
-					.card-footer
+  .content
+    .row
+      .col-md-4
+        .card.card-user
+          .image
+            img(src="/assets/img/bg/damir-bosnjak.jpg" alt="매니저 카드 배경")
+          .card-body
+            .author
+              a(href="#")
+                img.avatar.border-gray(src="/assets/img/default-avatar.png" alt="사람 모양")
+                h5.title(name='manager_name') 
+              p.description
+                | @chetfaker
+            p.description.text-center
+              | "I like the way you work it
+              br
+              |  No diggity
+              br
+              |  I wanna bag it up"
+          //- .card-footer
+          //-   hr
+          //-   .button-container
+          //-     .row
+          //-       .col-lg-3.col-md-6.col-6.ml-auto
+          //-         h5
+          //-           | 12
+          //-           br
+          //-           small Files
+          //-       .col-lg-4.col-md-6.col-6.ml-auto.mr-auto
+          //-         h5
+          //-           | 2GB
+          //-           br
+          //-           small Used
+          //-       .col-lg-3.mr-auto
+          //-         h5
+          //-           | 24,6$
+          //-           br
+          //-           small Spent
+        
+      .col-md-8
+        form(onsubmit='return fnEditManager()')
+          .card
+            .card-header
+              .d-flex.justify-content-between
+                h5.title Edit Profile
+                button.btn.btn-primary(type='button' onclick='fnReNewEditor()') 새 글 입력
+            .card-body
+              .row
+                .col-md-5
+                  .form-group
+                    label id (수정불가)
+                    input.form-control(type="text", name='_id' disabled="")
+                .col-md-3
+                  .form-group
+                    label 이름
+                    input.form-control(type="text", name='manager_name')
+                .col-md-4
+                  .form-group
+                    label(style='display:contents') 성별
+                    .mt-2
+                      .d-flex.justify-content-start
+                        .form-check-radio
+                          label.form-check-label(for='gender_1')
+                            input#gender_1.form-check-input(type="radio" name="gender" value="1")
+                            | 남성
+                            span.form-check-sign
+                        .form-check-radio.ml-3
+                          label.form-check-label(for='gender_2')
+                            input#gender_2.form-check-input(type="radio" name="gender" value="2")
+                            | 여성
+                            span.form-check-sign
+              .row
+                .col-md-4
+                  .form-group
+                    label 매니저 ID
+                    input.form-control(type='text', name='manager_id')
+                .col-md-4
+                  .form-group
+                    label 매니저 PW
+                    input.form-control(type='password', name='manager_pw')
+                .col-md-2
+                  .form-group
+                    label 생년월일
+                    input.form-control(type="text" name='birth', placeholder='ex) 901231')
+                .col-md-2
+                  .form-group
+                    label 연락처
+                    input.form-control(type="text" name='manager_phone')
+              .row
+                .col-3
+                  .fileinput.fileinput-new.text-center(data-provides="fileinput")
+                    .fileinput-new.thumbnail
+                      img(src="/assets/img/image_placeholder.jpg" alt="...")
+                    .fileinput-preview.fileinput-exists.thumbnail
+                    div
+                      span.btn.btn-rose.btn-round.btn-file
+                        span.fileinput-new 사진 등록
+                        span.fileinput-exists Change
+                        input(type="file" name="...")
+                      a.btn.btn-danger.btn-round.fileinput-exists(href="#" data-dismiss="fileinput")
+                        i.fa.fa-times
+                        |  Remove
+            .card-footer
+              button.btn.btn-success(type='submit') 저장  
 block append_js
+  script(src='/public_js/admin_manager.js')
+  

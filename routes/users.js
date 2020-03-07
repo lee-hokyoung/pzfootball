@@ -18,6 +18,7 @@ router.get("/login", (req, res) => {
 });
 router.get("/logout", (req, res) => {
   req.session.destroy();
+  req.logout();
   res.redirect("/");
 });
 router.post("/login", middle.isNotSignIn, (req, res, next) => {

@@ -203,6 +203,16 @@ ul.list-group li.list-group-item {
 .bs-searchbox input.form-control:focus {
   border-bottom: 1px solid #9a9a9a;
 }
+.picture input[type="file"] {
+  cursor: pointer;
+  display: block;
+  height: 100%;
+  left: 0;
+  opacity: 0 !important;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
 @media (min-width: 992px) {
   .modal-lg {
     max-width: 1200px;

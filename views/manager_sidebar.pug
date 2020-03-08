@@ -12,6 +12,10 @@
         </div>
   .sidebar-wrapper
     ul.nav
+      li(class=active === 'dashboard' ? 'active' : '')
+        a(href='/manager')
+          i.nc-icon.nc-layout-11
+          p 대시보드
       li(class=active === 'match' ? 'active' : '')
         a(href='/manager/match')
           i.nc-icon.nc-trophy

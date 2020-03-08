@@ -18,7 +18,10 @@ const matchSchema = new Schema({
   match_grade: String, // 실력
   ladder: Number, // 승점제 유무, 1: 승점제, 0: 승점제 x
   sex: Number, // 성별 1: 남성매치, -1: 여성매치, 0: 혼성매치
-  personnel: Number, // 정원
+  personnel: {
+    min: Number,
+    max: Number
+  }, // 정원
   apply_member: [
     {
       _id: {

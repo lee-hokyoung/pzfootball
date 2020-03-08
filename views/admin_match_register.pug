@@ -43,24 +43,24 @@ block content
               .row
                 .col-md-12
                   h6.py-3.m-0
-                  ul.list-group.list-group-flush
+                  ul.list-group.list-group-flush#match-register
                     li.list-group-item.list-group-item-primary
                       .row
-                        .col #
-                        .col-1 시간
-                        .col-3 타입
-                        .col-2 실력
-                        .col-2 성별
-                        .col-1 인원수
-                        .col-1 금액
-                        .col-1
+                        .col(data-title='#') #
+                        .col(data-title='match_time') 시간
+                        .col(data-title='match_type') 타입
+                        .col(data-title='match_grade') 실력
+                        .col(data-title='sex') 성별
+                        .col(data-title='personnel') 인원수
+                        .col(data-title='match_price') 금액
+                        .col(data-title='buttons')
                     each item, idx in match_list
                       li.list-group-item
                         .row(data-id=item._id)
-                          .col #{idx + 1}
-                          .col-1(name='match_time') #{item.match_time}
-                          .col-3(name='match_type', data-value=item.match_type) #{item.match_type} 파전 #{item.ladder === 1 ? " 승점제 경기":""}
-                          .col-2(name='match_grade', data-value=item.match_grade)
+                          .col(data-title='#') #{idx + 1}
+                          .col(data-title='match_time', name='match_time') #{item.match_time}
+                          .col(data-title='match_type' name='match_type', data-value=item.match_type) #{item.match_type} 파전 #{item.ladder === 1 ? " 승점제 경기":""}
+                          .col(data-title='match_grade' name='match_grade', data-value=item.match_grade)
                             case item.match_grade
                               when "1"
                                 | 상
@@ -68,7 +68,7 @@ block content
                                 | 중
                               when "3"
                                 | 하
-                          .col-2(name='sex', data-value=item.sex)
+                          .col(data-title='sex' name='sex', data-value=item.sex)
                             case item.sex
                               when 1
                                 | 남성
@@ -76,22 +76,22 @@ block content
                                 | 여성
                               when 0
                                 | 혼성
-                          .col-1(name='personnel') #{item.personnel}
-                          .col-1(name='match_price') #{item.match_price}
-                          .col-1
-                            button.btn.btn-sm.m-0.btn-success(title='수정', onclick="fnUpdate('" + item._id + "')")
-                              i.nc-icon.nc-settings
-                            button.btn.btn-sm.m-0.btn-danger(title='삭제', onclick="fnDelete('" + item._id + "')")
-                              i.nc-icon.nc-simple-remove
+                          .col(data-title='personnel', name='personnel', data-min=item.personnel.min, data-max=item.personnel.max) #{item.personnel.min} ~ #{item.personnel.max}
+                          .col(data-title='match_price' name='match_price') #{item.match_price}
+                          .col(data-title='buttons')
+                            button.btn.btn-sm.m-0.btn-success.btn-link(title='수정', onclick="fnUpdate('" + item._id + "')")
+                              i.fa.fa-edit
+                            button.btn.btn-sm.m-0.btn-danger.btn-link(title='삭제', onclick="fnDelete('" + item._id + "')")
+                              i.fa.fa-times
                           input(type='hidden', name='ladder', value=item.ladder)
                     #match_list
                     li.list-group-item
                       .row
-                        .col #
-                        .col-1
+                        .col(data-title='#') #
+                        .col(data-title='match_time')
                           .form-group
                             input.form-control.py-1#matchTime(type='text', name='match_time')
-                        .col-3
+                        .col(data-title='match_type')
                           .form-check-radio.form-check-inline
                             label.form-check-label
                               input.form-check-input(type="radio", name='match_type', value='2')
@@ -104,7 +104,7 @@ block content
                             label.form-check-label
                               input.form-check-input(type="checkbox", name="ladder")
                               span.form-check-sign 승점제 경기
-                        .col-2
+                        .col(data-title='match_grade')
                           .form-check-radio.form-check-inline
                             label.form-check-label
                               input.form-check-input(type="radio", name="match_grade", value='1')
@@ -117,7 +117,7 @@ block content
                             label.form-check-label
                               input.form-check-input(type="radio", name="match_grade", value='3')
                               span.form-check-sign 하
-                        .col-2
+                        .col(data-title='sex')
                           .form-check-radio.form-check-inline
                             label.form-check-label
                               input.form-check-input(type="radio", name="sex", value='1')
@@ -130,13 +130,15 @@ block content
                             label.form-check-label
                               input.form-check-input(type="radio", name="sex", value='0')
                               span.form-check-sign 혼성
-                        .col-1
+                        .col(data-title='personnel')
                           .form-group
-                            input.form-control.py-1(type='number', name='personnel')
-                        .col-1
+                            input.form-control.py-1(type='number', name='personnel-min')
+                            span ~ 
+                            input.form-control.py-1(type='number', name='personnel-max')
+                        .col(data-title='match_price')
                           .form-group
                             input.form-control.py-1(type='number', name='match_price')
-                        .col-1
+                        .col(data-title='buttons').text-right
                           button.btn.btn-primary.btn-sm.m-0#registerMatch(type='button') 등록
           .card-footer
 block append_js

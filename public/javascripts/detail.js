@@ -5,7 +5,6 @@ $(".detail-slider").slick({
 });
 //  클립보드에 주소 복사
 document.querySelector(".copy").addEventListener("click", function() {
-  console.log($(this));
   let copiedText = $(this).data().copy;
   var tempElem = document.createElement("textarea");
   tempElem.value = copiedText;
@@ -27,7 +26,6 @@ function fnApplyGame() {
     alert("로그인이 필요합니다.");
     $("#loginModal").modal("show");
   }
-  console.log("is logged in : ", isLoggedIn);
 }
 // 포인트 확인
 function fnGetUserPoint() {

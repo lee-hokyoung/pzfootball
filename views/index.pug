@@ -112,7 +112,7 @@ block content
                           if(game.ladder===1)
                             .ladder_icon.ml-2 승점
                       - var status ='available';
-                      - var remains = game.personnel - (game.apply_member.length || 0);
+                      - var remains = game.personnel.max - (game.apply_member.length || 0);
                       if(remains >= 4)
                         - status = 'available'
                       else if(remains >= 1 && remains < 4)

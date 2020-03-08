@@ -4,7 +4,7 @@
         .modal-header
           h6 매치 정보 확인
         .modal-body
-          - var remain = match_info.personnel - match_info.apply_member.length;
+          - var remain = match_info.personnel.max - match_info.apply_member.length;
           - var n = 0;
           .input-groun
             label 신청인원

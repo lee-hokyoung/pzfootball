@@ -1,3 +1,21 @@
+//  매니저 배정하기
+document
+  .querySelector("#select-manager")
+  .addEventListener("change", function() {
+    console.log(this);
+    let game_id = "";
+    let manager_id = this.value;
+    let xhr = new XMLHttpRequest();
+    xhr.open("PUT", "/admin/manager/assign", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function() {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      }
+    };
+    xhr.send();
+  });
+
+//  매니저 기능으로 넘겨야 할 내용
 function fnShowResultModal(id) {
   let xhr = new XMLHttpRequest();
   xhr.open("GET", "/admin/match/" + id);

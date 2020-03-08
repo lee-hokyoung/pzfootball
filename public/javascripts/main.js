@@ -68,7 +68,7 @@ function fnGenerateGroundList(res, currentSlide) {
   let html = "";
   if (res.length > 0) {
     res.forEach(function(game, idx) {
-      let remain = game.personnel - (game.apply_member.length || 0);
+      let remain = game.personnel.max - (game.apply_member.length || 0);
       let status = "available";
       if (remain >= 1 && remain < 4) {
         status = "hurry";

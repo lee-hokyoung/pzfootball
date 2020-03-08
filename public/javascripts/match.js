@@ -66,7 +66,8 @@ function fnGenerateRow(item) {
   let ladder = item.querySelector('input[name="ladder"]');
   let match_grade = item.querySelector('input[name="match_grade"]:checked');
   let sex = item.querySelector('input[name="sex"]:checked');
-  let personnel = item.querySelector('input[name="personnel"]');
+  let personnel_min = item.querySelector('input[name="personnel-min"]');
+  let personnel_max = item.querySelector('input[name="personnel-max"]');
   let match_price = item.querySelector('input[name="match_price"]');
 
   // 유효성 검증
@@ -92,9 +93,8 @@ function fnGenerateRow(item) {
     alert("성별을 선택해 주세요");
     return false;
   }
-  if (personnel.value === "") {
+  if (personnel_min.value === "" || personnel_max.value === "") {
     alert("인원수를 입력해 주세요");
-    personnel.focus();
     return false;
   }
   if (match_price.value === "") {
@@ -112,7 +112,10 @@ function fnGenerateRow(item) {
   formData["match_grade"] = match_grade.value;
   formData["ladder"] = ladder.checked ? 1 : 0;
   formData["sex"] = sex.value;
-  formData["personnel"] = personnel.value;
+  formData["personnel"] = {
+    min: Number(personnel_min.value),
+    max: Number(personnel_max.value)
+  };
   formData["match_price"] = match_price.value;
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "/admin/match/register", true);
@@ -145,9 +148,11 @@ function fnSetNewRow(doc) {
   // 첫번째 컬럼 #
   let col_1 = document.createElement("div");
   col_1.className = "col";
+  col_1.dataset.title = "#";
   // 두번째 컬럼(시간)
   let col_2 = document.createElement("div");
-  col_2.className = "col-1";
+  col_2.className = "col";
+  col_2.dataset.title = "match_time";
   let formGroup = document.createElement("div");
   let input = document.createElement("input");
   input.className = "form-control py-1";
@@ -159,7 +164,8 @@ function fnSetNewRow(doc) {
   col_2.appendChild(formGroup);
   // 세번째 컬럼 타입(2파전, 3파전, 승점제경기 유무)
   let col_3 = document.createElement("div");
-  col_3.className = "col-3";
+  col_3.className = "col";
+  col_3.dataset.title = "match_type";
   ["2", "3"].forEach(function(v) {
     formGroup = document.createElement("div");
     formGroup.className = "form-check-radio form-check-inline";
@@ -198,7 +204,8 @@ function fnSetNewRow(doc) {
   col_3.appendChild(formGroup);
   // 네번째 컬럼(실력: 상, 중, 하)
   let col_4 = document.createElement("div");
-  col_4.className = "col-2";
+  col_4.className = "col";
+  col_4.dataset.title = "match_grade";
   [
     { lbl: "상", val: "1" },
     { lbl: "중", val: "2" },
@@ -225,7 +232,8 @@ function fnSetNewRow(doc) {
   });
   // 다섯번째 컬럼(성별)
   let col_5 = document.createElement("div");
-  col_5.className = "col-2";
+  col_5.className = "col";
+  col_5.dataset.title = "sex";
   [
     { lbl: "남성", val: 1 },
     { lbl: "여성", val: -1 },
@@ -252,20 +260,30 @@ function fnSetNewRow(doc) {
   });
   // 여섯번째 컬럼(인원수)
   let col_6 = document.createElement("div");
-  col_6.className = "col-1";
+  col_6.className = "col";
+  col_6.dataset.title = "psersonnel";
   formGroup = document.createElement("div");
   formGroup.className = "form-group";
   input = document.createElement("input");
   input.className = "form-control py-1";
   input.setAttribute("type", "text");
-  input.setAttribute("name", "personnel");
-  // input.readOnly = true;
-  input.value = personnel;
+  input.setAttribute("name", "personnel-min");
+  input.value = personnel.min;
+  formGroup.appendChild(input);
+  span = document.createElement("span");
+  span.innerText = " ~ ";
+  formGroup.appendChild(span);
+  input = document.createElement("input");
+  input.className = "form-control py-1";
+  input.setAttribute("type", "text");
+  input.setAttribute("name", "personnel-max");
+  input.value = personnel.max;
   formGroup.appendChild(input);
   col_6.appendChild(formGroup);
   // 일곱번째 컬럼(금액)
   let col_7 = document.createElement("div");
-  col_7.className = "col-1";
+  col_7.className = "col";
+  col_7.dataset.title = "match_price";
   formGroup = document.createElement("div");
   formGroup.className = "form-group";
   input = document.createElement("input");
@@ -278,7 +296,8 @@ function fnSetNewRow(doc) {
   col_7.appendChild(formGroup);
   // 여덟번째 컬럼
   let col_8 = document.createElement("div");
-  col_8.className = "col-1";
+  col_8.className = "col";
+  col_8.dataset.title = "buttons";
 
   row.appendChild(col_1);
   row.appendChild(col_2);
@@ -302,17 +321,19 @@ function fnUpdate(_id) {
   let match_type = r.querySelector("div[name='match_type']").dataset.value;
   let match_grade = r.querySelector("div[name='match_grade']").dataset.value;
   let sex = r.querySelector("div[name='sex']").dataset.value;
-  let personnel = r.querySelector("div[name='personnel']").innerText;
+  let personnel = r.querySelector("div[name='personnel']");
   let match_price = r.querySelector("div[name='match_price']").innerText;
   let ladder = r.querySelector("input").value;
 
   // 첫번째 컬럼 #
   let col_1 = document.createElement("div");
   col_1.className = "col";
+  col_1.dataset.title = "#";
   col_1.innerText = idx;
   // 두번째 컬럼(시간)
   let col_2 = document.createElement("div");
-  col_2.className = "col-1";
+  col_2.className = "col";
+  col_2.dataset.title = "match_time";
   let formGroup = document.createElement("div");
   let input = document.createElement("input");
   input.className = "form-control py-1";
@@ -324,7 +345,8 @@ function fnUpdate(_id) {
   col_2.appendChild(formGroup);
   // 세번째 컬럼 타입(2파전, 3파전, 승점제경기 유무)
   let col_3 = document.createElement("div");
-  col_3.className = "col-3";
+  col_3.className = "col";
+  col_3.dataset.title = "match_type";
   ["2", "3"].forEach(function(v) {
     formGroup = document.createElement("div");
     formGroup.className = "form-check-radio form-check-inline";
@@ -363,7 +385,8 @@ function fnUpdate(_id) {
   col_3.appendChild(formGroup);
   // 네번째 컬럼(실력: 상, 중, 하)
   let col_4 = document.createElement("div");
-  col_4.className = "col-2";
+  col_4.className = "col";
+  col_4.dataset.title = "match_grade";
   [
     { lbl: "상", val: "1" },
     { lbl: "중", val: "2" },
@@ -390,7 +413,8 @@ function fnUpdate(_id) {
   });
   // 다섯번째 컬럼(성별)
   let col_5 = document.createElement("div");
-  col_5.className = "col-2";
+  col_5.className = "col";
+  col_5.dataset.title = "sex";
   [
     { lbl: "남성", val: "1" },
     { lbl: "여성", val: "-1" },
@@ -417,20 +441,30 @@ function fnUpdate(_id) {
   });
   // 여섯번째 컬럼(인원수)
   let col_6 = document.createElement("div");
-  col_6.className = "col-1";
+  col_6.className = "col";
+  col_6.dataset.title = "personnel";
   formGroup = document.createElement("div");
   formGroup.className = "form-group";
   input = document.createElement("input");
   input.className = "form-control py-1";
   input.setAttribute("type", "text");
-  input.setAttribute("name", "personnel");
-  // input.readOnly = true;
-  input.value = personnel;
+  input.setAttribute("name", "personnel-min");
+  input.value = personnel.dataset.min;
+  formGroup.appendChild(input);
+  span = document.createElement("span");
+  span.innerText = " ~ ";
+  formGroup.appendChild(span);
+  input = document.createElement("input");
+  input.className = "form-control py-1";
+  input.setAttribute("type", "text");
+  input.setAttribute("name", "personnel-max");
+  input.value = personnel.dataset.max;
   formGroup.appendChild(input);
   col_6.appendChild(formGroup);
   // 일곱번째 컬럼(금액)
   let col_7 = document.createElement("div");
-  col_7.className = "col-1";
+  col_7.className = "col";
+  col_7.dataset.title = "match_price";
   formGroup = document.createElement("div");
   formGroup.className = "form-group";
   input = document.createElement("input");
@@ -443,9 +477,10 @@ function fnUpdate(_id) {
   col_7.appendChild(formGroup);
   // 여덟번째 컬럼
   let col_8 = document.createElement("div");
-  col_8.className = "col-1";
+  col_8.className = "col";
+  col_8.dataset.title = "buttons";
   let button = document.createElement("button");
-  button.className = "btn btn-sm btn-success m-0";
+  button.className = "btn btn-sm btn-success m-0 btn-link";
   button.setAttribute("title", "수정");
   button.addEventListener("click", function() {
     let updateForm = {};
@@ -466,9 +501,11 @@ function fnUpdate(_id) {
     updateForm["sex"] = target_row.querySelector(
       'input[name="sex_' + _id + '"]:checked'
     ).value;
-    updateForm["personnel"] = target_row.querySelector(
-      'input[name="personnel"]'
-    ).value;
+    updateForm["personnel"] = {
+      min: target_row.querySelector('input[name="personnel-min"]').value,
+      max: target_row.querySelector('input[name="personnel-max"]').value
+    };
+    // target_row.querySelector('input[name="personnel"]').value;
     updateForm["match_price"] = target_row.querySelector(
       'input[name="match_price"]'
     ).value;
@@ -487,18 +524,18 @@ function fnUpdate(_id) {
     xhr.send(JSON.stringify(updateForm));
   });
   let icon = document.createElement("i");
-  icon.className = "nc-icon nc-check-2";
+  icon.className = "fa fa-check";
   button.appendChild(icon);
   col_8.appendChild(button);
 
   button = document.createElement("button");
-  button.className = "btn btn-sm btn-danger m-0";
+  button.className = "btn btn-sm btn-danger m-0 btn-link";
   button.setAttribute("title", "취소");
   button.addEventListener("click", function() {
     fnDelete(_id);
   });
   icon = document.createElement("i");
-  icon.className = "nc-icon nc-simple-remove";
+  icon.className = "fa fa-times";
   button.appendChild(icon);
   col_8.appendChild(button);
 

@@ -82,7 +82,7 @@ block content
                         .col #{match.match_date.slice(5)}
                         .col #{match.match_time}
                         .col-5 #{match.ground_info.groundName}
-                        .col-2 #{match.apply_member.length} / #{match.personnel}
+                        .col-2 #{match.apply_member.length} / #{match.personnel.max}
                         .col-2 #{match.isPlay?"종료":"진행중"}
               else
                 li.list-group-item 일정이 없습니다.

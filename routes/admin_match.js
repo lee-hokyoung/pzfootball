@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Match = require("../model/match");
 const Ground = require("../model/ground");
+const Manager = require("../model/manager");
 const mongoose = require("mongoose");
 
 // 일정 리스트 가져오기
@@ -78,11 +79,13 @@ router.get("/result/manage", async (req, res) => {
     },
     { $unwind: "$ground_info" }
   ]);
+  let manager_list = await Manager.find({}, { manager_name: 1, manager_id: 1 });
   res.render("admin_match_result_manage", {
     active: "match_result",
     title: "경기결과 관리",
     user: user,
-    match_list: match_list
+    match_list: match_list,
+    manager_list: manager_list
   });
 });
 // 경기 정보 읽기

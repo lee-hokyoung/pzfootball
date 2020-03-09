@@ -1,25 +1,7 @@
-//  매니저 배정하기
-document
-  .querySelector("#select-manager")
-  .addEventListener("change", function() {
-    console.log(this);
-    let game_id = this.dataset.id;
-    let manager_id = this.value;
-    let xhr = new XMLHttpRequest();
-    xhr.open("PUT", "/admin/match/assign/manager", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function() {
-      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-        let res = JSON.parse(this.response);
-      }
-    };
-    xhr.send(JSON.stringify({ game_id: game_id, manager_id: manager_id }));
-  });
-
 //  매니저 기능으로 넘겨야 할 내용
 function fnShowResultModal(id) {
   let xhr = new XMLHttpRequest();
-  xhr.open("GET", "/admin/match/" + id);
+  xhr.open("GET", "/manager/match/" + id);
   xhr.setRequestHeader("Content-Type", "application/json", true);
   xhr.onreadystatechange = function() {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {

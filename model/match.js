@@ -12,6 +12,7 @@ const matchSchema = new Schema({
   remain_cnt: Number,
 
   ground_id: { type: mongoose.Schema.Types.ObjectId, ref: "Ground" },
+  manager_id: { type: mongoose.Schema.Types.ObjectId, ref: "Manager" },
   match_date: String,
   match_time: String,
   match_type: String, // 2파전, 3파전

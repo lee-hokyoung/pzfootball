@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require("passport");
 const middle = require("../routes/middle");
 const Manager = require("../model/manager");
+const Match = require("../model/match");
 const mongoose = require("mongoose");
 
 router.get("/", middle.isManager, async (req, res) => {
@@ -15,15 +16,45 @@ router.get("/", middle.isManager, async (req, res) => {
     manager_info: manager_info
   });
 });
+//  경기일정 관리
 router.get("/match", middle.isManager, async (req, res) => {
   let user = req.session.passport.user;
+  console.log("id : ", user.user_id);
+  let match_list = await Match.aggregate([
+    {
+      $match: {
+        manager_id: mongoose.Types.ObjectId(user._id)
+      }
+    },
+    {
+      $lookup: {
+        from: "ground",
+        localField: "ground_id",
+        foreignField: "_id",
+        as: "ground_info"
+      }
+    },
+    { $unwind: "$ground_info" }
+  ]);
   res.render("manager_match", {
     title: "퍼즐풋볼 - 경기일정 관리",
     active: "match",
-    user: user
+    user: user,
+    match_list: match_list
   });
 });
-
+//  경기 정보 읽어오기
+router.get("/match/:id", middle.isManager, async (req, res) => {
+  try {
+    let result = await Match.findOne({
+      _id: mongoose.Types.ObjectId(req.params.id)
+    });
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.json({ code: 0, message: err.message });
+  }
+});
 //  매니저 로그인
 router.post("/login", middle.isNotLoggedInByManger, async (req, res, next) => {
   passport.authenticate("manager", (authError, user, info) => {

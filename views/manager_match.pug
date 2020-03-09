@@ -5,29 +5,74 @@ block content
 			.col-12
 				.card
 					.card-header
-						.d-flex.justify-content-between
-							h4.card-title 경기일정 관리
-							a.btn.btn-primary(href='/admin/match/register') 일정 등록
+						h4.card-title 경기결과 관리
 					.card-body
-						.table-responsive
-							table.table
+						.table
+							table.table.text-center
+								colgroup
+									col(width='50px', about='#')
+									col(width='150px', about='경기일')
+									col(width='150px', about='타임')
+									col(width='300px', about='경기장')
+									col(width='100px', about='실력')
+									col(width='100px', about='성별')
+									col(width='100px', about='인원수')
+									col(width='200px', about='매니저 배정')
 								thead
-									th #
-									th 장소
-									th 시간
-									th 날짜
-									th 구분
-									th 금액
+									tr
+										th #
+										th 경기일
+										th 타임
+										th 경기장
+										th 실력
+										th 성별
+										th 인원수
 								tbody
-									//- each match, idx in list
-									//- 	tr
-									//- 		td #{idx + 1}
-									//- 		td #{match.label_title}
-									//- 		td #{match.label_time}
-									//- 		td
-									//- 		td #{match.label_sex}
-									//- 		td #{match.label_cash}
+									- var idx = 0;
+									each match in match_list
+										tr
+											td #{++idx}
+											td #{match.match_date}
+											td #{match.match_time}
+											td #{match.ground_info.groundName}
+											td #{match.grade === 1 ? '실력':'일반'}
+											td #{match.sex === 1 ? '남성매치':match.sex === -1 ? '여성매치':'혼성매치'}
+											td #{match.apply_member ? match.apply_member.length : 0} / #{match.personnel.max}
+											td
+												button.btn.btn-link(onclick='fnShowResultModal("' + match._id + '")', class=match.isPlay===true?"btn-info":"btn-success") 
+													if(match.isPlay) 
+														| 결과 확인
+													else 
+														| 결과 입력
 					.card-footer
+	#resultModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='resultModalLabel', aria-hidden='true')
+		.modal-dialog.modal-lg
+			.modal-content
+				form.form(onsubmit='return fnRegisterResult();')
+					.modal-header.bg-primary
+						button.close.p-1(type="button" data-dismiss="modal" aria-hidden="true")
+							span.nc-icon.nc-simple-remove.text-white
+					.modal-body
+						.row#mvp_user
+							.col-1.my-auto
+								label.m-0(for='#mvp_user') MVP 선수
+							.col-3
+								select.form-control
+						.row
+							.col-12
+								ul.list-group.list-group-flush.text-center
+									li.list-group-item
+										.row
+											.col-1 #
+											.col-3 이름
+											.col-8
+												.row
+													.col-4 1차전
+													.col-4 2차전
+													.col-4 3차전
+									#user_list
+					.modal-footer
+						button.btn.btn-sm.btn-link.btn-success(type='button', onclick='fnSaveResult()') 저장
+						button.btn.btn-sm.btn-link.btn-danger(type='button', data-dismiss='modal') 닫기
 block append_js
-	script.
-		console.log('list : ', !{JSON.stringify(list)});
+	script(src='/public_js/manager_match.js')

@@ -130,4 +130,22 @@ router.put("/result/:id", async (req, res) => {
     });
   }
 });
+//  매니저 경기 매칭
+router.put("/assign/manager", async (req, res) => {
+  console.log("assign");
+  console.log("body : ", req.body);
+  try {
+    let result = await Match.updateOne(
+      { _id: mongoose.Types.ObjectId(req.body.game_id) },
+      { $set: { manager_id: mongoose.Types.ObjectId(req.body.manager_id) } }
+    );
+    if (result.ok === 1) {
+      res.json({ code: 1, message: "매칭 성공", result: result });
+    } else {
+      res.json({ code: 0, message: "매칭 실패" });
+    }
+  } catch (err) {
+    res.json({ code: 0, message: err.message });
+  }
+});
 module.exports = router;

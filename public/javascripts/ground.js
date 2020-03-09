@@ -224,6 +224,14 @@ function fnSubmitGround() {
   });
   // checkbox 값
   formData["facility"] = [];
+  //  경기장 지역
+  let region = document.querySelector('select[name="region"]');
+  if (region.value === "") {
+    alert("경기장 지역을 설정해주세요");
+    region.focus();
+    return false;
+  }
+  formData["region"] = region.value;
   document
     .querySelectorAll('input[type="checkbox"]:checked')
     .forEach(function(chk) {

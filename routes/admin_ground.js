@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Ground = require("../model/ground");
+const Region = require("../model/region");
 const mongoose = require("mongoose");
 
 // 경기장 리스트
@@ -16,7 +17,18 @@ router.get("/", async (req, res) => {
 });
 // 경기장 읽기
 router.get("/read/:id", async (req, res) => {
-  let doc = await Ground.findOne({ _id: req.params.id });
+  let doc = await Ground.aggregate([
+    { $match: { _id: req.params.id } },
+    {
+      $lookup: {
+        from: "region",
+        localField: "region_id",
+        foreinFiedl: "_id",
+        as: "region_info"
+      }
+    },
+    { $unwind: "$region_info" }
+  ]);
   res.json(doc);
 });
 // 경기장 수정 or 등록 화면
@@ -27,11 +39,13 @@ router.get("/register/:id?", async (req, res) => {
   if (typeof id !== "undefined") {
     ground = await Ground.findOne({ _id: mongoose.Types.ObjectId(id) });
   }
+  let region = await Region.find({});
   res.render("admin_ground_register", {
     active: "ground",
     title: "퍼즐풋볼 - 경기장 등록",
     user: user,
-    ground: ground
+    ground: ground,
+    region: region
   });
 });
 // 경기장 등록
@@ -59,7 +73,8 @@ router.post("/register", async (req, res) => {
         shoesRental: req.body.facility.indexOf("shoesRental") > -1,
         uniformRental: req.body.facility.indexOf("uniformRental") > -1
       },
-      description: req.body.description
+      description: req.body.description,
+      region: mongoose.Types.ObjectId(req.body.region)
     };
     // INSERT OR UPDATE
     let isUpdate = req.body.isUpdate,

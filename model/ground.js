@@ -19,6 +19,7 @@ const groundSchema = new Schema({
     uniformRental: { type: Boolean, default: false }
   }, // 경기장 시설
   description: String, // 경기장 특이사항
+  region: { type: mongoose.Schema.Types.ObjectId, ref: "Region" }, //  경기장 지역(지역 스키마에서 참조)
   updated: { type: Date, default: Date.now }
 });
 module.exports = mongoose.model("Ground", groundSchema, "ground");

@@ -15,7 +15,7 @@
 				span.input-group-text
 					i.nc-icon.nc-map-big
 			input.form-control#groundName(type="text" placeholder="경기장명 입력" name="groundName", value=ground?ground.groundName:'')
-	.col-md-8
+	.col-md-4
 		.input-group
 			.input-group-prepend
 				span.input-group-text
@@ -39,3 +39,13 @@
 				span.input-group-text
 					i.nc-icon.nc-globe
 			input.form-control(type="text" placeholder="경도 정보" name="y", about='lat', value=ground?ground.mapInfo.Lat:'')
+	.col-md-4
+		select.form-control(name='region')
+			option(value='', disabled, selected) 지역 선택
+			- var region_id = '';
+			if(ground)
+				if(ground.region)
+					- region_id = ground.region.toString();
+			each r, idx in region
+				option(value=r._id, selected=r._id.toString()===region_id) #{r.name}
+				

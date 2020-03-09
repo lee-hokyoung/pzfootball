@@ -246,6 +246,11 @@ ul#match-register li .row .col[data-title="personnel"] .form-group {
 ul#match-register li .row .col[data-title="personnel"] input {
   width: 90px;
 }
+.btn-group.bootstrap-select.show > .dropdown-menu.show[x-placement] {
+}
+.bootstrap-select.show::after {
+  content: "";
+}
 @media (min-width: 992px) {
   .modal-lg {
     max-width: 1200px;

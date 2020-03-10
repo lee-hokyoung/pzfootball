@@ -9,6 +9,9 @@ if (location.search !== "") {
 }
 let curr_list = [];
 //  메인 슬라이더
+$(".main-slider").on("init", function(e, s) {
+  $(".full-cover-pzfutball").css("display", "none");
+});
 $(".main-slider").slick({
   dots: true,
   arrows: false,
@@ -167,72 +170,68 @@ function fnGenerateGroundList(res, currentSlide) {
   ).innerHTML = html;
 }
 //  datetime picker
-let today = new Date();
-$("#datepicker")
-  .datepicker({
-    startDate: new Date(),
-    endDate: today.addDays(27)
-  })
-  .on("changeDate", function(c) {
-    if (!c.date) return false;
-    let year = c.date.getFullYear();
-    let month = c.date.getMonth() + 1;
-    let day = c.date.getDate();
-    let selectedDate =
-      year +
-      "-" +
-      (month < 10 ? "0" + month : month) +
-      "-" +
-      (day < 10 ? "0" + day : day);
-    $('button[data-date="' + selectedDate + '"]').click();
-  })
-  .on("show", function(e) {
-    let today = new Date();
-    let table = document.querySelector("table.table-condensed");
-    table.setAttribute("data-after", today.toISOString().slice(0, 7));
+// let today = new Date();
+// $("#datepicker")
+//   .datepicker({
+//     startDate: new Date(),
+//     endDate: today.addDays(27)
+//   })
+//   .on("changeDate", function(c) {
+//     if (!c.date) return false;
+//     let year = c.date.getFullYear();
+//     let month = c.date.getMonth() + 1;
+//     let day = c.date.getDate();
+//     let selectedDate =
+//       year +
+//       "-" +
+//       (month < 10 ? "0" + month : month) +
+//       "-" +
+//       (day < 10 ? "0" + day : day);
+//     $('button[data-date="' + selectedDate + '"]').click();
+//   })
+//   .on("show", function(e) {
+//     let today = new Date();
+//     let table = document.querySelector("table.table-condensed");
+//     table.setAttribute("data-after", today.toISOString().slice(0, 7));
 
-    let _days = document.querySelector(".datepicker-days");
-    _days.removeEventListener("click", fnChangeCalendar, false);
-    _days.addEventListener("click", fnChangeCalendar, false);
-  });
-//  달력 이동 함수
-function fnChangeCalendar(e) {
-  let today = new Date();
-  let now_month = today.getMonth();
-  let dateAfter = document.querySelector(".table-condensed");
-  let now = new Date(dateAfter.getAttribute("data-after").replace(".", "-"));
-  if (e.target.className === "datepicker-days") {
-    // 이전 달력으로 이동할 때
-    if (e.offsetX < 215) {
-      now.setMonth(now.getMonth() - 1);
-      let month =
-        now.getMonth() + 1 < 10
-          ? "0" + (now.getMonth() + 1)
-          : now.getMonth() + 1;
-      if (parseInt(month) <= parseInt(now_month)) return false;
-      dateAfter.setAttribute("data-after", now.getFullYear() + "-" + month);
-      $("#datepicker").datepicker("setDate", new Date(now));
-    }
-    // 다음 달력으로 이동할 떄
-    else if (e.offsetX > 267) {
-      now.setMonth(now.getMonth() + 1);
-      let month =
-        now.getMonth() + 1 < 10
-          ? "0" + (now.getMonth() + 1)
-          : now.getMonth() + 1;
-      if (parseInt(month) > parseInt(now_month) + 2) return false;
-      dateAfter.setAttribute("data-after", now.getFullYear() + "-" + month);
-      $("#datepicker").datepicker("setDate", new Date(now));
-    }
-  }
-}
-$('img[alt="전체달력"]').on("click", function() {
-  $("#datepicker").datepicker("show");
-});
-//  달력에서 날짜 선택 이벤트
-$(document).on("click", "td.day", function(e) {
-  console.log(e);
-});
+//     let _days = document.querySelector(".datepicker-days");
+//     _days.removeEventListener("click", fnChangeCalendar, false);
+//     _days.addEventListener("click", fnChangeCalendar, false);
+//   });
+// //  달력 이동 함수
+// function fnChangeCalendar(e) {
+//   let today = new Date();
+//   let now_month = today.getMonth();
+//   let dateAfter = document.querySelector(".table-condensed");
+//   let now = new Date(dateAfter.getAttribute("data-after").replace(".", "-"));
+//   if (e.target.className === "datepicker-days") {
+//     // 이전 달력으로 이동할 때
+//     if (e.offsetX < 215) {
+//       now.setMonth(now.getMonth() - 1);
+//       let month =
+//         now.getMonth() + 1 < 10
+//           ? "0" + (now.getMonth() + 1)
+//           : now.getMonth() + 1;
+//       if (parseInt(month) <= parseInt(now_month)) return false;
+//       dateAfter.setAttribute("data-after", now.getFullYear() + "-" + month);
+//       $("#datepicker").datepicker("setDate", new Date(now));
+//     }
+//     // 다음 달력으로 이동할 떄
+//     else if (e.offsetX > 267) {
+//       now.setMonth(now.getMonth() + 1);
+//       let month =
+//         now.getMonth() + 1 < 10
+//           ? "0" + (now.getMonth() + 1)
+//           : now.getMonth() + 1;
+//       if (parseInt(month) > parseInt(now_month) + 2) return false;
+//       dateAfter.setAttribute("data-after", now.getFullYear() + "-" + month);
+//       $("#datepicker").datepicker("setDate", new Date(now));
+//     }
+//   }
+// }
+// $('img[alt="전체달력"]').on("click", function() {
+//   $("#datepicker").datepicker("show");
+// });
 //  날짜 선택 이벤트
 function fnSelectDate(btn) {
   //  css 적용
@@ -261,6 +260,9 @@ $(document).on(
   }
 );
 // 경기 타입, 경기장 선택시 필터링
+$("div.bootstrap-switch").on("change", function(e, data) {
+  console.log("this : ", e, " , data : ", data);
+});
 $(".game-icons-wrap button.mr-3").on("click", function() {
   let game_type = $(this).data("game");
   curr_search["game_type"] = game_type;

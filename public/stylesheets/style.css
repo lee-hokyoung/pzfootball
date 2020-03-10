@@ -2,6 +2,9 @@ body {
   padding: 0;
   margin: 0;
 }
+.wrapper {
+  height: inherit;
+}
 .container-fluid,
 .container {
   padding: 0;
@@ -10,6 +13,14 @@ body {
   /* background: url(/images/back_reverse.png) repeat; */
   -webkit-background-size: 300px;
   background-size: 300px;
+}
+.nav-button-wrap {
+}
+.nav-button-wrap button {
+}
+.nav-button-wrap span {
+  font-size: 11px;
+  font-weight: 700;
 }
 /*.pz_bg:before{*/
 /*content:'';*/
@@ -58,11 +69,28 @@ body {
   max-width: 1110px;
 }
 .main-slider {
-  padding-top: 56px;
+  /* padding-top: 56px; */
 }
 .main-slider img[alt="pc"] {
   width: 938px;
 }
+.full-cover-pzfutball {
+  background-color: white;
+  background-image: url(/images/pz_logo.png);
+  background-position: center 300px;
+  background-size: 98px 68px;
+  background-repeat: no-repeat;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 1000;
+}
+/* .main-slider {
+  display: none;
+}
+.main-slider.slick-initialized {
+  display: block;
+} */
 .slick-dotted.slick-slider {
   margin-bottom: 0px;
 }
@@ -183,16 +211,16 @@ input#datepicker {
   width: 284px;
   height: 227px;
 }
-.datepicker .datepicker-days:before{
-  content:'<';
+.datepicker .datepicker-days:before {
+  content: "<";
   position: absolute;
   left: 208px;
   top: 12.5px;
   color: white;
   cursor: pointer;
 }
-.datepicker .datepicker-days:after{
-  content:'>';
+.datepicker .datepicker-days:after {
+  content: ">";
   position: absolute;
   right: 13px;
   top: 12.5px;
@@ -221,9 +249,10 @@ input#datepicker {
   width: 40px;
   font-weight: 500;
 }
-.datepicker .datepicker-days table tr td.disabled, 
-.datepicker table tr td.new, .datepicker table tr td.old{
-  color:#999 !important;
+.datepicker .datepicker-days table tr td.disabled,
+.datepicker table tr td.new,
+.datepicker table tr td.old {
+  color: #999 !important;
 }
 .datepicker .datepicker-days table tr td:first-child {
   color: darkred;
@@ -250,6 +279,10 @@ input#datepicker {
 .ground-list ul li {
   max-width: 830px;
   width: 100%;
+}
+.mobile-menu-wrap p.category {
+  margin-bottom: 0.3rem;
+  padding-left: 0.5rem;
 }
 .detail_img_wrap {
   height: 500px;

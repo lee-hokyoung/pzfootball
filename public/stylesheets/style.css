@@ -281,8 +281,12 @@ input#datepicker {
   width: 100%;
 }
 .mobile-menu-wrap p.category {
-  margin-bottom: 0.3rem;
+  margin-bottom: 0rem;
   padding-left: 0.5rem;
+  font-size: 0.8rem;
+}
+.mobile-menu-wrap button.btn {
+  padding-left: 15px;
 }
 .detail_img_wrap {
   height: 500px;
@@ -380,6 +384,21 @@ input#datepicker {
 }
 .fileinput img {
   width: 100%;
+}
+
+/* filterModalRegion css */
+#filterModalRegion button[data-toggle="false"],
+/* #filterModalGround button.btn-round[data-toggle="false"], */
+#filterModalGround button[data-toggle="false"] {
+  background-color: darkgray !important;
+}
+#filterModalGround h5 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+#filterModalGround button[data-role="all"] {
+  margin: 0;
 }
 @media (min-width: 576px) {
   .main-slider .slick-list {

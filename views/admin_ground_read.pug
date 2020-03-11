@@ -39,5 +39,6 @@ block content
 							.clearfix
 block append_js
 	script(type='text/javascript', src='/public_js/ground.js')
-  script.
-    console.log('ground : ', !{ground})
+	script.
+		console.log('ground : ', !{ground})
+		console.log('region : ', !{JSON.stringify(region)})

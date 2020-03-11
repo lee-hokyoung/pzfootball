@@ -1,6 +1,31 @@
-#filterModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true", width='640px;')
+//  지역 필터 모달창
+#filterModalRegion.modal.fade(tabindex="-1" role="dialog" aria-labelledby="filterModalRegionLabel" aria-hidden="true", width='700px;')
   .modal-dialog
     .modal-content
       .modal-header
-      .modal-body
+        span.title 지역
+      .modal-body.px-3
+        .button-group
+          - var selectedRegion = query.region
+          each r in region
+            button.btn.btn-primary.btn-round.btn-sm.mr-1.px-3(data-toggle=(selectedRegion?selectedRegion.toString().indexOf(r._id) > -1?"true":"false":"true"), data-id=r._id) #{r.name}
       .modal-footer
+        button.btn.btn-success.py-3.m-0.w-100 적용
+//  구장 필터 모달창
+#filterModalGround.modal.fade(tabindex="-1" role="dialog" aria-labelledby="filterModalGroundLabel" aria-hidden="true", width='700px;')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        span.title 구장
+      .modal-body.px-3
+        each r in region_group
+          .ground-wrap(data-id=r._id)
+            .d-flex.justify-content-between
+              h5 #{r.name}
+              button.btn.btn-success.btn-sm(type='button', data-role='all', data-id=r._id, data-toggle='true') 전체선택
+            .d-flex.justify-content-start
+              each ground in r.list
+                button.btn.btn-primary.btn-round.btn-sm.mr-1.px-3(type='button', data-id=ground._id, data-toggle='true') #{ground.groundName}
+          hr
+      .modal-footer
+        button.btn.btn-success.py-3.m-0.w-100(type='button', data-role='apply') 적용

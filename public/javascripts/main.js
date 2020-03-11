@@ -66,6 +66,26 @@ $(".ground-list-slider")
     };
     xhr.send();
   });
+//  nav sticky
+let offset = $(".navigation").offset();
+let navParent = $(".navigation");
+let nav = navParent.find("nav");
+let tmp = navParent
+  .find("nav")
+  .clone()
+  .attr("class", "tmp")
+  .css("visibility", "hidden");
+
+window.addEventListener("scroll", function() {
+  if (window.pageYOffset > offset.top) {
+    navParent.append(tmp);
+    nav.css({ position: "fixed", top: 0 });
+  } else {
+    navParent.find(".tmp").remove();
+    nav.css({ position: "static", top: "" });
+  }
+});
+
 //  경기 리스트 생성
 function fnGenerateGroundList(res, currentSlide) {
   let html = "";
@@ -259,19 +279,40 @@ $(document).on(
     location.href = "/match/" + match_id;
   }
 );
+
+// $(".game-icons-wrap button.mr-3").on("click", function() {
+//   let game_type = $(this).data("game");
+//   curr_search["game_type"] = game_type;
+//   history.pushState(null, "game filter", fnGenQueryString());
+//   fnFilterList();
+// });
+// $("#dropdownGroundList li").on("click", function() {
+//   let ground_id = $(this).data("id");
+//   curr_search["ground_id"] = ground_id;
+//   history.pushState(null, "game filter", fnGenQueryString());
+//   fnFilterList();
+// });
+
 // 경기 타입, 경기장 선택시 필터링
-$("div.bootstrap-switch").on("change", function(e, data) {
-  console.log("this : ", e, " , data : ", data);
-});
-$(".game-icons-wrap button.mr-3").on("click", function() {
-  let game_type = $(this).data("game");
-  curr_search["game_type"] = game_type;
-  history.pushState(null, "game filter", fnGenQueryString());
-  fnFilterList();
-});
-$("#dropdownGroundList li").on("click", function() {
-  let ground_id = $(this).data("id");
-  curr_search["ground_id"] = ground_id;
+//  bootstrap switch
+$(".bootstrap-switch").bootstrapSwitch();
+$("input.bootstrap-switch").on("switchChange.bootstrapSwitch", function(
+  event,
+  state
+) {
+  let type_2 = $('input.bootstrap-switch[value="2"]').bootstrapSwitch("state");
+  let type_3 = $('input.bootstrap-switch[value="3"]').bootstrapSwitch("state");
+  if (!type_2 && !type_3) {
+    curr_search["game_type"] = null;
+  } else {
+    if (type_2 && !type_3) {
+      curr_search["game_type"] = 2;
+    } else if (!type_2 && type_3) {
+      curr_search["game_type"] = 3;
+    } else {
+      delete curr_search.game_type;
+    }
+  }
   history.pushState(null, "game filter", fnGenQueryString());
   fnFilterList();
 });
@@ -313,3 +354,71 @@ function fnFilterList() {
   };
   xhr.send();
 }
+//  지역 필터링 내 버튼 클릭시 이벤트
+document
+  .querySelectorAll("#filterModalRegion .button-group button")
+  .forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      let toggle = this.dataset.toggle;
+      this.dataset.toggle = toggle === "false";
+    });
+  });
+//  적용하기 버튼 클릭 이벤트
+document
+  .querySelector("#filterModalRegion .modal-footer button")
+  .addEventListener("click", function() {
+    let region_list = [];
+    document
+      .querySelectorAll(
+        '#filterModalRegion .button-group button[data-toggle="true"]'
+      )
+      .forEach(function(btn) {
+        region_list.push(btn.dataset.id);
+      });
+    // let query = "region=" + region_list.join(",");
+    curr_search["region"] = region_list.join(",");
+    history.pushState(null, "game filter", fnGenQueryString());
+    fnFilterList();
+    $("#filterModalRegion").modal("hide");
+  });
+//  지역별 전체 버튼 클릭
+document.querySelectorAll('button[data-role="all"]').forEach(function(btn) {
+  btn.addEventListener("click", function() {
+    console.log(this);
+    let id = this.dataset.id;
+    let parent = document.querySelector('.ground-wrap[data-id="' + id + '"]');
+    let parent_toggle = this.dataset.toggle;
+    this.dataset.toggle = parent_toggle === "false";
+    if (this.dataset.toggle === "true") this.innerHTML = "전체선택";
+    else this.innerHTML = "전체해제";
+    parent.querySelectorAll("button.btn-round").forEach(function(btn) {
+      btn.dataset.toggle = parent_toggle === "false";
+    });
+  });
+});
+//  구장별 버튼 클릭시 이벤트
+document
+  .querySelectorAll("#filterModalGround button.btn-round")
+  .forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      let toggle = this.dataset.toggle;
+      this.dataset.toggle = toggle === "false";
+    });
+  });
+//  적용버튼 클릭 이벤트
+document
+  .querySelector('#filterModalGround button[data-role="apply"]')
+  .addEventListener("click", function() {
+    let ground_id = [];
+    document
+      .querySelectorAll(
+        '#filterModalGround button.btn-primary[data-toggle="true"]'
+      )
+      .forEach(function(btn) {
+        ground_id.push(btn.dataset.id);
+      });
+    curr_search["ground"] = ground_id.join(",");
+    history.pushState(null, "game filter", fnGenQueryString());
+    fnFilterList();
+    $("#filterModalGround").modal("hide");
+  });

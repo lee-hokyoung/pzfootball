@@ -2,19 +2,43 @@ const express = require("express");
 const router = express.Router();
 const Match = require("../model/match");
 const Ground = require("../model/ground");
-const passport = require("passport");
+const Region = require("../model/region");
 const mongoose = require("mongoose");
 
 /* GET home page. */
-router.get("/", async (req, res, next) => {
+router.get("/", async (req, res) => {
   let today = new Date();
   let list = await fnGetMatchList(today.toISOString().slice(0, 10), req.query);
   let user_info = req.session.passport;
   let ground_list = await Ground.find({}, { groundName: 1 });
+  let region = await Region.find({});
+  let region_group = await Region.aggregate([
+    { $match: {} },
+    {
+      $lookup: {
+        from: "ground",
+        localField: "_id",
+        foreignField: "region",
+        as: "info"
+      }
+    },
+    { $unwind: "$info" },
+    {
+      $group: {
+        _id: "$_id",
+        name: { $first: "$name" },
+        list: { $push: "$info" }
+      }
+    },
+    { $sort: { _id: 1 } }
+  ]);
   res.render("index", {
     list: list,
     user_info: user_info,
-    ground_list: ground_list
+    ground_list: ground_list,
+    region: region,
+    query: req.query,
+    region_group: region_group
   });
 });
 router.get("/search", async (req, res) => {

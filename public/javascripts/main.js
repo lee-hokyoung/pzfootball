@@ -15,9 +15,9 @@ $(".main-slider").on("init", function(e, s) {
 $(".main-slider").slick({
   dots: true,
   arrows: false,
-  fade: true,
+  fade: false,
   autoplay: true,
-  autoplaySpeed: 2000
+  autoplaySpeed: 3000
 });
 //  날짜 선택하는 부분
 $(".calendar-slider").slick({

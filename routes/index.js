@@ -3,6 +3,7 @@ const router = express.Router();
 const Match = require("../model/match");
 const Ground = require("../model/ground");
 const Region = require("../model/region");
+const Notice = require("../model/notice");
 const mongoose = require("mongoose");
 
 /* GET home page. */
@@ -12,6 +13,7 @@ router.get("/", async (req, res) => {
   let user_info = req.session.passport;
   let ground_list = await Ground.find({}, { groundName: 1 });
   let region = await Region.find({});
+  let notice_list = await Notice.find({ activity: true });
   let region_group = await Region.aggregate([
     { $match: {} },
     {
@@ -38,7 +40,8 @@ router.get("/", async (req, res) => {
     ground_list: ground_list,
     region: region,
     query: req.query,
-    region_group: region_group
+    region_group: region_group,
+    notice_list: notice_list
   });
 });
 router.get("/search", async (req, res) => {
@@ -59,6 +62,12 @@ async function fnGetMatchList(date, query) {
   if (query.game_type) match_query["match_type"] = query.game_type;
   if (query.ground_id)
     match_query["ground_id"] = mongoose.Types.ObjectId(query.ground_id);
+  if (query.ground) {
+    let in_query = query.ground.split(",").map(v => {
+      return mongoose.Types.ObjectId(v);
+    });
+    match_query["ground_id"] = { $in: in_query };
+  }
   let result = await Match.aggregate([
     { $match: match_query },
     {

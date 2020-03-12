@@ -34,25 +34,33 @@ html
             img(src='/images/pz_logo.png')
         ul.list-unstyled.components.p-3
           li
-            a(href="#about") About
+            a(href="#about") 회사소개
           li
-            a(href='#notice') 공지사항
+            a(href='#apply') 매니저지원
           li
-            a(href='#qna') 자주 묻는 질문
+            a(href='#qna') 문의하기
           li
-            a(href='#') 순위표
+            a(href='#faq') 자주 묻는 질문
+          li.division
           li
-            .division
+            a(href='#') 리그 순위표
+          li.division
           li.description
             label SNS
           li
-            a(href='https://www.instagram.com/puzzlefootball_/', target='_blank') 퍼즐풋볼 인스타그램
-          li
-            a(href='https://www.youtube.com/channel/UCtEGfZDcQrsOuD1mpytufVg/featured?view_as=subscriber', target='_blank') 퍼즐풋볼 유투브
+            a(href='https://www.instagram.com/puzzlefootball_/', target='_blank') 
+              i.ho-icon.ho-instagram
+              p 인스타
           li  
-            a(href='https://pf.kakao.com/_nNxexaj', target='_blank') 퍼즐풋볼 카카오채널
+            a(href='https://pf.kakao.com/_nNxexaj', target='_blank')
+              i.ho-icon.ho-kakao
+              p 카카오플친
           li
-            a(href='https://band.us/band/74014925', target='_blank') 퍼즐풋볼 밴드
+            a(href='https://www.youtube.com/channel/UCtEGfZDcQrsOuD1mpytufVg/featured?view_as=subscriber', target='_blank')
+              i.ho-icon.ho-youtube
+              p 유튜브
+          //- li
+          //-   a(href='https://band.us/band/74014925', target='_blank') 퍼즐풋볼 밴드
 
       //- #content.container-fluid.pz_bg
       .container-fluid
@@ -74,8 +82,8 @@ html
                 span.text-secondary.px-2 또는
                 span
                   a.text-primary(href='#', data-toggle='modal', data-target='#joinModal') 회원가입
-                a#sidebarCollapse.pl-3(href='#')
-                  img(src='/images/nav_toggle.svg', width=22)
+              a#sidebarCollapse.pl-3(href='#')
+                img(src='/images/nav_toggle.svg', width=22)
         //- nav.navbar
         //-   .navbar-wrapper
         //-     img.position-fixed(src='/images/pz_logo.png', style='top:20px; cursor:pointer; z-index:10', onclick='location.href="/"', alt='퍼즐풋볼 메인 로고')

@@ -72,16 +72,16 @@ h2,
   text-shadow: 3px 3px 3px #4c4141;
 }
 .main-slider .title-wrap.left {
-  top: 150px;
-  left: 250px;
+  top: 100px;
+  left: 1080px;
 }
 .main-slider .title-wrap.right {
-  top: 150px;
-  right: 250px;
+  top: 100px;
+  left: 1550px;
 }
 .main-slider .title-wrap.center {
-  top: 130px;
-  left: 410px;
+  top: 80px;
+  left: 2210px;
 }
 .main-slider .title-wrap.center h2 {
   font-size: 2.3rem;
@@ -91,7 +91,7 @@ h2,
 .main-slider .title-wrap.center h4 {
   text-align: left;
   transform: scale(1, 1.2);
-  margin-bottom: 0;
+  margin: 0;
   font-size: 1.3rem;
 }
 .main-slider .title-wrap.center h5 {

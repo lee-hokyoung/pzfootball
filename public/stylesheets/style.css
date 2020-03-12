@@ -14,9 +14,10 @@ body {
   -webkit-background-size: 300px;
   background-size: 300px;
 }
-.nav-button-wrap {
-}
-.nav-button-wrap button {
+.main-slide-item {
+  height: 320px;
+  background-size: cover;
+  width: 100%;
 }
 .nav-button-wrap span {
   font-size: 11px;
@@ -92,7 +93,7 @@ body {
   display: block;
 } */
 .slick-dotted.slick-slider {
-  margin-bottom: 0px;
+  padding: 2rem 0;
 }
 .slick-dots {
   bottom: 10px;
@@ -277,8 +278,9 @@ input#datepicker {
 }
 .mobile-menu-wrap,
 .ground-list ul li {
-  max-width: 830px;
+  max-width: 900px;
   width: 100%;
+  padding: 0 5px;
 }
 .mobile-menu-wrap p.category {
   margin-bottom: 0rem;

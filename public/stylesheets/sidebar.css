@@ -114,25 +114,32 @@ a:focus {
 }
 
 #sidebar ul p {
-  color: #fff;
-  padding: 10px;
+  color: inherit;
+  padding: 0px 10px;
+  margin-bottom: 0;
+  font-size: 0.9rem;
 }
 
 #sidebar ul li a {
   padding: 10px;
   font-size: 1.1em;
-  display: block;
+  display: flex;
+  justify-content: start;
 }
 
-#sidebar ul li a:hover {
+/* #sidebar ul li a:hover {
   color: #7386d5;
   background: #fff;
-}
+} */
 
 #sidebar ul li.active > a,
 a[aria-expanded="true"] {
   color: #fff;
   background: lightcoral;
+}
+
+#sidebar ul li i {
+  margin: auto 0;
 }
 
 a[data-toggle="collapse"] {
@@ -187,4 +194,23 @@ a.article:hover {
   position: absolute;
   top: 0;
   right: 0;
+}
+
+i.ho-icon::before {
+  content: "";
+  width: 1.2rem;
+  height: 1.2rem;
+  display: block;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+i.ho-icon.ho-instagram::before {
+  background-image: url(/assets/svg/instagram.svg);
+}
+i.ho-icon.ho-youtube::before {
+  background-image: url(/assets/svg/youtube.svg);
+}
+i.ho-icon.ho-kakao::before {
+  background-image: url(/assets/svg/kakao.svg);
 }

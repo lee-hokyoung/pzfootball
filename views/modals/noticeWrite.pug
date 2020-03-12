@@ -1,0 +1,28 @@
+#modalNoticeWrite.modal.fade(tabindex="-1" role="dialog" aria-labelledby="modalNoticeWriteLabel" aria-hidden="true")
+  .modal-dialog
+    .modal-content
+      .modal-header
+        span.title 공지사항 등록
+      .modal-body.px-3
+        .form-group
+          h6.title 메인화면 이미지(가로 960 X 세로 310)
+          .fileinput.text-center(data-provides="fileinput", class=ground?ground.ground_images.ground_images_1?'fileinput-exists':'fileinput-new':'fileinput-new')
+            .fileinput-new.thumbnail.img-raised
+              img(src="/assets/img/default-avatar.png" alt="defautl avatar")
+            .fileinput-preview.fileinput-exists.thumbnail.img-raised(name="ground_images_1")
+              if(ground)
+                img(src=ground.ground_images.ground_images_1)
+            div
+              span.btn.btn-raised.btn-round.btn-default.btn-file
+                span.fileinput-new Select image
+                span.fileinput-exists Change
+                input(type="file")
+              a.btn.btn-danger.btn-round.fileinput-exists(href="#pablo" data-dismiss="fileinput")
+                i.fa.fa-times
+                |  Remove
+        //- hr
+        //- .form-group
+        //-   h6.title 클릭시 이동할 페이지 url
+        //-   input.form-control(type='text', name='link_url', placeholder='상대참조 값 입력 (ex : "http://~" => (x) "/" => (o)'))
+      .modal-footer
+        button.btn.btn-success.py-3.m-0.w-100(data-role='notice-upload') 완료

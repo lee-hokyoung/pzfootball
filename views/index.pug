@@ -5,39 +5,36 @@ block content
   - var month = today.getMonth() + 1;
   .full-cover-pzfutball
   .container-fluid.bg-light
-    .container
+    .container(style='max-width:938px')
       .main-slider
         .d-flex.justify-content-center
-          .d-none.d-sm-block
+          .d-none.d-sm-block.main-slide-item(style='background-image:url(/images/main_1.png)')
             .title-wrap.left
               h3 General Game
               h1 일반매치
               a(href='#')
                 img.mx-auto(src='/images/lets_go.png')
-            img(src='/images/pz_main_slide_01.png', alt='pc')
+            .title-wrap.right
+              h3 League Game
+              h1 리그매치
+              a(href='#')
+                img.mx-auto(src='/images/lets_go.png')
+            //- img(src='/images/main_1.png', alt='pc')
           .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/main_slide_1_m.png)')
-          
-          //- img.w-100.d-block.d-sm-none(src='/images/main_slide_1_m.png', alt='m')
-          //- .d-flex.justify-content-center
-          //-   .d-none.d-sm-block
-          //-     .title-wrap.right
-          //-       h3 League Game
-          //-       h1 리그 매치
-          //-       a(href='#')
-          //-         img.mx-auto(src='/images/lets_go.png')
-          //-     img(src='/images/pz_main_slide_02.png', alt='pc')
-          //-   .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/main_slide_2_m.png)')
         .d-flex.justify-content-center
-          .d-none.d-sm-block
+          .d-none.d-sm-block.main-slide-item(style='background:url(/images/main_2.png)')
             .title-wrap.rank-title.center
-              h4 #{today.getFullYear()}.#{month < 10 ? '0' + month:month}
+              h4 20-21 시즌
               h2 순위표 바로가기
               .text-light /
-              h5 Go to then Rank
+              h5 Go to the Rank
               a(href='#')
                 img.mx-auto.mt-3(src='/images/lets_go.png')
-            img(src='/images/pz_main_slide_03.png', alt='pc')
+            //- img(src='/images/main_2.png', alt='pc')
           .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/main_slide_3_m.png)')
+        each notice in notice_list
+          .d-none.d-sm-block.main-slide-item(style='background-image:url(' + notice.notice_img + ')')
+            //- img(src=notice.notice_img, alt='pc')
   //  날짜 선택 slick-slider
   - var size = 28;
   - var day = ['일', '월', '화', '수', '목', '금', '토'];
@@ -83,7 +80,7 @@ block content
           .row
             .col
               .d-flex.justify-content-start
-                .form-group
+                .form-group.ml-2
                   p.category 2파
                   input.bootstrap-switch(type="checkbox" data-toggle="switch" value="2" checked="" data-on-color="primary" data-off-color="primary" data-on-label="on" data-off-label="off")
                 .form-group.ml-2
@@ -93,6 +90,9 @@ block content
                   button.btn.btn-primary.text-primary.btn-neutral.dropdown-toggle(type='button', data-toggle='modal', data-target='#filterModalRegion') 지역
                 .form-group.ml-2
                   button.btn.btn-primary.text-primary.btn-neutral.dropdown-toggle(type='button', data-toggle='modal', data-target='#filterModalGround') 구장
+            .col.text-right
+              p.category 총 27매치
+              
 
   //  경기 리스트
   include include/match-list

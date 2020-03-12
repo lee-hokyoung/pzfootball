@@ -108,3 +108,102 @@ document.querySelectorAll('button[data-role="remove"]').forEach(function(v) {
     }
   });
 });
+
+//  공지사항
+//  새 글 등록 모달 띄우기
+document
+  .querySelector('button[data-role="notice-upload"]')
+  .addEventListener("click", function() {
+    //  image 파일 등록 여부 확인
+    let notice_img = document.querySelector(
+      "#modalNoticeWrite .fileinput-preview img"
+    );
+    if (!notice_img) {
+      alert("이미지를 등록해주세요");
+      return false;
+    }
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "/admin/config/notice", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function() {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        let res = JSON.parse(this.response);
+        alert(res.message);
+        if (res.code === 1) location.reload();
+      }
+    };
+    xhr.send(JSON.stringify({ notice_img: notice_img.src }));
+  });
+//  공지사항 글 수정
+document
+  .querySelectorAll('button[data-role="editNotice"]')
+  .forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      let id = this.dataset.id;
+      let notice_img = document.querySelector(
+        "#modalNoticeWrite .fileinput-preview img"
+      );
+      let xhr = new XMLHttpRequest();
+      xhr.open("GET", "/admin/config/notice/" + id);
+      xhr.setRequestHeader("Content-Type", "application/json", true);
+      xhr.onreadystatechange = function() {
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+          let res = JSON.parse(this.response);
+          if (res.code === 1) {
+            //  모달창 띄우기
+            let item = res.result;
+            notice_img.src = item.notice_img;
+            $("#modalNoticeWrite").modal("show");
+          } else {
+            alert(res.message);
+            return false;
+          }
+        }
+      };
+      xhr.send();
+    });
+  });
+//  공지사항 글 삭제
+document
+  .querySelectorAll('button[data-role="removeNotice"]')
+  .forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      if (!confirm("삭제하시겠습니까?")) return false;
+      let id = this.dataset.id;
+      let xhr = new XMLHttpRequest();
+      xhr.open("DELETE", "/admin/config/notice/" + id, true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onreadystatechange = function() {
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+          let res = JSON.parse(this.response);
+          alert(res.message);
+          if (res.code === 1) location.reload();
+        }
+      };
+      xhr.send();
+    });
+  });
+//  공지사항 등록 활성화/비활성화
+document
+  .querySelectorAll('button[data-role="activeNotice"]')
+  .forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      let id = this.dataset.id;
+      let toggle = this.dataset.toggle;
+      let activityLabel = "활성화";
+      if (toggle === "true") activityLabel = "비활성화";
+      if (!confirm("해당 공지를 " + activityLabel + "하시겠습니까?"))
+        return false;
+      this.dataset.toggle = toggle === "false";
+      let xhr = new XMLHttpRequest();
+      xhr.open("PUT", "/admin/config/notice", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onreadystatechange = function() {
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+          let res = JSON.parse(this.response);
+          alert(res.message);
+        }
+      };
+      xhr.send(JSON.stringify({ id: id, activity: this.dataset.toggle }));
+    });
+  });

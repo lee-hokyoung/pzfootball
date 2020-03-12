@@ -1,6 +1,6 @@
 extends admin_layout
 block content
-  .content
+  .content#config-page
     .row
       .col-md-6
         .card#region-card
@@ -37,5 +37,36 @@ block content
                         i.nc-icon.nc-simple-add
           .card-footer.text-right
             button.btn.btn-sm.btn-success(type='button', onclick='fnSaveRegion()') 저장
+      .col-md-6
+        .card
+          .card-header
+            h4.card-title 공지사항
+          .card-body
+            .table-full-width
+              table.table.text-center
+                colgroup
+                  col(width='30')
+                  col(width='50')
+                  col(width='100')
+                thead
+                  tr
+                    th #
+                    th 등록사진
+                    th
+                tbody
+                  each item, i in notice
+                    tr(data-id=item._id)
+                      td #{i + 1}
+                      td
+                        img.my-2(src=item.notice_img, width='100%')
+                      td.text-right
+                        button.btn.btn-round.btn-icon.btn-icon-mini.btn-neutral(type="button", data-role='activeNotice', data-id=item._id, data-toggle=item.activity?"true":"false")
+                          i.nc-icon.nc-button-power
+                        button.btn.btn-danger.btn-round.btn-icon.btn-icon-mini.btn-neutral(type="button", data-role='removeNotice', data-id=item._id)
+                          i.nc-icon.nc-simple-remove
+          .card-footer
+            button.btn.btn-sm.btn-success(type='button', data-toggle='modal', data-target='#modalNoticeWrite') 새 글 등록
+    //  공지사항 등록 모달창
+    include modals/noticeWrite
 block append_js
   script(src='/public_js/admin_config.js')

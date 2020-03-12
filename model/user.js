@@ -15,6 +15,7 @@ const UserSchema = new Schema({
   profile_image: String,
   thumbnail_image: String,
   point: Number,
+  favorite_ground: [{ type: mongoose.Schema.Types.ObjectId, ref: "Ground" }],
   created_at: { type: Date, default: Date.now }
 });
 module.exports = mongoose.model("User", UserSchema);

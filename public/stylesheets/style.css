@@ -402,6 +402,11 @@ input#datepicker {
 #filterModalGround button[data-role="all"] {
   margin: 0;
 }
+.match-count {
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin: 1rem 0;
+}
 @media (min-width: 576px) {
   .main-slider .slick-list {
     border-radius: 1rem;

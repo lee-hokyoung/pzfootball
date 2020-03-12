@@ -9,8 +9,12 @@ const mongoose = require("mongoose");
 /* GET home page. */
 router.get("/", async (req, res) => {
   let today = new Date();
-  let list = await fnGetMatchList(today.toISOString().slice(0, 10), req.query);
   let user_info = req.session.passport;
+  let list = await fnGetMatchList(
+    today.toISOString().slice(0, 10),
+    req.query,
+    user_info
+  );
   let ground_list = await Ground.find({}, { groundName: 1 });
   let region = await Region.find({});
   let notice_list = await Notice.find({ activity: true });
@@ -52,17 +56,39 @@ router.get("/search", async (req, res) => {
   });
 });
 router.get("/schedule/:date", async (req, res) => {
-  let list = await fnGetMatchList(req.params.date, req.query);
+  let user_info = req.session.passport;
+  let list = await fnGetMatchList(req.params.date, req.query, user_info);
   res.json(list);
 });
 // 경기 일정 가져오는 함수
-async function fnGetMatchList(date, query) {
+async function fnGetMatchList(date, query, user_info) {
   let match_query = {};
   match_query["match_date"] = date;
   if (query.game_type) match_query["match_type"] = query.game_type;
   if (query.ground_id)
     match_query["ground_id"] = mongoose.Types.ObjectId(query.ground_id);
-  if (query.ground) {
+  //  지역으로 필터링 할 경우, 지역 내 구장 아이디를 가져온다
+  if (query.region) {
+    let ground_list = await Ground.aggregate([
+      {
+        $match: {
+          region: {
+            $in: query.region.split(",").map(v => {
+              return mongoose.Types.ObjectId(v);
+            })
+          }
+        }
+      },
+      { $project: { _id: 1, groundName: 1 } }
+    ]);
+    match_query["ground_id"] = {
+      $in: ground_list.map(v => {
+        return mongoose.Types.ObjectId(v._id);
+      })
+    };
+  }
+  //  구장으로 필터링(로그인 상태일 때만 가능함)
+  if (query.ground && user_info) {
     let in_query = query.ground.split(",").map(v => {
       return mongoose.Types.ObjectId(v);
     });

@@ -4,12 +4,28 @@ const Match = require("../model/match");
 const Ground = require("../model/ground");
 const Region = require("../model/region");
 const Notice = require("../model/notice");
+const User = require("../model/user");
 const mongoose = require("mongoose");
 
 /* GET home page. */
 router.get("/", async (req, res) => {
   let today = new Date();
   let user_info = req.session.passport;
+
+  //  유저 로그인 확인 후, 즐겨찾기 등록된 구장이 있으면 리다이렉트 시킨다.
+  let user = { favorite_ground: [] };
+  if (user_info) {
+    user = await User.findOne(
+      {
+        _id: mongoose.Types.ObjectId(user_info.user._id)
+      },
+      { favorite_ground: 1 }
+    );
+    if (user.favorite_ground && !req.query.ground) {
+      return res.redirect("/?ground=" + user.favorite_ground.join(","));
+    }
+  }
+
   let list = await fnGetMatchList(
     today.toISOString().slice(0, 10),
     req.query,
@@ -45,7 +61,8 @@ router.get("/", async (req, res) => {
     region: region,
     query: req.query,
     region_group: region_group,
-    notice_list: notice_list
+    notice_list: notice_list,
+    favorite_ground: user.favorite_ground
   });
 });
 router.get("/search", async (req, res) => {

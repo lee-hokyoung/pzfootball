@@ -342,7 +342,7 @@ input#datepicker {
 #club_list,
 #match_detail {
   height: 100vh;
-  padding: 10rem 2rem;
+  padding: 10rem 0.5rem;
 }
 #mypage-wrap .point-wrap p {
   height: 30px;
@@ -391,7 +391,8 @@ input#datepicker {
 /* filterModalRegion css */
 #filterModalRegion button[data-toggle="false"],
 /* #filterModalGround button.btn-round[data-toggle="false"], */
-#filterModalGround button[data-toggle="false"] {
+#filterModalGround button[data-toggle="false"] ,
+#mypage-wrap button[data-toggle="false"] {
   background-color: darkgray !important;
 }
 #filterModalGround h5 {

@@ -7,6 +7,7 @@ const Match = require("../model/match");
 const Club = require("../model/club");
 const nodemailer = require("nodemailer");
 const Mail = require("../model/mail");
+const Region = require("../model/region");
 const mongoose = require("mongoose");
 
 /* GET users listing. */
@@ -161,7 +162,7 @@ router.post("/point/charge", middle.isLoggedIn, async (req, res) => {
 router.get("/mypage", middle.isSignedIn, async (req, res) => {
   let user_info = req.session.passport;
   let user_id = user_info.user.user_id;
-  let user = await User.findOne({ user_id: user_id });
+  let user = await User.findOne({ user_id: user_id }, { user_pw: 0 });
   let match_list = await Match.aggregate([
     { $match: { "apply_member.reader": user_id } },
     {
@@ -174,6 +175,26 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
     },
     { $unwind: "$ground_info" }
   ]);
+  let region_group = await Region.aggregate([
+    { $match: {} },
+    {
+      $lookup: {
+        from: "ground",
+        localField: "_id",
+        foreignField: "region",
+        as: "info"
+      }
+    },
+    { $unwind: "$info" },
+    {
+      $group: {
+        _id: "$_id",
+        name: { $first: "$name" },
+        list: { $push: "$info" }
+      }
+    },
+    { $sort: { _id: 1 } }
+  ]);
   let myClub = await Club.findOne({
     club_member: mongoose.Types.ObjectId(user_info.user._id)
   });
@@ -182,7 +203,8 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
     user_info: user_info,
     user: user,
     match_list: match_list,
-    myClub: myClub
+    myClub: myClub,
+    region_group: region_group
   });
 });
 // 마이페이지 내 정보 수정
@@ -258,4 +280,26 @@ router.get("/match/:id", middle.isSignedIn, async (req, res) => {
     title: "퍼즐풋볼 - 매치 정보"
   });
 });
+//  내 구장 설정
+router.put("/region", middle.isSignedIn, async (req, res) => {
+  let user_info = req.session.passport.user;
+  try {
+    if (!req.body.ground)
+      return res.json({ code: 0, message: "구장을 선택해주세요" });
+    let result = await User.updateOne(
+      { _id: user_info._id },
+      {
+        $set: {
+          favorite_ground: req.body.ground.map(v => {
+            return mongoose.Types.ObjectId(v);
+          })
+        }
+      }
+    );
+    res.json({ code: 1, message: "적용되었습니다", result: result });
+  } catch (err) {
+    res.json({ code: 0, message: err.message });
+  }
+});
+
 module.exports = router;

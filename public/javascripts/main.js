@@ -417,8 +417,24 @@ document
       .forEach(function(btn) {
         ground_id.push(btn.dataset.id);
       });
-    curr_search["ground"] = ground_id.join(",");
-    history.pushState(null, "game filter", fnGenQueryString());
-    fnFilterList();
-    $("#filterModalGround").modal("hide");
+
+    //  즐겨찾는 구장 등록 여부 확인
+    if (document.querySelector('input[name="chkUpdateMyGround"]').checked) {
+      console.log("update ground : ", ground_id);
+      let xhr = new XMLHttpRequest();
+      xhr.open("PUT", "/users/region", true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onreadystatechange = function() {
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+          let res = JSON.parse(this.response);
+          if (res.code === 1) location.href = "/?" + ground_id.toString();
+        }
+      };
+      xhr.send(JSON.stringify({ ground: ground_id }));
+    } else {
+      curr_search["ground"] = ground_id.join(",");
+      history.pushState(null, "game filter", fnGenQueryString());
+      fnFilterList();
+      $("#filterModalGround").modal("hide");
+    }
   });

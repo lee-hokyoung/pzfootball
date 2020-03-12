@@ -86,9 +86,27 @@ block content
                         .col-2 #{match.isPlay?"종료":"진행중"}
               else
                 li.list-group-item 일정이 없습니다.
+        .card
+          .card-header
+            label.title 내 구장 설정
+          .card-body
+            each r, idx in region_group
+              .ground-wrap(data-id=r._id)
+                .d-flex.justify-content-between
+                  h5 #{r.name}
+                  button.btn.btn-success.btn-sm(type='button', data-role='all', data-id=r._id, data-toggle='true') 전체선택
+                .d-flex.justify-content-start
+                  - var my_ground = user.favorite_ground.join(',')
+                  each ground in r.list
+                    button.btn.btn-primary.btn-round.btn-sm.mr-1.px-3(type='button', data-id=ground._id, data-toggle=my_ground.toString().indexOf(ground._id.toString()) > -1 ? "true":"false", data-role='ground') #{ground.groundName}
+              if(idx + 1 < region_group.length)
+                hr
+          .card-footer.p-0
+            button.btn.btn-success.w-100.m-0(type='button', data-role='saveGround') 적용
   include modals/chargePoint
 block append_js
   script(src='/public_js/mypage.js')
   script.
-    console.log('user_info : ', !{JSON.stringify(user_info)});
-    console.log('match_list : ', !{JSON.stringify(match_list)});
+    console.log('ground : ', !{JSON.stringify(region_group)})
+    console.log('user : ', !{JSON.stringify(user)})
+    

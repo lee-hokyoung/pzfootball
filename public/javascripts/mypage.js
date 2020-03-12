@@ -140,3 +140,48 @@ function fnSaveUserInfo() {
   };
   xhr.send(JSON.stringify(formData));
 }
+
+//  지역별 전체 버튼 클릭
+document.querySelectorAll('button[data-role="all"]').forEach(function(btn) {
+  btn.addEventListener("click", function() {
+    console.log(this);
+    let id = this.dataset.id;
+    let parent = document.querySelector('.ground-wrap[data-id="' + id + '"]');
+    let parent_toggle = this.dataset.toggle;
+    this.dataset.toggle = parent_toggle === "false";
+    if (this.dataset.toggle === "true") this.innerHTML = "전체선택";
+    else this.innerHTML = "전체해제";
+    parent.querySelectorAll("button.btn-round").forEach(function(btn) {
+      btn.dataset.toggle = parent_toggle === "false";
+    });
+  });
+});
+//  구장별 버튼 클릭시 이벤트
+document.querySelectorAll("button[data-role='ground']").forEach(function(btn) {
+  btn.addEventListener("click", function() {
+    let toggle = this.dataset.toggle;
+    this.dataset.toggle = toggle === "false";
+  });
+});
+//  내 구장 정보 설정
+document
+  .querySelector('button[data-role="saveGround"]')
+  .addEventListener("click", function() {
+    let ground_list = [];
+    document
+      .querySelectorAll('button[data-role="ground"][data-toggle="true"]')
+      .forEach(function(btn) {
+        ground_list.push(btn.dataset.id);
+      });
+    let xhr = new XMLHttpRequest();
+    xhr.open("PUT", "/users/region", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function() {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        let res = JSON.parse(this.response);
+        alert(res.message);
+        if (res.code === 1) location.reload();
+      }
+    };
+    xhr.send(JSON.stringify({ ground: ground_list }));
+  });

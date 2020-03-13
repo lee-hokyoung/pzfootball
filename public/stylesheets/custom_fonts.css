@@ -24,6 +24,38 @@
   font-style: normal;
   font-weight: normal;
 }
+@font-face {
+  font-family: NanumBarunpen;
+  src: url("/assets/fonts/NanumBarunpen.woff") format("woff");
+  font-style: normal;
+  font-weight: normal;
+}
+
+/* 나눔스퀘어라운드 */
+@font-face {
+  font-family: NanumSquareRoundL;
+  src: url("/assets/fonts/NanumSquareRoundL.woff") format("woff");
+  font-style: normal;
+  font-weight: lighter;
+}
+@font-face {
+  font-family: NanumSquareRoundR;
+  src: url("/assets/fonts/NanumSquareRoundR.woff") format("woff");
+  font-style: normal;
+  font-weight: normal;
+}
+@font-face {
+  font-family: NanumSquareRoundB;
+  src: url("/assets/fonts/NanumSquareRoundB.woff") format("woff");
+  font-style: normal;
+  font-weight: bold;
+}
+@font-face {
+  font-family: NanumSquareRoundEB;
+  src: url("/assets/fonts/NanumSquareRoundEB.woff") format("woff");
+  font-style: normal;
+  font-weight: bolder;
+}
 h4,
 h5,
 h6,
@@ -34,21 +66,21 @@ label,
 span,
 p,
 input {
-  font-family: NanumGothic-Regular, sans-serif;
+  font-family: NanumSquareRoundR, sans-serif;
   font-weight: normal;
 }
 h3,
 .h3,
 strong,
 section.ground-list {
-  font-family: NanumGothic-Bold, sans-serif;
+  font-family: NanumSquareRoundB-Bold, sans-serif;
   font-weight: bold;
 }
 h1,
 h2,
 .h1,
 .h2 {
-  font-family: NanumGothic-ExtraBold, sans-serif;
+  font-family: NanumSquareRoundEB, sans-serif;
   font-weight: bolder;
 }
 .calendar-slider,

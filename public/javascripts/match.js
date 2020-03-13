@@ -17,21 +17,21 @@ $(function() {
   });
 });
 // 경기장 선택 이벤트
-$("#selectGround").on("change", function(v) {
-  let groundInfo = fnGetGroundInfo(v.currentTarget.value);
-});
-function fnGetGroundInfo(id) {
-  let xhr = new XMLHttpRequest();
-  xhr.open("GET", "/admin/ground/read/" + id, true);
-  xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function() {
-    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-      let res = JSON.parse(this.response);
-      console.log("res : ", res);
-    }
-  };
-  xhr.send();
-}
+// $("#selectGround").on("change", function(v) {
+//   let groundInfo = fnGetGroundInfo(v.currentTarget.value);
+// });
+// function fnGetGroundInfo(id) {
+//   let xhr = new XMLHttpRequest();
+//   xhr.open("GET", "/admin/ground/read/" + id, true);
+//   xhr.setRequestHeader("Content-Type", "application/json");
+//   xhr.onreadystatechange = function() {
+//     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+//       let res = JSON.parse(this.response);
+//       console.log("res : ", res);
+//     }
+//   };
+//   xhr.send();
+// }
 // 날짜선택 버튼 클릭 이벤트
 $("#selectDateBtn button").on("click", function(btn) {
   // 클릭시 색 변경

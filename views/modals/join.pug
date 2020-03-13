@@ -5,12 +5,11 @@ link(rel='stylesheet', href='/public_css/custom_modal.css')
       form.form(onsubmit="return fnJoin();")
         .modal-header
           button.close(type="button" data-dismiss="modal" aria-hidden="true")
-            i.fas.fa-times
+            i.nc-icon.nc-simple-remove
         .modal-body
           .card.card-login.border-0
             .card-header.border-0.bg-white
-              .card-header.border-0.bg-white
-                h3.header.text-center Join
+              h3.header.text-center.m-0 Join
             .card-body
               .row
                 .col-md-6
@@ -19,48 +18,48 @@ link(rel='stylesheet', href='/public_css/custom_modal.css')
                     .input-group
                       .input-group-prepend
                         span.input-group-text
-                          i.fas.fa-user
+                          i.nc-icon.nc-single-02
                       input.form-control(type="text" placeholder="ID", name='user_id')
                   .form-group
                     label 비밀번호
                     .input-group
                       .input-group-prepend
                         span.input-group-text
-                          i.fas.fa-key
+                          i.nc-icon.nc-key-25
                       input.form-control(type="password" placeholder="Password", name='user_pw')
                     .input-group
                       .input-group-prepend
                         span.input-group-text
-                          i.fas.fa-key
+                          i.nc-icon.nc-key-25
                       input.form-control(type="password" placeholder="Password confirm", name='user_pw_chk')
                   .form-group
                     label 기본정보
                     .input-group
                       .input-group-prepend
                         span.input-group-text
-                          i.fas.fa-puzzle-piece
+                          i.nc-icon.nc-badge
                       input.form-control(type="text" placeholder="이름", name='user_name')
                     .input-group
                       .input-group-prepend
                         span.input-group-text
-                          i.fas.fa-puzzle-piece
+                          i.nc-icon.nc-chat-33
                       input.form-control(type="text" placeholder="닉네임", name='user_nickname')
                     .input-group
                       .input-group-prepend
                         span.input-group-text
-                          i.fas.fa-venus-mars
+                          i.nc-icon.nc-favourite-28
                       input.form-control(type="text" placeholder="성별", name='gender')
                     .input-group
                       .input-group-prepend
                         span.input-group-text
-                          i.fas.fa-birthday-cake
+                          i.nc-icon.nc-planet
                       input.form-control(type="text" placeholder="생년월일 6자리 ex) 840101", name='birth')
                   .form-group
                     label 이메일 인증   
                     .input-group
                       .input-group-prepend
                         span.input-group-text
-                          i.fas.fa-envelope
+                          i.nc-icon.nc-send
                       input.form-control(type="text" placeholder="E-mail", name='user_email')
                     .text-center.my-3
                       button.btn.btn-primary(type='button', onclick='fnCheckEmail()') E-mail check
@@ -69,7 +68,7 @@ link(rel='stylesheet', href='/public_css/custom_modal.css')
                     .input-group
                       .input-group-prepend
                         span.input-group-text
-                          i.fas.fa-check-circle
+                          i.nc-icon.nc-touch-id
                       input.form-control(type="text" placeholder="인증번호 입력", name='email_verify_number')
                   .row
                     .col-md-8.mx-auto
@@ -80,7 +79,6 @@ link(rel='stylesheet', href='/public_css/custom_modal.css')
                     img(src='/images/kakao_login.png', alt='카카오 아이디로 로그인')
                   a(href='/auth/naver')
                     img(src='/images/naver_login.png', alt='네이버 아이디로 로그인')
-            .card-footer.bg-white.border-0
         .modal-footer
 script.
   // 이메일 인증

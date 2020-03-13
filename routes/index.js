@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
       },
       { favorite_ground: 1 }
     );
-    if (user.favorite_ground && !req.query.ground) {
+    if (user.favorite_ground.length > 0 && !req.query.ground) {
       return res.redirect("/?ground=" + user.favorite_ground.join(","));
     }
   }

@@ -89,6 +89,8 @@ window.addEventListener("scroll", function() {
 //  경기 리스트 생성
 function fnGenerateGroundList(res, currentSlide) {
   let html = "";
+  document.querySelector(".match-count").innerHTML =
+    "총 " + res.length + "매치";
   if (res.length > 0) {
     res.forEach(function(game, idx) {
       let remain = game.personnel.max - (game.apply_member.length || 0);
@@ -98,6 +100,31 @@ function fnGenerateGroundList(res, currentSlide) {
       } else if (remain < 2) {
         status = "full";
       }
+      let li = document.createElement("li");
+      li.classList =
+        "list-group-item list-group-item-light py-1 px-0 mx-auto " +
+        (idx % 2 === 0 ? "bg-light" : "");
+      let row = document.createElement("div");
+      row.className = "row";
+      let col = document.createElement("div");
+      col.className = "col-md-10 col-8 my-auto";
+      let inner_row = document.createElement("div");
+      inner_row.className = "row";
+      let inner_col = document.createElement("div");
+      inner_col.className = "col-md-6";
+      let time_group_wrap = document.createElement("div");
+      time_group_wrap.className =
+        "time-ground-wrap d-flex justify-content-start";
+      let p = document.createElement("p");
+      p.className = "ml-3 text-info";
+      p.innerText = game.match_time;
+      time_group_wrap.appendChild(p);
+      p.innerText = game.ground_info.groundName;
+      time_group_wrap.appendChild(p);
+      inner_col.appendChild(time_group_wrap);
+      inner_row.appendChild(inner_col);
+      inner_col.className = "col-md-5 ml-3";
+
       html +=
         '<li class="list-group-item list-group-item-light py-1 px-0 mx-auto ' +
         (idx % 2 === 0 ? "bg-light" : "") +

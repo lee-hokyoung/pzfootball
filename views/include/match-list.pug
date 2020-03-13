@@ -10,52 +10,95 @@
             if(list.length > 0)
               each game, idx in list
                 //a.mx-auto(href='#', style='width:790px;', class=idx%2===0?'bg-light':'')
-                li.list-group-item.list-group-item-light.py-1.px-0.mx-auto(style='border:none !important', class=idx%2===0?'bg-light':'')
-                  //.d-flex.justify-content-between.
-                  .row.w-100.m-0
-                    .col-4.col-md-2.d-block
-                      small.font-weight-bold.text-secondary TIME
-                      h5.text-orange #{game.match_time}
-                    .col-8.col-md-7.text-left
-                      small.text-secondary.font-weight-bold #{game.ground_info.groundName}
-                      .d-flex.justify-content-start
-                        .match-wrap.text-center.pt-1
-                          img(src=game.match_type==="2"?'/images/match_2.png':'/images/match_3.png')
-                          b #{game.match_type==="2"?'2파':'3파'}
-                        .text-left.text-dark
-                          small.pl-2.tagList(class=game.sex===1?'male text-primary':game.sex===-1?'female text-danger':'mix')
-                            case game.sex
-                              when 1
-                                | 남성매치
-                              when -1
-                                | 여성매치
-                              when 0
-                                | 혼성매치
-                        .grade_icon.ml-2(data-grade=game.match_grade) 실력
-                        if(game.ladder===1)
-                          .ladder_icon.ml-2 승점
-                    - var status ='available';
-                    - var remains = game.personnel.max - (game.apply_member.length || 0);
-                    if(remains >= 4)
-                      - status = 'available'
-                    else if(remains >= 1 && remains < 4)
-                      - status = 'hurry'
-                    else
-                      - status = 'full'
-                    .col.col-md-3.p-0(style='width:160px;', data-cnt=remains, data-id=game._id)
-                      if(status === 'hurry')
-                        button.btn.btn-status.text-white.p-0(data-status='hurry')
-                          h5.m-0.py-1 마감임박
-                          .text-warning.bg-white.mx-auto.font-weight-bold(style='border-radius:1rem; width:100px; font-size:13px;') #{remains}자리 남음
-                          small.position-relative(style='top:-3px;') #{new Intl.NumberFormat().format(game.match_price)}원
-                      else if(status === 'available')
-                        button.btn.btn-status.text-white.p-0(data-status='available')
-                          h5.m-0.py-1 신청가능
-                          .text-primary.bg-white.mx-auto.font-weight-bold(style='border-radius:1rem; width:100px; font-size:13px;') #{remains}자리 남음
-                          small.position-relative(style='top:-3px;') #{new Intl.NumberFormat().format(game.match_price)}원
-                      else if(status === 'full')
-                        button.btn.btn-status.text-white(data-status='full')
-                          small.m-0 마  감
+                li.list-group-item.list-group-item-light.py-1.px-0.mx-auto(class=idx%2===0?'bg-light':'')
+                  .row
+                    .col-md-10.col-8.my-auto
+                      .row
+                        .col-md-6
+                          .time-ground-wrap.d-flex.justify-content-start
+                            p.ml-3.text-info #{game.match_time}
+                            p.ml-3.text-dark #{game.ground_info.groundName}
+                        .col-md-5.ml-3
+                          .d-flex.justify-content-start
+                            .match-wrap.text-center.pt-1
+                              //- img(src=game.match_type==="2"?'/images/match_2.png':'/images/match_3.png')
+                              b #{game.match_type}파
+                            .text-left.text-dark
+                              small.pl-2.tagList(class=game.sex===1?'male text-primary':game.sex===-1?'female text-danger':'mix')
+                                case game.sex
+                                  when 1
+                                    | 남성매치
+                                  when -1
+                                    | 여성매치
+                                  when 0
+                                    | 혼성매치
+                            .grade_icon.ml-2(data-grade=game.match_grade, data-title='실력')
+                            if(game.ladder===1)
+                              .ladder_icon.ml-2(data-title='승점')
+                    .col-md-2.col-4
+                        - var status ='available';
+                        - var remains = game.personnel.max - (game.apply_member.length || 0);
+                        - var percent = game.apply_member.length / game.personnel.max;
+                        if(percent <= 0.6)
+                          - status = 'available'
+                        else if(percent < 1 && percent > 0.6)
+                          - status = 'hurry'
+                        else
+                          - status = 'full'
+                        .pull-right.w-100(data-cnt=remains, data-id=game._id)
+                          if(status === 'full')
+                            button.btn.btn-neutral.btn-status.text-white(data-status='full')
+                              small.m-0 마  감
+                          else
+                            button.btn.btn-neutral.btn-status.text-white.p-0(data-status=status)
+                              h5.m-0.py-1 #{status === 'hurry'?"곧 마감!":"신청가능!"}
+                              .text-warning.bg-white.mx-auto.font-weight-bold.mb-1(style='border-radius:1rem; width:80%; font-size:.75rem;') #{game.apply_member.length} / #{game.personnel.max}
+                            //- small.position-relative(style='top:-3px;') #{new Intl.NumberFormat().format(game.match_price)}원
+                        
+                    //- .row
+                    //-   .col-4.col-md-2.d-block
+                    //-     small.font-weight-bold.text-secondary TIME
+                    //-     h5.text-orange #{game.match_time}
+                    //-   .col-8.col-md-7.text-left
+                    //-     small.text-secondary.font-weight-bold #{game.ground_info.groundName}
+                    //-     .d-flex.justify-content-start
+                    //-       .match-wrap.text-center.pt-1
+                    //-         img(src=game.match_type==="2"?'/images/match_2.png':'/images/match_3.png')
+                    //-         b #{game.match_type==="2"?'2파':'3파'}
+                    //-       .text-left.text-dark
+                    //-         small.pl-2.tagList(class=game.sex===1?'male text-primary':game.sex===-1?'female text-danger':'mix')
+                    //-           case game.sex
+                    //-             when 1
+                    //-               | 남성매치
+                    //-             when -1
+                    //-               | 여성매치
+                    //-             when 0
+                    //-               | 혼성매치
+                    //-       .grade_icon.ml-2(data-grade=game.match_grade) 실력
+                    //-       if(game.ladder===1)
+                    //-         .ladder_icon.ml-2 승점
+                    //- - var status ='available';
+                    //- - var remains = game.personnel.max - (game.apply_member.length || 0);
+                    //- if(remains >= 4)
+                    //-   - status = 'available'
+                    //- else if(remains >= 1 && remains < 4)
+                    //-   - status = 'hurry'
+                    //- else
+                    //-   - status = 'full'
+                    //- .col.col-md-3.p-0(style='width:160px;', data-cnt=remains, data-id=game._id)
+                    //-   if(status === 'hurry')
+                    //-     button.btn.btn-status.text-white.p-0(data-status='hurry')
+                    //-       h5.m-0.py-1 마감임박
+                    //-       .text-warning.bg-white.mx-auto.font-weight-bold(style='border-radius:1rem; width:100px; font-size:13px;') #{remains}자리 남음
+                    //-       small.position-relative(style='top:-3px;') #{new Intl.NumberFormat().format(game.match_price)}원
+                    //-   else if(status === 'available')
+                    //-     button.btn.btn-status.text-white.p-0(data-status='available')
+                    //-       h5.m-0.py-1 신청가능
+                    //-       .text-primary.bg-white.mx-auto.font-weight-bold(style='border-radius:1rem; width:100px; font-size:13px;') #{remains}자리 남음
+                    //-       small.position-relative(style='top:-3px;') #{new Intl.NumberFormat().format(game.match_price)}원
+                    //-   else if(status === 'full')
+                    //-     button.btn.btn-status.text-white(data-status='full')
+                    //-       small.m-0 마  감
 
             else
               li.list-group-item.list-group-item-light.py-1.px-0.mx-auto

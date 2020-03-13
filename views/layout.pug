@@ -9,6 +9,7 @@ html
     title 퍼즐풋볼
     //- font and icon
     link(href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet")
+    link(href="https://fonts.googleapis.com/css?family=Nanum+Gothic" rel="stylesheet")
 
     link(href="/assets/css/bootstrap.min.css" rel="stylesheet")
     link(href="/assets/css/paper-dashboard.css" rel="stylesheet")
@@ -36,16 +37,21 @@ html
             img(src='/images/pz_logo.png')
         ul.list-unstyled.components.p-3
           li
-            a(href="#about") 회사소개
+            a(href="#about") 
+              p 회사소개
           li
-            a(href='#apply') 매니저지원
+            a(href='#apply') 
+              p 매니저지원
           li
-            a(href='#qna') 문의하기
+            a(href='#qna') 
+              p 문의하기
           li
-            a(href='#faq') 자주 묻는 질문
+            a(href='#faq') 
+              p 자주 묻는 질문
           li.division
           li
-            a(href='#') 리그 순위표
+            a(href='#')
+              p 리그 순위표
           li.division
           li.description
             label SNS
@@ -67,7 +73,7 @@ html
       //- #content.container-fluid.pz_bg
       .container-fluid
         .container
-          .d-flex.justify-content-between
+          .d-flex.justify-content-between.px-3
             img.py-2(src='/images/pz_logo.png', style='cursor:pointer; z-index:10; width:70px', onclick='location.href="/"', alt='퍼즐풋볼 메인 로고')
             .nav-button-wrap.my-auto
               if(user_info)
@@ -126,7 +132,7 @@ html
         //-       li.nav-item(style='line-height:28px;')
         //-         button#sidebarCollapse.btn.btn-link.p-1(href='#')
         //-           img(src='/images/nav_toggle.svg', width=22)
-        //-   input#isLoggedIn(type='hidden', data-isLogin=(user_info?'true':'false'))
+        input#isLoggedIn(type='hidden', data-isLogin=(user_info?'true':'false'))
       block content
       // login modal
       include modals/login

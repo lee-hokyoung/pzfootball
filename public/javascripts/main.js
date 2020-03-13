@@ -94,22 +94,34 @@ function fnGenerateGroundList(res, currentSlide) {
   if (res.length > 0) {
     res.forEach(function(game, idx) {
       let remain = game.personnel.max - (game.apply_member.length || 0);
+      let percent = game.apply_member.length / game.personnel.max;
       let status = "available";
-      if (remain >= 1 && remain < 4) {
+      if (percent <= 0.6) {
+        status = "available";
+      } else if (percent < 1 && percent > 0.6) {
         status = "hurry";
-      } else if (remain < 2) {
+      } else {
         status = "full";
       }
+
+      // if (remain >= 1 && remain < 4) {
+      //   status = "hurry";
+      // } else if (remain < 2) {
+      //   status = "full";
+      // }
       let li = document.createElement("li");
       li.classList =
         "list-group-item list-group-item-light py-1 px-0 mx-auto " +
         (idx % 2 === 0 ? "bg-light" : "");
+
       let row = document.createElement("div");
       row.className = "row";
+      //  col-md-10.col-8.my-auto
       let col = document.createElement("div");
       col.className = "col-md-10 col-8 my-auto";
       let inner_row = document.createElement("div");
       inner_row.className = "row";
+      //  col-md-6
       let inner_col = document.createElement("div");
       inner_col.className = "col-md-6";
       let time_group_wrap = document.createElement("div");
@@ -123,86 +135,157 @@ function fnGenerateGroundList(res, currentSlide) {
       time_group_wrap.appendChild(p);
       inner_col.appendChild(time_group_wrap);
       inner_row.appendChild(inner_col);
+      //  col-md-5.ml-3
       inner_col.className = "col-md-5 ml-3";
-
-      html +=
-        '<li class="list-group-item list-group-item-light py-1 px-0 mx-auto ' +
-        (idx % 2 === 0 ? "bg-light" : "") +
-        '" style="border:none !important">' +
-        '<div class="row w-100 m-0">' +
-        '<div class="col-4 col-md-2 d-block">' +
-        '<small class="font-weight-bold text-secondary">TIME</small>' +
-        '<h5 class="text-orange">' +
-        game.match_time +
-        "</h5>" +
-        "</div>" +
-        '<div class="col-8 col-md-7 text-left">' +
-        '<small class="text-secondary font-weight-bold">' +
-        game.ground_info.groundName +
-        "</small>" +
-        '<div class="d-flex justify-content-start">' +
-        '<div class="match-wrap text-center pt-1">' +
-        '<img src="/images/match_' +
-        game.match_type +
-        '.png">' +
-        "<b>" +
-        game.match_type +
-        "파</b>" +
-        "</div>" +
-        '<div class="text-left text-dark">' +
-        '<small class="pl-2 tagList ' +
-        (game.sex === 1
+      let flex = document.createElement("div");
+      flex.className = "d-flex justify-content-start";
+      //    match-wrap
+      let inner_div = document.createElement("div");
+      inner_div.className = "match-wrap text-center pt-1";
+      let b = document.createElement("b");
+      b.innerText = game.match_type + "파";
+      inner_div.appendChild(b);
+      flex.appendChild(inner_div);
+      //    text-left.text-dark
+      inner_div.className = "text-left text-dark";
+      let small = document.createElement("small");
+      small.className =
+        "pl-2 tagList" + game.sex === 1
           ? "male text-primary"
           : game.sex === -1
           ? "female text-danger"
-          : "mix") +
-        '">' +
-        (game.sex === 1
-          ? "남성매치"
-          : game.sex === -1
-          ? "여성매치"
-          : "혼성매치") +
-        "</small>" +
-        "</div>" +
-        '<div class="grade_icon ml-2" data-grade="' +
-        game.match_grade +
-        '">실력</div>';
-      if (game.ladder === 1) html += '<div class="ladder_icon ml-2">승점</div>';
-      html +=
-        "</div>" +
-        "</div>" +
-        '<div class="col col-md-3 p-0" style="width:160px;" data-cnt="' +
-        remain +
-        '" data-id="' +
-        game._id +
-        '">' +
-        '<button class="btn btn-status text-white p-0" data-status="' +
-        status +
-        '" tabindex="0">' +
-        '<h5 class="m-0 py-1">' +
-        (status === "hurry"
-          ? "마감임박"
-          : status === "available"
-          ? "신청가능"
-          : "마  감") +
-        "</h5>" +
-        '<div class="' +
-        (status === "hurry"
-          ? "text-warning"
-          : status === "available"
-          ? "text-primary"
-          : "") +
-        ' bg-white mx-auto font-weight-bold" style="border-radius:1rem; width:100px; font-size:13px;">' +
-        remain +
-        (remain > 0 ? "자리 남음" : "") +
-        "</div>" +
-        '<small class="position-relative" style="top:-3px;">' +
-        new Intl.NumberFormat().format(game.match_price) +
-        "원</small>" +
-        "</button>" +
-        "</div>" +
-        "</div>" +
-        "</li>";
+          : "mix";
+      small.innerText =
+        game.sex === 1 ? "남성매치" : game.sex === -1 ? "여성매치" : "혼성매치";
+      inner_div.appendChild(small);
+      flex.appendChild(inner_div);
+      //    grade_icon.ml-2
+      inner_div.className = "grade_icon ml-2";
+      inner_div.dataset.grade = game.match_grade;
+      inner_div.dataset.title = "실력";
+      flex.appendChild(inner_div);
+      if (game.ladder === 1) {
+        inner_div.className = "ladder_icon ml-2";
+        inner_div.dataset.title = "승점";
+        flex.appendChild(inner_div);
+      }
+      inner_col.appendChild(flex);
+      inner_row.appendChild(inner_col);
+      col.appendChild(inner_row);
+      row.appendChild(col);
+
+      //  col-md-2.col-4
+      col.className = "col-md-2 col-4";
+      div.className = "pull-right w-100";
+      div.dataset.cnt = remains;
+      div.dataset.id = game._id;
+
+      let button = document.createElement("button");
+      if (status === "full") {
+        button.className = "btn btn-neutral btn-status text-white";
+        button.dataset.status = "full";
+        small.className = "m-0";
+        button.appendChild(small);
+      } else {
+        button.className = "btn btn-neutral btn-status text-white p-0";
+        button.dataset.status = status;
+        let h5 = document.createElement("h5");
+        h5.className = "m-0 py-1";
+        inner_div.className =
+          "text-warning bg-white mx-auto font-weight-bold mb-1";
+        inner_div.style = "border-radius:1rem; width:80%; font-size:.75rem";
+        inner_div.innerText =
+          game.apply_member.length + " / " + game.personnel.max;
+        button.appendChild(h5);
+        button.appendChild(inner_div);
+      }
+      div.appendChild(button);
+      col.appendChild(div);
+      row.appendChild(col);
+      li.appendChild(row);
+
+      document
+        .querySelector('div[data-slick-index="' + currentSlide + '"] ul')
+        .appendChild(li);
+
+      //     html +=
+      //       '<li class="list-group-item list-group-item-light py-1 px-0 mx-auto ' +
+      //       (idx % 2 === 0 ? "bg-light" : "") +
+      //       '" style="border:none !important">' +
+      //       '<div class="row w-100 m-0">' +
+      //       '<div class="col-4 col-md-2 d-block">' +
+      //       '<small class="font-weight-bold text-secondary">TIME</small>' +
+      //       '<h5 class="text-orange">' +
+      //       game.match_time +
+      //       "</h5>" +
+      //       "</div>" +
+      //       '<div class="col-8 col-md-7 text-left">' +
+      //       '<small class="text-secondary font-weight-bold">' +
+      //       game.ground_info.groundName +
+      //       "</small>" +
+      //       '<div class="d-flex justify-content-start">' +
+      //       '<div class="match-wrap text-center pt-1">' +
+      //       '<img src="/images/match_' +
+      //       game.match_type +
+      //       '.png">' +
+      //       "<b>" +
+      //       game.match_type +
+      //       "파</b>" +
+      //       "</div>" +
+      //       '<div class="text-left text-dark">' +
+      //       '<small class="pl-2 tagList ' +
+      //       (game.sex === 1
+      //         ? "male text-primary"
+      //         : game.sex === -1
+      //         ? "female text-danger"
+      //         : "mix") +
+      //       '">' +
+      //       (game.sex === 1
+      //         ? "남성매치"
+      //         : game.sex === -1
+      //         ? "여성매치"
+      //         : "혼성매치") +
+      //       "</small>" +
+      //       "</div>" +
+      //       '<div class="grade_icon ml-2" data-grade="' +
+      //       game.match_grade +
+      //       '">실력</div>';
+      //     if (game.ladder === 1) html += '<div class="ladder_icon ml-2">승점</div>';
+      //     html +=
+      //       "</div>" +
+      //       "</div>" +
+      //       '<div class="col col-md-3 p-0" style="width:160px;" data-cnt="' +
+      //       remain +
+      //       '" data-id="' +
+      //       game._id +
+      //       '">' +
+      //       '<button class="btn btn-status text-white p-0" data-status="' +
+      //       status +
+      //       '" tabindex="0">' +
+      //       '<h5 class="m-0 py-1">' +
+      //       (status === "hurry"
+      //         ? "마감임박"
+      //         : status === "available"
+      //         ? "신청가능"
+      //         : "마  감") +
+      //       "</h5>" +
+      //       '<div class="' +
+      //       (status === "hurry"
+      //         ? "text-warning"
+      //         : status === "available"
+      //         ? "text-primary"
+      //         : "") +
+      //       ' bg-white mx-auto font-weight-bold" style="border-radius:1rem; width:100px; font-size:13px;">' +
+      //       remain +
+      //       (remain > 0 ? "자리 남음" : "") +
+      //       "</div>" +
+      //       '<small class="position-relative" style="top:-3px;">' +
+      //       new Intl.NumberFormat().format(game.match_price) +
+      //       "원</small>" +
+      //       "</button>" +
+      //       "</div>" +
+      //       "</div>" +
+      //       "</li>";
     });
   } else {
     html +=

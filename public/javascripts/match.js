@@ -64,7 +64,14 @@ function fnGenerateRow(item) {
   let match_time = item.querySelector("#matchTime");
   let match_type = item.querySelector('input[name="match_type"]:checked');
   let ladder = item.querySelector('input[name="ladder"]');
-  let match_grade = item.querySelector('input[name="match_grade"]:checked');
+  let grade_group = document.querySelector('.grade-group[data-view="true"]');
+  let match_grade = item.querySelector(
+    '.grade-group[data-view="true"] input[name="match_grade"]:checked'
+  );
+  let grade_score = item.querySelector(
+    '.grade-group[data-view="true"] input[name="grade-score"]'
+  );
+  // let match_grade = item.querySelector('input[name="match_grade"]:checked');
   let sex = item.querySelector('input[name="sex"]:checked');
   let personnel_min = item.querySelector('input[name="personnel-min"]');
   let personnel_max = item.querySelector('input[name="personnel-max"]');
@@ -85,8 +92,21 @@ function fnGenerateRow(item) {
     alert("경기 타입을 선택해 주세요");
     return false;
   }
-  if (match_grade === null || match_grade.value === "") {
+  console.log("match grade : ", match_grade);
+  console.log("garde score : ", grade_score);
+  console.log("grade_group : ", grade_group);
+  if (
+    grade_group.getAttribute("name") === "grade" &&
+    (match_grade === null || match_grade.value === "")
+  ) {
     alert("실력을 선택해 주세요");
+    return false;
+  }
+  if (
+    grade_group.getAttribute("name") === "score" &&
+    (grade_score === null || grade_score.value === "")
+  ) {
+    alert("승점을 입력해 주세요");
     return false;
   }
   if (sex === null || sex.value === "") {
@@ -128,7 +148,8 @@ function fnGenerateRow(item) {
       return false;
     }
   };
-  xhr.send(JSON.stringify(formData));
+  console.log("for data : ", formData);
+  // xhr.send(JSON.stringify(formData));
 }
 
 function fnSetNewRow(doc) {
@@ -387,6 +408,18 @@ function fnUpdate(_id) {
   let col_4 = document.createElement("div");
   col_4.className = "col";
   col_4.dataset.title = "match_grade";
+  let grade_group = document.createElement("div");
+  grade_group.className = "grade-group";
+  grade_group.dataset.view = "false";
+  input = document.createElement("input");
+  input.className = "form-control";
+  input.type = "text";
+  input.name = "grade-score";
+  input.placeholder = "승점을 입력해주세요";
+  grade_group.appendChild(input);
+  col_4.appendChild(grade_group);
+
+  grade_group.dataset.view = "true";
   [
     { lbl: "상", val: "1" },
     { lbl: "중", val: "2" },
@@ -409,8 +442,10 @@ function fnUpdate(_id) {
     label.appendChild(input);
     label.appendChild(span);
     formGroup.appendChild(label);
-    col_4.appendChild(formGroup);
+    grade_group.appendChild(formGroup);
   });
+  col_4.appendChild(formGroup);
+
   // 다섯번째 컬럼(성별)
   let col_5 = document.createElement("div");
   col_5.className = "col";
@@ -568,3 +603,16 @@ function fnDelete(id) {
 function fnDeleteRow(id) {
   document.querySelector('div[data-id="' + id + '"]').parentNode.remove();
 }
+
+//  승점제 경기 체크시 일반/실력 활성화
+document
+  .querySelector('input[name="ladder"]')
+  .addEventListener("click", function() {
+    let toggle = this.dataset.toggle === "false";
+    this.dataset.toggle = toggle;
+    document.querySelectorAll(".grade-group").forEach(function(div) {
+      let view = div.dataset.view === "false";
+      div.dataset.view = view;
+    });
+    console.log(toggle);
+  });

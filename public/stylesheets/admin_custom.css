@@ -250,6 +250,12 @@ ul#match-register li .row .col[data-title="personnel"] .form-group {
 ul#match-register li .row .col[data-title="personnel"] input {
   width: 90px;
 }
+.grade-group[data-view="false"] {
+  display: none;
+}
+.grade-group[data-view="true"] {
+  display: block;
+}
 .bootstrap-select.show::after {
   content: "";
 }

@@ -102,21 +102,24 @@ block content
                               span.form-check-sign 3파전
                           .form-check.form-check-inline
                             label.form-check-label
-                              input.form-check-input(type="checkbox", name="ladder")
+                              input.form-check-input(type="checkbox", name="ladder", data-toggle='false')
                               span.form-check-sign 승점제 경기
                         .col(data-title='match_grade')
-                          .form-check-radio.form-check-inline
-                            label.form-check-label
-                              input.form-check-input(type="radio", name="match_grade", value='1')
-                              span.form-check-sign 상
-                          .form-check-radio.form-check-inline
-                            label.form-check-label
-                              input.form-check-input(type="radio", name="match_grade", value='2')
-                              span.form-check-sign 중
-                          .form-check-radio.form-check-inline
-                            label.form-check-label
-                              input.form-check-input(type="radio", name="match_grade", value='3')
-                              span.form-check-sign 하
+                          .grade-group(data-view='false', name='score')
+                            input.form-control(type='text', name='grade-score', placeholder='승점을 입력해주세요')
+                          .grade-group(data-view='true', name='grade')
+                            .form-check-radio.form-check-inline
+                              label.form-check-label
+                                input.form-check-input(type="radio", name="match_grade", value='1')
+                                span.form-check-sign 상
+                            .form-check-radio.form-check-inline
+                              label.form-check-label
+                                input.form-check-input(type="radio", name="match_grade", value='2')
+                                span.form-check-sign 중
+                            .form-check-radio.form-check-inline
+                              label.form-check-label
+                                input.form-check-input(type="radio", name="match_grade", value='3')
+                                span.form-check-sign 하
                         .col(data-title='sex')
                           .form-check-radio.form-check-inline
                             label.form-check-label

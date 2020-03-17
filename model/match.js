@@ -17,6 +17,7 @@ const matchSchema = new Schema({
   match_time: String,
   match_type: String, // 2파전, 3파전
   match_grade: String, // 실력
+  match_score: Number, //  승점
   ladder: Number, // 승점제 유무, 1: 승점제, 0: 승점제 x
   sex: Number, // 성별 1: 남성매치, -1: 여성매치, 0: 혼성매치
   personnel: {

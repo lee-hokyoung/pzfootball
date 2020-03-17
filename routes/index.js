@@ -82,6 +82,7 @@ async function fnGetMatchList(date, query, user_info) {
   let match_query = {};
   match_query["match_date"] = date;
   if (query.game_type) match_query["match_type"] = query.game_type;
+  if (query.ladder) match_query["ladder"] = parseInt(query.ladder);
   if (query.ground_id)
     match_query["ground_id"] = mongoose.Types.ObjectId(query.ground_id);
   //  지역으로 필터링 할 경우, 지역 내 구장 아이디를 가져온다

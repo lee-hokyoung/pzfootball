@@ -228,7 +228,8 @@ ul#match-register li .row .col[data-title="match_type"] {
   max-width: 300px;
   min-width: 300px;
 }
-ul#match-register li .row .col[data-title="match_grade"] {
+ul#match-register li .row .col[data-title="match_grade"],
+ul#match-register li .row .col[data-title="match_score"] {
   max-width: 200px;
 }
 ul#match-register li .row .col[data-title="sex"] {

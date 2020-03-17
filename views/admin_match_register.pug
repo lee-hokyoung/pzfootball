@@ -49,7 +49,7 @@ block content
                         .col(data-title='#') #
                         .col(data-title='match_time') 시간
                         .col(data-title='match_type') 타입
-                        .col(data-title='match_grade') 실력
+                        .col(data-title='match_grade') 실력 또는 승점
                         .col(data-title='sex') 성별
                         .col(data-title='personnel') 인원수
                         .col(data-title='match_price') 금액
@@ -60,14 +60,17 @@ block content
                           .col(data-title='#') #{idx + 1}
                           .col(data-title='match_time', name='match_time') #{item.match_time}
                           .col(data-title='match_type' name='match_type', data-value=item.match_type) #{item.match_type} 파전 #{item.ladder === 1 ? " 승점제 경기":""}
-                          .col(data-title='match_grade' name='match_grade', data-value=item.match_grade)
-                            case item.match_grade
-                              when "1"
-                                | 상
-                              when "2"
-                                | 중
-                              when "3"
-                                | 하
+                          if(item.match_grade)
+                            .col(data-title='match_grade' name='match_grade', data-value=item.match_grade)
+                              case item.match_grade
+                                when "1"
+                                  | 상
+                                when "2"
+                                  | 중
+                                when "3"
+                                  | 하
+                          else
+                            .col(data-title='match_score', name='match_score', data-value=item.match_score) #{item.match_score}
                           .col(data-title='sex' name='sex', data-value=item.sex)
                             case item.sex
                               when 1
@@ -147,4 +150,4 @@ block content
 block append_js
   script(src='/public_js/match.js')
   script.
-    console.log('match list  : ', !{JSON.stringify(match_list)});
+    console.log('list : ', !{JSON.stringify(match_list)})

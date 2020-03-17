@@ -32,9 +32,11 @@
                                     | 여성매치
                                   when 0
                                     | 혼성매치
-                            .grade_icon.ml-2(data-grade=game.match_grade, data-title='실력')
+                            if(game.ladder!==1)
+                              .grade_icon.ml-2(data-grade=game.match_grade, data-title='실력')
                             if(game.ladder===1)
                               .ladder_icon.ml-2(data-title='승점')
+                              b (+#{game.match_score})
                     .col-md-2.col-4
                       - var status ='available';
                       - var remains = game.personnel.max - (game.apply_member.length || 0);
@@ -52,7 +54,7 @@
                         else
                           button.btn.btn-neutral.btn-status.text-white.p-0(data-status=status)
                             h5.m-0.py-1 #{status === 'hurry'?"곧 마감!":"신청가능!"}
-                            .text-warning.bg-white.mx-auto.font-weight-bold.mb-1(style='border-radius:1rem; width:80%; font-size:.75rem;') #{game.apply_member.length} / #{game.personnel.max}
+                            .text-danger.bg-white.mx-auto.font-weight-bold.mb-1(style='border-radius:1rem; width:80%; font-size:.75rem;') #{game.apply_member.length} / #{game.personnel.max}
                             //- small.position-relative(style='top:-3px;') #{new Intl.NumberFormat().format(game.match_price)}원
                         
                     //- .row

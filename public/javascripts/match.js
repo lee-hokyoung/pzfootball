@@ -64,7 +64,7 @@ function fnGenerateRow(item) {
   let match_time = item.querySelector("#matchTime");
   let match_type = item.querySelector('input[name="match_type"]:checked');
   let ladder = item.querySelector('input[name="ladder"]');
-  let grade_group = document.querySelector('.grade-group[data-view="true"]');
+  let grade_group = item.querySelector('.grade-group[data-view="true"]');
   let match_grade = item.querySelector(
     '.grade-group[data-view="true"] input[name="match_grade"]:checked'
   );
@@ -129,7 +129,10 @@ function fnGenerateRow(item) {
   ).dataset.date;
   formData["match_time"] = match_time.value;
   formData["match_type"] = match_type.value;
-  formData["match_grade"] = match_grade.value;
+  if (grade_group.getAttribute("name") === "grade")
+    formData["match_grade"] = match_grade.value;
+  if (grade_group.getAttribute("name") === "score")
+    formData["match_score"] === grade_score.value;
   formData["ladder"] = ladder.checked ? 1 : 0;
   formData["sex"] = sex.value;
   formData["personnel"] = {
@@ -149,7 +152,7 @@ function fnGenerateRow(item) {
     }
   };
   console.log("for data : ", formData);
-  // xhr.send(JSON.stringify(formData));
+  xhr.send(JSON.stringify(formData));
 }
 
 function fnSetNewRow(doc) {
@@ -166,10 +169,12 @@ function fnSetNewRow(doc) {
   li.className = "list-group-item";
   let row = document.createElement("div");
   row.className = "row";
+
   // 첫번째 컬럼 #
   let col_1 = document.createElement("div");
   col_1.className = "col";
   col_1.dataset.title = "#";
+
   // 두번째 컬럼(시간)
   let col_2 = document.createElement("div");
   col_2.className = "col";
@@ -183,6 +188,7 @@ function fnSetNewRow(doc) {
   input.value = match_time;
   formGroup.appendChild(input);
   col_2.appendChild(formGroup);
+
   // 세번째 컬럼 타입(2파전, 3파전, 승점제경기 유무)
   let col_3 = document.createElement("div");
   col_3.className = "col";
@@ -223,10 +229,27 @@ function fnSetNewRow(doc) {
   label.appendChild(span);
   formGroup.appendChild(label);
   col_3.appendChild(formGroup);
-  // 네번째 컬럼(실력: 상, 중, 하)
+
+  // 네번째 컬럼(실력: 상, 중, 하 또는 승점)
   let col_4 = document.createElement("div");
   col_4.className = "col";
   col_4.dataset.title = "match_grade";
+  let grade_group = document.createElement("div");
+  grade_group.className = "grade-group";
+  grade_group.setAttribute("name", "score");
+  grade_group.dataset.view = "false";
+  input = document.createElement("input");
+  input.className = "form-control";
+  input.type = "text";
+  input.name = "grade-score";
+  input.placeholder = "승점을 입력해주세요";
+  grade_group.appendChild(input);
+  col_4.appendChild(grade_group);
+
+  grade_group = document.createElement("div");
+  grade_group.className = "grade-group";
+  grade_group.setAttribute("name", "grade");
+  grade_group.dataset.view = "true";
   [
     { lbl: "상", val: "1" },
     { lbl: "중", val: "2" },
@@ -249,8 +272,10 @@ function fnSetNewRow(doc) {
     label.appendChild(input);
     label.appendChild(span);
     formGroup.appendChild(label);
-    col_4.appendChild(formGroup);
+    grade_group.appendChild(formGroup);
   });
+  col_4.appendChild(grade_group);
+
   // 다섯번째 컬럼(성별)
   let col_5 = document.createElement("div");
   col_5.className = "col";
@@ -282,12 +307,12 @@ function fnSetNewRow(doc) {
   // 여섯번째 컬럼(인원수)
   let col_6 = document.createElement("div");
   col_6.className = "col";
-  col_6.dataset.title = "psersonnel";
+  col_6.dataset.title = "personnel";
   formGroup = document.createElement("div");
   formGroup.className = "form-group";
   input = document.createElement("input");
   input.className = "form-control py-1";
-  input.setAttribute("type", "text");
+  input.setAttribute("type", "number");
   input.setAttribute("name", "personnel-min");
   input.value = personnel.min;
   formGroup.appendChild(input);
@@ -296,7 +321,7 @@ function fnSetNewRow(doc) {
   formGroup.appendChild(span);
   input = document.createElement("input");
   input.className = "form-control py-1";
-  input.setAttribute("type", "text");
+  input.setAttribute("type", "number");
   input.setAttribute("name", "personnel-max");
   input.value = personnel.max;
   formGroup.appendChild(input);
@@ -340,7 +365,10 @@ function fnUpdate(_id) {
   let idx = r.querySelector(".col").innerText;
   let match_time = r.querySelector("div[name='match_time']").innerText;
   let match_type = r.querySelector("div[name='match_type']").dataset.value;
-  let match_grade = r.querySelector("div[name='match_grade']").dataset.value;
+
+  let match_grade = r.querySelector("div[name='match_grade']");
+  let match_score = r.querySelector("div[name='match_score']");
+
   let sex = r.querySelector("div[name='sex']").dataset.value;
   let personnel = r.querySelector("div[name='personnel']");
   let match_price = r.querySelector("div[name='match_price']").innerText;
@@ -397,6 +425,15 @@ function fnUpdate(_id) {
   input.setAttribute("type", "checkbox");
   input.setAttribute("name", "ladder");
   input.checked = ladder === "1";
+  input.addEventListener("click", function() {
+    let toggle = this.dataset.toggle === "false";
+    this.dataset.toggle = toggle;
+    let row = this.parentElement.parentElement.parentElement.parentElement;
+    row.querySelectorAll(".grade-group").forEach(function(div) {
+      let view = div.dataset.view === "false";
+      div.dataset.view = view;
+    });
+  });
   let span = document.createElement("span");
   span.className = "form-check-sign";
   span.innerText = "승점제 경기";
@@ -404,22 +441,28 @@ function fnUpdate(_id) {
   label.appendChild(span);
   formGroup.appendChild(label);
   col_3.appendChild(formGroup);
+
   // 네번째 컬럼(실력: 상, 중, 하)
   let col_4 = document.createElement("div");
   col_4.className = "col";
   col_4.dataset.title = "match_grade";
   let grade_group = document.createElement("div");
   grade_group.className = "grade-group";
-  grade_group.dataset.view = "false";
+  grade_group.setAttribute("name", "score");
+  grade_group.dataset.view = ladder === "1" ? "true" : "false";
   input = document.createElement("input");
   input.className = "form-control";
   input.type = "text";
   input.name = "grade-score";
+  if (match_score) input.value = match_score.dataset.value;
   input.placeholder = "승점을 입력해주세요";
   grade_group.appendChild(input);
   col_4.appendChild(grade_group);
 
-  grade_group.dataset.view = "true";
+  grade_group = document.createElement("div");
+  grade_group.className = "grade-group";
+  grade_group.setAttribute("name", "grade");
+  grade_group.dataset.view = ladder !== "1" ? "true" : "false";
   [
     { lbl: "상", val: "1" },
     { lbl: "중", val: "2" },
@@ -435,7 +478,8 @@ function fnUpdate(_id) {
     input.setAttribute("name", "match_grade_" + _id);
     input.setAttribute("value", v.val);
     // input.setAttribute("disabled", true);
-    if (match_grade === v.val) input.checked = true;
+    if (match_grade)
+      if (match_grade.dataset.value === v.val) input.checked = true;
     span = document.createElement("span");
     span.className = "form-check-sign";
     span.innerText = v.lbl;
@@ -444,7 +488,7 @@ function fnUpdate(_id) {
     formGroup.appendChild(label);
     grade_group.appendChild(formGroup);
   });
-  col_4.appendChild(formGroup);
+  col_4.appendChild(grade_group);
 
   // 다섯번째 컬럼(성별)
   let col_5 = document.createElement("div");
@@ -520,6 +564,9 @@ function fnUpdate(_id) {
   button.addEventListener("click", function() {
     let updateForm = {};
     let target_row = document.querySelector('.row[data-id="' + _id + '"]');
+    let grade_group = target_row.querySelector(
+      '.grade-group[data-view="true"]'
+    );
     updateForm["match_time"] = target_row.querySelector(
       'input[name="match_time"]'
     ).value;
@@ -530,9 +577,16 @@ function fnUpdate(_id) {
       .checked
       ? 1
       : 0;
-    updateForm["match_grade"] = target_row.querySelector(
-      'input[name="match_grade_' + _id + '"]:checked'
-    ).value;
+    if (grade_group.getAttribute("name") === "grade") {
+      updateForm["match_grade"] = target_row.querySelector(
+        'input[name="match_grade_' + _id + '"]:checked'
+      ).value;
+    }
+    if (grade_group.getAttribute("name") === "score") {
+      updateForm["match_score"] = target_row.querySelector(
+        'input[name="grade-score"]'
+      ).value;
+    }
     updateForm["sex"] = target_row.querySelector(
       'input[name="sex_' + _id + '"]:checked'
     ).value;
@@ -606,7 +660,7 @@ function fnDeleteRow(id) {
 
 //  승점제 경기 체크시 일반/실력 활성화
 document
-  .querySelector('input[name="ladder"]')
+  .querySelector('input.form-check-input[name="ladder"]')
   .addEventListener("click", function() {
     let toggle = this.dataset.toggle === "false";
     this.dataset.toggle = toggle;

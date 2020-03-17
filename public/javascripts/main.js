@@ -91,6 +91,9 @@ function fnGenerateGroundList(res, currentSlide) {
   let html = "";
   document.querySelector(".match-count").innerHTML =
     "총 " + res.length + "매치";
+  document.querySelector(
+    'div[data-slick-index="' + currentSlide + '"] ul'
+  ).innerHTML = "";
   if (res.length > 0) {
     res.forEach(function(game, idx) {
       let remain = game.personnel.max - (game.apply_member.length || 0);
@@ -131,11 +134,14 @@ function fnGenerateGroundList(res, currentSlide) {
       p.className = "ml-3 text-info";
       p.innerText = game.match_time;
       time_group_wrap.appendChild(p);
+      p = document.createElement("p");
+      p.className = "ml-3 text-dark";
       p.innerText = game.ground_info.groundName;
       time_group_wrap.appendChild(p);
       inner_col.appendChild(time_group_wrap);
       inner_row.appendChild(inner_col);
       //  col-md-5.ml-3
+      inner_col = document.createElement("div");
       inner_col.className = "col-md-5 ml-3";
       let flex = document.createElement("div");
       flex.className = "d-flex justify-content-start";
@@ -147,27 +153,34 @@ function fnGenerateGroundList(res, currentSlide) {
       inner_div.appendChild(b);
       flex.appendChild(inner_div);
       //    text-left.text-dark
+      inner_div = document.createElement("div");
       inner_div.className = "text-left text-dark";
       let small = document.createElement("small");
       small.className =
-        "pl-2 tagList" + game.sex === 1
-          ? "male text-primary"
+        "pl-2 tagList" +
+        (game.sex === 1
+          ? " male text-primary"
           : game.sex === -1
-          ? "female text-danger"
-          : "mix";
+          ? " female text-danger"
+          : " mix");
       small.innerText =
         game.sex === 1 ? "남성매치" : game.sex === -1 ? "여성매치" : "혼성매치";
       inner_div.appendChild(small);
       flex.appendChild(inner_div);
       //    grade_icon.ml-2
-      inner_div.className = "grade_icon ml-2";
-      inner_div.dataset.grade = game.match_grade;
-      inner_div.dataset.title = "실력";
-      flex.appendChild(inner_div);
-      if (game.ladder === 1) {
+      inner_div = document.createElement("div");
+      if (game.ladder !== 1) {
+        inner_div.className = "grade_icon ml-2";
+        inner_div.dataset.grade = game.match_grade;
+        inner_div.dataset.title = "실력";
+        flex.appendChild(inner_div);
+      } else {
         inner_div.className = "ladder_icon ml-2";
         inner_div.dataset.title = "승점";
+        let b = document.createElement("b");
+        b.innerText = "(+" + game.match_score + ")";
         flex.appendChild(inner_div);
+        flex.appendChild(b);
       }
       inner_col.appendChild(flex);
       inner_row.appendChild(inner_col);
@@ -175,9 +188,11 @@ function fnGenerateGroundList(res, currentSlide) {
       row.appendChild(col);
 
       //  col-md-2.col-4
+      col = document.createElement("div");
       col.className = "col-md-2 col-4";
+      let div = document.createElement("div");
       div.className = "pull-right w-100";
-      div.dataset.cnt = remains;
+      div.dataset.cnt = remain;
       div.dataset.id = game._id;
 
       let button = document.createElement("button");
@@ -185,14 +200,17 @@ function fnGenerateGroundList(res, currentSlide) {
         button.className = "btn btn-neutral btn-status text-white";
         button.dataset.status = "full";
         small.className = "m-0";
+        small.innerText = "마  감";
         button.appendChild(small);
       } else {
         button.className = "btn btn-neutral btn-status text-white p-0";
         button.dataset.status = status;
         let h5 = document.createElement("h5");
         h5.className = "m-0 py-1";
+        h5.innerText = status === "hurry" ? "곧 마감!" : "신청가능!";
+        inner_div = document.createElement("div");
         inner_div.className =
-          "text-warning bg-white mx-auto font-weight-bold mb-1";
+          "text-danger bg-white mx-auto font-weight-bold mb-1";
         inner_div.style = "border-radius:1rem; width:80%; font-size:.75rem";
         inner_div.innerText =
           game.apply_member.length + " / " + game.personnel.max;
@@ -295,9 +313,9 @@ function fnGenerateGroundList(res, currentSlide) {
       "<p>아직 등록된 일정이 없습니다.  </p>" +
       "</div></div></li>";
   }
-  document.querySelector(
-    'div[data-slick-index="' + currentSlide + '"] ul'
-  ).innerHTML = html;
+  // document.querySelector(
+  //   'div[data-slick-index="' + currentSlide + '"] ul'
+  // ).innerHTML = html;
 }
 //  datetime picker
 // let today = new Date();
@@ -548,3 +566,11 @@ document
       $("#filterModalGround").modal("hide");
     }
   });
+//  일반/리그 매치 버튼 클릭 이벤트
+document.querySelectorAll('a[data-role="match"]').forEach(function(a) {
+  a.addEventListener("click", function() {
+    curr_search["ladder"] = this.dataset.value;
+    history.pushState(null, "game filter", fnGenQueryString());
+    fnFilterList();
+  });
+});

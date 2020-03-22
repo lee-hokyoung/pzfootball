@@ -367,13 +367,16 @@ input#datepicker {
 }
 #mypage-wrap .point-wrap p {
   height: 30px;
+  line-height: 30px;
   margin: 0;
 }
 #mypage-wrap .point-wrap button {
   border-radius: 50px;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   margin-left: 1rem;
-  height: 30px;
+  /* height: 30px; */
+  margin: 0 1rem;
+  padding: 0.5rem 1rem;
 }
 #mypage-wrap .card,
 #club_page .card,

@@ -1,3 +1,6 @@
+//  로그인 유무
+let isLoggedIn =
+  document.querySelector("#isLoggedIn").dataset.isLogin === "true";
 let curr_search = {};
 if (location.search !== "") {
   location.search
@@ -534,38 +537,39 @@ document
     });
   });
 //  적용버튼 클릭 이벤트
-document
-  .querySelector('#filterModalGround button[data-role="apply"]')
-  .addEventListener("click", function() {
-    let ground_id = [];
-    document
-      .querySelectorAll(
-        '#filterModalGround button.btn-primary[data-toggle="true"]'
-      )
-      .forEach(function(btn) {
-        ground_id.push(btn.dataset.id);
-      });
+if (isLoggedIn)
+  document
+    .querySelector('#filterModalGround button[data-role="apply"]')
+    .addEventListener("click", function() {
+      let ground_id = [];
+      document
+        .querySelectorAll(
+          '#filterModalGround button.btn-primary[data-toggle="true"]'
+        )
+        .forEach(function(btn) {
+          ground_id.push(btn.dataset.id);
+        });
 
-    //  즐겨찾는 구장 등록 여부 확인
-    if (document.querySelector('input[name="chkUpdateMyGround"]').checked) {
-      console.log("update ground : ", ground_id);
-      let xhr = new XMLHttpRequest();
-      xhr.open("PUT", "/users/region", true);
-      xhr.setRequestHeader("Content-Type", "application/json");
-      xhr.onreadystatechange = function() {
-        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-          let res = JSON.parse(this.response);
-          if (res.code === 1) location.href = "/?" + ground_id.toString();
-        }
-      };
-      xhr.send(JSON.stringify({ ground: ground_id }));
-    } else {
-      curr_search["ground"] = ground_id.join(",");
-      history.pushState(null, "game filter", fnGenQueryString());
-      fnFilterList();
-      $("#filterModalGround").modal("hide");
-    }
-  });
+      //  즐겨찾는 구장 등록 여부 확인
+      if (document.querySelector('input[name="chkUpdateMyGround"]').checked) {
+        console.log("update ground : ", ground_id);
+        let xhr = new XMLHttpRequest();
+        xhr.open("PUT", "/users/region", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function() {
+          if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            let res = JSON.parse(this.response);
+            if (res.code === 1) location.href = "/?" + ground_id.toString();
+          }
+        };
+        xhr.send(JSON.stringify({ ground: ground_id }));
+      } else {
+        curr_search["ground"] = ground_id.join(",");
+        history.pushState(null, "game filter", fnGenQueryString());
+        fnFilterList();
+        $("#filterModalGround").modal("hide");
+      }
+    });
 //  일반/리그 매치 버튼 클릭 이벤트
 document.querySelectorAll('a[data-role="match"]').forEach(function(a) {
   a.addEventListener("click", function() {

@@ -19,6 +19,7 @@ const adminGroundRouter = require("./routes/admin_ground");
 const adminClubRouter = require("./routes/admin_club");
 const adminManagerRouter = require("./routes/admin_manager");
 const adminConfigRouter = require("./routes/admin_config");
+const adminFaqRouter = require("./routes/admin_faq");
 const managerRouter = require("./routes/manager");
 const middle = require("./routes/middle");
 
@@ -84,6 +85,7 @@ app.use("/admin/ground", middle.isAdmin, adminGroundRouter);
 app.use("/admin/club", middle.isAdmin, adminClubRouter);
 app.use("/admin/manager", middle.isAdmin, adminManagerRouter);
 app.use("/admin/config", middle.isAdmin, adminConfigRouter);
+app.use("/admin/faq", middle.isAdmin, adminFaqRouter);
 app.use("/manager", managerRouter);
 
 // catch 404 and forward to error handler

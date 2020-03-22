@@ -1,0 +1,41 @@
+extends admin_layout
+block content
+  .content
+    .row
+      .col-12
+        .card
+          .card-header
+            h5.title 자주 묻는 질문 등록
+          .card-body
+            .row
+              .col-md-4
+                label 카테고리
+                .form-group
+                  select.form-control(name='category' style='height:auto;')
+                    option(value='', selected, disabled) 선택
+                    option(value='매치취소') 매치취소
+                    option(value='매치진행') 매치진행
+                    option(value='캐시') 캐시
+                    option(value='서비스') 서비스
+                    option(value='공지사항') 공지사항
+                    option(value='매치신청') 매치신청
+                    option(value='구장관련') 구장관련
+                    option(value='매니저') 매니저
+              .col-md-8
+                label 제목
+                .form-group
+                  input.form-control(type='text', name='title')
+            .row
+              .col-12
+                label 내용
+                .form-group
+                  textarea.form-control(name='content')
+            .row
+              .col-md-12
+                label 키워드
+                .form-group
+                  input.form-control(type='text', name='keyword', placeholder='키워드는 콤마(,)로 구분해서 입력해주세요')
+          .card-footer
+            button.btn.btn-primary#register_faq(type='button') 등록하기
+block append_js
+  script(src='/public_js/admin_faq.js')

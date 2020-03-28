@@ -8,13 +8,13 @@ const UserSchema = new Schema({
   user_phone: String,
   user_email: String,
   user_nickname: String,
-  gender: String,
+  gender: String, //  남성 : 1, 여성 : -1
   birth: String,
   snsId: String,
   provider: String,
   profile_image: String,
   thumbnail_image: String,
-  point: Number,
+  point: { type: Number, default: 0 },
   favorite_ground: [{ type: mongoose.Schema.Types.ObjectId, ref: "Ground" }],
   created_at: { type: Date, default: Date.now }
 });

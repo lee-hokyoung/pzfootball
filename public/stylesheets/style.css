@@ -5,10 +5,10 @@ body {
 .wrapper {
   height: inherit;
 }
-.container-fluid,
+/* .container-fluid,
 .container {
   padding: 0;
-}
+} */
 .pz_bg {
   /* background: url(/images/back_reverse.png) repeat; */
   -webkit-background-size: 300px;
@@ -363,7 +363,7 @@ input#datepicker {
 #club_list,
 #match_detail {
   height: 100vh;
-  padding: 10rem 0.5rem;
+  padding: 5rem 0.5rem;
 }
 #mypage-wrap .point-wrap p {
   height: 30px;
@@ -471,4 +471,12 @@ input#datepicker {
   .slick-dots {
     display: none !important;
   }
+}
+/* .form-group .form-control {
+  height: 44px !important;
+  line-height: 44px;
+} */
+.form-group label {
+  font-size: 0.7rem;
+  margin-bottom: 0.1rem;
 }

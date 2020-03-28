@@ -13,7 +13,6 @@ html
 
     link(href="/assets/css/bootstrap.min.css" rel="stylesheet")
     link(href="/assets/css/paper-dashboard.css" rel="stylesheet")
-    //- link(rel='stylesheet', href='/nm/bootstrap/dist/css/bootstrap.min.css')
     //- link(rel='stylesheet', href='/nm/@fortawesome/fontawesome-free/css/all.min.css')
 
     link(rel='stylesheet', type='text/css', href='/nm/slick-slider/slick/slick.css')
@@ -27,6 +26,7 @@ html
     link(rel='stylesheet', href='/public_css/sidebar.css')
     // font style
     link(rel="stylesheet", href="/public_css/custom_fonts.css")
+    block append_css
   body
     .wrapper
       nav#sidebar
@@ -86,10 +86,12 @@ html
                   a.text-danger(href='/users/logout') LOGOUT
               else
                 span
-                  a.text-primary(href='#' data-toggle='modal', data-target='#loginModal') 로그인
+                  //- a.text-primary(href='#' data-toggle='modal', data-target='#loginModal') 로그인
+                  a.text-primary(href='/users/login') 로그인
                 span.text-secondary.px-2 또는
                 span
-                  a.text-primary(href='#', data-toggle='modal', data-target='#joinModal') 회원가입
+                  //- a.text-primary(href='#', data-toggle='modal', data-target='#joinModal') 회원가입
+                  a.text-primary(href='/users/join') 회원가입
               a#sidebarCollapse.pl-3(href='#')
                 img(src='/images/nav_toggle.svg', width=22)
         //- nav.navbar

@@ -2,40 +2,58 @@ extends layout
 block content
   #club_page.container.bg-white
     .row
-      .col
-        .card
-          .card-header
-            labe.title 클럽 만들기
-          .card-body
+      .col.mx-auto
+        label.title 팀 등록
+        .row
+          .col-md-3
+            .fileinput.fileinput-new.text-center(data-provides="fileinput")
+              .fileinput-new.thumbnail.img-raised.m-3
+                img(src='/images/pz_logo.png', alt='퍼즐 풋볼 로고')
+              .fileinput-preview.fileinput-exists.thumbnail.img-raised.m-3(data-trigger="fileinput" style="width: 200px; height: 150px;", name='club_mark')
+              div
+                span.btn.text-primary.btn-neutral.btn-file
+                  span.fileinput-new 엠블럼 등록
+                  span.fileinput-exists Change
+                  input(type="file" name="...")
+                a.btn.text-danger.btn-neutral.fileinput-exists.ml-3(href="#" data-dismiss="fileinput") Remove
+          .col-md-9
             .row
-              .col-md-6
-                .fileinput.fileinput-new.text-center(data-provides="fileinput")
-                  .fileinput-new.thumbnail.img-raised.m-3
-                    img(src='/images/pz_logo.png', alt='퍼즐 풋볼 로고')
-                  .fileinput-preview.fileinput-exists.thumbnail.img-raised.m-3(data-trigger="fileinput" style="width: 200px; height: 150px;", name='club_mark')
-                  div
-                    span.btn.btn-success.btn-file
-                      span.fileinput-new 클럽 마크 등록
-                      span.fileinput-exists Change
-                      input(type="file" name="...")
-                    a.btn.btn-danger.fileinput-exists.ml-3(href="#" data-dismiss="fileinput") Remove
-            .row
-              .col-md-6
+              .col-md-4
                 .form-group
-                  label 클럽명
+                  label 팀명
                   input.form-control(name='club_name')
-              .col-md-6
+              .col-md-4
                 .form-group
-                  label 활동지역
-                  input.form-control(name='club_region')
+                  label 주장명
+                  input.form-control(name='club_leader_name', value=user_info.user.user_nickname, readonly)
+                  input(type='hidden', name='club_leader', value=user_info.user._id, readon)
+              .col-md-4.my-auto
+                p * 최초 등록자가 주장으로 임명됩니다. 
             .row
-              .col
+              .col-md-10
                 .form-group
-                  label 클럽 소개
-                  textarea.form-control(name='club_desc', rows=5)
-          .card-footer
-            .d-flex.justify-content-center
-              button.btn.btn-primary(type='button', onclick='fnRegisterClub()') 등록
-              a.btn.btn-info.ml-3(href='/clubs/list') 클럽 목록 보기              
+                  label 간략한 팀소개
+                  textarea.form-control(name='club_desc', rows='10')
+            .row
+              .col-md-4
+                .form-group
+                  label 지역
+                  select.form-control(name='main_region')
+              .col-md-4
+                .form-group
+                  label 주 경기장
+                  select.form-control(name='main_ground')
+              .col-md-4
+                .form-group
+                  label 이용시간
+                  input.form-control(type='text', name='main_time')
+              .col-12
+                .form-group
+                  label 분류
+                  
+                  
+        .d-flex.justify-content-center
+          button.btn.btn-primary(type='button', onclick='fnRegisterClub()') 등록
+          a.btn.btn-info.ml-3(href='/clubs/list') 클럽 목록 보기              
 block append_js
   script(src='/public_js/club.js')

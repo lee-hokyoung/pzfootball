@@ -1,0 +1,28 @@
+extends layout
+block append_css
+  link(rel='stylesheet', href='/public_css/login.css')
+block content
+  .container-fluid
+    .container#login-page
+      .page-wrap
+        h5.title SNS 로그인
+        ul
+          li
+            a(href='/auth/kakao')
+              img(src='/images/kakao_login.png', alt='카카오 아이디로 로그인')
+          li
+            a(href='/auth/naver')
+              img(src='/images/naver_login.png', alt='네이버 아이디로 로그인')
+        hr
+        h5.title 퍼즐풋볼 로그인
+        ul.local-login
+          li.text-left
+            .form-group.m-0
+              input#user_id.form-control(type='text', name='user_id', placeholder='ID')
+          li.text-left
+            .form-group.m-0
+              input#user_pw.form-control(type='password', name='user_pw', placeholder='PASSWORD')
+          li
+            button.btn.btn-primary.w-100(type='button', onclick='fnSubmitLoginPage()') login
+block append_js
+  script(src='/public_js/login.js')

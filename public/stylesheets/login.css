@@ -1,0 +1,35 @@
+#login-page,
+#join-page {
+  max-width: 350px;
+  height: calc(100vh - 70px);
+  display: table;
+}
+#login-page .page-wrap,
+#join-page .page-wrap {
+  display: table-cell;
+  vertical-align: middle;
+}
+#login-page h5.title {
+  text-align: center;
+}
+#login-page img,
+#login-page ul.local-login {
+  max-width: 220px;
+  margin: auto;
+}
+#login-page ul {
+  text-align: center;
+  padding: 0;
+}
+#login-page ul li {
+  list-style-type: none;
+  padding-bottom: 0.5rem;
+}
+#join-page {
+  max-width: 1110px;
+}
+@media (max-width: 768px) {
+  #join-page {
+    max-width: 100%;
+  }
+}

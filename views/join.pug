@@ -1,0 +1,106 @@
+extends layout
+block append_css
+  link(rel='stylesheet', href='/public_css/login.css')
+block content
+  .container#join-page
+    form.page-wrap(onsubmit='return fnJoin()')
+    .row
+      .col-md-6
+        h5.title.m-0 풋살하고 싶을 땐
+        h5.text-danger 퍼즐풋볼
+        .form-check
+          label.form-check-label
+            input#chk_all.form-check-input(type='checkbox', name='chk_all')
+            span.form-check-sign 이용약관, 개인정보 수집 및 이용, 개인정보 취급 위탁에 모두 동의합니다.
+        .form-check
+          label.form-check-label
+            input.form-check-input(type='checkbox', name='chk_terms')
+            span.form-check-sign 퍼즐풋볼 홈페이지 이용약관 안내 &nbsp;
+              small.text-danger (필수) 
+          textarea.form-control(rows='5')
+        .form-check
+          label.form-check-label
+            input.form-check-input(type='checkbox', name='chk_privacy')
+            span.form-check-sign 개인정보 수집 및 이용에 대한 안내 &nbsp;
+              small.text-danger (필수) 
+          textarea.form-control(rows='5')
+        //- .form-check
+        //-   label.form-check-label
+        //-     input.form-check-input(type='checkbox', name='chk_')
+        //-     span.form-check-sign 개인정보 취급위탁 안내 &nbsp;
+        //-       small.text-danger (필수) 
+        //-   textarea.form-control(rows='5')
+      .col-md-6
+        .form-group
+          label ID
+          input.form-control(type='text', name='user_id', placeholder='ID')
+        .row
+          .col-md-6.pr-1-pc
+            .form-group
+              label PASSWORD
+              input.form-control(type='password', name='user_pw', placeholder='PASSWORD')
+          .col-md-6.pl-1-pc
+            .form-group
+              label PASSWORD 확인
+              input.form-control(type='password', name='user_pw_chk', placeholder='PASSWORD 확인')
+        .row
+          .col-md-6
+            .form-group 
+              label 이름
+              input.form-control(type='text', name='user_name', placeholder='이름')
+          .col-md-6
+            .form-group
+              label 성별
+              select.form-control(name='gender')
+                option(value="") 성별을 선택해 주세요
+                option(value='1') 남성
+                option(value='-1') 여성
+          .col-12
+            .form-group
+              label 휴대폰 번호
+              input.form-control(type='text', name='user_phone', placeholder='010-0000-0000')
+          .col-4
+            .form-group
+              label 생년월일
+              select.form-control(name='birth_y')
+                - var n = 0
+                - var date = new Date()
+                - var year = date.getFullYear()
+                while n < year - 1930
+                  if(n === 30)
+                    option(value=year - n, selected) #{year - n++}
+                  else
+                    option(value=year - n) #{year - n++}
+          .col-4
+            .form-group
+              label
+              select.form-control(name='birth_m')
+                - var n = 0
+                while n < 12
+                  option(value=++n) #{n}월
+          .col-4
+            .form-group
+              label
+              select.form-control(name='birth_d')
+                -var n =0
+                while n < 31
+                  option(value=++n) #{n}일
+          .col-12
+            .form-group
+              label 이메일
+              input.form-control(name='user_email', placeholder='abc@pzfutball.com')
+        .row
+          .col-12
+            button.btn.btn-success.w-100.py-3(onclick="fnJoin()") 회원가입
+        hr
+        .row
+          .col-12.text-center
+            a.btn-link(href='/users/login') 아이디가 있으면 여기서 로그인 하세요
+  #modalJoin.modal.fade(tabindex="-1" role="dialog" aria-labelledby="joinModalLabel" aria-hidden="true")
+    .modal-dialog
+      .modal-content
+        .modal-body.text-center
+          h5.text-warning.font-weight-bold.my-3 가입을 축하드립니다!
+          button.btn.text-primary.btn-neutral(type='button', onclick='fnAddInfo("mypage")') 추가 정보를 입력하시겠어요?
+block append_js
+  script(src='/public_js/join.js')

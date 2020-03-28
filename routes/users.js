@@ -14,7 +14,7 @@ const mongoose = require("mongoose");
 router.get("/", function(req, res, next) {
   res.send("respond with a resource");
 });
-router.get("/login", (req, res) => {
+router.get("/login", middle.isNotLoggedIn, (req, res) => {
   res.render("login");
 });
 router.get("/logout", (req, res) => {
@@ -22,6 +22,7 @@ router.get("/logout", (req, res) => {
   req.logout();
   res.redirect("/");
 });
+//  일반 로그인
 router.post("/login", middle.isNotSignIn, (req, res, next) => {
   let user_id = req.body.user_id;
   try {
@@ -35,6 +36,7 @@ router.post("/login", middle.isNotSignIn, (req, res, next) => {
       if (!user) {
         return res.json({ code: 0, message: "등록되지 않은 회원입니다" });
       }
+      console.log("user : ", user);
       return req.login(user, async loginError => {
         if (loginError) {
           return next(loginError);
@@ -54,6 +56,36 @@ router.post("/login", middle.isNotSignIn, (req, res, next) => {
     //   } else {
     //     res.json({ code: 0, message: "회원정보가 없습니다" });
     //   }
+  } catch (err) {
+    console.error(err);
+    res.json({ code: 0, message: "로그인 실패" });
+  }
+});
+//  회원가입 후 로그인 -> 타겟으로 이동
+router.post("/login/:target", middle.isNotLoggedIn, async (req, res, next) => {
+  try {
+    passport.authenticate("local", (authError, user, info) => {
+      if (info) {
+        return res.json({ code: 0, message: info.message });
+      }
+      if (authError) {
+        return next(authenticate);
+      }
+      if (!user) {
+        return res.json({ code: 0, message: "등록되지 않은 회원입니다" });
+      }
+      console.log("target user : ", user);
+      return req.login(user, async loginError => {
+        if (loginError) {
+          console.log("login error : ", loginError);
+          return next(loginError);
+        }
+        let target = req.params.target;
+        let url = "/users/mypage";
+        if (target === "main") url = "/";
+        res.json({ code: 1, target: url });
+      });
+    })(req, res, next);
   } catch (err) {
     console.error(err);
     res.json({ code: 0, message: "로그인 실패" });
@@ -105,6 +137,9 @@ router.post("/mail_verify", async (req, res) => {
   });
 });
 // 회원가입
+router.get("/join", middle.isNotLoggedIn, (req, res) => {
+  res.render("join");
+});
 router.post("/register", async (req, res) => {
   let exUser = await User.findOne({ user_id: req.body.user_id });
   if (exUser) {
@@ -114,12 +149,16 @@ router.post("/register", async (req, res) => {
     user_id: req.body.user_id,
     user_pw: req.body.user_pw,
     user_name: req.body.user_name,
-    user_nickname: req.body.user_nickname,
+    user_nickname: req.body.user_name,
     gender: req.body.gender,
     birth: req.body.birth,
     user_email: req.body.user_email
   });
-  res.json(result);
+  if (result) {
+    res.json({ code: 1, result: result });
+  } else {
+    res.json({ code: 0, result: result });
+  }
 });
 // 포인트 조회
 router.get("/point", middle.isLoggedIn, async (req, res) => {
@@ -238,7 +277,6 @@ router.put("/mypage/user_info", async (req, res) => {
       });
     }
   } catch (err) {
-    console.error(err);
     res.json({
       code: 0,
       message: "수정 실패! 관리자에게 문의해주세요",

@@ -9,7 +9,6 @@ function fnSubmitLoginPage() {
   xhr.onreadystatechange = function() {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
-      console.log("res : ", res);
       if (res.code === 1) {
         location.replace("/");
       } else {
@@ -18,4 +17,5 @@ function fnSubmitLoginPage() {
     }
   };
   xhr.send(JSON.stringify({ user_id: user_id.value, user_pw: user_pw.value }));
+  return false;
 }

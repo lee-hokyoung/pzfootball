@@ -16,6 +16,7 @@ block content
                   col(width='150', about='보유포인트')
                   //- col(width='150', about='입금확인')
                   col(width='200', about='가입일시')
+                  col(width='100', about='버튼')
                 thead
                   tr
                     th #
@@ -25,6 +26,7 @@ block content
                     th 보유포인트
                     //- th 입금확인
                     th 가입일시
+                    th 
                 tbody
                   each user, idx in list
                     tr
@@ -38,3 +40,7 @@ block content
                       //-     input.form-control(type='text', style='width:150px;')
                       //-     button.btn.btn-sm.btn-success 저장
                       td #{user.created_at.toLocaleString('ko')}
+                      td
+                        button.btn.btn-danger.btn-link.text-danger.btn-neutral(type='button', onclick='fnDeleteUser("' + user._id.toString() + '")') 삭제
+block append_js
+  script(src='/public_js/admin_user.js')

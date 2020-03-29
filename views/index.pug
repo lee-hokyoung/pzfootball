@@ -4,37 +4,36 @@ block content
   - var today = new Date();
   - var month = today.getMonth() + 1;
   .full-cover-pzfutball
-  .container-fluid.bg-light
-    .container(style='max-width:938px')
-      .main-slider
-        .d-flex.justify-content-center
-          .d-none.d-sm-block.main-slide-item(style='background-image:url(/images/main_1.png)')
-            .title-wrap.left
-              h3 General Game
-              h1 일반매치
-              a(href='#', data-role='match', data-value='0')
-                img.mx-auto(src='/images/lets_go.png')
-            .title-wrap.right
-              h3 League Game
-              h1 리그매치
-              a(href='#', data-role='match', data-value='1')
-                img.mx-auto(src='/images/lets_go.png')
-            //- img(src='/images/main_1.png', alt='pc')
-          .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/main_slide_1_m.png)')
-        .d-flex.justify-content-center
-          .d-none.d-sm-block.main-slide-item(style='background:url(/images/main_2.png)')
-            .title-wrap.rank-title.center
-              h4 20-21 시즌
-              h2 순위표 바로가기
-              .text-light /
-              h5 Go to the Rank
-              a(href='#')
-                img.mx-auto.mt-3(src='/images/lets_go.png')
-            //- img(src='/images/main_2.png', alt='pc')
-          .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/main_slide_3_m.png)')
-        each notice in notice_list
-          .d-none.d-sm-block.main-slide-item(style='background-image:url(' + notice.notice_img + ')')
-            //- img(src=notice.notice_img, alt='pc')
+  .container(style='max-width:938px')
+    .main-slider
+      .d-flex.justify-content-center
+        .d-none.d-sm-block.main-slide-item(style='background-image:url(/images/main_1.png)')
+          .title-wrap.left
+            h3 General Game
+            h1 일반매치
+            a(href='#', data-role='match', data-value='0')
+              img.mx-auto(src='/images/lets_go.png')
+          .title-wrap.right
+            h3 League Game
+            h1 리그매치
+            a(href='#', data-role='match', data-value='1')
+              img.mx-auto(src='/images/lets_go.png')
+          //- img(src='/images/main_1.png', alt='pc')
+        .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/main_slide_1_m.png)')
+      .d-flex.justify-content-center
+        .d-none.d-sm-block.main-slide-item(style='background:url(/images/main_2.png)')
+          .title-wrap.rank-title.center
+            h4 20-21 시즌
+            h2 순위표 바로가기
+            .text-light /
+            h5 Go to the Rank
+            a(href='#')
+              img.mx-auto.mt-3(src='/images/lets_go.png')
+          //- img(src='/images/main_2.png', alt='pc')
+        .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/main_slide_3_m.png)')
+      each notice in notice_list
+        .d-none.d-sm-block.main-slide-item(style='background-image:url(' + notice.notice_img + ')')
+          //- img(src=notice.notice_img, alt='pc')
   //  날짜 선택 slick-slider
   - var size = 28;
   - var day = ['일', '월', '화', '수', '목', '금', '토'];

@@ -71,70 +71,69 @@ html
           //-   a(href='https://band.us/band/74014925', target='_blank') 퍼즐풋볼 밴드
 
       //- #content.container-fluid.pz_bg
-      .container-fluid
-        .container
-          .d-flex.justify-content-between.px-3
-            img.py-2(src='/images/pz_logo.png', style='cursor:pointer; z-index:10; width:70px', onclick='location.href="/"', alt='퍼즐풋볼 메인 로고')
-            .nav-button-wrap.my-auto
-              if(user_info)
-                span.text-secondary
-                  a.text-primary(href='/users/mypage') #{user_info.user.user_nickname}
-                  | &nbsp;님 반갑습니다.
-                span.px-2
-                  img(src='/images/vertical_bar.svg', width=10)
-                span
-                  a.text-danger(href='/users/logout') LOGOUT
-              else
-                span
-                  //- a.text-primary(href='#' data-toggle='modal', data-target='#loginModal') 로그인
-                  a.text-primary(href='/users/login') 로그인
-                span.text-secondary.px-2 또는
-                span
-                  //- a.text-primary(href='#', data-toggle='modal', data-target='#joinModal') 회원가입
-                  a.text-primary(href='/users/join') 회원가입
-              a#sidebarCollapse.pl-3(href='#')
-                img(src='/images/nav_toggle.svg', width=22)
-        //- nav.navbar
-        //-   .navbar-wrapper
-        //-     img.position-fixed(src='/images/pz_logo.png', style='top:20px; cursor:pointer; z-index:10', onclick='location.href="/"', alt='퍼즐풋볼 메인 로고')
-        //-   .navbar-collapse.justify-content-end
-        //-     button.btn.btn-primary.btn-link(type='button') 로그인
-        //-     button.btn.btn-primary.btn-link(type='button') 회원가입
-        //- nav.navbar.navbar-expand-lg.navbar-light.bg-white.top_bar.d-none
-        //-   img.position-fixed(src='/images/pz_logo.png', style='top:20px; cursor:pointer; z-index:10', onclick='location.href="/"', alt='퍼즐풋볼 메인 로고')
-        //-   #navbarSupportedContent.collapse.navbar-collapse
-        //-     ul.navbar-nav.ml-auto
-        //-       if(user_info)
-        //-         li.nav-item 
-        //-           p.nav-link.nav-font.text-secondary.m-0 
-        //-             a.text-primary(href='/users/mypage') #{user_info.user.user_nickname} 
-        //-             | 님 반갑습니다.
-        //-         li.nav-item.my-3(style='background:url(/images/vertical_bar.svg); width:5px;')
-        //-         li.nav-item
-        //-           a.nav-link.nav-font(href='/users/logout') LOGOUT
-        //-       else
-        //-         li.nav-item
-        //-           //- button.btn.btn-primary.btn-link(data-toggle='modal', data-target='#loginModal') 로그인
-        //-           a.nav-link.nav-font(href='#', data-toggle='modal', data-target='#loginModal') 로그인
-        //-         | 또는
-        //-         li.nav-item
-        //-           a.nav-link.nav-font(href='#', data-toggle='modal', data-target='#joinModal') 회원가입
-        //-       //- li.nav-item
-        //-       //-   a.nav-link.p-1(href='https://www.instagram.com/puzzlefootball_/', target='_blank')
-        //-       //-     img(src='/images/nav_top_1_insta.png', alt='퍼즐풋볼 인스타그램')
-        //-       //- li.nav-item
-        //-       //-   a.nav-link.p-1(href='https://www.youtube.com/channel/UCtEGfZDcQrsOuD1mpytufVg/featured?view_as=subscriber', target='_blank')
-        //-       //-     img(src='/images/nav_top_2_youtube.png', alt='퍼즐풋볼 유투브')
-        //-       //- li.nav-item
-        //-       //-   a.nav-link.p-1(href='https://pf.kakao.com/_nNxexaj', target='_blank')
-        //-       //-     img(src='/images/nav_top_3_pin.png', alt='퍼즐풋볼 카카오 채널')
-        //-       //- li.nav-item
-        //-       //-   a.nav-link.p-1(href='https://band.us/band/74014925', target='_blank')
-        //-       //-     img(src='/images/nav_top_4_band.png', alt='퍼즐풋볼 밴드')
-        //-       li.nav-item(style='line-height:28px;')
-        //-         button#sidebarCollapse.btn.btn-link.p-1(href='#')
-        //-           img(src='/images/nav_toggle.svg', width=22)
-        input#isLoggedIn(type='hidden', data-isLogin=(user_info?'true':'false'))
+      .container
+        .d-flex.justify-content-between.px-3
+          img.py-2(src='/images/pz_logo.png', style='cursor:pointer; z-index:10; width:70px', onclick='location.href="/"', alt='퍼즐풋볼 메인 로고')
+          .nav-button-wrap.my-auto
+            if(user_info)
+              span.text-secondary
+                a.text-primary(href='/users/mypage') #{user_info.user.user_nickname}
+                | &nbsp;님 반갑습니다.
+              span.px-2
+                img(src='/images/vertical_bar.svg', width=10)
+              span
+                a.text-danger(href='/users/logout') LOGOUT
+            else
+              span
+                //- a.text-primary(href='#' data-toggle='modal', data-target='#loginModal') 로그인
+                a.text-primary(href='/users/login') 로그인
+              span.text-secondary.px-2 또는
+              span
+                //- a.text-primary(href='#', data-toggle='modal', data-target='#joinModal') 회원가입
+                a.text-primary(href='/users/join') 회원가입
+            a#sidebarCollapse.pl-3(href='#')
+              img(src='/images/nav_toggle.svg', width=22)
+      //- nav.navbar
+      //-   .navbar-wrapper
+      //-     img.position-fixed(src='/images/pz_logo.png', style='top:20px; cursor:pointer; z-index:10', onclick='location.href="/"', alt='퍼즐풋볼 메인 로고')
+      //-   .navbar-collapse.justify-content-end
+      //-     button.btn.btn-primary.btn-link(type='button') 로그인
+      //-     button.btn.btn-primary.btn-link(type='button') 회원가입
+      //- nav.navbar.navbar-expand-lg.navbar-light.bg-white.top_bar.d-none
+      //-   img.position-fixed(src='/images/pz_logo.png', style='top:20px; cursor:pointer; z-index:10', onclick='location.href="/"', alt='퍼즐풋볼 메인 로고')
+      //-   #navbarSupportedContent.collapse.navbar-collapse
+      //-     ul.navbar-nav.ml-auto
+      //-       if(user_info)
+      //-         li.nav-item 
+      //-           p.nav-link.nav-font.text-secondary.m-0 
+      //-             a.text-primary(href='/users/mypage') #{user_info.user.user_nickname} 
+      //-             | 님 반갑습니다.
+      //-         li.nav-item.my-3(style='background:url(/images/vertical_bar.svg); width:5px;')
+      //-         li.nav-item
+      //-           a.nav-link.nav-font(href='/users/logout') LOGOUT
+      //-       else
+      //-         li.nav-item
+      //-           //- button.btn.btn-primary.btn-link(data-toggle='modal', data-target='#loginModal') 로그인
+      //-           a.nav-link.nav-font(href='#', data-toggle='modal', data-target='#loginModal') 로그인
+      //-         | 또는
+      //-         li.nav-item
+      //-           a.nav-link.nav-font(href='#', data-toggle='modal', data-target='#joinModal') 회원가입
+      //-       //- li.nav-item
+      //-       //-   a.nav-link.p-1(href='https://www.instagram.com/puzzlefootball_/', target='_blank')
+      //-       //-     img(src='/images/nav_top_1_insta.png', alt='퍼즐풋볼 인스타그램')
+      //-       //- li.nav-item
+      //-       //-   a.nav-link.p-1(href='https://www.youtube.com/channel/UCtEGfZDcQrsOuD1mpytufVg/featured?view_as=subscriber', target='_blank')
+      //-       //-     img(src='/images/nav_top_2_youtube.png', alt='퍼즐풋볼 유투브')
+      //-       //- li.nav-item
+      //-       //-   a.nav-link.p-1(href='https://pf.kakao.com/_nNxexaj', target='_blank')
+      //-       //-     img(src='/images/nav_top_3_pin.png', alt='퍼즐풋볼 카카오 채널')
+      //-       //- li.nav-item
+      //-       //-   a.nav-link.p-1(href='https://band.us/band/74014925', target='_blank')
+      //-       //-     img(src='/images/nav_top_4_band.png', alt='퍼즐풋볼 밴드')
+      //-       li.nav-item(style='line-height:28px;')
+      //-         button#sidebarCollapse.btn.btn-link.p-1(href='#')
+      //-           img(src='/images/nav_toggle.svg', width=22)
+      input#isLoggedIn(type='hidden', data-isLogin=(user_info?'true':'false'))
       block content
       // login modal
       include modals/login

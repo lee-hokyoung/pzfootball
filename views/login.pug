@@ -15,14 +15,15 @@ block content
               img(src='/images/naver_login.png', alt='네이버 아이디로 로그인')
         hr
         h5.title 퍼즐풋볼 로그인
-        ul.local-login
-          li.text-left
-            .form-group.m-0
-              input#user_id.form-control(type='text', name='user_id', placeholder='ID')
-          li.text-left
-            .form-group.m-0
-              input#user_pw.form-control(type='password', name='user_pw', placeholder='PASSWORD')
-          li
-            button.btn.btn-primary.w-100(type='button', onclick='fnSubmitLoginPage()') login
+        form(onsubmit='return fnSubmitLoginPage()')
+          ul.local-login
+            li.text-left
+              .form-group.m-0
+                input#user_id.form-control(type='text', name='user_id', placeholder='ID')
+            li.text-left
+              .form-group.m-0
+                input#user_pw.form-control(type='password', name='user_pw', placeholder='PASSWORD')
+            li
+              button.btn.btn-primary.w-100(type='submit') login
 block append_js
   script(src='/public_js/login.js')

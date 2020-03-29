@@ -1,4 +1,6 @@
 extends layout
+block append_css
+  link(rel='stylesheet' href='/public_css/star_rating.css')
 block content
   #club_page.container.bg-white
     .row
@@ -18,42 +20,126 @@ block content
                 a.btn.text-danger.btn-neutral.fileinput-exists.ml-3(href="#" data-dismiss="fileinput") Remove
           .col-md-9
             .row
-              .col-md-4
+              .col-md-6
                 .form-group
-                  label 팀명
-                  input.form-control(name='club_name')
-              .col-md-4
+                  label 팀 분류
+                  .btn-group.d-block.btn-type-wrap
+                    button.btn.btn-outline-info(type='button', data-toggle='false', data-value='student', data-role='team-type') 청소년(학생부)
+                    button.btn.btn-outline-info(type='button', data-toggle='false', data-value='youth', data-role='team-type') 성인(청년)
+                    button.btn.btn-outline-info(type='button', data-toggle='false', data-value='adult', data-role='team-type') 성인(장년)
+              .col-md-6
                 .form-group
-                  label 주장명
+                  label 팀 구분
+                  .btn-group.d-block.btn-type-wrap
+                    button.btn.btn-outline-info(type='button', data-toggle='false', data-value='male', data-role='team-gender') 남성
+                    button.btn.btn-outline-info(type='button', data-toggle='false', data-value='femail', data-role='team-gender') 여성
+                    button.btn.btn-outline-info(type='button', data-toggle='false', data-value='mix', data-role='team-gender') 혼성
+              .col-md-6
+                .form-group
+                  label 주 이용구장
+                  select.form-control(name='mainly_ground')
+                    option(value="", disabled, selected) 이용구장을 선택해 주세요.
+                    each item in ground
+                      option(value=item._id) #{item.groundName}
+              .col-md-3
+                .form-group
+                  label 주 이용요일
+                  select.form-control(name='mainly_day')
+                    option(value="", disabled, selected) 요일 선택
+                    option(value='sun') 일요일
+                    option(value='mon') 월요일
+                    option(value='tue') 화요일
+                    option(value='wed') 수요일
+                    option(value='thu') 목요일
+                    option(value='fro') 금요일
+                    option(value='sat') 토요일
+              .col-md-3
+                .form-group
+                  label 주 이용시간
+                  select.form-control(name='mainly_time')
+                    option(value='', disabled, selected) 이용 시간 선택
+                    option(value='1') 10:00 ~ 12:00
+                    option(value='2') 12:00 ~ 14:00
+                    option(value='3') 14:00 ~ 16:00
+                    option(value='4') 16:00 ~ 18:00
+                    option(value='5') 18:00 ~ 20:00
+                    option(value='6') 20:00 ~ 22:00
+                    option(value='7') 22:00 ~ 24:00
+              .col-md-6
+                .form-group
+                  label 팀 이름
+                  .input-group
+                    input.form-control(name='club_name')
+                    .input-group-append
+                      button.btn.btn-danger.btn-sm(type='button', onclick='fnChkDuplicate()') 중복확인
+                  input(type='hidden', name='club_name_check')
+              .col-md-6
+                .form-group
+                  label 팀 주장 (최초 등록자가 주장으로 임명됩니다)
                   input.form-control(name='club_leader_name', value=user_info.user.user_nickname, readonly)
-                  input(type='hidden', name='club_leader', value=user_info.user._id, readon)
-              .col-md-4.my-auto
-                p * 최초 등록자가 주장으로 임명됩니다. 
-            .row
-              .col-md-10
+                  input(type='hidden', name='club_leader', value=user_info.user._id, readonly)
+              .col-md-6
+                .form-group
+                  label 이메일
+                  input.form-control(type='text', name='team_email')
+              .col-md-6
+                .form-group
+                  label 휴대폰 번호
+                  .d-flex.justify-content-between
+                    input.form-control(type='number', name='phone_1')
+                    .my-auto &nbsp;-&nbsp;
+                    input.form-control(type='number', name='phone_2')
+                    .my-auto &nbsp;-&nbsp;
+                    input.form-control(type='number', name='phone_3')
+              //- .col-md-4.my-auto
+              //-   p * 최초 등록자가 주장으로 임명됩니다. 
+              .col-md-12
                 .form-group
                   label 간략한 팀소개
                   textarea.form-control(name='club_desc', rows='10')
-            .row
-              .col-md-4
+              .col-md-6
                 .form-group
-                  label 지역
-                  select.form-control(name='main_region')
-              .col-md-4
+                  label 유니폼 색상
+                  .row
+                    .col-6
+                      input.form-control(type='text', name='uniform_top', placeholder='상의')
+                    .col-6
+                      input.form-control(type='text', name='uniform_bottom', placeholder='하의')
+              .col-md-6
                 .form-group
-                  label 주 경기장
-                  select.form-control(name='main_ground')
-              .col-md-4
+                  label 팀 등급
+                  .d-block
+                    fieldset.rating
+                      input#star5(type="radio" name="rating" value="5")
+                      label.full(for="star5" title="Awesome - 5 stars")
+                      input#star4half(type="radio" name="rating" value="4.5")
+                      label.half(for="star4half" title="Pretty good - 4.5 stars")
+                      input#star4(type="radio" name="rating" value="4")
+                      label.full(for="star4" title="Pretty good - 4 stars")
+                      input#star3half(type="radio" name="rating" value="3.5")
+                      label.half(for="star3half" title="Meh - 3.5 stars")
+                      input#star3(type="radio" name="rating" value="3")
+                      label.full(for="star3" title="Meh - 3 stars")
+                      input#star2half(type="radio" name="rating" value="2.5")
+                      label.half(for="star2half" title="Kinda bad - 2.5 stars")
+                      input#star2(type="radio" name="rating" value="2")
+                      label.full(for="star2" title="Kinda bad - 2 stars")
+                      input#star1half(type="radio" name="rating" value="1.5")
+                      label.half(for="star1half" title="Meh - 1.5 stars")
+                      input#star1(type="radio" name="rating" value="1")
+                      label.full(for="star1" title="Sucks big time - 1 star")
+                      input#starhalf(type="radio" name="rating" value="0.5")
+                      label.half(for="starhalf" title="Sucks big time - 0.5 stars")
+              .col-md-6
                 .form-group
-                  label 이용시간
-                  input.form-control(type='text', name='main_time')
-              .col-12
+                  label 팀 비밀번호
+                    small (영문, 숫자 8 ~ 16 자리)
+                  input.form-control(type='password', name='team_password')
+              .col-md-6
                 .form-group
-                  label 분류
-                  
-                  
+                  label 팀 비밀번호 확인
+                  input.form-control(type='password', name='team_password_check')
         .d-flex.justify-content-center
-          button.btn.btn-primary(type='button', onclick='fnRegisterClub()') 등록
-          a.btn.btn-info.ml-3(href='/clubs/list') 클럽 목록 보기              
+          button.btn.btn-primary(type='button', onclick='fnRegisterClub()') 팀 등록하기
 block append_js
   script(src='/public_js/club.js')

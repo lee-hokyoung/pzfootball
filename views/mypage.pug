@@ -43,15 +43,19 @@ block content
                     .col-7 클럽명
                     .col-3 회원수
                 li.list-group-item.list-group-item-action
-                  a(href='/clubs/' + myClub._id)
+                  if(myClub.status === 1)
+                    a(href='/clubs/' + myClub._id)
+                      .row
+                        .col-2
+                          if(myClub.club_mark === "")
+                            img(src='/images/pz_logo.png', width='100%')
+                          else
+                            img(src=myClub.club_mark, width='100%')
+                        .col-7 !{myClub.club_name}
+                        .col-3 !{myClub.club_member.length} 명
+                  else if(myClub.status === 0)
                     .row
-                      .col-2
-                        if(myClub.club_mark === "")
-                          img(src='/images/pz_logo.png', width='100%')
-                        else
-                          img(src=myClub.club_mark, width='100%')
-                      .col-7 !{myClub.club_name}
-                      .col-3 !{myClub.club_member.length} 명
+                      .col-12 승인 대기 중 
             else
               .row
                 .col-8
@@ -109,4 +113,5 @@ block append_js
   script.
     console.log('ground : ', !{JSON.stringify(region_group)})
     console.log('user : ', !{JSON.stringify(user)})
+    console.log('club : ', !{JSON.stringify(myClub)})
     

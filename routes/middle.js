@@ -49,14 +49,14 @@ exports.isSignedIn = (req, res, next) => {
       next();
     }
   } else {
-    res.redirect("/");
+    res.redirect("/users/login");
   }
 };
 exports.isNotSignIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
     next();
   } else {
-    res.redirect("/");
+    res.redirect("/users/login");
   }
 };
 

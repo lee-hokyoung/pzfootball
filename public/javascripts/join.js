@@ -106,14 +106,13 @@ function fnJoin() {
       let res = JSON.parse(this.response);
       if (res.code === 1) {
         $("#modalJoin").modal("show");
-        return false;
       } else {
         alert(res.message);
-        return false;
       }
     }
   };
   xhr.send(JSON.stringify(formData));
+  return false;
 }
 //  추가정보 입력 선택했을 경우
 function fnAddInfo(target) {

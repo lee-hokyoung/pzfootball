@@ -34,6 +34,7 @@ function fnRegisterClub() {
 
 //  클럽 가입하기
 function fnJoinClub(club_id) {
+  if (!confirm("가입하시겠습니까?")) return false;
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "/clubs/join", true);
   xhr.setRequestHeader("Content-Type", "application/json");
@@ -246,4 +247,19 @@ function fnRegisterClub() {
   };
   xhr.send(JSON.stringify(formData));
   return false;
+}
+//  팀 가입 승인하기
+function fnApprove(user_id, team_id) {
+  console.log(user_id, team_id);
+  let xhr = new XMLHttpRequest();
+  xhr.open("PATCH", "/clubs/approve", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function() {
+    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      let res = JSON.parse(this.response);
+      alert(res.message);
+      if (res.code === 1) location.reload();
+    }
+  };
+  xhr.send(JSON.stringify({ user_id: user_id, team_id: team_id }));
 }

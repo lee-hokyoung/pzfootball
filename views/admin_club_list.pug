@@ -9,6 +9,16 @@ block content
           .card-body
             .table-responsive
               table.table.text-center
+                colgroup
+                  col(width='auto', about='#')
+                  col(width='auto', about='emblem')
+                  col(width='auto', about='클럽명')
+                  col(width='auto', about='클럽지역')
+                  col(width='auto', about='클럽리더')
+                  col(width='auto', about='인원')
+                  col(width='100px', about='팀코드')
+                  col(width='150px', about='상태')
+                  col(width='auto', about='버튼')
                 thead
                   tr
                     th #
@@ -17,6 +27,8 @@ block content
                     th 클럽지역
                     th 클럽리더
                     th 인원
+                    th 팀코드
+                    th 상태
                     th 
                 tbody
                   if(club_list.length > 0)
@@ -30,6 +42,19 @@ block content
                         td #{club.club_region}
                         td #{club.leader_info.user_name}
                         td #{club.club_member.length}
+                        if(club.status===1)
+                          td
+                            .form-group.m-0
+                              input.form-control(type='text', value=club.team_code, readonly)
+                          td 
+                            h6.m-0 정상
+                        else
+                          - var team_code = club.team_phone.split('-')[2]
+                          td
+                            .form-group.m-0
+                              input.form-control.bg-success.text-center(type='text', name='team_code', value='PZ' + team_code)
+                          td
+                            button.btn.btn-success.btn-neutral(name='btnApprovalModal', data-id=club._id) 승인
                         td 
                           button.btn.btn-link.btn-danger.btn-round.btn-icon(onclick='fnRemoveClub("' + club._id + '")')
                             i.nc-icon.nc-simple-remove
@@ -37,6 +62,18 @@ block content
                     tr
                       td(colspan='6') 아직 등록된 클럽이 없습니다.
           .card-footer
+  #modalApproval.modal.fade(tabindex="-1" role="dialog" aria-labelledby="approvalModalLabel" aria-hidden="true")
+    .modal-dialog
+      .modal-content
+        .modal-header
+          h6 팀 승인
+        .modal-body
+          .form-group
+            label 팀 코드 확인
+            input.form-control(type='text', name='team_code_approved', readonly)
+          label 위 팀 코드로 승인됩니다. 계속 하시겠습니까?
+        .modal-footer
+          button.btn.btn-primary.btn-link(name='btnApproval') 승인
 block append_js
   script(src='/public_js/admin_club.js')
   script.

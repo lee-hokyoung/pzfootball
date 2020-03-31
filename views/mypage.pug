@@ -56,6 +56,16 @@ block content
                   else if(myClub.status === 0)
                     .row
                       .col-12 승인 대기 중 
+            else if(waiting_club)
+               ul.list-group.list-group-flush.text-center
+                li.list-group-item.list-group-item-primary
+                  .row
+                    .col-2 마크
+                    .col-7 클럽명
+                    .col-3 회원수
+                li.list-group-item.list-group-item-action
+                  .row
+                    .col-12 승인 대기 중 
             else
               .row
                 .col-8
@@ -114,4 +124,4 @@ block append_js
     console.log('ground : ', !{JSON.stringify(region_group)})
     console.log('user : ', !{JSON.stringify(user)})
     console.log('club : ', !{JSON.stringify(myClub)})
-    
+    console.log('waiting club : ', !{JSON.stringify(waiting_club)})

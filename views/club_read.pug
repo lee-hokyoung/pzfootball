@@ -7,45 +7,75 @@ block content
           .card-header
             label.title #{club.club_name}
           .card-body
-            if(club.club_mark !== '')
-              img(src=club.club_mark, width='150px;')
-            else
-              img(src='/images/pz_logo.png', width='80px;')
-            .d-block.border.py-1.px-3.mt-3.rounded
-              h6.my-3 클럽 소개
-              .bordered(style='white-space:pre') #{club.club_desc}
-            #club-member
-              ul.list-group.list-group-flush
-                li.list-group-item
-                  .row
-                    .col-1 #
-                    .col-2  
-                    .col-3 회원
-                - var idx = 0;
-                each item in club.user_info
-                  a(href='#')
-                    li.list-group-item.list-group-item-action
-                      .row(data-id=item._id)
-                        .col-1 #{++idx}
-                        .col-2
-                          if(item.profile_image)
-                            img(src=item.profile_image, width='40px')
-                          else
-                            img(src='/assets/img/default-avatar.png', alt='default avatar', width='40px')
-                        .col-3 #{item.user_name}
-                        .col-6.text-right
-                          if(club.club_leader.toString() === user_info.user._id.toString())
-                            if(club.club_leader.toString() !== item._id.toString())
-                              button.btn.btn-danger.btn-sm(onclick='fnExile("' + item._id + '", "' + club._id + '")') 추방
+            .row
+              .col-md-2
+                .form-group
+                  if(club.club_mark !== '')
+                    img(src=club.club_mark)
+                  else
+                    img(src='/images/pz_logo.png')
+                .form-group
+                  label 팀 코드
+                  input.form-control(type='text', value=club.team_code, readonly)
+              .col-md-10
+                .d-block.border.py-1.px-3.mt-3.rounded
+                  h6.my-3 클럽 소개
+                  .bordered(style='white-space:pre') #{club.club_desc}
+                #club-member
+                  ul.list-group.list-group-flush
+                    li.list-group-item
+                      .row
+                        .col-1 #
+                        .col-2  
+                        .col-3 회원
+                    - var idx = 0;
+                    each item in club.user_info
+                      a(href='#')
+                        li.list-group-item.list-group-item-action
+                          .row(data-id=item._id)
+                            .col-1 #{++idx}
+                            .col-2
+                              if(item.profile_image)
+                                img(src=item.profile_image, width='40px')
+                              else
+                                img(src='/assets/img/default-avatar.png', alt='default avatar', width='40px')
+                            .col-3 #{item.user_name}
+                            .col-6.text-right
+                              if(club.club_leader.toString() === user_info.user._id.toString())
+                                if(club.club_leader.toString() !== item._id.toString())
+                                  button.btn.btn-danger.btn-sm(onclick='fnExile("' + item._id + '", "' + club._id + '")') 추방
+                if(club.waiting_info.length > 0)
+                  ul.list-group.list-group-flush
+                    li.list-group-item
+                      .row
+                        .col-1 #
+                        .col-2 
+                        .col-3 승인 대기 회원  
+                    - var idx = 0;
+                    each item in club.waiting_info
+                      li.list-group-item.list-group-item-action
+                        .row(data-id=item._id)
+                          .col-1 #{++idx}
+                          .col-2
+                            if(item.profile_image)
+                              img(src=item.profile_image, width='40px')
+                            else
+                              img(src='/assets/img/default-avatar.png', alt='default avatar', width='40px')
+                          .col-3 #{item.user_name}
+                          .col-6.text-right
+                            if(club.club_leader.toString() === user_info.user._id.toString())
+                              if(club.club_leader.toString() !== item._id.toString())
+                                button.btn.btn-danger.btn-sm(onclick='fnApprove("' + item._id + '", "' + club._id + '")') 승인
           .card-footer
             - var idx = club.club_member.indexOf(user_info.user._id);
             if(club.club_leader.toString() !== user_info.user._id.toString())
               if(club.club_member.toString().indexOf(user_info.user._id) === -1)
-                button.btn.btn-primary(onclick='fnJoinClub("' + club._id + '")') 가입하기
+                button.btn.btn-primary(onclick='fnJoinClub("' + club._id + '")') 가입
               else
                 button.btn.btn-danger(onclick='fnSecession("' + club._id + '")') 탈퇴하기
-            
+              
 block append_js
   script(src='/public_js/club.js')
   script.
     console.log('club : ', !{JSON.stringify(club)});
+    console.log('waiting club : ', !{JSON.stringify(waiting_club)})

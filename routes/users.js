@@ -234,6 +234,9 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
     },
     { $sort: { _id: 1 } }
   ]);
+  let waiting_club = await Club.findOne({
+    waiting_member: mongoose.Types.ObjectId(user_info.user._id)
+  });
   let myClub = await Club.findOne({
     club_member: mongoose.Types.ObjectId(user_info.user._id)
   });
@@ -243,7 +246,8 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
     user: user,
     match_list: match_list,
     myClub: myClub,
-    region_group: region_group
+    region_group: region_group,
+    waiting_club: waiting_club
   });
 });
 // 마이페이지 내 정보 수정

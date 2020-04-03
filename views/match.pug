@@ -73,4 +73,5 @@ block content
 block append_js
   script.
     let match_info = !{JSON.stringify(match_info)}
+    console.log('user info : ', !{JSON.stringify(user_info)})
   script(src='/public_js/detail.js', type='text/javascript')

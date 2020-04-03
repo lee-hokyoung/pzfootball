@@ -1,4 +1,4 @@
-extends admin_layout
+extends manager_layout
 block content
   .content
     .row
@@ -18,17 +18,27 @@ block content
               li.list-group-item.list-group-item-primary
                 .row
                   .col-md-2 선수명
-                  .col-md-10 비매너 감점
+                  .col-md-3 비매너 감점
               each player in match_info.apply_member
-                li.list-group-item
-                  .row
-                    .col-md-2 #{player.member}
-                    .col-md-10
-                      .form-group
-                        select.form-control.selectpicker(data-style='btn btn-link', multiple, title='비매너행동')
-                          option(value="" disabled) 비매너 행동 선택
-                          each val in manner_list
-                            option(value=val.point) #{val.title}(-#{val.point})
+                li.list-group-item.px-0
+                  .row(data-player=player._id)
+                    .col-md-2.my-auto.py-3 #{player.member}
+                    .col-md-3(style='max-height:10rem; overflow:auto;')
+                      ul.list-group.list-group-flush
+                        each item in manner_list
+                          li.list-group-item.py-1.px-0
+                            .row
+                              .col-10
+                                .form-check
+                                  label.form-check-label
+                                    input.form-check-input(type='checkbox', value=item._id, data-point=item.point, checked=player.penalty.toString().indexOf(item._id) > -1)
+                                    | #{item.title}
+                                    span.form-check-sign
+                              .col-2.text-center #{item.point}
+                    .col-md-3(data-penalty)
+          .card-footer
+            button.btn.btn-primary(onclick='fnSaveMatch("' + match_info._id.toString() + '")') 저장
+            a.btn.btn-info.ml-3(href='/manager/match') 목록으로 돌아가기  
 block append_js
   script(src='/public_js/manager_match.js')
   script.

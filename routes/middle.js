@@ -4,16 +4,31 @@ const mongoose = require("mongoose");
 
 //  admin 관련 미들웨어
 exports.isLoggedIn = (req, res, next) => {
+  console.log("manager is logged in");
   if (req.isAuthenticated()) {
     next();
   } else {
     res.redirect("/admin/login");
   }
 };
-exports.isNotLoggedIn = (req, res, next) => {
+exports.isNotLoggedIn = async (req, res, next) => {
+  console.log("manager is not logged in");
   if (!req.isAuthenticated()) {
     next();
   } else {
+    // Manager 로그인 확인
+    if (req.session) {
+      let user_info = await User.findOne({
+        user_id: req.session.passport.user.user_id
+      });
+      if (user_info.isManager) {
+        req.logout();
+        req.session.destroy();
+        res.send(
+          '<script>alert("매니저 권한으로 로그인 했습니다. 자동 로그아웃 되었습니다.")</script>'
+        );
+      }
+    }
     res.redirect("/admin/login");
   }
 };
@@ -21,6 +36,13 @@ exports.isAdmin = async (req, res, next) => {
   if (req.isAuthenticated()) {
     let user = req.session.passport.user;
     let user_info = await User.findOne({ user_id: user.user_id });
+    if (!user_info) {
+      req.logout();
+      req.session.destroy();
+      return res.send(
+        '<script>alert("관리자 권한이 없는 아이디입니다."); location.href = "/admin/login";</script>;'
+      );
+    }
     if (user_info.admin) {
       req.session.admin = true;
       next();
@@ -41,7 +63,7 @@ exports.isSignedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
     let user_info = req.session.passport.user;
     if (user_info.isManager) {
-      let script = `<script>alert("매니저로 로그인 했습니다. 일반 유저로 로그인해주세요"); location.href='/';</script>`;
+      let script = `<script>alert("매니저 권한으로 로그인 했습니다. 일반 유저로 로그인해주세요"); location.href='/';</script>`;
       req.logout();
       req.session.destroy();
       res.send(script);
@@ -52,7 +74,7 @@ exports.isSignedIn = (req, res, next) => {
     res.redirect("/users/login");
   }
 };
-exports.isNotSignIn = (req, res, next) => {
+exports.isNotSignedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
     next();
   } else {

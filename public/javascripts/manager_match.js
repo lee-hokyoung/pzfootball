@@ -8,7 +8,6 @@ function fnShowResultModal(id) {
       let res = JSON.parse(this.response);
       $("#resultModal").modal("show");
       $("#resultModal").data("id", id);
-      console.log("res : ", res);
       res.apply_member.forEach(function(item, idx) {
         let option = document.createElement("option");
         option.value = item._id;
@@ -160,6 +159,40 @@ function fnSaveResult() {
       let res = JSON.parse(this.response);
       alert(res.message);
       if (res.code === 1) location.reload();
+    }
+  };
+  xhr.send(JSON.stringify(formData));
+}
+
+//  비매너 플레이 점수 체크 이벤트
+document.querySelectorAll('input[type="checkbox"]').forEach(function(chk) {
+  chk.addEventListener("click", function() {
+    console.log(this);
+    let point = this.dataset.point;
+    console.log("point : ", point);
+  });
+});
+
+//  경기 결과 저장
+function fnSaveMatch(match_id) {
+  //  벌점 확인
+  let player = document.querySelectorAll(".row[data-player]");
+  let formData = {};
+  player.forEach(function(row) {
+    let player_id = row.dataset.player;
+    let checked_list = [];
+    row.querySelectorAll("input[data-point]:checked").forEach(function(v) {
+      checked_list.push(v.value);
+    });
+    formData[player_id] = checked_list;
+  });
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", "/manager/match/result/" + match_id, true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function() {
+    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      let res = JSON.parse(this.response);
+      alert(res.message);
     }
   };
   xhr.send(JSON.stringify(formData));

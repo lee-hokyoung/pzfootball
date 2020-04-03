@@ -27,24 +27,24 @@ block content
 										th 실력
 										th 성별
 										th 인원수
+										th
 								tbody
 									- var idx = 0;
-									each match in match_list
+									if(match_list.length > 0)
+										each match in match_list
+											tr
+												td #{++idx}
+												td #{match.match_date}
+												td #{match.match_time}
+												td #{match.ground_info.groundName}
+												td #{match.grade === 1 ? '실력':'일반'}
+												td #{match.sex === 1 ? '남성매치':match.sex === -1 ? '여성매치':'혼성매치'}
+												td #{match.apply_member ? match.apply_member.length : 0} / #{match.personnel.max}
+												td
+													a.btn.btn-neutral.btn-primary.text-primary(href='/manager/match/' + match._id) 상세확인	
+									else
 										tr
-											td #{++idx}
-											td #{match.match_date}
-											td #{match.match_time}
-											td #{match.ground_info.groundName}
-											td #{match.grade === 1 ? '실력':'일반'}
-											td #{match.sex === 1 ? '남성매치':match.sex === -1 ? '여성매치':'혼성매치'}
-											td #{match.apply_member ? match.apply_member.length : 0} / #{match.personnel.max}
-											td
-												a.btn.btn-neutral.btn-primary.text-primary(href='/manager/match/' + match._id) 상세확인	
-												//- button.btn.btn-link(onclick='fnShowResultModal("' + match._id + '")', class=match.isPlay===true?"btn-info":"btn-success") 
-												//- 	if(match.isPlay) 
-												//- 		| 결과 확인
-												//- 	else 
-												//- 		| 결과 입력
+											td(colspan='8') 배정된 경기가 없습니다. 
 					.card-footer
 	#resultModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='resultModalLabel', aria-hidden='true')
 		.modal-dialog

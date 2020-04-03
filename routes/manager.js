@@ -125,3 +125,24 @@ router.put("/", middle.isManager, async (req, res) => {
   }
 });
 module.exports = router;
+
+//  경기 결과 입력
+router.post("/match/result/:match_id", middle.isManager, async (req, res) => {
+  try {
+    let match_info = await Match.findOne({
+      _id: mongoose.Types.ObjectId(req.params.match_id)
+    });
+    match_info.apply_member.forEach(v => {
+      v.penalty = req.body[v._id].map(m => {
+        return mongoose.Types.ObjectId(m);
+      });
+    });
+    let result = await Match.updateOne(
+      { _id: mongoose.Types.ObjectId(req.params.match_id) },
+      { $set: { apply_member: match_info.apply_member } }
+    );
+    res.json({ code: 1, message: "저장되었습니다.", result: result });
+  } catch (err) {
+    res.json({ code: 0, message: err.message });
+  }
+});

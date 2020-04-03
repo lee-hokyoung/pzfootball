@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
+const middle = require("../routes/middle");
 const Match = require("../model/match");
 const User = require("../model/user");
 const mongoose = require("mongoose");
 
 /* GET home page. */
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", middle.isSignedIn, async (req, res) => {
   let user_info = req.session.passport;
   let match_info = await Match.aggregate([
     { $match: { _id: mongoose.Types.ObjectId(req.params.id) } },
@@ -25,13 +26,13 @@ router.get("/:id", async (req, res, next) => {
     user_info: user_info
   });
 });
-router.get("/price/:id", async (req, res) => {
-  let price = await Match.findOne(
-    { _id: mongoose.Types.ObjectId(req.params.id) },
-    { match_price: 1 }
-  );
-  res.json(price);
-});
+// router.get("/price/:id", async (req, res) => {
+//   let price = await Match.findOne(
+//     { _id: mongoose.Types.ObjectId(req.params.id) },
+//     { match_price: 1 }
+//   );
+//   res.json(price);
+// });
 // 경기 신청
 router.post("/apply", async (req, res) => {
   let match_id = req.body.match_id;
@@ -49,10 +50,10 @@ router.post("/apply", async (req, res) => {
   //   { apply_member: 1 }
   // );
   if (
-    // apply_member 의 형식이 {reader:'', member:''} 로 되어있어서 인덱싱을 위해서 중간에 map을 통해 한번 걸러줌
+    // apply_member 의 형식이 {leader:'', member:''} 로 되어있어서 인덱싱을 위해서 중간에 map을 통해 한번 걸러줌
     match_info.apply_member
       .map(m => {
-        return m.reader;
+        return m.leader;
       })
       .indexOf(user_info.user_id) > -1
   ) {
@@ -64,16 +65,16 @@ router.post("/apply", async (req, res) => {
     if (i === 0)
       apply_list.push({
         _id: user_info._id,
-        reader: user_info.user_id,
+        leader: user_info.user_id,
         member: user_info.user_name
       });
     else
       apply_list.push({
         _id: new mongoose.Types.ObjectId(),
-        reader: user_info.user_id,
+        leader: user_info.user_id,
         member: user_info.user_name + "_" + i
       });
-    // if (i === 0) apply_list.push({reader:user_info.user_id, member:user_info.user_id + +"" + i});
+    // if (i === 0) apply_list.push({leader:user_info.user_id, member:user_info.user_id + +"" + i});
     // else apply_list.push(user_info.user_id + "_" + i);
   }
   // 경기 신청

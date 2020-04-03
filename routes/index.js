@@ -11,10 +11,17 @@ const mongoose = require("mongoose");
 router.get("/", async (req, res) => {
   let today = new Date();
   let user_info = req.session.passport;
-
   //  유저 로그인 확인 후, 즐겨찾기 등록된 구장이 있으면 리다이렉트 시킨다.
   let user = { favorite_ground: [] };
   if (user_info) {
+    //  매니저로 로그인 됐을 경우, 자동 로그아웃 시키고 유저 로그인이 디ㅗ게 한다.
+    if (user_info.user.isManager) {
+      console.log("manager login");
+      let script = `<script>alert("매니저 권한으로 로그인 했습니다. 일반 유저로 로그인해주세요"); location.href='/';</script>`;
+      req.logout();
+      req.session.destroy();
+      return res.send(script);
+    }
     user = await User.findOne(
       {
         _id: mongoose.Types.ObjectId(user_info.user._id)

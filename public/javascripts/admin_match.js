@@ -1,7 +1,7 @@
 //  매니저 배정하기
-document
-  .querySelector("#select-manager")
-  .addEventListener("change", function() {
+document.querySelectorAll("select.select-manager").forEach(function(select) {
+  console.log(select);
+  select.addEventListener("change", function() {
     console.log(this);
     let game_id = this.dataset.id;
     let manager_id = this.value;
@@ -15,6 +15,7 @@ document
     };
     xhr.send(JSON.stringify({ game_id: game_id, manager_id: manager_id }));
   });
+});
 
 //  매니저 기능으로 넘겨야 할 내용
 function fnShowResultModal(id) {

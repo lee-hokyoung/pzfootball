@@ -402,14 +402,19 @@ function fnSelectDate(btn) {
   $(".ground-list-slider").slick("slickGoTo", slick_idx);
 }
 // 매치 버튼 클릭 이벤트
-$(document).on(
-  "click",
-  'button[data-status="available"], button[data-status="hurry"]',
-  function() {
-    let match_id = $(this)[0].parentNode.dataset.id;
-    location.href = "/match/" + match_id;
-  }
-);
+let match_buttons = document.querySelectorAll("button[data-status]");
+if (match_buttons) {
+  match_buttons.forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      location.href = "/match/" + this.parentNode.dataset.id;
+    });
+  });
+}
+
+// $(document).on("click", "button[data-status]", function() {
+//   let match_id = $(this)[0].parentNode.dataset.id;
+//   location.href = "/match/" + match_id;
+// });
 
 // $(".game-icons-wrap button.mr-3").on("click", function() {
 //   let game_type = $(this).data("game");

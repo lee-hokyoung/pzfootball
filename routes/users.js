@@ -14,7 +14,7 @@ const mongoose = require("mongoose");
 router.get("/", function(req, res, next) {
   res.send("respond with a resource");
 });
-router.get("/login", middle.isNotLoggedIn, (req, res) => {
+router.get("/login", middle.isNotSignedIn, (req, res) => {
   res.render("login");
 });
 router.get("/logout", (req, res) => {
@@ -23,7 +23,7 @@ router.get("/logout", (req, res) => {
   res.redirect("/");
 });
 //  일반 로그인
-router.post("/login", middle.isNotSignIn, (req, res, next) => {
+router.post("/login", middle.isNotSignedIn, (req, res, next) => {
   let user_id = req.body.user_id;
   try {
     passport.authenticate("local", (authError, user, info) => {
@@ -137,7 +137,7 @@ router.post("/mail_verify", async (req, res) => {
   });
 });
 // 회원가입
-router.get("/join", middle.isNotLoggedIn, (req, res) => {
+router.get("/join", middle.isNotSignedIn, (req, res) => {
   res.render("join");
 });
 router.post("/register", async (req, res) => {
@@ -161,16 +161,20 @@ router.post("/register", async (req, res) => {
   }
 });
 // 포인트 조회
-router.get("/point", middle.isLoggedIn, async (req, res) => {
-  let user_info = req.session.passport;
-  let point = await User.findOne(
-    { user_id: user_info.user.user_id },
-    { point: 1 }
-  );
-  res.json(point);
+router.get("/point", middle.isSignedIn, async (req, res) => {
+  try {
+    let user_info = req.session.passport;
+    let point = await User.findOne(
+      { user_id: user_info.user.user_id },
+      { point: 1 }
+    );
+    res.json(point);
+  } catch (err) {
+    console.error(err);
+  }
 });
 // 포인트 충전
-router.post("/point/charge", middle.isLoggedIn, async (req, res) => {
+router.post("/point/charge", middle.isSignedIn, async (req, res) => {
   try {
     let user_id = req.session.passport.user.user_id;
     // 현재 포인트 조회
@@ -203,7 +207,7 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
   let user_id = user_info.user.user_id;
   let user = await User.findOne({ user_id: user_id }, { user_pw: 0 });
   let match_list = await Match.aggregate([
-    { $match: { "apply_member.reader": user_id } },
+    { $match: { "apply_member.leader": user_id } },
     {
       $lookup: {
         from: "ground",
@@ -251,7 +255,7 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
   });
 });
 // 마이페이지 내 정보 수정
-router.put("/mypage/user_info", async (req, res) => {
+router.put("/mypage/user_info", middle.isSignedIn, async (req, res) => {
   try {
     let user_info = req.session.passport;
     let user_id = user_info.user.user_id;

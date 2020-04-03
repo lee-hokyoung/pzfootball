@@ -39,37 +39,42 @@ block content
 											td #{match.sex === 1 ? '남성매치':match.sex === -1 ? '여성매치':'혼성매치'}
 											td #{match.apply_member ? match.apply_member.length : 0} / #{match.personnel.max}
 											td
-												button.btn.btn-link(onclick='fnShowResultModal("' + match._id + '")', class=match.isPlay===true?"btn-info":"btn-success") 
-													if(match.isPlay) 
-														| 결과 확인
-													else 
-														| 결과 입력
+												a.btn.btn-neutral.btn-primary.text-primary(href='/manager/match/' + match._id) 상세확인	
+												//- button.btn.btn-link(onclick='fnShowResultModal("' + match._id + '")', class=match.isPlay===true?"btn-info":"btn-success") 
+												//- 	if(match.isPlay) 
+												//- 		| 결과 확인
+												//- 	else 
+												//- 		| 결과 입력
 					.card-footer
 	#resultModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='resultModalLabel', aria-hidden='true')
-		.modal-dialog.modal-lg
+		.modal-dialog
 			.modal-content
 				form.form(onsubmit='return fnRegisterResult();')
 					.modal-header.bg-primary
 						button.close.p-1(type="button" data-dismiss="modal" aria-hidden="true")
 							span.nc-icon.nc-simple-remove.text-white
 					.modal-body
-						.row#mvp_user
-							.col-1.my-auto
-								label.m-0(for='#mvp_user') MVP 선수
-							.col-3
-								select.form-control
+						.row
+							.col-12
+								ul.list-group.list-group-flush
+									li.list-group-item
+										.row#mvp_user
+											.col-4.my-auto
+												label.m-0(for='#mvp_user') MVP 선수
+											.col-8
+												select.form-control
 						.row
 							.col-12
 								ul.list-group.list-group-flush.text-center
 									li.list-group-item
 										.row
-											.col-1 #
-											.col-3 이름
-											.col-8
-												.row
-													.col-4 1차전
-													.col-4 2차전
-													.col-4 3차전
+											.col-3.col-md-1 #
+											.col-9.col-md-3 이름
+											.col-md-8 
+												//- .row
+												//- 	.col-4 1차전
+												//- 	.col-4 2차전
+												//- 	.col-4 3차전
 									#user_list
 					.modal-footer
 						button.btn.btn-sm.btn-link.btn-success(type='button', onclick='fnSaveResult()') 저장

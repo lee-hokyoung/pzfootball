@@ -179,12 +179,14 @@ ul.list-group li.list-group-item {
 #user_list li button {
   margin: 0;
 }
+#user_list li button[data-toggle="true"] {
+}
 #user_list li div[class*="col-"] {
   margin: auto 0;
 }
 #config-page .card .card-body {
   height: 400px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 #config-page table.table td {
   font-size: 0.75rem;
@@ -265,6 +267,12 @@ button[data-role="activeNotice"][data-toggle="true"] {
 }
 button[data-role="activeNotice"][data-toggle="false"] {
   color: #dc3545 !important;
+}
+#config-page table#manner-table tbody td {
+  padding: 0.25rem 0.5rem;
+}
+#config-page table#manner-table tbody td input {
+  padding: 0.5rem;
 }
 @media (min-width: 992px) {
   .modal-lg {

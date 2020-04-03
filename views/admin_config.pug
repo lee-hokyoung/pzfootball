@@ -2,6 +2,7 @@ extends admin_layout
 block content
   .content#config-page
     .row
+      //- 지역설정
       .col-md-6
         .card#region-card
           .card-header 
@@ -37,6 +38,7 @@ block content
                         i.nc-icon.nc-simple-add
           .card-footer.text-right
             button.btn.btn-sm.btn-success(type='button', onclick='fnSaveRegion()') 저장
+      //- 공지사항
       .col-md-6
         .card
           .card-header
@@ -66,7 +68,42 @@ block content
                           i.nc-icon.nc-simple-remove
           .card-footer
             button.btn.btn-sm.btn-success(type='button', data-toggle='modal', data-target='#modalNoticeWrite') 새 글 등록
-    //  공지사항 등록 모달창
+      .col-md-6
+        .card
+          .card-header
+            h4.card-title 매너점수 관리
+          .card-body
+            .table-full-width
+              table.table#manner-table
+                colgrouop
+                  col(width='auto', about='벌점 항목')
+                  col(width='100px', about='벌점')
+                  col(width='80px', about='버튼')
+                thead
+                  th 벌점 항목
+                  th 벌점
+                  th
+                tbody
+                  each item in manner
+                    tr
+                      td
+                        input.form-control(type='text', name='manner-title' value=item.title)
+                      td
+                        input.form-control(type='text', name='manner-point', value=item.point)
+                      td
+                        button.btn.btn-danger.btn-sm.btn-neutral.btn-icon.btn-icon.mini(type='button', name='removeManner', data-id=item._id)
+                          i.nc-icon.nc-simple-remove
+                  tr
+                    td
+                      input.form-control(type='text', name='manner-title')
+                    td
+                      input.form-control(type='text', name='manner-point')
+                    td
+                      button.btn.btn-primary.btn-sm.btn-icon.btn-icon-mini(type='button', name='btnAddRowManner')
+                        i.nc-icon.nc-simple-add
+          .card-footer.text-right
+            button.btn.btn-sm.btn-success(type='button', onclick='fnSaveManner()') 저장
+    //- 공지사항 등록 모달창
     include modals/noticeWrite
 block append_js
   script(src='/public_js/admin_config.js')

@@ -207,3 +207,80 @@ document
       xhr.send(JSON.stringify({ id: id, activity: this.dataset.toggle }));
     });
   });
+//  매너점수 플러스 버튼 클릭 이벤트
+document
+  .querySelector('button[name="btnAddRowManner"]')
+  .addEventListener("click", function() {
+    let tr = document.createElement("tr");
+    let td = document.createElement("td");
+    let input = document.createElement("input");
+    input.className = "form-control";
+    input.setAttribute("type", "text");
+    input.setAttribute("name", "manner-title");
+    td.appendChild(input);
+    tr.appendChild(td);
+
+    td = document.createElement("td");
+    input = document.createElement("input");
+    input.className = "form-control";
+    input.setAttribute("type", "text");
+    input.setAttribute("name", "manner-point");
+    td.appendChild(input);
+    tr.appendChild(td);
+
+    td = document.createElement("td");
+    button = document.createElement("button");
+    button.className = "btn btn-danger btn-sm btn-icon btn-icon-mini";
+    button.setAttribute("type", "button");
+    button.setAttribute("name", "removeMannerRow");
+    button.addEventListener("click", function() {
+      this.parentElement.parentElement.remove();
+    });
+    let i = document.createElement("i");
+    i.className = "nc-icon nc-simple-remove";
+    button.appendChild(i);
+    td.appendChild(button);
+    tr.appendChild(td);
+
+    document.querySelector("#manner-table tbody").appendChild(tr);
+  });
+//  매너 점수 저장
+function fnSaveManner() {
+  let list = [];
+  document.querySelectorAll("#manner-table tbody tr").forEach(function(v) {
+    let title = v.querySelector('input[name="manner-title"]');
+    let point = v.querySelector('input[name="manner-point"]');
+    if (title.value !== "" && point.value !== "") {
+      list.push({ title: title.value, point: point.value });
+    }
+  });
+  console.log("list : ", list);
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", "/admin/config/manner", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function() {
+    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      let res = JSON.parse(this.response);
+      alert(res.message);
+      if (res.code === 1) location.reload();
+    }
+  };
+  xhr.send(JSON.stringify(list));
+}
+//  매너 항목 삭제
+document.querySelectorAll('button[name="removeManner"]').forEach(function(btn) {
+  btn.addEventListener("click", function() {
+    if (!confirm("삭제하시겠습니까?")) return false;
+    let xhr = new XMLHttpRequest();
+    xhr.open("DELETE", "/admin/config/manner/" + this.dataset.id, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function() {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        let res = JSON.parse(this.response);
+        alert(res.message);
+        if (res.code === 1) btn.parentElement.parentElement.remove();
+      }
+    };
+    xhr.send();
+  });
+});

@@ -14,6 +14,7 @@ const UserSchema = new Schema({
   provider: String,
   profile_image: String,
   thumbnail_image: String,
+  manner: { type: Number, default: 100 }, //  매너점수 100 점에서 시작
   point: { type: Number, default: 0 },
   favorite_ground: [{ type: mongoose.Schema.Types.ObjectId, ref: "Ground" }],
   created_at: { type: Date, default: Date.now }

@@ -4,6 +4,7 @@ const passport = require("passport");
 const middle = require("../routes/middle");
 const Manager = require("../model/manager");
 const Match = require("../model/match");
+const Manner = require("../model/manner");
 const mongoose = require("mongoose");
 
 router.get("/", middle.isManager, async (req, res) => {
@@ -44,15 +45,35 @@ router.get("/match", middle.isManager, async (req, res) => {
   });
 });
 //  경기 정보 읽어오기
+// router.get("/match/:id", middle.isManager, async (req, res) => {
+//   try {
+//     let result = await Match.findOne({
+//       _id: mongoose.Types.ObjectId(req.params.id)
+//     });
+//     res.json(result);
+//   } catch (err) {
+//     console.error(err);
+//     res.json({ code: 0, message: err.message });
+//   }
+// });
+//  경기 결과 입력 화면
 router.get("/match/:id", middle.isManager, async (req, res) => {
   try {
-    let result = await Match.findOne({
+    let user = req.session.passport.user;
+    let match_info = await Match.findOne({
       _id: mongoose.Types.ObjectId(req.params.id)
     });
-    res.json(result);
+    let manner_list = await Manner.find({});
+    res.render("manager_match_result", {
+      title: "퍼즐풋볼 - 경기일정 관리",
+      active: "match",
+      user: user,
+      match_info: match_info,
+      manner_list: manner_list
+    });
   } catch (err) {
     console.error(err);
-    res.json({ code: 0, message: err.message });
+    res.end();
   }
 });
 //  매니저 로그인

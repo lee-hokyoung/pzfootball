@@ -3,18 +3,21 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const Region = require("../model/region");
 const Notice = require("../model/notice");
+const Manner = require("../model/manner");
 
 //  환경설정 페이지
 router.get("/", async (req, res) => {
   let user = req.session.passport.user;
   let region = await Region.find({});
   let notice = await Notice.find({});
+  let manner = await Manner.find({});
   res.render("admin_config", {
     active: "config",
     user: user,
     title: "퍼즐풋볼 - 환경설정",
     region: region,
-    notice: notice
+    notice: notice,
+    manner: manner
   });
 });
 //  지역 등록
@@ -102,5 +105,30 @@ router.put("/notice", async (req, res) => {
     res.json({ code: 0, message: err.message });
   }
 });
-
+//  매너 점수 관리 등록
+router.post("/manner", async (req, res) => {
+  try {
+    await Manner.deleteMany({});
+    let result = await Manner.insertMany(req.body);
+    if (result.length > 0) {
+      res.json({ code: 1, message: "등록되었습니다" });
+    } else {
+      res.json({ code: 0, message: "등록 실패!" });
+    }
+  } catch (err) {
+    res.json({ code: 0, message: err.message });
+  }
+});
+//  매너 점수 삭제
+router.delete("/manner/:id", async (req, res) => {
+  try {
+    let result = await Manner.deleteOne({
+      _id: mongoose.Types.ObjectId(req.params.id)
+    });
+    if (result.ok === 1) res.json({ code: 1, message: "삭제되었습니다." });
+    else res.json({ code: 0, message: "삭제 실패!" });
+  } catch (err) {
+    res.json({ code: 0, message: err.message });
+  }
+});
 module.exports = router;

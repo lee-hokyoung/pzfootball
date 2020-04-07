@@ -1,0 +1,22 @@
+#modalSearchTeam.modal.fade(tabindex="-1" role="dialog" aria-labelledby="modalSearchTeamLabel" aria-hidden="true")
+  .modal-dialog
+    .modal-content
+      .modal-header
+        span.title 팀코드로 찾기
+      .modal-body.px-3
+        form(onsubmit='return fnSearchTeam();')
+          .form-group
+            input.form-control(type='text', name='team_code', placeholder='팀 코드를 입력하세요')
+            button.btn.btn-primary(type='submit') 검색
+        table#teamSearchTable.table
+          colgroup
+            col(width='150')
+            col(width='auto')
+            col(width='100')
+            col(width='60')
+          thead.text-primary
+            th 팀이름
+            th 주장
+            th 연락처
+            th  
+          tbody

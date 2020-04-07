@@ -1,9 +1,9 @@
 // 포인트 충전 모달창 팝업 이벤트
-$("#modalChargePoint").on("show.bs.modal", function(v) {
+$("#modalChargePoint").on("show.bs.modal", function (v) {
   let xhr = new XMLHttpRequest();
   xhr.open("GET", "/users/point", true);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       let user_point = res.point || 0;
@@ -20,7 +20,7 @@ $("#modalChargePoint").on("show.bs.modal", function(v) {
   xhr.send();
 });
 // 충전할 금액 선택 이벤트
-$("#selectPoint").on("change", function() {
+$("#selectPoint").on("change", function () {
   let selectedPoint = Number($(this).val());
   let beforeCharge = Number(
     document.getElementById("beforeCharge").value.replace(/[^0-9.-]+/g, "")
@@ -37,7 +37,7 @@ function fnConfirmChargePoint() {
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "/users/point/charge");
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       if (res.code === 1) {
@@ -52,9 +52,20 @@ function fnConfirmChargePoint() {
 }
 
 //  클럽 가입
-function fnJoinClub() {
-  //  1. 클럽 가입 여부 확인
-  //  2. 클럽 리스트 페이지로 이동
+function fnJoinClub(team_id) {
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", "/clubs/join", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function () {
+    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      let res = JSON.parse(this.response);
+      alert(res.message);
+      if (res.code === 1) {
+        location.reload();
+      }
+    }
+  };
+  xhr.send(JSON.stringify({ _id: team_id }));
 }
 
 //  클럽 생성
@@ -79,24 +90,24 @@ function fnCreateClub() {
 
 //  클럽 가입 여부 확인
 function fnCheckMyClub() {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     let xhr = new XMLHttpRequest();
     xhr.open("GET", "/users/myClub", true);
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onload = function() {
+    xhr.onload = function () {
       if (this.status >= 200 && this.status < 300) {
         resolve(xhr.response);
       } else {
         reject({
           status: this.status,
-          statusText: xhr.statusText
+          statusText: xhr.statusText,
         });
       }
     };
-    xhr.onerror = function() {
+    xhr.onerror = function () {
       reject({
         status: this.status,
-        statusText: xhr.statusText
+        statusText: xhr.statusText,
       });
     };
     xhr.send();
@@ -131,7 +142,7 @@ function fnSaveUserInfo() {
   let xhr = new XMLHttpRequest();
   xhr.open("PUT", "/users/mypage/user_info", true);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       alert(res.message);
@@ -142,8 +153,8 @@ function fnSaveUserInfo() {
 }
 
 //  지역별 전체 버튼 클릭
-document.querySelectorAll('button[data-role="all"]').forEach(function(btn) {
-  btn.addEventListener("click", function() {
+document.querySelectorAll('button[data-role="all"]').forEach(function (btn) {
+  btn.addEventListener("click", function () {
     console.log(this);
     let id = this.dataset.id;
     let parent = document.querySelector('.ground-wrap[data-id="' + id + '"]');
@@ -151,14 +162,14 @@ document.querySelectorAll('button[data-role="all"]').forEach(function(btn) {
     this.dataset.toggle = parent_toggle === "false";
     if (this.dataset.toggle === "true") this.innerHTML = "전체선택";
     else this.innerHTML = "전체해제";
-    parent.querySelectorAll("button.btn-round").forEach(function(btn) {
+    parent.querySelectorAll("button.btn-round").forEach(function (btn) {
       btn.dataset.toggle = parent_toggle === "false";
     });
   });
 });
 //  구장별 버튼 클릭시 이벤트
-document.querySelectorAll("button[data-role='ground']").forEach(function(btn) {
-  btn.addEventListener("click", function() {
+document.querySelectorAll("button[data-role='ground']").forEach(function (btn) {
+  btn.addEventListener("click", function () {
     let toggle = this.dataset.toggle;
     this.dataset.toggle = toggle === "false";
   });
@@ -166,17 +177,17 @@ document.querySelectorAll("button[data-role='ground']").forEach(function(btn) {
 //  내 구장 정보 설정
 document
   .querySelector('button[data-role="saveGround"]')
-  .addEventListener("click", function() {
+  .addEventListener("click", function () {
     let ground_list = [];
     document
       .querySelectorAll('button[data-role="ground"][data-toggle="true"]')
-      .forEach(function(btn) {
+      .forEach(function (btn) {
         ground_list.push(btn.dataset.id);
       });
     let xhr = new XMLHttpRequest();
     xhr.open("PUT", "/users/region", true);
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
         let res = JSON.parse(this.response);
         alert(res.message);
@@ -189,8 +200,8 @@ document
 //  내 정보 편집 아이콘 클릭 이벤트(아이콘 토글)
 document
   .querySelectorAll(".user-info-wrap tbody td button[data-role]")
-  .forEach(function(btn) {
-    btn.addEventListener("click", function() {
+  .forEach(function (btn) {
+    btn.addEventListener("click", function () {
       let td = btn.parentElement.parentElement;
       let input = td.querySelector("input");
       if (td.getAttribute("about") === "gender") {
@@ -201,7 +212,7 @@ document
         case "edit":
         case "cancel":
           td.querySelectorAll("div[data-toggle], input[data-toggle]").forEach(
-            function(div) {
+            function (div) {
               let toggle = div.dataset.toggle;
               div.dataset.toggle = toggle === "false";
             }
@@ -217,7 +228,7 @@ document
           let xhr = new XMLHttpRequest();
           xhr.open("POST", "/users/mypage/myinfo", true);
           xhr.setRequestHeader("Content-Type", "application/json");
-          xhr.onreadystatechange = function() {
+          xhr.onreadystatechange = function () {
             if (
               this.readyState === XMLHttpRequest.DONE &&
               this.status === 200
@@ -228,7 +239,7 @@ document
                 input.setAttribute("readonly", "readonly");
                 td.querySelectorAll(
                   "div[data-toggle], input[data-toggle]"
-                ).forEach(function(div) {
+                ).forEach(function (div) {
                   let toggle = div.dataset.toggle;
                   div.dataset.toggle = toggle === "false";
                 });
@@ -254,3 +265,61 @@ document
       }
     });
   });
+//  팀 코드 검색 결과 표시하기
+function fnSearchTeam() {
+  let team_code = document.querySelector('input[name="team_code"]');
+  if (team_code.value === "") {
+    alert("팀 코드를 입력해 주세요");
+    team_code.focus();
+  }
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", "/clubs/find/" + team_code.value, true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function () {
+    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      let res = JSON.parse(this.response);
+      let tbody = document.querySelector("#teamSearchTable tbody");
+      tbody.innerHTML = "";
+      if (res.code === 1) {
+        if (res.result.length > 0) {
+          let team_info = res.result[0];
+          let tr = document.createElement("tr");
+          let td = document.createElement("td");
+          td.innerText = team_info.club_name;
+          tr.appendChild(td);
+
+          td = document.createElement("td");
+          td.innerText = team_info.user_info.user_name;
+          tr.appendChild(td);
+
+          td = document.createElement("td");
+          td.innerText = team_info.team_phone;
+          tr.appendChild(td);
+
+          td = document.createElement("td");
+          let button = document.createElement("button");
+          button.className = "btn btn-primary ml-3";
+          button.innerText = "가입신청";
+          button.addEventListener("click", function () {
+            fnJoinClub(team_info._id);
+          });
+          td.appendChild(button);
+          tr.appendChild(td);
+
+          tbody.appendChild(tr);
+        } else {
+          let tr = document.createElement("tr");
+          let td = document.createElement("td");
+          td.setAttribute("colspan", 3);
+          td.innerText = "해당 코드로 찾은 팀이 없습니다.";
+          tr.appendChild(td);
+          tbody.appendChild(tr);
+        }
+      } else {
+        alert(res.message);
+      }
+    }
+  };
+  xhr.send();
+  return false;
+}

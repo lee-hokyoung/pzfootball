@@ -1,6 +1,6 @@
 document
   .querySelector('input[name="chk_all"]')
-  .addEventListener("click", function() {
+  .addEventListener("click", function () {
     console.log(this);
     let chk_term = document.querySelector('input[name="chk_terms"]');
     let chk_privacy = document.querySelector('input[name="chk_privacy"]');
@@ -34,8 +34,9 @@ function fnJoin() {
   let user_pw_chk = document.querySelector('input[name="user_pw_chk"]');
   let user_name = document.querySelector('input[name="user_name"]');
   let user_phone = document.querySelector('input[name="user_phone"]');
+  let phone1 = document.querySelector('input[name="phone1"]');
+  let phone2 = document.querySelector('input[name="phone2"]');
 
-  let user_nickname = document.querySelector('input[name="user_nickname"]');
   let gender = document.querySelector('select[name="gender"]');
   let birth =
     document.querySelector('select[name="birth_y"]').value +
@@ -43,7 +44,9 @@ function fnJoin() {
     document.querySelector('select[name="birth_m"]').value +
     "-" +
     document.querySelector('select[name="birth_d"]').value;
-  let user_email = document.querySelector('input[name="user_email"]');
+
+  // let user_nickname = document.querySelector('input[name="user_nickname"]');
+  // let user_email = document.querySelector('input[name="user_email"]');
   // let email_verify_number = document.querySelector(
   //   'input[name="email_verify_number"]'
   // );
@@ -77,11 +80,21 @@ function fnJoin() {
     user_phone.focus();
     return false;
   }
-  if (user_email.value === "") {
-    alert("이메일을 입력해 주세요");
-    user_email.focus();
+  if (phone1.value === "") {
+    alert("휴대폰 번호를 입력해 주세요");
+    phone1.focus();
     return false;
   }
+  if (phone2.value === "") {
+    alert("휴대폰 번호를 입력해 주세요");
+    phone2.focus();
+    return false;
+  }
+  // if (user_email.value === "") {
+  //   alert("이메일을 입력해 주세요");
+  //   user_email.focus();
+  //   return false;
+  // }
   // if (email_verify_number.value === "") {
   //   alert("이메일 인증번호를 입력해주세요");
   //   email_verify_number.focus();
@@ -91,17 +104,21 @@ function fnJoin() {
   formData["user_id"] = user_id.value;
   formData["user_pw"] = user_pw.value;
   formData["user_name"] = user_name.value;
-  // formData["user_nickname"] = user_nickname.value;
   formData["gender"] = gender.value;
+  formData["user_phone"] = user_phone.value;
+  formData["phone1"] = phone1.value;
+  formData["phone2"] = phone2.value;
   formData["birth"] = birth;
-  formData["user_email"] = user_email.value;
-  // formData["email_verify_number"] = email_verify_number.value;
   console.log("formData : ", formData);
+
+  // formData["user_nickname"] = user_nickname.value;
+  // formData["user_email"] = user_email.value;
+  // formData["email_verify_number"] = email_verify_number.value;
 
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "/users/register", true);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       if (res.code === 1) {
@@ -124,7 +141,7 @@ function fnAddInfo(target) {
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "/users/login/" + target, true);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       if (res.code === 1) {
@@ -138,6 +155,6 @@ function fnAddInfo(target) {
   xhr.send(JSON.stringify(formData));
 }
 //  모달 닫혔을 때 이벤트
-$("#modalJoin").on("hidden.bs.modal", function() {
+$("#modalJoin").on("hidden.bs.modal", function () {
   fnAddInfo("main");
 });

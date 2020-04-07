@@ -33,7 +33,7 @@ block content
               .col-md-8
                 h4 Welcome, 퍼즐풋볼!
                 h2 
-                  b.text-purple #{user.user_nickname} 
+                  b.text-purple #{user.user_name} 
                   b.text-dark 감독님
                 .row
                   //- 팀워크 점수 계산
@@ -61,7 +61,20 @@ block content
                     th 이메일(ID)
                     td
                     td 
-                      input.form-control(type='text', name='user_email', value=user.user_email, readonly)
+                      input.form-control(type='text', name='user_id', value=user.user_id, readonly)
+                      div(data-toggle='true')
+                        button.btn.btn-link.btn-primary(data-role='edit')
+                          i.nc-icon.nc-ruler-pencil
+                      div(data-toggle='false')
+                        button.btn.btn-link.btn-success(data-role='confirm')
+                          i.nc-icon.nc-check-2
+                        button.btn.btn-link.btn-danger(data-role='cancel')
+                          i.nc-icon.nc-simple-remove
+                  tr
+                    th 이름
+                    td
+                    td 
+                      input.form-control(type='text', name='user_name', value=user.user_name, readonly)
                       div(data-toggle='true')
                         button.btn.btn-link.btn-primary(data-role='edit')
                           i.nc-icon.nc-ruler-pencil
@@ -74,7 +87,7 @@ block content
                     th 휴대폰 번호
                     td
                     td 
-                      input.form-control(type='text', name='user_phone', value=user.user_phone, placeholder='010-0000-0000', readonly)
+                      input.form-control(type='text', name='user_phone', value=user.user_phone + '-' + user.phone1 + '-' + user.phone2, placeholder='010-0000-0000', readonly)
                       div(data-toggle='true')
                         button.btn.btn-link.btn-primary(data-role='edit')
                           i.nc-icon.nc-ruler-pencil
@@ -195,35 +208,42 @@ block content
       .col-md-6
         //- 가입한 클럽이 없을 경우
         if(!myClub)
-          .card.profile-card
-            .card-header.text-center.pt-4
-              h6.title 아직 소속된 클럽이 없습니다
-              h6.description 팀을 생성하거나 참여해보세요
-            .card-body.pt-2
-              .row
-                .col-md-10.mx-auto
-                  .find-club-wrap(data-color='red')
-                    .row
-                      .col-4
-                        img(src='/images/captain.png', width='100%')
-                      .col-8.my-auto.text-center
-                        p.m-0
-                          span.text-warning 감독
-                          span.text-white 으로 참가하기
-                        a.btn.btn-danger.border.px-4.py-2(href='/clubs/create') 팀 생성 
-              .row.mt-4
-                .col-md-10.mx-auto
-                  .find-club-wrap(data-color='purple')
-                    .row
-                      .col-4
-                        img(src='/images/captain.png', width='100%')
-                      .col-8.my-auto
-                        p.m-0
-                          span.text-warning 팀원
-                          span.text-white 으로 참여하기
-                        .input-wrap
-                          input.form-control(type='text', placeholder='팀 코드를 입력하세요.')
-                          button.btn.btn-danger(type='button', name='btnFindTeam') 팀 찾기
+          //- 가입 요청한 클럽이 없을 경우
+          if(!waiting_club)
+            .card.profile-card
+              .card-header.text-center.pt-4
+                h6.title 아직 소속된 클럽이 없습니다
+                h6.description 팀을 생성하거나 참여해보세요
+              .card-body.pt-2
+                .row
+                  .col-md-10.mx-auto
+                    .find-club-wrap(data-color='red')
+                      .row
+                        .col-4
+                          img(src='/images/captain.png', width='100%')
+                        .col-8.my-auto.text-center
+                          p.m-0
+                            span.text-warning 감독
+                            span.text-white 으로 참가하기
+                          a.btn.btn-danger.border.px-4.py-2(href='/clubs/create') 팀 생성 
+                .row.mt-4
+                  .col-md-10.mx-auto
+                    .find-club-wrap(data-color='purple')
+                      .row
+                        .col-4
+                          img(src='/images/captain.png', width='100%')
+                        .col-8.my-auto
+                          p.m-0
+                            span.text-warning 팀원
+                            span.text-white 으로 참여하기
+                          .input-wrap
+                            input.form-control(type='text', placeholder='팀 코드를 입력하세요.')
+                            button.btn.btn-danger(type='button', name='btnFindTeam', data-toggle='modal', data-target='#modalSearchTeam') 팀 찾기
+          //- 가입 요청한 팀이 있을 경우
+          else
+            .card.profile-card
+              .card-body
+                h5 가입 승인 대기 중
         //- 가입한 클럽이 있을 경우
         else
           .card.profile-card
@@ -370,10 +390,11 @@ block content
             
         
   include modals/chargePoint
+  include modals/searchTeam
 block append_js
   script(src='/public_js/mypage.js')
   script.
-    console.log('ground : ', !{JSON.stringify(region_group)})
+    console.log('waiting_club : ', !{JSON.stringify(waiting_club)})
     console.log('user : ', !{JSON.stringify(user)})
     console.log('club : ', !{JSON.stringify(myClub)})
     console.log('manner_info : ', !{JSON.stringify(manner_info)})

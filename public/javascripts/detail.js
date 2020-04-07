@@ -1,10 +1,10 @@
 $(".detail-slider").slick({
   dots: true,
   arrows: false,
-  fade: true
+  fade: true,
 });
 //  클립보드에 주소 복사
-document.querySelector(".copy").addEventListener("click", function() {
+document.querySelector(".copy").addEventListener("click", function () {
   let copiedText = $(this).data().copy;
   var tempElem = document.createElement("textarea");
   tempElem.value = copiedText;
@@ -32,7 +32,7 @@ function fnGetUserPoint() {
   let xhr = new XMLHttpRequest();
   xhr.open("GET", "/users/point", true);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       let user_point = res.point || 0;
@@ -68,7 +68,7 @@ function fnConfirmMatch() {
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "/match/apply", true);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       if (res.code === 1) {
@@ -82,7 +82,8 @@ function fnConfirmMatch() {
   xhr.send(JSON.stringify(formData));
 }
 // 신청인원 수 조정 이벤트
-$("#selectMember").on("change", function() {
+$("#selectMember").on("change", function () {
+  //  포인트 변동
   let user_point = Number(
     document.getElementById("user_point").value.replace(/[^0-9.-]+/g, "")
   );
@@ -106,6 +107,93 @@ $("#selectMember").on("change", function() {
     document.getElementById("confirmFooter").className = "modal-footer d-none";
     document.getElementById("requireFooter").className = "modal-footer";
   }
+  //  참여인원 칸 늘리기
+  let member_list = document.querySelector("#apply_member_list");
+  member_list.innerHTML = "";
+  if (member_cnt > 1) {
+    for (var i = 1; i < member_cnt; i++) {
+      let li = document.createElement("li");
+      li.className = "list-group-item";
+      let row = document.createElement("div");
+      row.className = "row";
+      let = col = document.createElement("div");
+      col.className = "col-9 form-group m-0";
+      let input = document.createElement("input");
+      input.className = "form-control m-0";
+      input.placeholder = "연락처 뒤 4자리 입력";
+      col.appendChild(input);
+      row.appendChild(col);
+
+      col = document.createElement("div");
+      col.className = "col-3";
+      let button = document.createElement("button");
+      button.className = "btn btn-danger btn-sm";
+      button.innerText = "찾기";
+      button.addEventListener("click", function () {
+        console.log(this);
+        let parent_row = this.parentElement.parentElement;
+        let phone = parent_row.querySelector("input");
+        if (phone.value === "") {
+          alert("연락처를 입력해 주세요");
+          return false;
+        }
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", "/users/find/" + phone.value, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+          if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            let res = JSON.parse(this.response);
+            if (res.code === 1) {
+              let list = res.result;
+              let tbody = document.querySelector("#searchResultTable tbody");
+              tbody.innerHTML = "";
+              list.forEach(function (v) {
+                let tr = document.createElement("tr");
+                let td = document.createElement("td");
+                td.innerText = v.user_name;
+                tr.appendChild(td);
+
+                td = document.createElement("td");
+                td.innerText = v.user_id;
+                tr.appendChild(td);
+
+                td = document.createElement("td");
+                let button = document.createElement("button");
+                button.className = "btn btn-primary btn-sm";
+                button.dataset.user_name = v.user_name;
+                button.dataset.user_id = v.user_id;
+                button.dataset._id = v._id;
+                button.innerText = "선택";
+                button.addEventListener("click", function () {
+                  console.log(this.dataset);
+                  parent_row.innerHTML = "";
+                  let col = document.createElement("div");
+                  col.className = "col-3";
+                  col.innerText = this.dataset.user_name;
+                  parent_row.appendChild(col);
+
+                  col = document.createElement("div");
+                  col.className = "col-9";
+                  col.innerText = this.dataset.user_id;
+                  parent_row.appendChild(col);
+                  $("#searchResultModal").modal("hide");
+                });
+                td.appendChild(button);
+                tr.appendChild(td);
+                tbody.appendChild(tr);
+              });
+              $("#searchResultModal").modal("show");
+            }
+          }
+        };
+        xhr.send();
+      });
+      col.appendChild(button);
+      row.appendChild(col);
+      li.appendChild(row);
+      member_list.appendChild(li);
+    }
+  }
 });
 // 포인트 충전 모달창 띄우기
 function fnChargePoint() {
@@ -113,7 +201,7 @@ function fnChargePoint() {
   let xhr = new XMLHttpRequest();
   xhr.open("GET", "/users/point", true);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       let user_point = res.point || 0;
@@ -130,7 +218,7 @@ function fnChargePoint() {
   xhr.send();
 }
 // 충전할 금액 선택 이벤트
-$("#selectPoint").on("change", function() {
+$("#selectPoint").on("change", function () {
   let selectedPoint = Number($(this).val());
   let beforeCharge = Number(
     document.getElementById("beforeCharge").value.replace(/[^0-9.-]+/g, "")
@@ -147,7 +235,7 @@ function fnConfirmChargePoint() {
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "/users/point/charge");
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       if (res.code === 1) {

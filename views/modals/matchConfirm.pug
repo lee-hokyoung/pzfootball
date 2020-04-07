@@ -1,29 +1,58 @@
 #modalMatchConfirm.modal.fade(tabindex="-1" role="dialog" aria-labelledby="matchConfirmModalLabel" aria-hidden="true")
-    .modal-dialog
-      .modal-content
-        .modal-header
-          h6 매치 정보 확인
-        .modal-body
-          - var remain = match_info.personnel.max - match_info.apply_member.length;
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h6 매치 정보 확인
+      .modal-body
+        - var remain = match_info.personnel.max - match_info.apply_member.length;
+        if(remain > 6) 
+          - remain = 5;
           - var n = 0;
-          .input-groun
-            label 신청인원
-            select.form-control#selectMember
-              while n < remain
-                option(value=++n) !{n} 명
-          .form-group
-            label 보유포인트
-            input.form-control#user_point(readonly)
-          .form-group
-            label 차감포인트
-            input.form-control#require_point(readonly)
-          .form-group
-            label 결제 후 포인트
-            input.form-control.text-white#afterPurchase(readonly)
+        .form-group
+          label 보유포인트
+          input.form-control#user_point(readonly)
+        .form-group
+          label 차감포인트
+          input.form-control#require_point(readonly)
+        .form-group
+          label 결제 후 포인트
+          input.form-control.text-white#afterPurchase(readonly)
+        .form-group
+          label 신청인원
+          select.form-control#selectMember
+            while n < remain
+              option(value=++n) !{n} 명
+        ul.list-group.list-group-flush
+          li.list-group-item
+            .row
+              .col-3 이름
+              .col-9 ID(이메일)
+          li.list-group-item
+            .row
+              .col-3 #{user_info.user.user_name}
+              .col-9 #{user_info.user.user_id}
+          #apply_member_list
+
         #confirmFooter.modal-footer
-          button.btn.btn-primary(onclick='fnConfirmMatch()') 확인
-          button.btn.btn-danger(data-dismiss='modal') 취소
-        #requireFooter.modal-footer
-          p 포인트가 부족합니다. 충전하시겠습니까?
-          button.btn.btn-primary(onclick='fnChargePoint()') 확인
-          button.btn.btn-danger(data-dismiss='modal') 취소
+        button.btn.btn-primary(onclick='fnConfirmMatch()') 확인
+        button.btn.btn-danger(data-dismiss='modal') 취소
+      #requireFooter.modal-footer
+        p 포인트가 부족합니다. 충전하시겠습니까?
+        button.btn.btn-primary(onclick='fnChargePoint()') 확인
+        button.btn.btn-danger(data-dismiss='modal') 취소
+#searchResultModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='searchResultModalLabel', aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h6 검색결과
+      .modal-body
+        .table
+          table.table#searchResultTable
+            colgroup
+              col(width='100')
+              col(width='auto')
+              col(width='100')
+            thead
+              th 이름
+              th ID(이메일)
+            tbody

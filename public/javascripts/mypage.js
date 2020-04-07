@@ -58,10 +58,10 @@ function fnJoinClub() {
 }
 
 //  클럽 생성
-async function fnCreateClub() {
+function fnCreateClub() {
   //  1. 클럽 가입 여부 확인
   console.log("start async");
-  let res = JSON.parse(await fnCheckMyClub());
+  let res = JSON.parse(fnCheckMyClub());
   console.log("resut : ", res);
   if (res.code === 1) {
     if (res.result) {
@@ -78,7 +78,7 @@ async function fnCreateClub() {
 }
 
 //  클럽 가입 여부 확인
-async function fnCheckMyClub() {
+function fnCheckMyClub() {
   return new Promise(function(resolve, reject) {
     let xhr = new XMLHttpRequest();
     xhr.open("GET", "/users/myClub", true);
@@ -184,4 +184,73 @@ document
       }
     };
     xhr.send(JSON.stringify({ ground: ground_list }));
+  });
+
+//  내 정보 편집 아이콘 클릭 이벤트(아이콘 토글)
+document
+  .querySelectorAll(".user-info-wrap tbody td button[data-role]")
+  .forEach(function(btn) {
+    btn.addEventListener("click", function() {
+      let td = btn.parentElement.parentElement;
+      let input = td.querySelector("input");
+      if (td.getAttribute("about") === "gender") {
+        input = td.querySelector('input[type="radio"]:checked');
+      }
+      console.log("td : ", td, "input : ", input);
+      switch (this.dataset.role) {
+        case "edit":
+        case "cancel":
+          td.querySelectorAll("div[data-toggle], input[data-toggle]").forEach(
+            function(div) {
+              let toggle = div.dataset.toggle;
+              div.dataset.toggle = toggle === "false";
+            }
+          );
+          if (this.dataset.role === "edit") {
+            input.removeAttribute("readonly");
+          } else {
+            input.setAttribute("readonly", "readonly");
+          }
+          break;
+        case "confirm":
+          let formData = {};
+          let xhr = new XMLHttpRequest();
+          xhr.open("POST", "/users/mypage/myinfo", true);
+          xhr.setRequestHeader("Content-Type", "application/json");
+          xhr.onreadystatechange = function() {
+            if (
+              this.readyState === XMLHttpRequest.DONE &&
+              this.status === 200
+            ) {
+              let res = JSON.parse(this.response);
+              alert(res.message);
+              if (res.code === 1) {
+                input.setAttribute("readonly", "readonly");
+                td.querySelectorAll(
+                  "div[data-toggle], input[data-toggle]"
+                ).forEach(function(div) {
+                  let toggle = div.dataset.toggle;
+                  div.dataset.toggle = toggle === "false";
+                });
+                if (input.name === "gender") {
+                  td.querySelector('input[name="gender"]').value =
+                    input.value === "male"
+                      ? "남자"
+                      : input.value === "female"
+                      ? "여자"
+                      : "선택안함";
+                }
+                // if (this.dataset.role === "edit") {
+                //   input.removeAttribute("readonly");
+                // } else {
+                //   input.setAttribute("readonly", "readonly");
+                // }
+              }
+            }
+          };
+          formData[input.name] = input.value;
+          xhr.send(JSON.stringify(formData));
+          break;
+      }
+    });
   });

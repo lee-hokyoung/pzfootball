@@ -206,6 +206,37 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
   let user_info = req.session.passport;
   let user_id = user_info.user.user_id;
   let user = await User.findOne({ user_id: user_id }, { user_pw: 0 });
+
+  //  팀워크 점수 계산
+  let manner_info = await Match.aggregate([
+    {
+      $match: {
+        "apply_member._id": mongoose.Types.ObjectId(user_info.user._id)
+      }
+    },
+    { $project: { apply_member: 1 } },
+    { $unwind: "$apply_member" },
+    {
+      $match: {
+        "apply_member._id": mongoose.Types.ObjectId(user_info.user._id)
+      }
+    },
+    {
+      $lookup: {
+        from: "manners",
+        localField: "apply_member.penalty",
+        foreignField: "_id",
+        as: "manner_info"
+      }
+    },
+    {
+      $project: {
+        _id: 1,
+        manner_info: 1,
+        total: { $sum: "$manner_info.point" }
+      }
+    }
+  ]);
   let match_list = await Match.aggregate([
     { $match: { "apply_member.leader": user_id } },
     {
@@ -251,10 +282,29 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
     match_list: match_list,
     myClub: myClub,
     region_group: region_group,
-    waiting_club: waiting_club
+    waiting_club: waiting_club,
+    manner_info: manner_info
   });
 });
-// 마이페이지 내 정보 수정
+//  내 정보 수정
+router.post("/mypage/myinfo", middle.isSignedIn, async (req, res) => {
+  try {
+    let user_info = req.session.passport;
+    let result = await User.updateOne(
+      {
+        _id: mongoose.Types.ObjectId(user_info.user._id)
+      },
+      {
+        $set: req.body
+      },
+      { $upsert: true }
+    );
+    res.json({ code: 1, message: "수정했습니다.", result: result });
+  } catch (err) {
+    res.json({ code: 0, message: err.message });
+  }
+});
+//  마이페이지 내 정보 수정
 router.put("/mypage/user_info", middle.isSignedIn, async (req, res) => {
   try {
     let user_info = req.session.passport;
@@ -347,5 +397,4 @@ router.put("/region", middle.isSignedIn, async (req, res) => {
     res.json({ code: 0, message: err.message });
   }
 });
-
 module.exports = router;

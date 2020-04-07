@@ -1,4 +1,6 @@
 extends layout
+block append_css
+  link(href='/public_css/mypage.css', rel='stylesheet')
 block content
   style.
     #mypage-wrap li{
@@ -7,17 +9,302 @@ block content
     #mypage-wrap li [class*="col-"] {margin:auto 0;} 
   #mypage-wrap.container.bg-white
     .row
-      .col-md-5
-        .card
-          .card-header
-            label.title ID
-            p #{user.user_id}
+      .col-md-6
+        .card.profile-card
+          .card-body
+            .row
+              .col-md-4
+                .fileinput.fileinput-new.text-center(data-provides="fileinput")
+                  .fileinput-new.thumbnail.img-circle
+                    img(src="/assets/img/placeholder.jpg" alt="...")
+                  .fileinput-preview.fileinput-exists.thumbnail.img-circle
+                  div
+                    span.btn.btn-round.btn-rose.btn-file.bg-success
+                      span.fileinput-new
+                        i.nc-icon.nc-simple-add
+                      span.fileinput-exists.bg-success
+                        i.nc-icon.nc-settings
+                      input(type="file" name="...")
+                    //- br
+                    a.btn.btn-danger.btn-round.fileinput-exists.d-none(href="#pablo" data-dismiss="fileinput")
+                      i.fa.fa-times
+                      |  Remove
+
+              .col-md-8
+                h4 Welcome, 퍼즐풋볼!
+                h2 
+                  b.text-purple #{user.user_nickname} 
+                  b.text-dark 감독님
+                .row
+                  //- 팀워크 점수 계산
+                  - var point = 0;
+                  each item in manner_info
+                    - point = point + item.total
+                  .col-5.mr-auto
+                    .row
+                      .img-wrap
+                        i.nc-icon.nc-favourite-28
+                        span #{100 - parseInt(point)}
+                      p.description 퍼즐 팀워크 점수
+                  .col-5.ml-auto
+                    .row
+                      .img-wrap
+                        i.nc-icon.nc-favourite-28
+                        span 1회
+                      p.description 퍼즐 MVP 횟수
+              .col-12
+                hr
+            .user-info-wrap
+              table.table
+                tbody
+                  tr
+                    th 이메일(ID)
+                    td
+                    td 
+                      input.form-control(type='text', name='user_email', value=user.user_email, readonly)
+                      div(data-toggle='true')
+                        button.btn.btn-link.btn-primary(data-role='edit')
+                          i.nc-icon.nc-ruler-pencil
+                      div(data-toggle='false')
+                        button.btn.btn-link.btn-success(data-role='confirm')
+                          i.nc-icon.nc-check-2
+                        button.btn.btn-link.btn-danger(data-role='cancel')
+                          i.nc-icon.nc-simple-remove
+                  tr
+                    th 휴대폰 번호
+                    td
+                    td 
+                      input.form-control(type='text', name='user_phone', value=user.user_phone, placeholder='010-0000-0000', readonly)
+                      div(data-toggle='true')
+                        button.btn.btn-link.btn-primary(data-role='edit')
+                          i.nc-icon.nc-ruler-pencil
+                      div(data-toggle='false')
+                        button.btn.btn-link.btn-success(data-role='confirm')
+                          i.nc-icon.nc-check-2
+                        button.btn.btn-link.btn-danger(data-role='cancel')
+                          i.nc-icon.nc-simple-remove
+                  tr
+                    th 생년월일
+                    td
+                    td
+                      input.form-control(type='text', name='birth', value=user.birth, readonly)
+                      div(data-toggle='true')
+                        button.btn.btn-link.btn-primary(data-role='edit')
+                          i.nc-icon.nc-ruler-pencil
+                      div(data-toggle='false')
+                        button.btn.btn-link.btn-success(data-role='confirm')
+                          i.nc-icon.nc-check-2
+                        button.btn.btn-link.btn-danger(data-role='cancel')
+                          i.nc-icon.nc-simple-remove
+                  tr 
+                    th 성별
+                    td
+                    td(about='gender')
+                      input.form-control(type='text', name='gender', value=user.gender==='male'?'남자':user.gender==='female'?'여자':'선택안함', readonly, data-toggle='true')
+                      .form-control(data-toggle='false')
+                        .form-check-radio.my-auto.ml-2
+                          label.form-check-label
+                            input.form-check-input(type='radio', name='gender', value='male', checked=user.gender==='male')
+                            | 남자
+                            span.form-check-sign
+                        .form-check-radio.my-auto.ml-3
+                          label.form-check-label
+                            input.form-check-input(type='radio', name='gender', value='female', checked=user.gender==='female')
+                            | 여자
+                            span.form-check-sign
+                      div(data-toggle='true')
+                        button.btn.btn-link.btn-primary(data-role='edit')
+                          i.nc-icon.nc-ruler-pencil
+                      div(data-toggle='false')
+                        button.btn.btn-link.btn-success(data-role='confirm')
+                          i.nc-icon.nc-check-2
+                        button.btn.btn-link.btn-danger(data-role='cancel')
+                          i.nc-icon.nc-simple-remove
+            p.text-center.description.m-0 최초 인증 받은 연락처로 매치 참여시 본인확인이 이루어지며
+            p.text-center.description.m-0 매치 및 이벤트 알림이 발송되오니 바르게 작성해 주세요.
+        //  키, 몸무게, 포지션, 실력
+        .card.profile-card
+          .card-body
+            .user-info-wrap
+              table.table
+                tbody
+                  tr
+                    th 키
+                    td
+                    td 
+                      input.form-control(type='text', name='height', value=user.height, readonly)
+                      div(data-toggle='true')
+                        button.btn.btn-link.btn-primary(data-role='edit')
+                          i.nc-icon.nc-ruler-pencil
+                      div(data-toggle='false')
+                        button.btn.btn-link.btn-success(data-role='confirm')
+                          i.nc-icon.nc-check-2
+                        button.btn.btn-link.btn-danger(data-role='cancel')
+                          i.nc-icon.nc-simple-remove
+                  tr
+                    th 몸무게
+                    td
+                    td 
+                      input.form-control(type='text', name='weight', value=user.weight, readonly)
+                      div(data-toggle='true')
+                        button.btn.btn-link.btn-primary(data-role='edit')
+                          i.nc-icon.nc-ruler-pencil
+                      div(data-toggle='false')
+                        button.btn.btn-link.btn-success(data-role='confirm')
+                          i.nc-icon.nc-check-2
+                        button.btn.btn-link.btn-danger(data-role='cancel')
+                          i.nc-icon.nc-simple-remove
+            .user-info-wrap
+              table.table
+                tbody
+                  tr
+                    th 내 포지션
+                    td
+                    td 
+                      input.form-control(type='text', name='position', value=user.position, readonly)
+                      div(data-toggle='true')
+                        button.btn.btn-link.btn-primary(data-role='edit')
+                          i.nc-icon.nc-ruler-pencil
+                      div(data-toggle='false')
+                        button.btn.btn-link.btn-success(data-role='confirm')
+                          i.nc-icon.nc-check-2
+                        button.btn.btn-link.btn-danger(data-role='cancel')
+                          i.nc-icon.nc-simple-remove
+                  tr
+                    th 내 실력
+                    td
+                    td 
+                      input.form-control(type='text', name='skill', value=user.skill, readonly)
+                      div(data-toggle='true')
+                        button.btn.btn-link.btn-primary(data-role='edit')
+                          i.nc-icon.nc-ruler-pencil
+                      div(data-toggle='false')
+                        button.btn.btn-link.btn-success(data-role='confirm')
+                          i.nc-icon.nc-check-2
+                        button.btn.btn-link.btn-danger(data-role='cancel')
+                          i.nc-icon.nc-simple-remove
+            h6.fontGmarket 초급 : 축구를 취미로 즐기는 수준
+            h6.fontGmarket 중급 : 기본기에 능숙하며 볼 다루는 게 익숙함
+            h6.fontGmarket 고급 : 정식 축구부에 등록되어 대회를 뛰어본 경우(KFA 인증 필요)            
+            .guide_wrap
+              p 위 정보를 토대로 추후 등급배치 시스템을 통하여
+              p 신체, 능력 등 여러 사항을 종합적으로 고려해서
+              p 용병 시스템 / 스카우트 시스템 / 트레이닝 시스템에
+              p 반영할 예정이오니 신중히 선택해 주십시오.
+              p (등급 배치전을 통하여 관리자에 의해 등급 조정 될 수 있습니다)
+      .col-md-6
+        //- 가입한 클럽이 없을 경우
+        if(!myClub)
+          .card.profile-card
+            .card-header.text-center.pt-4
+              h6.title 아직 소속된 클럽이 없습니다
+              h6.description 팀을 생성하거나 참여해보세요
+            .card-body.pt-2
+              .row
+                .col-md-10.mx-auto
+                  .find-club-wrap(data-color='red')
+                    .row
+                      .col-4
+                        img(src='/images/captain.png', width='100%')
+                      .col-8.my-auto.text-center
+                        p.m-0
+                          span.text-warning 감독
+                          span.text-white 으로 참가하기
+                        a.btn.btn-danger.border.px-4.py-2(href='/clubs/create') 팀 생성 
+              .row.mt-4
+                .col-md-10.mx-auto
+                  .find-club-wrap(data-color='purple')
+                    .row
+                      .col-4
+                        img(src='/images/captain.png', width='100%')
+                      .col-8.my-auto
+                        p.m-0
+                          span.text-warning 팀원
+                          span.text-white 으로 참여하기
+                        .input-wrap
+                          input.form-control(type='text', placeholder='팀 코드를 입력하세요.')
+                          button.btn.btn-danger(type='button', name='btnFindTeam') 팀 찾기
+        //- 가입한 클럽이 있을 경우
+        else
+          .card.profile-card
+            .card-header.text-center.pt-4
+              h6.title 내 팀 정보
+            .card-body
+              .find-club-wrap(data-color='green')
+                if(myClub.status === 1)
+                  .row
+                    .col-md-4
+                      img(src=myClub.club_mark, width='100%')
+                    .col-md-8
+                      .row
+                        .col-8 #{myClub.club_name}
+                        .col-4 #{myClub.club_member.length} 명
+                      .row
+                        a.btn.btn-primary.border.px-4.py-2(href='/clubs/' + myClub._id) 팀 정보
+
+        .card.profile-card
+          .card-header.text-center.pt-4
+            h6.title 내 구장 설정
+          .card-body
+            each r, idx in region_group
+              .ground-wrap(data-id=r._id)
+                .d-flex.justify-content-between
+                  h5 #{r.name}
+                  button.btn.btn-success.btn-sm(type='button', data-role='all', data-id=r._id, data-toggle='true') 전체선택
+                .d-flex.justify-content-start
+                  - var my_ground = user.favorite_ground.join(',')
+                  each ground in r.list
+                    button.btn.btn-primary.btn-round.btn-sm.mr-1.px-3(type='button', data-id=ground._id, data-toggle=my_ground.toString().indexOf(ground._id.toString()) > -1 ? "true":"false", data-role='ground') #{ground.groundName}
+              if(idx + 1 < region_group.length)
+                hr
+            button.btn.btn-success.w-100.m-0(type='button', data-role='saveGround') 적용
+        .card.profile-card
+          .card-header.text-center.pt-4
+            h6.title 캐쉬 및 예약 현황
           .card-body
             .form-group
               label.title 보유 포인트
               .point-wrap.d-flex.justify-content-start
                 p #{new Intl.NumberFormat('ko').format(user.point) || 0}
                 button.btn.btn-primary(data-toggle='modal', data-target='#modalChargePoint') 충전하기
+            #table-reservation
+              table.table
+                colgroup
+                  col
+                  col
+                  col
+                  col
+                  col
+                thead
+                  tr.table-success
+                    th 날짜
+                    th 시간
+                    th 경기장
+                    th 신청수
+                    th 상태
+                tbody
+                  if(match_list.length > 0)
+                    each match in match_list
+                      tr
+                        td #{match.match_date.slice(5)}
+                        td #{match.match_time}
+                        td #{match.ground_info.groundName}
+                        td #{match.apply_member.length} / #{match.personnel.max}
+                        td 
+                          a.btn.btn-danger.btn-link(href='/users/match/' + match._id) #{match.isPlay?"종료":"진행중"}
+                  else
+                    tr
+                      td(colspan='5') 일정이 없습니다.
+
+
+
+    .row.d-none
+      .col-md-6
+        .card
+          .card-header
+            label.title ID
+            p #{user.user_id}
+          .card-body
             .form-group
               label.title 이름
               input.form-control(type='text', value=user.user_name, name='user_name')
@@ -57,7 +344,7 @@ block content
                     .row
                       .col-12 승인 대기 중 
             else if(waiting_club)
-               ul.list-group.list-group-flush.text-center
+              ul.list-group.list-group-flush.text-center
                 li.list-group-item.list-group-item-primary
                   .row
                     .col-2 마크
@@ -73,50 +360,15 @@ block content
                 .col-4
                   a.btn.btn-sm.btn-link.text-primary(href='/clubs/list') 가입
                   button.btn.btn-sm.btn-link.text-success(onclick='fnCreateClub()') 생성
-      .col-md-7
+      .col-md-6
         .card
           .card-header
             .d-flex.justify-content-between
               label.title 내 경기 일정
               //- a.text-info(href='#users/match/list') 더 보기
           .card-body
-            ul.list-group.list-group-flush
-              li.list-group-item.list-group-item-primary.text-center
-                .row
-                  .col 날짜
-                  .col 시간
-                  .col-5 경기장
-                  .col-2 신청수
-                  .col-2 상태
-              if(match_list.length > 0)
-                each match in match_list
-                  a(href='/users/match/' + match._id)
-                    li.list-group-item.list-group-item-action.text-center
-                      .row
-                        .col #{match.match_date.slice(5)}
-                        .col #{match.match_time}
-                        .col-5 #{match.ground_info.groundName}
-                        .col-2 #{match.apply_member.length} / #{match.personnel.max}
-                        .col-2 #{match.isPlay?"종료":"진행중"}
-              else
-                li.list-group-item 일정이 없습니다.
-        .card
-          .card-header
-            label.title 내 구장 설정
-          .card-body
-            each r, idx in region_group
-              .ground-wrap(data-id=r._id)
-                .d-flex.justify-content-between
-                  h5 #{r.name}
-                  button.btn.btn-success.btn-sm(type='button', data-role='all', data-id=r._id, data-toggle='true') 전체선택
-                .d-flex.justify-content-start
-                  - var my_ground = user.favorite_ground.join(',')
-                  each ground in r.list
-                    button.btn.btn-primary.btn-round.btn-sm.mr-1.px-3(type='button', data-id=ground._id, data-toggle=my_ground.toString().indexOf(ground._id.toString()) > -1 ? "true":"false", data-role='ground') #{ground.groundName}
-              if(idx + 1 < region_group.length)
-                hr
-          .card-footer.p-0
-            button.btn.btn-success.w-100.m-0(type='button', data-role='saveGround') 적용
+            
+        
   include modals/chargePoint
 block append_js
   script(src='/public_js/mypage.js')
@@ -124,4 +376,4 @@ block append_js
     console.log('ground : ', !{JSON.stringify(region_group)})
     console.log('user : ', !{JSON.stringify(user)})
     console.log('club : ', !{JSON.stringify(myClub)})
-    console.log('match list : ', !{JSON.stringify(match_list)})
+    console.log('manner_info : ', !{JSON.stringify(manner_info)})

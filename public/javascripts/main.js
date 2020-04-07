@@ -220,6 +220,9 @@ function fnGenerateGroundList(res, currentSlide) {
         button.appendChild(h5);
         button.appendChild(inner_div);
       }
+      button.addEventListener("click", function() {
+        location.href = "/match/" + game._id;
+      });
       div.appendChild(button);
       col.appendChild(div);
       row.appendChild(col);

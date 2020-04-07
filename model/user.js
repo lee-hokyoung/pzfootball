@@ -10,6 +10,11 @@ const UserSchema = new Schema({
   user_nickname: String,
   gender: String, //  남성 : 1, 여성 : -1
   birth: String,
+
+  height: String, //  키
+  weight: String, //  몸무게
+  position: String, //  포지션
+  skill: String, //  스킬
   snsId: String,
   provider: String,
   profile_image: String,
@@ -19,4 +24,5 @@ const UserSchema = new Schema({
   favorite_ground: [{ type: mongoose.Schema.Types.ObjectId, ref: "Ground" }],
   created_at: { type: Date, default: Date.now }
 });
+
 module.exports = mongoose.model("User", UserSchema);

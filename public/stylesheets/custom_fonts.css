@@ -56,6 +56,28 @@
   font-style: normal;
   font-weight: bolder;
 }
+/* 티몬폰트 */
+@font-face {
+  font-family: Tmon;
+  src: url("/assets/fonts/TmonMonsori.woff") format("woff");
+  font-style: normal;
+}
+@font-face {
+  font-family: Gmarket;
+  src: url("/assets/fonts/GmarketSansBold.woff") format("woff");
+  font-style: bold;
+}
+@font-face {
+  font-family: Gmarket;
+  src: url("/assets/fonts/GmarketSansLight.woff") format("woff");
+  font-style: lighter;
+}
+@font-face {
+  font-family: Gmarket;
+  src: url("/assets/fonts/GmarketSansMedium.woff") format("woff");
+  font-style: normal;
+}
+
 h4,
 h5,
 h6,
@@ -141,4 +163,11 @@ h2,
   font-size: 1.5rem;
   transform: scale(1, 1.35);
   font-weight: normal;
+}
+.card.profile-card h2,
+.card.profile-card h4 {
+  font-family: Tmon;
+}
+.fontGmarket {
+  font-family: Gmarket;
 }

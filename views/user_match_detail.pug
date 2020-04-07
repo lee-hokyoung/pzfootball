@@ -23,7 +23,7 @@ block content
                     .detail_img_wrap(style='background-image:url("' + ground_images.ground_images_2 + '")')
                   if(ground_images.ground_images_3)
                     .detail_img_wrap(style='background-image:url("' + ground_images.ground_images_3 + '")')
-            h6 정원 : !{match_info.personnel} / 신청 : !{match_info.apply_member.length}
+            h6 정원 : !{match_info.personnel.max} / 신청 : !{match_info.apply_member.length}
             #apply-list-wrap.my-3.py-3
               label.title 신청자 리스트 (팀원의 이름을 입력해주세요)
               ul.list-group.list-group-flush.mt-3
@@ -33,7 +33,7 @@ block content
                     .row
                       .col(style='max-width:50px;') #{++idx}
                       .col-6
-                        if(user_info.user.user_id !== item.reader)
+                        if(user_info.user.user_id !== item.leader)
                           - var name_length = item.member.length;
                           - var n = 0
                           span #{item.member.slice(0,1)} 

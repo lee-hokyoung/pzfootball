@@ -23,6 +23,7 @@ module.exports = passport => {
       user_name: user.user_name || user.manager_name,
       user_nickname: user.user_nickname || user.manager_name,
       user_email: user.user_email || "",
+      gender: user.gender,
       point: user.point || 0,
       isManager: user.manager_id ? true : false
     });

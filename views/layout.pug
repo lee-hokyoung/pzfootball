@@ -77,7 +77,7 @@ html
           .nav-button-wrap.my-auto
             if(user_info)
               span.text-secondary
-                a.text-primary(href='/users/mypage') #{user_info.user.user_nickname}
+                a.text-primary(href='/users/mypage') #{user_info.user.user_name}
                 | &nbsp;님 반갑습니다.
               span.px-2
                 img(src='/images/vertical_bar.svg', width=10)

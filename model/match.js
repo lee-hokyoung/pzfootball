@@ -30,8 +30,9 @@ const matchSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
       },
-      reader: String,
+      leader: String,
       member: String,
+      penalty: [{ type: mongoose.Schema.Types.ObjectId, ref: "Manner" }],
       result: Array
     }
   ],

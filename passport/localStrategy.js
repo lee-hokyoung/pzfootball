@@ -11,7 +11,6 @@ module.exports = passport => {
         passwordField: "user_pw"
       },
       async (user, password, done) => {
-        console.log("local user : ", user);
         try {
           const exUser = await User.findOne({ user_id: user });
           if (exUser) {
@@ -45,12 +44,10 @@ module.exports = passport => {
         passwordField: "manager_pw"
       },
       async (user, password, done) => {
-        console.log("manager user : ", user);
         try {
           const exUser = await Manger.findOne({ manager_id: user });
           if (exUser) {
             if (exUser.manager_pw === password) {
-              console.log("비밀번호가 일치합니다");
               done(null, exUser);
             } else {
               done(null, false, {

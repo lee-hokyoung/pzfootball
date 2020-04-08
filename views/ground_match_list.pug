@@ -9,10 +9,11 @@ block content
         .detail_img_wrap(style='background-image:url("' + ground_images.ground_images_2 + '")')
       if(ground_images.ground_images_3)
         .detail_img_wrap(style='background-image:url("' + ground_images.ground_images_3 + '")')
+    
     nav
-      .nav.nav-tabs#nav-tab(role='tablist')
-        a.nav-item.nav-link#nav-match-list-tab(data-toggle='tab', href='#nav-match-list', role='tab', aria-controls='nav-match-list', aria-selected='true') 풋살매치
-        a.nav-item.nav-link#nav-facility-tab(data-toggle='tab', href='#nav-facility', role='tab', aria-controls='nav-facility', aria-selected='false') 시설 및 정보
+      .nav.nav-tabs#nav-tab
+        a#nav-match-list-tab.nav-item.nav-link.active(data-toggle='tab', href='#nav-match-list', role='tab', aria-controls='nav-match-list', aria-selected='true') 풋살매치
+        a#nav-facility-tab.nav-item.nav-link(data-toggle='tab', href='#nav-facility', role='tab', aria-controls='nav-facility', aria-selected='false') 시설 및 정보
     #nav-tabContent.tab-content
       //- 매칭 리스트
       #nav-match-list.tab-pane.fade.show.active(role="tabpanel" aria-labelledby="nav-match-list-tab")
@@ -36,24 +37,26 @@ block content
                       - status = 'hurry'
                     else
                       - status = 'full'
-                    if(status === 'hurry')
-                      button.btn.btn-status.btn-neutral.text-white.p-0(data-status='hurry')
-                        h5.m-0.py-1 마감임박
-                        .text-warning.bg-white.mx-auto.font-weight-bold(style='border-radius:1rem; width:100px; font-size:13px;') #{remains}자리 남음
-                        small.position-relative(style='top:-3px;') #{new Intl.NumberFormat().format(match.match_price)}원
-                    else if(status === 'available')
-                      button.btn.btn-status.btn-neutral.text-white.p-0(data-status='available')
-                        h5.m-0.py-1 신청가능
-                        .text-primary.bg-white.mx-auto.font-weight-bold(style='border-radius:1rem; width:100px; font-size:13px;') #{remains}자리 남음
-                        small.position-relative(style='top:-3px;') #{new Intl.NumberFormat().format(match.match_price)}원
-                    else if(status === 'full')
-                      button.btn.btn-status.btn-neutral.text-white(data-status='full')
-                        small.m-0 마  감
-
+                    .pull-right.w-100(data-cnt=remains, data-id=match._id)
+                        if(status === 'full')
+                          button.btn.btn-neutral.btn-status.text-white(data-status='full')
+                            small.m-0 마  감
+                        else
+                          button.btn.btn-neutral.btn-status.text-white.p-0(data-status=status)
+                            h5.m-0.py-1 #{status === 'hurry'?"곧 마감!":"신청가능!"}
+                            .text-danger.bg-white.mx-auto.font-weight-bold.mb-1(style='border-radius:1rem; width:80%; font-size:.75rem;') #{match.apply_member.length} / #{match.personnel.max}
+                      
       //- 시설 및 구장정보
       #nav-facility.tab-pane.fade(role="tabpanel" aria-labelledby="nav-facility-tab") 
-
-
+        h6 기본정보
+        ul.list-group.list-group-flush
+          li.list-group-item
+            .row
+              .col-4 주소
+              .col-8 #{ground_info.groundAddress.road}
+        hr
+        h6 공통 시설
+                
 block append_js
   script(src='/public_js/ground_match.js')
   script.

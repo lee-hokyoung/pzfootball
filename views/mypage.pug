@@ -50,7 +50,7 @@ block content
                     .row
                       .img-wrap
                         i.nc-icon.nc-favourite-28
-                        span 1회
+                        span #{mvp_info}회
                       p.description 퍼즐 MVP 횟수
               .col-12
                 hr
@@ -86,13 +86,20 @@ block content
                   tr
                     th 휴대폰 번호
                     td
-                    td 
-                      input.form-control(type='text', name='user_phone', value=user.user_phone + '-' + user.phone1 + '-' + user.phone2, placeholder='010-0000-0000', readonly)
+                    td(about='user_phone')
+                      input.form-control(type='text', name='user_phone', value=user.user_phone + '-' + user.phone1 + '-' + user.phone2, placeholder='010-0000-0000', readonly, data-toggle='true')
+                      .form-control(data-toggle='false')
+                        .d-flex.justify-content-start
+                          input.form-control(type='tel', name='user_phone', style='width:60px', value=user.user_phone, maxlength='3')
+                          span.mx-2.my-auto -
+                          input.form-control(type='tel', name='phone1', style='width:70px', value=user.phone1, maxlength='4')
+                          span.mx-2.my-auto -
+                          input.form-control(type='tel', name='phone2', style='width:70px', value=user.phone2, maxlength='4')
                       div(data-toggle='true')
                         button.btn.btn-link.btn-primary(data-role='edit')
                           i.nc-icon.nc-ruler-pencil
                       div(data-toggle='false')
-                        button.btn.btn-link.btn-success(data-role='confirm')
+                        button.btn.btn-link.btn-success(data-role='confirm', data-type='multi')
                           i.nc-icon.nc-check-2
                         button.btn.btn-link.btn-danger(data-role='cancel')
                           i.nc-icon.nc-simple-remove
@@ -396,5 +403,5 @@ block append_js
   script.
     console.log('waiting_club : ', !{JSON.stringify(waiting_club)})
     console.log('user : ', !{JSON.stringify(user)})
-    console.log('club : ', !{JSON.stringify(myClub)})
+    console.log('mvp_info : ', !{JSON.stringify(mvp_info)})
     console.log('manner_info : ', !{JSON.stringify(manner_info)})

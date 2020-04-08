@@ -238,6 +238,10 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
       },
     },
   ]);
+  //  mvp 횟수 계산
+  let mvp_info = await Match.count({
+    mvp: mongoose.Types.ObjectId(user_info.user._id),
+  });
   //  내 경기 일정
   let match_list = await Match.aggregate([
     { $match: { "apply_member.leader": user_id } },
@@ -289,6 +293,7 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
     region_group: region_group,
     waiting_club: waiting_club,
     manner_info: manner_info,
+    mvp_info: mvp_info,
   });
 });
 //  내 정보 수정

@@ -49,6 +49,24 @@ router.post("/apply", async (req, res) => {
   //   { _id: mongoose.Types.ObjectId(match_id) },
   //   { apply_member: 1 }
   // );
+  let apply_member_list = req.body.apply_member_list.split(",");
+  let applied_member_ids = match_info.apply_member.map((m) => {
+    return m._id;
+  });
+  let duplicate = false;
+  applied_member_ids.forEach((v) => {
+    apply_member_list.forEach((w) => {
+      if (v.indexOf(w) > -1) {
+        duplicate = true;
+      }
+    });
+  });
+  if (duplicate) {
+    return res.json({
+      code: 9,
+      message: "해당 경기에 동일한 신청자가 이미 있습니다.",
+    });
+  }
   if (
     // apply_member 의 형식이 {leader:'', member:''} 로 되어있어서 인덱싱을 위해서 중간에 map을 통해 한번 걸러줌
     match_info.apply_member
@@ -61,22 +79,11 @@ router.post("/apply", async (req, res) => {
   }
   // 신청자 + 신청명수 Array 만들기
   let apply_list = [];
-  for (var i = 0; i < req.body.member_cnt; i++) {
-    if (i === 0)
-      apply_list.push({
-        _id: user_info._id,
-        leader: user_info.user_id,
-        member: user_info.user_name,
-      });
-    else
-      apply_list.push({
-        _id: new mongoose.Types.ObjectId(),
-        leader: user_info.user_id,
-        member: user_info.user_name + "_" + i,
-      });
-    // if (i === 0) apply_list.push({leader:user_info.user_id, member:user_info.user_id + +"" + i});
-    // else apply_list.push(user_info.user_id + "_" + i);
-  }
+  apply_member_list.forEach((v) => {
+    apply_list.push({
+      _id: mongoose.Types.ObjectId(v),
+    });
+  });
   // 경기 신청
   let match_result = await Match.updateOne(
     {

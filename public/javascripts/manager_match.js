@@ -3,12 +3,12 @@ function fnShowResultModal(id) {
   let xhr = new XMLHttpRequest();
   xhr.open("GET", "/manager/match/" + id);
   xhr.setRequestHeader("Content-Type", "application/json", true);
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       $("#resultModal").modal("show");
       $("#resultModal").data("id", id);
-      res.apply_member.forEach(function(item, idx) {
+      res.apply_member.forEach(function (item, idx) {
         let option = document.createElement("option");
         option.value = item._id;
         option.innerText = item.member;
@@ -36,15 +36,15 @@ function fnShowResultModal(id) {
         btn_wrap.className = "d-flex justify-content-start";
         [
           { title: "지각", point: -1, toggle: "false" },
-          { title: "비매너", point: -2, toggle: "false" }
-        ].forEach(function(v) {
+          { title: "비매너", point: -2, toggle: "false" },
+        ].forEach(function (v) {
           let button = document.createElement("button");
           button.className = "btn btn-danger btn-link ml-2";
           button.innerText = v.title;
           button.type = "button";
           button.dataset.point = v.point;
           button.dataset.toggle = v.toggle;
-          button.addEventListener = function() {
+          button.addEventListener = function () {
             let toggle = this.dataset.toggle;
             this.dataset.toggle = toggle === "false";
           };
@@ -143,7 +143,7 @@ function fnSaveResult() {
     return false;
   }
   let formData = {};
-  data.forEach(function(v) {
+  data.forEach(function (v) {
     if (formData.hasOwnProperty(v.dataset.id)) {
       formData[v.dataset.id].push(v.value);
     } else {
@@ -154,7 +154,7 @@ function fnSaveResult() {
   let xhr = new XMLHttpRequest();
   xhr.open("PUT", "/admin/match/result/" + id, true);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       alert(res.message);
@@ -165,8 +165,8 @@ function fnSaveResult() {
 }
 
 //  비매너 플레이 점수 체크 이벤트
-document.querySelectorAll('input[type="checkbox"]').forEach(function(chk) {
-  chk.addEventListener("click", function() {
+document.querySelectorAll('input[type="checkbox"]').forEach(function (chk) {
+  chk.addEventListener("click", function () {
     console.log(this);
     let point = this.dataset.point;
     console.log("point : ", point);
@@ -178,18 +178,19 @@ function fnSaveMatch(match_id) {
   //  벌점 확인
   let player = document.querySelectorAll(".row[data-player]");
   let formData = {};
-  player.forEach(function(row) {
+  player.forEach(function (row) {
     let player_id = row.dataset.player;
     let checked_list = [];
-    row.querySelectorAll("input[data-point]:checked").forEach(function(v) {
+    row.querySelectorAll("input[data-point]:checked").forEach(function (v) {
       checked_list.push(v.value);
     });
     formData[player_id] = checked_list;
   });
+  formData["mvp"] = document.querySelector("select").value;
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "/manager/match/result/" + match_id, true);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       alert(res.message);

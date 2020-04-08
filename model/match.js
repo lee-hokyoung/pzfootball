@@ -22,25 +22,25 @@ const matchSchema = new Schema({
   sex: Number, // 성별 1: 남성매치, -1: 여성매치, 0: 혼성매치
   personnel: {
     min: Number,
-    max: Number
+    max: Number,
   }, // 정원
   apply_member: [
     {
       _id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        ref: "User",
       },
       leader: String,
       member: String,
       penalty: [{ type: mongoose.Schema.Types.ObjectId, ref: "Manner" }],
-      result: Array
-    }
+      result: Array,
+    },
   ],
   // apply_member: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }], // 신청자 list
   match_price: Number, // 금액
   apply_status: String,
   isPlay: { type: Boolean, default: false },
-  mvp: { type: mongoose.Schema.ObjectId, ref: "User" }
+  mvp: { type: mongoose.Schema.ObjectId, ref: "User" },
   // match_result: {
   //   winner: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   //   loser: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }]

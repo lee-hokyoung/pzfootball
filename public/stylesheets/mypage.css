@@ -223,7 +223,20 @@ span.fileinput-exists i.nc-icon {
 #table-reservation > .table > tfoot > tr > td {
   padding: 10px 5px !important;
 }
-
+.radio-button-wrap {
+  display: flex;
+}
+.radio-button-wrap button {
+  flex: 1;
+  border: 1px solid #555;
+  border-right: none;
+}
+.radio-button-wrap button:last-child {
+  border-right: 1px solid #555;
+}
+.radio-button-wrap button.active {
+  background-color: lightblue;
+}
 @media (max-width: 768px) {
   .card.profile-card .card-body {
     padding: 0.5rem;

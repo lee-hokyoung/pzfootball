@@ -62,14 +62,14 @@ block content
                     td
                     td 
                       input.form-control(type='text', name='user_id', value=user.user_id, readonly)
-                      div(data-toggle='true')
-                        button.btn.btn-link.btn-primary(data-role='edit')
-                          i.nc-icon.nc-ruler-pencil
-                      div(data-toggle='false')
-                        button.btn.btn-link.btn-success(data-role='confirm')
-                          i.nc-icon.nc-check-2
-                        button.btn.btn-link.btn-danger(data-role='cancel')
-                          i.nc-icon.nc-simple-remove
+                      //- div(data-toggle='true')
+                      //-   button.btn.btn-link.btn-primary(data-role='edit')
+                      //-     i.nc-icon.nc-ruler-pencil
+                      //- div(data-toggle='false')
+                      //-   button.btn.btn-link.btn-success(data-role='confirm')
+                      //-     i.nc-icon.nc-check-2
+                      //-   button.btn.btn-link.btn-danger(data-role='cancel')
+                      //-     i.nc-icon.nc-simple-remove
                   tr
                     th 이름
                     td
@@ -87,7 +87,7 @@ block content
                     th 휴대폰 번호
                     td
                     td(about='user_phone')
-                      input.form-control(type='text', name='user_phone', value=user.user_phone + '-' + user.phone1 + '-' + user.phone2, placeholder='010-0000-0000', readonly, data-toggle='true')
+                      input.form-control(type='text', name='user_phone', value=(user.user_phone || '010') + '-' + (user.phone1 || '0000') + '-' + (user.phone2 || '0000'), placeholder='010-0000-0000', readonly, data-toggle='true')
                       .form-control(data-toggle='false')
                         .d-flex.justify-content-start
                           input.form-control(type='tel', name='user_phone', style='width:60px', value=user.user_phone, maxlength='3')
@@ -180,29 +180,21 @@ block content
                   tr
                     th 내 포지션
                     td
-                    td 
-                      input.form-control(type='text', name='position', value=user.position, readonly)
-                      div(data-toggle='true')
-                        button.btn.btn-link.btn-primary(data-role='edit')
-                          i.nc-icon.nc-ruler-pencil
-                      div(data-toggle='false')
-                        button.btn.btn-link.btn-success(data-role='confirm')
-                          i.nc-icon.nc-check-2
-                        button.btn.btn-link.btn-danger(data-role='cancel')
-                          i.nc-icon.nc-simple-remove
+                    td
+                      .radio-button-wrap
+                        button(type='button', name='position', value='FW', class=user.position==='FW'?'active':'') FW
+                        button(type='button', name='position', value='MF', class=user.position==='MF'?'active':'') MF
+                        button(type='button', name='position', value='DF', class=user.position==='DF'?'active':'') DF
+                        button(type='button', name='position', value='GK', class=user.position==='GK'?'active':'') GK
                   tr
                     th 내 실력
                     td
                     td 
-                      input.form-control(type='text', name='skill', value=user.skill, readonly)
-                      div(data-toggle='true')
-                        button.btn.btn-link.btn-primary(data-role='edit')
-                          i.nc-icon.nc-ruler-pencil
-                      div(data-toggle='false')
-                        button.btn.btn-link.btn-success(data-role='confirm')
-                          i.nc-icon.nc-check-2
-                        button.btn.btn-link.btn-danger(data-role='cancel')
-                          i.nc-icon.nc-simple-remove
+                      .radio-button-wrap
+                        button(type='button', name='skill', value='1', class=user.skill==='1'?'active':'') 초급
+                        button(type='button', name='skill', value='2', class=user.skill==='2'?'active':'') 중급
+                        button(type='button', name='skill', value='3', class=user.skill==='3'?'active':'') 고급
+
             h6.fontGmarket 초급 : 축구를 취미로 즐기는 수준
             h6.fontGmarket 중급 : 기본기에 능숙하며 볼 다루는 게 익숙함
             h6.fontGmarket 고급 : 정식 축구부에 등록되어 대회를 뛰어본 경우(KFA 인증 필요)            

@@ -276,6 +276,28 @@ document
       }
     });
   });
+//  포지션, 실력 등 버튼 클릭시 정보 업데이트
+document.querySelectorAll(".radio-button-wrap button").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    let wrap = this.parentElement;
+    wrap.querySelectorAll("button").forEach(function (v) {
+      v.className = "";
+    });
+    this.className = "active";
+    let formData = {};
+    formData[this.name] = this.value;
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "/users/mypage/myinfo", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        let res = JSON.parse(this.response);
+      }
+    };
+    xhr.send(JSON.stringify(formData));
+  });
+});
+
 //  팀 코드 검색 결과 표시하기
 function fnSearchTeam() {
   let team_code = document.querySelector('input[name="team_code"]');

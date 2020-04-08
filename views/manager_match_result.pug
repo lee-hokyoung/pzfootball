@@ -11,10 +11,13 @@ block content
               .col-md-3
                 .form-group
                   label 경기 MVP 선정
+                  - var mvp_user = "";
+                  if(mvp.mvp)
+                    - mvp_user = mvp.mvp.toString();
                   select.form-control.p-2
                     option(value="") MVP를 선정해 주세요
                     each player in match_info
-                      option(value=player.user_info._id, selected=player.user_info._id.toString()===mvp.mvp.toString()) #{player.user_info.user_name}
+                      option(value=player.user_info._id, selected=player.user_info._id.toString()===mvp_user) #{player.user_info.user_name}
             ul.list-group.list-group-flush
               li.list-group-item.list-group-item-primary
                 .row

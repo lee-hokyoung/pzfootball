@@ -153,6 +153,10 @@ module.exports = router;
 //  경기 결과 입력
 router.post("/match/result/:match_id", middle.isManager, async (req, res) => {
   try {
+    let mvp_id =
+      req.body.mvp !== ""
+        ? mongoose.Types.ObjectId(req.body.mvp)
+        : new mongoose.Types.ObjectId();
     let match_info = await Match.findOne({
       _id: mongoose.Types.ObjectId(req.params.match_id),
     });
@@ -166,7 +170,7 @@ router.post("/match/result/:match_id", middle.isManager, async (req, res) => {
       {
         $set: {
           apply_member: match_info.apply_member,
-          mvp: mongoose.Types.ObjectId(req.body.mvp),
+          mvp: mvp_id,
         },
       }
     );

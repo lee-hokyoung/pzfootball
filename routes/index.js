@@ -16,7 +16,6 @@ router.get("/", async (req, res) => {
   if (user_info) {
     //  매니저로 로그인 됐을 경우, 자동 로그아웃 시키고 유저 로그인이 디ㅗ게 한다.
     if (user_info.user.isManager) {
-      console.log("manager login");
       let script = `<script>alert("매니저 권한으로 로그인 했습니다. 일반 유저로 로그인해주세요"); location.href='/';</script>`;
       req.logout();
       req.session.destroy();
@@ -24,7 +23,7 @@ router.get("/", async (req, res) => {
     }
     user = await User.findOne(
       {
-        _id: mongoose.Types.ObjectId(user_info.user._id)
+        _id: mongoose.Types.ObjectId(user_info.user._id),
       },
       { favorite_ground: 1 }
     );
@@ -48,18 +47,18 @@ router.get("/", async (req, res) => {
         from: "ground",
         localField: "_id",
         foreignField: "region",
-        as: "info"
-      }
+        as: "info",
+      },
     },
     { $unwind: "$info" },
     {
       $group: {
         _id: "$_id",
         name: { $first: "$name" },
-        list: { $push: "$info" }
-      }
+        list: { $push: "$info" },
+      },
     },
-    { $sort: { _id: 1 } }
+    { $sort: { _id: 1 } },
   ]);
   res.render("index", {
     list: list,
@@ -69,14 +68,14 @@ router.get("/", async (req, res) => {
     query: req.query,
     region_group: region_group,
     notice_list: notice_list,
-    favorite_ground: user.favorite_ground
+    favorite_ground: user.favorite_ground,
   });
 });
 router.get("/search", async (req, res) => {
   let user_info = req.session.passport;
   let query = req.query;
   res.render("index", {
-    user_info: user_info
+    user_info: user_info,
   });
 });
 router.get("/schedule/:date", async (req, res) => {
@@ -98,23 +97,23 @@ async function fnGetMatchList(date, query, user_info) {
       {
         $match: {
           region: {
-            $in: query.region.split(",").map(v => {
+            $in: query.region.split(",").map((v) => {
               return mongoose.Types.ObjectId(v);
-            })
-          }
-        }
+            }),
+          },
+        },
       },
-      { $project: { _id: 1, groundName: 1 } }
+      { $project: { _id: 1, groundName: 1 } },
     ]);
     match_query["ground_id"] = {
-      $in: ground_list.map(v => {
+      $in: ground_list.map((v) => {
         return mongoose.Types.ObjectId(v._id);
-      })
+      }),
     };
   }
   //  구장으로 필터링(로그인 상태일 때만 가능함)
   if (query.ground && user_info) {
-    let in_query = query.ground.split(",").map(v => {
+    let in_query = query.ground.split(",").map((v) => {
       return mongoose.Types.ObjectId(v);
     });
     match_query["ground_id"] = { $in: in_query };
@@ -126,11 +125,46 @@ async function fnGetMatchList(date, query, user_info) {
         from: "ground",
         localField: "ground_id",
         foreignField: "_id",
-        as: "ground_info"
-      }
+        as: "ground_info",
+      },
     },
-    { $unwind: "$ground_info" }
+    { $unwind: "$ground_info" },
   ]);
   return result;
 }
+//  구장별 조회 화면
+router.get("/ground/:id", async (req, res) => {
+  let date = new Date();
+  let today = date.toISOString().slice(0, 10);
+  let ground_info = await Ground.findOne({
+    _id: mongoose.Types.ObjectId(req.params.id),
+  });
+  let match_list = await Match.aggregate([
+    {
+      $match: {
+        ground_id: mongoose.Types.ObjectId(req.params.id),
+        match_date: { $gte: today },
+      },
+    },
+    {
+      $group: {
+        _id: "$match_date",
+        list: { $push: "$$ROOT" },
+      },
+    },
+    // {
+    //   $lookup: {
+    //     from: "ground",
+    //     localField: "ground_id",
+    //     foreignField: "_id",
+    //     as: "ground_info",
+    //   },
+    // },
+    // { $unwind: "$ground_info" },
+  ]);
+  res.render("ground_match_list", {
+    match_list: match_list,
+    ground_info: ground_info,
+  });
+});
 module.exports = router;

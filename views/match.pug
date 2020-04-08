@@ -21,6 +21,11 @@ block content
         button.btn.btn-link(href='#') 가는 길 보기
       h6.description 참가비
       h5.text-primary #{new Intl.NumberFormat('ko').format(match_info.match_price)}원
+    .section
+      h6 
+        a(href='/ground/' + match_info.ground_info._id) 
+          b.text-primary #{match_info.ground_info.groundName}
+        | 에서는 더 많은 경기가 열리고 있습니다.
     .section.d-none
       .match_percent_wrap
         h6 

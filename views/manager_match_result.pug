@@ -12,17 +12,18 @@ block content
                 .form-group
                   label 경기 MVP 선정
                   select.form-control.p-2
-                    each player in match_info.apply_member
-                      option(value=player._id) #{player.member}
+                    option(value="") MVP를 선정해 주세요
+                    each player in match_info
+                      option(value=player.user_info._id, selected=player.user_info._id.toString()===mvp.mvp.toString()) #{player.user_info.user_name}
             ul.list-group.list-group-flush
               li.list-group-item.list-group-item-primary
                 .row
                   .col-md-2 선수명
                   .col-md-3 비매너 감점
-              each player in match_info.apply_member
+              each player in match_info
                 li.list-group-item.px-0
-                  .row(data-player=player._id)
-                    .col-md-2.my-auto.py-3 #{player.member}
+                  .row(data-player=player.user_info._id)
+                    .col-md-2.my-auto.py-3 #{player.user_info.user_name}
                     .col-md-3(style='max-height:10rem; overflow:auto;')
                       ul.list-group.list-group-flush
                         each item in manner_list
@@ -31,15 +32,17 @@ block content
                               .col-10
                                 .form-check
                                   label.form-check-label
-                                    input.form-check-input(type='checkbox', value=item._id, data-point=item.point, checked=player.penalty.toString().indexOf(item._id) > -1)
+                                    input.form-check-input(type='checkbox', value=item._id, data-point=item.point, checked=player.apply_member.penalty.toString().indexOf(item._id) > -1)
                                     | #{item.title}
                                     span.form-check-sign
                               .col-2.text-center #{item.point}
                     .col-md-3(data-penalty)
           .card-footer
-            button.btn.btn-primary(onclick='fnSaveMatch("' + match_info._id.toString() + '")') 저장
+            button.btn.btn-primary(onclick='fnSaveMatch("' + match_info[0]._id.toString() + '")') 저장
             a.btn.btn-info.ml-3(href='/manager/match') 목록으로 돌아가기  
 block append_js
   script(src='/public_js/manager_match.js')
   script.
     console.log('match info : ', !{JSON.stringify(match_info)})
+    console.log('mvp : ', !{JSON.stringify(mvp)})
+    

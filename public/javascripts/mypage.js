@@ -206,8 +206,8 @@ document
       let input = td.querySelector("input");
       if (td.getAttribute("about") === "gender") {
         input = td.querySelector('input[type="radio"]:checked');
+      } else if (td.getAttribute("about") === "user_phone") {
       }
-      console.log("td : ", td, "input : ", input);
       switch (this.dataset.role) {
         case "edit":
         case "cancel":
@@ -224,7 +224,17 @@ document
           }
           break;
         case "confirm":
-          let formData = {};
+          let formData = {},
+            multi_input;
+          //  input이 여러개 있을 경우
+          if (this.dataset.type === "multi") {
+            multi_input = td.querySelectorAll(".d-flex input");
+            multi_input.forEach(function (v) {
+              formData[v.name] = v.value;
+            });
+          } else {
+            formData[input.name] = input.value;
+          }
           let xhr = new XMLHttpRequest();
           xhr.open("POST", "/users/mypage/myinfo", true);
           xhr.setRequestHeader("Content-Type", "application/json");
@@ -250,16 +260,17 @@ document
                       : input.value === "female"
                       ? "여자"
                       : "선택안함";
+                } else if (input.name === "user_phone") {
+                  input.value =
+                    multi_input[0].value +
+                    "-" +
+                    multi_input[1].value +
+                    "-" +
+                    multi_input[2].value;
                 }
-                // if (this.dataset.role === "edit") {
-                //   input.removeAttribute("readonly");
-                // } else {
-                //   input.setAttribute("readonly", "readonly");
-                // }
               }
             }
           };
-          formData[input.name] = input.value;
           xhr.send(JSON.stringify(formData));
           break;
       }

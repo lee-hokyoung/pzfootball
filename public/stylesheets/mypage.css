@@ -81,10 +81,21 @@ span.fileinput-exists i.nc-icon {
   top: 0;
   right: 0;
 }
-.user-info-wrap table td[about="gender"] .form-control[data-toggle="true"] {
+.user-info-wrap table td[about="gender"] .form-control[data-toggle="true"],
+.user-info-wrap table td[about="user_phone"] input[data-toggle="true"] {
   display: flex;
 }
-.user-info-wrap table td[about="gender"] .form-control[data-toggle="false"] {
+.user-info-wrap
+  table
+  td[about="user_phone"]
+  div.form-control[data-toggle="true"] {
+  display: contents;
+}
+.user-info-wrap table td[about="gender"] .form-control[data-toggle="false"],
+.user-info-wrap
+  table
+  td[about="user_phone"]
+  .form-control[data-toggle="false"] {
   display: none;
 }
 .user-info-wrap table td .form-control .form-check-radio,

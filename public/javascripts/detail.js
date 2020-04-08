@@ -63,8 +63,18 @@ function fnGetUserPoint() {
 function fnConfirmMatch() {
   let formData = {};
   let match_id = match_info._id;
+  let member_cnt = $("#selectMember").val();
+  let apply_member_list = document.querySelector("#modalMatchConfirm ul")
+    .dataset.id;
+  console.log("apply member list : ", apply_member_list);
+  console.log("member cnt ", member_cnt);
+  if (parseInt(member_cnt) !== parseInt(apply_member_list.split(",").length)) {
+    alert("신청 인원을 모두 입력해주세요");
+    return false;
+  }
   formData["match_id"] = match_id;
-  formData["member_cnt"] = Number($("#selectMember").val());
+  formData["member_cnt"] = member_cnt;
+  formData["apply_member_list"] = apply_member_list;
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "/match/apply", true);
   xhr.setRequestHeader("Content-Type", "application/json");
@@ -88,6 +98,7 @@ $("#selectMember").on("change", function () {
     document.getElementById("user_point").value.replace(/[^0-9.-]+/g, "")
   );
   let member_cnt = $(this).val();
+  let user_id = $(this).data("id");
   let match_price = match_info.match_price * member_cnt;
   document.getElementById(
     "require_point"
@@ -108,8 +119,12 @@ $("#selectMember").on("change", function () {
     document.getElementById("requireFooter").className = "modal-footer";
   }
   //  참여인원 칸 늘리기
-  let member_list = document.querySelector("#apply_member_list");
-  member_list.innerHTML = "";
+  let apply_member_info = document.querySelector("#apply_member_info");
+  apply_member_info.dataset.id = user_id;
+  let apply_list = [user_id];
+  let apply_member_list = document.querySelector("#apply_member_list");
+  apply_member_list.innerHTML = "";
+
   if (member_cnt > 1) {
     for (var i = 1; i < member_cnt; i++) {
       let li = document.createElement("li");
@@ -129,6 +144,7 @@ $("#selectMember").on("change", function () {
       let button = document.createElement("button");
       button.className = "btn btn-danger btn-sm";
       button.innerText = "찾기";
+      //  연락처 뒷 4자리로 회원 찾기
       button.addEventListener("click", function () {
         console.log(this);
         let parent_row = this.parentElement.parentElement;
@@ -147,41 +163,59 @@ $("#selectMember").on("change", function () {
               let list = res.result;
               let tbody = document.querySelector("#searchResultTable tbody");
               tbody.innerHTML = "";
-              list.forEach(function (v) {
+              if (list.length > 0) {
+                list.forEach(function (v) {
+                  let tr = document.createElement("tr");
+                  let td = document.createElement("td");
+                  td.innerText = v.user_name;
+                  tr.appendChild(td);
+
+                  td = document.createElement("td");
+                  td.innerText = v.user_id;
+                  tr.appendChild(td);
+
+                  td = document.createElement("td");
+                  let button = document.createElement("button");
+                  button.className = "btn btn-primary btn-sm";
+                  button.dataset.user_name = v.user_name;
+                  button.dataset.user_id = v.user_id;
+                  button.dataset._id = v._id;
+                  button.innerText = "선택";
+                  //  검색된 회원 선택시 이벤트
+                  button.addEventListener("click", function () {
+                    if (apply_list.indexOf(v._id) > -1) {
+                      alert("이미 선택한 회원입니다.");
+                      return false;
+                    } else {
+                      apply_list.push(v._id);
+                      parent_row.innerHTML = "";
+                      let col = document.createElement("div");
+                      col.className = "col-3";
+                      col.innerText = this.dataset.user_name;
+                      parent_row.appendChild(col);
+
+                      col = document.createElement("div");
+                      col.className = "col-9";
+                      col.innerText = this.dataset.user_id;
+                      parent_row.appendChild(col);
+                      $("#searchResultModal").modal("hide");
+                      //  ul dataset.id 에 현재까지 선택된 리스트 넣기
+                      apply_member_info.dataset.id = apply_list.toString();
+                    }
+                  });
+                  td.appendChild(button);
+                  tr.appendChild(td);
+                  tbody.appendChild(tr);
+                });
+              } else {
                 let tr = document.createElement("tr");
                 let td = document.createElement("td");
-                td.innerText = v.user_name;
-                tr.appendChild(td);
-
-                td = document.createElement("td");
-                td.innerText = v.user_id;
-                tr.appendChild(td);
-
-                td = document.createElement("td");
-                let button = document.createElement("button");
-                button.className = "btn btn-primary btn-sm";
-                button.dataset.user_name = v.user_name;
-                button.dataset.user_id = v.user_id;
-                button.dataset._id = v._id;
-                button.innerText = "선택";
-                button.addEventListener("click", function () {
-                  console.log(this.dataset);
-                  parent_row.innerHTML = "";
-                  let col = document.createElement("div");
-                  col.className = "col-3";
-                  col.innerText = this.dataset.user_name;
-                  parent_row.appendChild(col);
-
-                  col = document.createElement("div");
-                  col.className = "col-9";
-                  col.innerText = this.dataset.user_id;
-                  parent_row.appendChild(col);
-                  $("#searchResultModal").modal("hide");
-                });
-                td.appendChild(button);
+                td.setAttribute("colspan", "2");
+                td.innerText = "검색 결과가 없습니다.";
+                td.className = "text-center";
                 tr.appendChild(td);
                 tbody.appendChild(tr);
-              });
+              }
               $("#searchResultModal").modal("show");
             }
           }
@@ -191,7 +225,7 @@ $("#selectMember").on("change", function () {
       col.appendChild(button);
       row.appendChild(col);
       li.appendChild(row);
-      member_list.appendChild(li);
+      apply_member_list.appendChild(li);
     }
   }
 });

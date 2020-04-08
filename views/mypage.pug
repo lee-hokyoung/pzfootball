@@ -50,7 +50,7 @@ block content
                     .row
                       .img-wrap
                         i.nc-icon.nc-favourite-28
-                        span 1회
+                        span #{mvp_info}회
                       p.description 퍼즐 MVP 횟수
               .col-12
                 hr
@@ -403,5 +403,5 @@ block append_js
   script.
     console.log('waiting_club : ', !{JSON.stringify(waiting_club)})
     console.log('user : ', !{JSON.stringify(user)})
-    console.log('club : ', !{JSON.stringify(myClub)})
+    console.log('mvp_info : ', !{JSON.stringify(mvp_info)})
     console.log('manner_info : ', !{JSON.stringify(manner_info)})

@@ -14,7 +14,7 @@ router.get("/", middle.isManager, async (req, res) => {
     title: "퍼즐풋볼 - 대시보드",
     user: user,
     active: "dashboard",
-    manager_info: manager_info
+    manager_info: manager_info,
   });
 });
 //  경기일정 관리
@@ -24,24 +24,24 @@ router.get("/match", middle.isManager, async (req, res) => {
   let match_list = await Match.aggregate([
     {
       $match: {
-        manager_id: mongoose.Types.ObjectId(user._id)
-      }
+        manager_id: mongoose.Types.ObjectId(user._id),
+      },
     },
     {
       $lookup: {
         from: "ground",
         localField: "ground_id",
         foreignField: "_id",
-        as: "ground_info"
-      }
+        as: "ground_info",
+      },
     },
-    { $unwind: "$ground_info" }
+    { $unwind: "$ground_info" },
   ]);
   res.render("manager_match", {
     title: "퍼즐풋볼 - 경기일정 관리",
     active: "match",
     user: user,
-    match_list: match_list
+    match_list: match_list,
   });
 });
 //  경기 정보 읽어오기
@@ -60,16 +60,40 @@ router.get("/match", middle.isManager, async (req, res) => {
 router.get("/match/:id", middle.isManager, async (req, res) => {
   try {
     let user = req.session.passport.user;
-    let match_info = await Match.findOne({
-      _id: mongoose.Types.ObjectId(req.params.id)
-    });
+    let mvp = await Match.findOne(
+      {
+        _id: mongoose.Types.ObjectId(req.params.id),
+      },
+      { mvp: 1 }
+    );
+    let match_info = await Match.aggregate([
+      { $match: { _id: mongoose.Types.ObjectId(req.params.id) } },
+      { $unwind: "$apply_member" },
+      {
+        $lookup: {
+          from: "users",
+          localField: "apply_member._id",
+          foreignField: "_id",
+          as: "user_info",
+        },
+      },
+      { $unwind: "$user_info" },
+      {
+        $project: {
+          apply_member: 1,
+          "user_info._id": 1,
+          "user_info.user_name": 1,
+        },
+      },
+    ]);
     let manner_list = await Manner.find({});
     res.render("manager_match_result", {
       title: "퍼즐풋볼 - 경기일정 관리",
       active: "match",
       user: user,
       match_info: match_info,
-      manner_list: manner_list
+      manner_list: manner_list,
+      mvp: mvp,
     });
   } catch (err) {
     console.error(err);
@@ -91,7 +115,7 @@ router.post("/login", middle.isNotLoggedInByManger, async (req, res, next) => {
       console.log("not user");
       return res.redirect("/auth/manager");
     }
-    return req.login(user, async loginError => {
+    return req.login(user, async (loginError) => {
       if (loginError) {
         console.error(loginError);
         return next(loginError);
@@ -130,16 +154,21 @@ module.exports = router;
 router.post("/match/result/:match_id", middle.isManager, async (req, res) => {
   try {
     let match_info = await Match.findOne({
-      _id: mongoose.Types.ObjectId(req.params.match_id)
+      _id: mongoose.Types.ObjectId(req.params.match_id),
     });
-    match_info.apply_member.forEach(v => {
-      v.penalty = req.body[v._id].map(m => {
+    match_info.apply_member.forEach((v) => {
+      v.penalty = req.body[v._id].map((m) => {
         return mongoose.Types.ObjectId(m);
       });
     });
     let result = await Match.updateOne(
       { _id: mongoose.Types.ObjectId(req.params.match_id) },
-      { $set: { apply_member: match_info.apply_member } }
+      {
+        $set: {
+          apply_member: match_info.apply_member,
+          mvp: mongoose.Types.ObjectId(req.body.mvp),
+        },
+      }
     );
     res.json({ code: 1, message: "저장되었습니다.", result: result });
   } catch (err) {

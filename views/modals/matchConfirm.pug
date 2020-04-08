@@ -19,10 +19,10 @@
           input.form-control.text-white#afterPurchase(readonly)
         .form-group
           label 신청인원
-          select.form-control#selectMember
+          select.form-control#selectMember(data-id=user_info.user._id)
             while n < remain
               option(value=++n) !{n} 명
-        ul.list-group.list-group-flush
+        ul.list-group.list-group-flush#apply_member_info(data-id=user_info.user._id)
           li.list-group-item
             .row
               .col-3 이름
@@ -33,7 +33,7 @@
               .col-9 #{user_info.user.user_id}
           #apply_member_list
 
-        #confirmFooter.modal-footer
+      #confirmFooter.modal-footer
         button.btn.btn-primary(onclick='fnConfirmMatch()') 확인
         button.btn.btn-danger(data-dismiss='modal') 취소
       #requireFooter.modal-footer

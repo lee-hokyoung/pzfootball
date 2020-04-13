@@ -51,7 +51,7 @@ router.post("/apply", async (req, res) => {
   // );
   let apply_member_list = req.body.apply_member_list.split(",");
   let applied_member_ids = match_info.apply_member.map((m) => {
-    return m._id;
+    return m._id.toString();
   });
   let duplicate = false;
   applied_member_ids.forEach((v) => {

@@ -40,10 +40,13 @@ block content
                       td #{match.sex === 1 ? '남성매치':match.sex === -1 ? '여성매치':'혼성매치'}
                       td #{match.apply_member ? match.apply_member.length : 0} / #{match.personnel.max}
                       td
-                        select.select-manager.selectpicker.form-control.p-0(data-style="btn btn-info btn-round", data-live-search='true', name='manager_id' data-size="7", data-id=match._id)
-                          option(value='', disabled, selected) select manager
+                        select.select-manager.form-control.p-0(data-style="btn btn-info btn-round", data-live-search='true', name='manager_id' data-size="7", data-id=match._id)
+                          option(value='', disabled) select manager
                           each manager in manager_list
-                            option(value=manager._id) #{manager.manager_name}(#{manager.manager_id})
+                            if(match.manager_id)
+                              option(value=manager._id, selected=manager._id.toString()===match.manager_id.toString()) #{manager.manager_name}(#{manager.manager_id})
+                            else
+                              option(value=manager._id) #{manager.manager_name}(#{manager.manager_id})
           .card-footer
 block append_js
   script(src='/public_js/admin_match.js')

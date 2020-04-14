@@ -17,7 +17,7 @@ function fnRegisterClub() {
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "/clubs/create", true);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       if (res.code === 1) {
@@ -38,7 +38,7 @@ function fnJoinClub(club_id) {
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "/clubs/join", true);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       alert(res.message);
@@ -54,7 +54,7 @@ function fnSecession(club_id) {
     let xhr = new XMLHttpRequest();
     xhr.open("DELETE", "/clubs/" + club_id);
     xhr.setRequestHeader("Content-Type", "application/json", true);
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
         let res = JSON.parse(this.response);
         alert(res.message);
@@ -71,7 +71,7 @@ function fnExile(user_id, club_id) {
     let xhr = new XMLHttpRequest();
     xhr.open("PATCH", "/clubs/exile");
     xhr.setRequestHeader("Content-Type", "application/json", true);
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
         let res = JSON.parse(this.response);
         alert(res.message);
@@ -85,11 +85,11 @@ function fnExile(user_id, club_id) {
 //  분류 버튼 클릭 이벤트
 document
   .querySelectorAll("button[data-role='team-type']")
-  .forEach(function(btn) {
-    btn.addEventListener("click", function() {
+  .forEach(function (btn) {
+    btn.addEventListener("click", function () {
       document
         .querySelectorAll("button[data-role='team-type']")
-        .forEach(function(item) {
+        .forEach(function (item) {
           item.dataset.toggle = "false";
         });
       let toggle = this.dataset.toggle;
@@ -98,11 +98,11 @@ document
   });
 document
   .querySelectorAll("button[data-role='team-gender']")
-  .forEach(function(btn) {
-    btn.addEventListener("click", function() {
+  .forEach(function (btn) {
+    btn.addEventListener("click", function () {
       document
         .querySelectorAll("button[data-role='team-gender']")
-        .forEach(function(item) {
+        .forEach(function (item) {
           item.dataset.toggle = "false";
         });
       let toggle = this.dataset.toggle;
@@ -119,7 +119,7 @@ function fnChkDuplicate() {
   let xhr = new XMLHttpRequest();
   xhr.open("GET", "/clubs/chkDuplication/" + club_name.value, true);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       alert(res.message);
@@ -238,7 +238,7 @@ function fnRegisterClub() {
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "/clubs/create", true);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       alert(res.message);
@@ -250,11 +250,10 @@ function fnRegisterClub() {
 }
 //  팀 가입 승인하기
 function fnApprove(user_id, team_id) {
-  console.log(user_id, team_id);
   let xhr = new XMLHttpRequest();
   xhr.open("PATCH", "/clubs/approve", true);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       alert(res.message);
@@ -262,4 +261,20 @@ function fnApprove(user_id, team_id) {
     }
   };
   xhr.send(JSON.stringify({ user_id: user_id, team_id: team_id }));
+}
+//  팀원 설정(공동주장, 일반 회원 설정)
+function fnConfigMember(user_id, team_id, user_role) {
+  let xhr = new XMLHttpRequest();
+  xhr.open("PATCH", "/clubs/configMember", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function () {
+    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      let res = JSON.parse(this.response);
+      alert(res.message);
+      if (res.code === 1) location.reload();
+    }
+  };
+  xhr.send(
+    JSON.stringify({ user_id: user_id, team_id: team_id, user_role: user_role })
+  );
 }

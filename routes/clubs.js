@@ -81,7 +81,9 @@ router.post("/create", middle.isSignedIn, async (req, res) => {
       team_password: req.body.team_password,
       club_mark: req.body.club_mark,
       club_region: req.body.club_region,
-      club_member: [mongoose.Types.ObjectId(user_info._id)],
+      club_member: [
+        { _id: mongoose.Types.ObjectId(user_info._id), user_role: "leader" },
+      ],
     };
     let result = await Club.create(insertData);
     res.json({
@@ -114,7 +116,7 @@ router.get("/:id", middle.isSignedIn, async (req, res) => {
     {
       $lookup: {
         from: "users",
-        localField: "club_member",
+        localField: "club_member._id",
         foreignField: "_id",
         as: "user_info",
       },
@@ -142,7 +144,7 @@ router.post("/join", middle.isSignedIn, async (req, res) => {
     let isExist = await Club.findOne(
       {
         _id: mongoose.Types.ObjectId(req.body._id),
-        club_member: mongoose.Types.ObjectId(user_info.user._id),
+        "club_member._id": mongoose.Types.ObjectId(user_info.user._id),
       },
       {
         _id: 1,
@@ -167,7 +169,7 @@ router.patch("/approve", middle.isSignedIn, async (req, res) => {
     let team_id = req.body.team_id;
     let exUser = await Club.findOne({
       _id: mongoose.Types.ObjectId(team_id),
-      club_member: mongoose.Types.ObjectId(member_id),
+      "club_member._id": mongoose.Types.ObjectId(member_id),
     });
     if (exUser)
       return res.json({ code: 0, message: "이미 가입 승인된 회원입니다." });
@@ -176,7 +178,12 @@ router.patch("/approve", middle.isSignedIn, async (req, res) => {
         _id: mongoose.Types.ObjectId(team_id),
       },
       {
-        $push: { club_member: mongoose.Types.ObjectId(member_id) },
+        $push: {
+          club_member: {
+            _id: mongoose.Types.ObjectId(member_id),
+            user_role: "member",
+          },
+        },
         $pull: { waiting_member: mongoose.Types.ObjectId(member_id) },
       }
     );
@@ -192,7 +199,7 @@ router.delete("/:club_id", middle.isSignedIn, async (req, res) => {
     let result = await Club.updateOne(
       { _id: mongoose.Types.ObjectId(req.params.club_id) },
       {
-        $pull: { club_member: user_info.user._id },
+        $pull: { club_member: { _id: user_info.user._id } },
       }
     );
     res.json({ code: 1, message: "탈퇴하였습니다", result: result });
@@ -200,6 +207,36 @@ router.delete("/:club_id", middle.isSignedIn, async (req, res) => {
     res.json({ code: 0, message: err.message });
   }
 });
+//  팀원 권한 수정
+router.patch("/configMember", middle.isSignedIn, async (req, res) => {
+  try {
+    //  방장 권한 확인
+    let user_info = req.session.passport;
+    let isLeader = await Club.findOne({
+      _id: mongoose.Types.ObjectId(req.body.team_id),
+      club_leader: mongoose.Types.ObjectId(user_info.user._id),
+    });
+    if (!isLeader) {
+      return res.json({ code: 0, message: "권한이 없습니다." });
+    } else {
+      let result = await Club.updateOne(
+        {
+          _id: mongoose.Types.ObjectId(req.body.team_id),
+          "club_member._id": mongoose.Types.ObjectId(req.body.user_id),
+        },
+        {
+          $set: {
+            "club_member.$.user_role": req.body.user_role,
+          },
+        }
+      );
+      return res.json({ code: 1, message: "수정했습니다", result: result });
+    }
+  } catch (err) {
+    res.json({ code: 0, message: err.message });
+  }
+});
+//  팀원 추방하기
 router.patch("/exile", middle.isSignedIn, async (req, res) => {
   try {
     //  방장 권한 확인
@@ -217,7 +254,9 @@ router.patch("/exile", middle.isSignedIn, async (req, res) => {
           club_leader: mongoose.Types.ObjectId(user_info.user._id),
         },
         {
-          $pull: { club_member: mongoose.Types.ObjectId(req.body.user_id) },
+          $pull: {
+            club_member: { _id: mongoose.Types.ObjectId(req.body.user_id) },
+          },
         }
       );
       return res.json({ code: 1, message: "추방했습니다", result: result });
@@ -226,6 +265,7 @@ router.patch("/exile", middle.isSignedIn, async (req, res) => {
     res.json({ code: 0, message: err.message });
   }
 });
+//  팀 코드로 팀 찾기
 router.get("/find/:team_code", middle.isSignedIn, async (req, res) => {
   try {
     let result = await Club.aggregate([

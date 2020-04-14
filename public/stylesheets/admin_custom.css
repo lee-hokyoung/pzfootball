@@ -274,6 +274,14 @@ button[data-role="activeNotice"][data-toggle="false"] {
 #config-page table#manner-table tbody td input {
   padding: 0.5rem;
 }
+.table th,
+.table td {
+  white-space: nowrap;
+}
+
+.table select {
+  min-width: 130px;
+}
 @media (min-width: 992px) {
   .modal-lg {
     max-width: 1200px;

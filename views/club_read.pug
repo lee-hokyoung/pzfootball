@@ -28,8 +28,13 @@ block content
                         .col-1 #
                         .col-2  
                         .col-3 회원
-                    - var idx = 0;
+                        .col-3 직책
+                    - var idx = 0, user_role;
                     each item in club.user_info
+                      - user_role = "";
+                      each member in club.club_member
+                        if(member._id.toString() === item._id.toString())
+                          - user_role = member.user_role;
                       a(href='#')
                         li.list-group-item.list-group-item-action
                           .row(data-id=item._id)
@@ -40,9 +45,14 @@ block content
                               else
                                 img(src='/assets/img/default-avatar.png', alt='default avatar', width='40px')
                             .col-3 #{item.user_name}
-                            .col-6.text-right
+                            .col-3 #{user_role==="leader"?"주장":user_role==="co-leader"?"공동주장":"팀원"}
+                            .col-3.text-right
                               if(club.club_leader.toString() === user_info.user._id.toString())
                                 if(club.club_leader.toString() !== item._id.toString())
+                                  if(user_role==="member")
+                                    button.btn.btn-success.btn-sm(onclick='fnConfigMember("' + item._id + '", "' + club._id + '", "co-leader")') 공동주장 설정
+                                  else if(user_role==="co-leader")
+                                    button.btn.btn-success.btn-sm(onclick='fnConfigMember("' + item._id + '", "' + club._id + '", "member")') 일반회원으로
                                   button.btn.btn-danger.btn-sm(onclick='fnExile("' + item._id + '", "' + club._id + '")') 추방
                 if(club.waiting_info.length > 0)
                   ul.list-group.list-group-flush

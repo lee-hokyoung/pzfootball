@@ -239,7 +239,7 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
     },
   ]);
   //  mvp 횟수 계산
-  let mvp_info = await Match.count({
+  let mvp_info = await Match.countDocuments({
     mvp: mongoose.Types.ObjectId(user_info.user._id),
   });
   //  내 경기 일정
@@ -282,7 +282,7 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
   });
   //  내 클럽
   let myClub = await Club.findOne({
-    club_member: mongoose.Types.ObjectId(user_info.user._id),
+    "club_member._id": mongoose.Types.ObjectId(user_info.user._id),
   });
   res.render("mypage", {
     title: "내 정보",

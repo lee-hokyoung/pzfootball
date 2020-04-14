@@ -21,6 +21,7 @@ const adminManagerRouter = require("./routes/admin_manager");
 const adminConfigRouter = require("./routes/admin_config");
 const adminFaqRouter = require("./routes/admin_faq");
 const managerRouter = require("./routes/manager");
+const queryRouter = require("./routes/query");
 const middle = require("./routes/middle");
 
 const app = express();
@@ -41,13 +42,13 @@ app.use(cookieParser());
 app.use(
   "/public_js",
   express.static(path.join(__dirname, "public/javascripts"), {
-    maxAge: ""
+    maxAge: "",
   })
 );
 app.use(
   "/public_css",
   express.static(path.join(__dirname, "public/stylesheets"), {
-    maxAge: ""
+    maxAge: "",
   })
 );
 app.use(
@@ -68,7 +69,7 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false, httpOnly: true }
+    cookie: { secure: false, httpOnly: true },
   })
 );
 app.use(passport.initialize());
@@ -87,14 +88,15 @@ app.use("/admin/manager", middle.isAdmin, adminManagerRouter);
 app.use("/admin/config", middle.isAdmin, adminConfigRouter);
 app.use("/admin/faq", middle.isAdmin, adminFaqRouter);
 app.use("/manager", managerRouter);
+app.use("/query", queryRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};

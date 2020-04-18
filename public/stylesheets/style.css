@@ -311,7 +311,8 @@ input#datepicker {
 .mobile-menu-wrap button.btn {
   padding-left: 15px;
 }
-.detail_img_wrap {
+.detail_img_wrap,
+.theway_images {
   height: 500px;
   background-size: cover;
   background-position: center center;
@@ -480,6 +481,19 @@ select.form-control:not([size]):not([multiple]),
 .input-group .input-group-append button {
   width: 100%;
   margin: 0;
+}
+#theway-slider {
+  position: absolute;
+  top: 2rem;
+  width: 1080px;
+}
+#kakao_map[data-visible="true"],
+#theway-slider[data-visible="true"] {
+  visibility: visible;
+}
+#kakao_map[data-visible="false"],
+#theway-slider[data-visible="false"] {
+  visibility: collapse;
 }
 @media (min-width: 576px) {
   .main-slider .slick-list {

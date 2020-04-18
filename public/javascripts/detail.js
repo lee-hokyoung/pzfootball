@@ -3,6 +3,9 @@ $(".detail-slider").slick({
   arrows: false,
   fade: true,
 });
+$("#theway-slider").slick({
+  fade: true,
+});
 //  클립보드에 주소 복사
 document.querySelector(".copy").addEventListener("click", function () {
   let copiedText = $(this).data().copy;
@@ -282,3 +285,35 @@ function fnConfirmChargePoint() {
   };
   xhr.send(JSON.stringify(formData));
 }
+
+//  지도 보기 클릭 이벤트
+document
+  .querySelector('button[name="toggle_map"]')
+  .addEventListener("click", function () {
+    //  지도를 놓을 곳의 위치 정보를 알아낸다
+    let target = document
+      .querySelector(".detail_img_wrap")
+      .getBoundingClientRect();
+    console.log("target : ", target);
+    let map_info = match_info.ground_info.mapInfo;
+    let mapContainer = document.querySelector("#kakao_map");
+    mapContainer.style.width = target.width + "px";
+    mapContainer.style.height = target.height + "px";
+    mapContainer.style.top = "2rem";
+    mapContainer.style.position = "absolute";
+    mapContainer.dataset.visible = mapContainer.dataset.visible === "false";
+
+    let mapOption = {
+      center: new kakao.maps.LatLng(map_info.Lat, map_info.Lng),
+      level: 3,
+    };
+    let map = new kakao.maps.Map(mapContainer, mapOption);
+  });
+//  가는 길 보기 클릭 이벤트
+document
+  .querySelector('button[name="toggle_theway"]')
+  .addEventListener("click", function () {
+    this.dataset.visible = this.dataset.visible === "false";
+    let theway = document.querySelector("#theway-slider");
+    theway.dataset.visible = theway.dataset.visible === "false";
+  });

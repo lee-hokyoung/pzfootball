@@ -63,6 +63,7 @@ app.use(
   "/nm",
   express.static(path.join(__dirname, "node_modules"), { maxAge: "30d" })
 );
+app.use("/upload", express.static(path.join(__dirname, "upload")));
 
 app.use(
   session({

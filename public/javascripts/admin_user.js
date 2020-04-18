@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
       { orderable: true, targets: eCol.created_at },
       { orderable: false, targets: eCol.user_info },
     ],
+    bInfo: false,
   });
   let table = $("#datatable").DataTable();
   //  소속 필터링

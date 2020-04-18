@@ -282,6 +282,10 @@ button[data-role="activeNotice"][data-toggle="false"] {
 .table select {
   min-width: 130px;
 }
+#datatable_wrapper .dataTables_filter {
+  width: 50%;
+  float: right;
+}
 @media (min-width: 992px) {
   .modal-lg {
     max-width: 1200px;

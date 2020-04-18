@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
   // Initialise the wizard
   demo.initWizard();
   $(".card.card-wizard").addClass("active");
@@ -6,7 +6,7 @@ $(document).ready(function() {
   //   $('.card.card-wizard').addClass('active');
   // }, 600);
 });
-$("#groundModal").on("shown.bs.modal", function(e) {
+$("#groundModal").on("shown.bs.modal", function (e) {
   map.relayout();
 });
 // 마커를 담을 배열입니다
@@ -14,7 +14,7 @@ let markers = [];
 let mapContainer = document.getElementById("map"), // 지도를 표시할 div
   mapOption = {
     center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-    level: 3 // 지도의 확대 레벨
+    level: 3, // 지도의 확대 레벨
   };
 // 지도를 생성합니다
 let map = new kakao.maps.Map(mapContainer, mapOption);
@@ -71,17 +71,17 @@ function displayPlaces(places) {
     // 마커와 검색결과 항목에 mouseover 했을때
     // 해당 장소에 인포윈도우에 장소명을 표시합니다
     // mouseout 했을 때는 인포윈도우를 닫습니다
-    (function(marker, title) {
-      kakao.maps.event.addListener(marker, "mouseover", function() {
+    (function (marker, title) {
+      kakao.maps.event.addListener(marker, "mouseover", function () {
         displayInfowindow(marker, title);
       });
-      kakao.maps.event.addListener(marker, "mouseout", function() {
+      kakao.maps.event.addListener(marker, "mouseout", function () {
         infowindow.close();
       });
-      itemEl.onmouseover = function() {
+      itemEl.onmouseover = function () {
         displayInfowindow(marker, title);
       };
-      itemEl.onmouseout = function() {
+      itemEl.onmouseout = function () {
         infowindow.close();
       };
     })(marker, places[i].place_name);
@@ -122,7 +122,7 @@ function getListItem(index, places) {
   itemStr += '  <span class="tel">' + places.phone + "</span>" + "</div>";
   el.innerHTML = itemStr;
   el.className = "item";
-  el.addEventListener("click", function() {
+  el.addEventListener("click", function () {
     fnSetLocation(el);
   });
   return el;
@@ -135,12 +135,12 @@ function addMarker(position, idx, title) {
     imgOptions = {
       spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
       spriteOrigin: new kakao.maps.Point(0, idx * 46 + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-      offset: new kakao.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+      offset: new kakao.maps.Point(13, 37), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
     },
     markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
     marker = new kakao.maps.Marker({
       position: position, // 마커의 위치
-      image: markerImage
+      image: markerImage,
     });
   marker.setMap(map); // 지도 위에 마커를 표출합니다
   markers.push(marker); // 배열에 생성된 마커를 추가합니다
@@ -170,8 +170,8 @@ function displayPagination(pagination) {
     if (i === pagination.current) {
       el.className = "on";
     } else {
-      el.onclick = (function(i) {
-        return function() {
+      el.onclick = (function (i) {
+        return function () {
           pagination.gotoPage(i);
         };
       })(i);
@@ -219,7 +219,7 @@ function fnSubmitGround() {
   formData["isUpdate"] = isUpdate;
   formData["ground_id"] = ground_id.value;
   // input 값
-  document.querySelectorAll(".form-control").forEach(function(inp) {
+  document.querySelectorAll(".form-control").forEach(function (inp) {
     formData[inp.name] = inp.value;
   });
   // checkbox 값
@@ -234,13 +234,14 @@ function fnSubmitGround() {
   formData["region"] = region.value;
   document
     .querySelectorAll('input[type="checkbox"]:checked')
-    .forEach(function(chk) {
+    .forEach(function (chk) {
       formData["facility"].push(chk.value);
     });
   // 경기장 이미지
   let ground_images = document.querySelectorAll(".fileinput-preview img");
   let ground_images_obj = {};
-  ground_images.forEach(function(file) {
+  ground_images.forEach(function (file) {
+    console.log("file : ", file);
     let file_name = file.parentElement.getAttribute("name");
     ground_images_obj[file_name] = file.src;
   });
@@ -249,7 +250,7 @@ function fnSubmitGround() {
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "/admin/ground/register", true);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       if (res.code === 1) {
@@ -260,6 +261,67 @@ function fnSubmitGround() {
       }
     }
   };
-  // console.log('data : ', formData)
+  //  경기장 가는 길 path 추가
+  let uploaded_path = [];
+  document.querySelectorAll('a[name="uploaded"]').forEach(function (v) {
+    uploaded_path.push(v.innerText);
+  });
+
+  let new_path = [];
+  document
+    .querySelector('input[name="theway_name"]')
+    .value.split(",")
+    .forEach(function (v) {
+      new_path.push(v);
+    });
+  formData["pathname"] = uploaded_path.concat(new_path).join(",");
+
   xhr.send(JSON.stringify(formData));
 }
+//  경기장 가는 길 파일 업로드 이벤트
+document
+  .querySelector('input[name="theway"]')
+  .addEventListener("change", function () {
+    let formData = new FormData();
+    let files = this.files;
+    Object.keys(this.files).forEach(function (key) {
+      formData.append("theway[]", files[key], files[key].name);
+    });
+    console.log("form data : ", formData);
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "/admin/ground/fileUpload", true);
+    xhr.onreadystatechange = function () {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        let res = JSON.parse(this.response);
+        let fileList = [];
+        res.forEach(function (file) {
+          fileList.push(file.filename);
+        });
+        document.querySelector(
+          'input[name="theway_name"]'
+        ).value = fileList.join(",");
+      }
+    };
+    xhr.send(formData);
+  });
+//  등록된 이미지 삭제
+document.querySelectorAll('button[data-role="delete"]').forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    console.log("btn : ", this);
+    let parent = this.parentElement;
+    let path = parent.querySelector("a").innerText;
+    let ground_id = document.querySelector("#ground_id");
+    let xhr = new XMLHttpRequest();
+    xhr.open("DELETE", "/admin/ground/theway/" + ground_id.value + "/" + path);
+    xhr.onreadystatechange = function () {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        let res = JSON.parse(this.response);
+        alert(res.message);
+        if (res.code === 1) {
+          parent.remove();
+        }
+      }
+    };
+    xhr.send();
+  });
+});

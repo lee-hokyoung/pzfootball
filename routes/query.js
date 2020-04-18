@@ -77,7 +77,7 @@ router.get("/admin_user", async (req, res) => {
               },
             },
           },
-          { $project: { apply_member: 1 } },
+          { $project: { apply_member: 1, mvp: 1 } },
         ],
         as: "match_info",
       },

@@ -1,14 +1,21 @@
 extends layout
 block content
   #detail_page.container.bg-white(style='padding-top:56px;')
-    .detail-slider
-      -var ground_images = match_info.ground_info.ground_images
-      if(ground_images.ground_images_1)
-        .detail_img_wrap(style='background-image:url("' + ground_images.ground_images_1 + '")')
-      if(ground_images.ground_images_2)
-        .detail_img_wrap(style='background-image:url("' + ground_images.ground_images_2 + '")')
-      if(ground_images.ground_images_3)
-        .detail_img_wrap(style='background-image:url("' + ground_images.ground_images_3 + '")')
+    .position-relative
+      .detail-slider
+        -var ground_images = match_info.ground_info.ground_images
+        if(ground_images.ground_images_1)
+          .detail_img_wrap(style='background-image:url("' + ground_images.ground_images_1 + '")')
+        if(ground_images.ground_images_2)
+          .detail_img_wrap(style='background-image:url("' + ground_images.ground_images_2 + '")')
+        if(ground_images.ground_images_3)
+          .detail_img_wrap(style='background-image:url("' + ground_images.ground_images_3 + '")')
+      #kakao_map(data-visible='false')
+      #theway-slider(data-visible='false')
+        - var theway = match_info.ground_info.pathname.split(',')
+        each item in theway
+          .theway_images(style='background-image:url("/upload/' + item + '")')
+
     .section
       - day_list = ['일', '월', '화', '수', '목', '금', '토'];
       - match_date = new Date(match_info.match_date);
@@ -16,9 +23,9 @@ block content
       h3.text-primary #{match_info.ground_info.groundName}
       p #{match_info.ground_info.groundAddress.jibun}
       .address_wrap.pb-3
-        button.btn.btn-link.copy(data-copy=match_info.ground_info.groundAddress.jibun) 주소 복사하기
-        button.btn.btn-link(href='#') 지도 보기
-        button.btn.btn-link(href='#') 가는 길 보기
+        button.btn.btn-neutral.text-primary.copy(data-copy=match_info.ground_info.groundAddress.jibun) 주소 복사하기
+        button.btn.btn-neutral.text-primary(name="toggle_map" data-visible="false") 지도 보기
+        button.btn.btn-neutral.text-primary(name='toggle_theway', data-visible='false') 가는 길 보기
       h6.description 참가비
       h5.text-primary #{new Intl.NumberFormat('ko').format(match_info.match_price)}원
     .section
@@ -79,4 +86,6 @@ block append_js
   script.
     let match_info = !{JSON.stringify(match_info)}
     console.log('user info : ', !{JSON.stringify(user_info)})
+    console.log('ground info : ', !{JSON.stringify(match_info.ground_info)})
+  script(src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dd47642bb3bbc286516220872f5eb9f6")
   script(src='/public_js/detail.js', type='text/javascript')

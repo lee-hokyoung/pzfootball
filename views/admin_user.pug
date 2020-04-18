@@ -63,14 +63,30 @@ block content
                     th 가입일자
                     th 회원정보 관리
                 tbody
-                  - var club_member, role;
+                  - var club_member, role, penalty, penalty_list, mvp_list;
                   each user, idx in list
-                    - role = "";
+                    - role = "",  penalty = 0, penalty_list = [], mvp_list = [];
+                    //  회원 역할(주장, 공동주장, 회원)
                     if(user.club_info)
                       - club_member = user.club_info.club_member
                       each member in club_member
                         if(member._id.toString() === user._id.toString())
                           - role = member.user_role
+                    //  매치 정보에서 벌점 리스트, 
+                    if(user.match_data.length > 0)
+                      each match in user.match_data
+                        //  mvp list 추출
+                        if(match.mvp.toString() === user._id.toString())
+                          - mvp_list.push(match.mvp.toString())
+                        each member in match.apply_member
+                          if(member._id.toString() === user._id.toString())
+                            - penalty_list = member.penalty
+                    //  매너점수 계산
+                    if(penalty_list.length > 0)
+                      each manner in user.manner_info
+                        each m in manner
+                          if(penalty_list.toString().indexOf(m._id) > -1)
+                            - penalty = penalty + m.point
                     tr
                       td #{idx + 1}
                       td  
@@ -87,8 +103,8 @@ block content
                       td #{role === "leader"?"주장":role === "co-leader"?"공동주장":role==="member"?"팀원":"해당없음"}
                       td #{new Intl.NumberFormat().format(user.point || 0)}
                       td #{new Intl.NumberFormat().format(user.point || 0)}
-                      td #{user.manner}
-                      td
+                      td #{100 - penalty} 
+                      td #{mvp_list.length}
                       - var date = new Date(user.created_at)
                       td #{date.toLocaleString('ko')}
                       //- td

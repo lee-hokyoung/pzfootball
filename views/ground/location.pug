@@ -14,33 +14,33 @@
 			.input-group-prepend
 				span.input-group-text
 					i.nc-icon.nc-map-big
-			input.form-control#groundName(type="text" placeholder="경기장명 입력" name="groundName", value=ground?ground.groundName:'')
+			input.form-control#groundName(type="text" placeholder="경기장명 입력" name="groundName", data-ground, value=ground?ground.groundName:'')
 	.col-md-4
 		.input-group
 			.input-group-prepend
 				span.input-group-text
 					i.nc-icon.nc-pin-3
-			input.form-control#groundAddr(type="text" placeholder="경기장 주소 입력" name="road", value=ground?ground.groundAddress.road:'')
+			input.form-control#groundAddr(type="text" placeholder="경기장 주소 입력" name="road", data-ground, value=ground?ground.groundAddress.road:'')
 	.col-md-4
 		.input-group
 			.input-group-prepend
 				span.input-group-text
 					i.nc-icon.nc-pin-3
-			input.form-control(type="text" placeholder="지번주소" name="jibun", value=ground?ground.groundAddress.jibun:'')
+			input.form-control(type="text" placeholder="지번주소" name="jibun", data-ground, value=ground?ground.groundAddress.jibun:'')
 	.col-md-4
 		.input-group
 			.input-group-prepend
 				span.input-group-text
 					i.nc-icon.nc-globe
-			input.form-control(type="text" placeholder="위도 정보" name="x", about='lng', value=ground?ground.mapInfo.Lng:'')
+			input.form-control(type="text" placeholder="위도 정보" name="x", data-ground, about='lng', value=ground?ground.mapInfo.Lng:'')
 	.col-md-4
 		.input-group
 			.input-group-prepend
 				span.input-group-text
 					i.nc-icon.nc-globe
-			input.form-control(type="text" placeholder="경도 정보" name="y", about='lat', value=ground?ground.mapInfo.Lat:'')
+			input.form-control(type="text" placeholder="경도 정보" name="y", data-ground, about='lat', value=ground?ground.mapInfo.Lat:'')
 	.col-md-4
-		select.form-control(name='region')
+		select.form-control(name='region', data-ground)
 			option(value='', disabled, selected) 지역 선택
 			- var region_id = '';
 			if(ground)

@@ -33,13 +33,13 @@ h5.info-text  경기장 시설 정보
 					.input-group
 						.input-group-prepend
 							span.input-group-text
-						input.form-control(type="number", name="groundSizeX", value=ground?ground.facility.size.x:'')
+						input.form-control(type="number", name="groundSizeX", data-ground, value=ground?ground.facility.size.x:'')
 				.col-md-2
 					label 경기장 세로 길이
 					.input-group
 						.input-group-prepend
 							span.input-group-text
-						input.form-control(type="number", name="groundSizeY", value=ground?ground.facility.size.y:'')
+						input.form-control(type="number", name="groundSizeY", data-ground, value=ground?ground.facility.size.y:'')
 			hr
 			.row
 				.col-md-12
@@ -47,4 +47,4 @@ h5.info-text  경기장 시설 정보
 					.input-group
 						.input-group-prepend
 							span.input-group-text
-						textarea.form-control(type="text", name="description") #{ground?ground.description:''}
+						textarea.form-control(type="text", name="description", data-ground) #{ground?ground.description:''}

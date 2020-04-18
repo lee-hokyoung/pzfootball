@@ -12,14 +12,13 @@ exports.isLoggedIn = (req, res, next) => {
   }
 };
 exports.isNotLoggedIn = async (req, res, next) => {
-  console.log("manager is not logged in");
   if (!req.isAuthenticated()) {
     next();
   } else {
     // Manager 로그인 확인
     if (req.session) {
       let user_info = await User.findOne({
-        user_id: req.session.passport.user.user_id
+        user_id: req.session.passport.user.user_id,
       });
       if (user_info.isManager) {
         req.logout();
@@ -87,7 +86,7 @@ exports.isManager = async (req, res, next) => {
   if (req.isAuthenticated()) {
     let user = req.session.passport.user;
     let isManager = await Manager.findOne({
-      _id: mongoose.Types.ObjectId(user._id)
+      _id: mongoose.Types.ObjectId(user._id),
     });
     if (isManager) {
       req.session.manager = true;

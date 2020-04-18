@@ -92,10 +92,19 @@ router.post("/apply", async (req, res) => {
     { $push: { apply_member: { $each: apply_list } } }
   );
   // 포인트 차감
-  let remain_point = user.point - match_info.match_price;
+  let usePoint = match_info.match_price * req.body.member_cnt;
+  let remain_point = user.point - usePoint;
   await User.updateOne(
     { _id: mongoose.Types.ObjectId(user._id) },
-    { $set: { point: remain_point } }
+    {
+      $set: { point: remain_point },
+      $push: {
+        point_history: {
+          usePoint: usePoint,
+          match_id: mongoose.Types.ObjectId(match_id),
+        },
+      },
+    }
   );
   return res.json({
     code: 1,

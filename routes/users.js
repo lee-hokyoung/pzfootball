@@ -183,6 +183,19 @@ router.post("/point/charge", middle.isSignedIn, async (req, res) => {
     let current_user_point = Number(user_info.point || 0);
     let request_point = Number(req.body.point);
     let after_charge_point = current_user_point + request_point;
+    //  누적 포인트
+    await User.updateOne(
+      { user_id: req.session.passport.user.user_id },
+      {
+        $push: {
+          point_history: {
+            chargePoint: request_point,
+            chargeType: req.body.chargeType,
+          },
+        },
+      }
+    );
+    //  포인트 충전
     let result = await User.updateOne(
       {
         user_id: req.session.passport.user.user_id,
@@ -244,7 +257,11 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
   });
   //  내 경기 일정
   let match_list = await Match.aggregate([
-    { $match: { "apply_member.leader": user_id } },
+    {
+      $match: {
+        "apply_member._id": mongoose.Types.ObjectId(user_info.user._id),
+      },
+    },
     {
       $lookup: {
         from: "ground",

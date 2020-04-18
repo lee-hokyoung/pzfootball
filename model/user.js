@@ -23,6 +23,15 @@ const UserSchema = new Schema({
   thumbnail_image: String,
   manner: { type: Number, default: 100 }, //  매너점수 100 점에서 시작
   point: { type: Number, default: 0 },
+  point_history: [
+    {
+      chargePoint: { type: Number, default: 0 },
+      chargeType: String,
+      usePoint: Number,
+      match_id: { type: mongoose.Schema.Types.ObjectId, ref: "Match" },
+      created_at: { type: Date, default: Date.now },
+    },
+  ],
   favorite_ground: [{ type: mongoose.Schema.Types.ObjectId, ref: "Ground" }],
   created_at: { type: Date, default: Date.now },
 });

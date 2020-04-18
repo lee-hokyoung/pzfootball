@@ -12,9 +12,10 @@ block content
           .detail_img_wrap(style='background-image:url("' + ground_images.ground_images_3 + '")')
       #kakao_map(data-visible='false')
       #theway-slider(data-visible='false')
-        - var theway = match_info.ground_info.pathname.split(',')
-        each item in theway
-          .theway_images(style='background-image:url("/upload/' + item + '")')
+        if(match_info.ground_info.pathname)
+          - var theway = match_info.ground_info.pathname.split(',')
+          each item in theway
+            .theway_images(style='background-image:url("/upload/' + item + '")')
 
     .section
       - day_list = ['일', '월', '화', '수', '목', '금', '토'];

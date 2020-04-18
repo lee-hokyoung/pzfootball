@@ -76,8 +76,9 @@ block content
                     if(user.match_data.length > 0)
                       each match in user.match_data
                         //  mvp list 추출
-                        if(match.mvp.toString() === user._id.toString())
-                          - mvp_list.push(match.mvp.toString())
+                        if(match.mvp)
+                          if(match.mvp.toString() === user._id.toString())
+                            - mvp_list.push(match.mvp.toString())
                         each member in match.apply_member
                           if(member._id.toString() === user._id.toString())
                             - penalty_list = member.penalty
@@ -101,7 +102,12 @@ block content
                       td #{user.user_phone} - #{user.phone1} - #{user.phone2}
                       td
                       td #{role === "leader"?"주장":role === "co-leader"?"공동주장":role==="member"?"팀원":"해당없음"}
-                      td #{new Intl.NumberFormat().format(user.point || 0)}
+                      td
+                        - var accu_point = 0; 
+                        if(user.point_history)
+                          each item in user.point_history
+                            - accu_point = accu_point + item.chargePoint
+                        | #{new Intl.NumberFormat().format(accu_point || 0)}
                       td #{new Intl.NumberFormat().format(user.point || 0)}
                       td #{100 - penalty} 
                       td #{mvp_list.length}

@@ -55,7 +55,6 @@ router.get("/user/list", middle.isAdmin, async (req, res) => {
     let ladder = req.query.ladder;
     let ladder_query = [1, 1];
     if (ladder) ladder_query = ["$ladder", parseInt(ladder)];
-    console.log("ladder : ", ladder_query);
     let list = await User.aggregate([
       { $match: { admin: false } },
       { $sort: { created_at: 1 } },

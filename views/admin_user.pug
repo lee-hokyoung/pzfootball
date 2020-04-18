@@ -36,9 +36,9 @@ block content
                     th 연락처
                     th
                       select.form-control(name='useNumber')
-                        option(value='all') 전체
-                        option(value='1') 리그이용
-                        option(value='2') 일반매치이용
+                        option(value='') 전체
+                        option(value='1', selected=ladder==='1') 리그이용
+                        option(value='0', selected=ladder==='0') 일반매치이용
                     th
                       select.form-control(name='role')
                         option(value='') 전체
@@ -100,7 +100,7 @@ block content
                       td #{user.user_id}
                       td #{user.user_name}
                       td #{user.user_phone} - #{user.phone1} - #{user.phone2}
-                      td
+                      td #{user.match_data.length}
                       td #{role === "leader"?"주장":role === "co-leader"?"공동주장":role==="member"?"팀원":"해당없음"}
                       td
                         - var accu_point = 0; 

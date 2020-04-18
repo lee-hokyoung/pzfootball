@@ -47,7 +47,7 @@
 hr
 .row
 	.col.pt-3
-		if(ground.pathname !== "")
+		if(ground.pathname)
 			- var theway = ground.pathname.split(',')
 			each path in theway
 				p.m-0

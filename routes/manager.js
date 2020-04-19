@@ -9,7 +9,10 @@ const mongoose = require("mongoose");
 
 router.get("/", middle.isManager, async (req, res) => {
   let user = req.session.passport.user;
-  let manager_info = await Manager.findOne();
+  console.log("user : ", user);
+  let manager_info = await Manager.findOne({
+    _id: mongoose.Types.ObjectId(user._id),
+  });
   res.render("manager_dashboard", {
     title: "퍼즐풋볼 - 대시보드",
     user: user,

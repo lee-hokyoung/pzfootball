@@ -1,23 +1,23 @@
-Date.prototype.addDays = function(days) {
+Date.prototype.addDays = function (days) {
   var date = new Date(this.valueOf());
   date.setDate(date.getDate() + days);
   return date;
 };
 
-// sidebar 관련
-$(document).ready(function() {
+$(document).ready(function () {
+  // sidebar 관련
   $("#sidebar").mCustomScrollbar({
-    theme: "minimal"
+    theme: "minimal",
   });
 
-  $("#dismiss, .overlay").on("click", function() {
+  $("#dismiss, .overlay").on("click", function () {
     // hide sidebar
     $("#sidebar").removeClass("active");
     // hide overlay
     $(".overlay").removeClass("active");
   });
 
-  $("#sidebarCollapse").on("click", function() {
+  $("#sidebarCollapse").on("click", function () {
     // open sidebar
     $("#sidebar").addClass("active");
     // fade in the overlay

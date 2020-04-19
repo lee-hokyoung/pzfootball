@@ -30,7 +30,7 @@ function fnApplyGame() {
     fnGetUserPoint();
   } else {
     alert("로그인이 필요합니다.");
-    $("#loginModal").modal("show");
+    location.href = "/users/login";
   }
 }
 // 포인트 확인

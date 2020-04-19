@@ -32,7 +32,7 @@ function fnEditManager() {
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "/admin/manager", true);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       if (res.code === 1) {
@@ -54,15 +54,16 @@ function fnEditManager() {
   if (profile_image) formData["profile_image"] = profile_image.src;
   if (user_id.value !== "") formData["user_id"] = user_id.value;
   xhr.send(JSON.stringify(formData));
+  return false;
 }
 //  매니저 정보 읽어오기
-document.querySelectorAll('button[data-role="read"]').forEach(function(btn) {
-  btn.addEventListener("click", function() {
+document.querySelectorAll('button[data-role="read"]').forEach(function (btn) {
+  btn.addEventListener("click", function () {
     let _id = this.dataset.id;
     let xhr = new XMLHttpRequest();
     xhr.open("GET", "/admin/manager/" + _id, true);
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
         let res = JSON.parse(this.response);
         console.log("res : ", res);
@@ -99,22 +100,22 @@ document.querySelectorAll('button[data-role="read"]').forEach(function(btn) {
 
 //  신규등록 버튼 클릭 이벤트(에디터 초기화)
 function fnReNewEditor() {
-  document.querySelectorAll("form input.form-control").forEach(function(v) {
+  document.querySelectorAll("form input.form-control").forEach(function (v) {
     v.value = "";
   });
   document.querySelector("input.form-check-input:checked").checked = false;
 }
 
 //  매니저 삭제하기
-document.querySelectorAll('button[data-role="remove"]').forEach(function(v) {
-  v.addEventListener("click", function() {
+document.querySelectorAll('button[data-role="remove"]').forEach(function (v) {
+  v.addEventListener("click", function () {
     if (!confirm("삭제하면 복구할 수 없습니다. 계속하시겠습니까?"))
       return false;
     let _id = this.dataset.id;
     let xhr = new XMLHttpRequest();
     xhr.open("DELETE", "/admin/manager/" + _id, true);
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
         let res = JSON.parse(this.response);
         alert(res.message);

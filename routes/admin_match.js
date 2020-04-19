@@ -13,7 +13,7 @@ router.get("/list", async (req, res) => {
     active: "match",
     title: "퍼즐풋볼 - 일정관리",
     user: user,
-    list: list
+    list: list,
   });
 });
 // 일별, 경기장별 등록화면(리스트)
@@ -30,9 +30,9 @@ router.get("/register/:date?/:ground_id?", async (req, res) => {
       {
         $match: {
           ground_id: mongoose.Types.ObjectId(ground_id),
-          match_date: date
-        }
-      }
+          match_date: date,
+        },
+      },
     ]);
   }
 
@@ -43,7 +43,7 @@ router.get("/register/:date?/:ground_id?", async (req, res) => {
     ground: ground,
     selectedDate: date,
     ground_id: ground_id,
-    match_list: match_list
+    match_list: match_list,
   });
 });
 // 일정 등록
@@ -74,10 +74,10 @@ router.get("/result/manage", async (req, res) => {
         from: "ground",
         localField: "ground_id",
         foreignField: "_id",
-        as: "ground_info"
-      }
+        as: "ground_info",
+      },
     },
-    { $unwind: "$ground_info" }
+    { $unwind: "$ground_info" },
   ]);
   let manager_list = await Manager.find({}, { manager_name: 1, manager_id: 1 });
   res.render("admin_match_result_manage", {
@@ -85,20 +85,20 @@ router.get("/result/manage", async (req, res) => {
     title: "경기결과 관리",
     user: user,
     match_list: match_list,
-    manager_list: manager_list
+    manager_list: manager_list,
   });
 });
 // 경기 정보 읽기
 router.get("/:id", async (req, res) => {
   let match = await Match.aggregate([
-    { $match: { _id: mongoose.Types.ObjectId(req.params.id) } }
+    { $match: { _id: mongoose.Types.ObjectId(req.params.id) } },
   ]);
   res.json(match[0]);
 });
 // 경기 결과 입력
 router.put("/result/:id", async (req, res) => {
   let match = await Match.findOne({
-    _id: mongoose.Types.ObjectId(req.params.id)
+    _id: mongoose.Types.ObjectId(req.params.id),
   });
   // 경기결과 입력을 위해
   let list = [],
@@ -115,7 +115,7 @@ router.put("/result/:id", async (req, res) => {
       await Match.updateOne(
         {
           _id: mongoose.Types.ObjectId(req.params.id),
-          "apply_member._id": mongoose.Types.ObjectId(item._id)
+          "apply_member._id": mongoose.Types.ObjectId(item._id),
         },
         { $set: { "apply_member.$.result": item.val } }
       );
@@ -126,18 +126,20 @@ router.put("/result/:id", async (req, res) => {
     res.json({
       code: 0,
       err: err,
-      message: "수정 실패! 관리자에게 문의해주세요"
+      message: "수정 실패! 관리자에게 문의해주세요",
     });
   }
 });
 //  매니저 경기 매칭
 router.put("/assign/manager", async (req, res) => {
-  console.log("assign");
-  console.log("body : ", req.body);
   try {
+    let manager_id =
+      req.body.manager_id !== ""
+        ? mongoose.Types.ObjectId(req.body.manager_id)
+        : new mongoose.Types.ObjectId();
     let result = await Match.updateOne(
       { _id: mongoose.Types.ObjectId(req.body.game_id) },
-      { $set: { manager_id: mongoose.Types.ObjectId(req.body.manager_id) } }
+      { $set: { manager_id: mongoose.Types.ObjectId(manager_id) } }
     );
     if (result.ok === 1) {
       res.json({ code: 1, message: "매칭 성공", result: result });

@@ -78,15 +78,21 @@ let tmp = navParent
   .clone()
   .attr("class", "tmp")
   .css("visibility", "hidden");
-
+let scrollTopButton = document.querySelector("#scrollTop");
 window.addEventListener("scroll", function () {
   if (window.pageYOffset > offset.top) {
     navParent.append(tmp);
     nav.css({ position: "fixed", top: 0 });
+    scrollTopButton.dataset.view = "true";
   } else {
     navParent.find(".tmp").remove();
     nav.css({ position: "static", top: "" });
+    scrollTopButton.dataset.view = "false";
   }
+});
+//  scroll top button click event
+document.querySelector("#scrollTop").addEventListener("click", function () {
+  window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
 //  경기 리스트 생성

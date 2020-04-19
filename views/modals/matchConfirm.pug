@@ -1,37 +1,38 @@
 #modalMatchConfirm.modal.fade(tabindex="-1" role="dialog" aria-labelledby="matchConfirmModalLabel" aria-hidden="true")
   .modal-dialog
     .modal-content
-      .modal-header
-        h6 매치 정보 확인
-      .modal-body
-        - var remain = match_info.personnel.max - match_info.apply_member.length;
-        if(remain > 6) 
-          - remain = 5;
-          - var n = 0;
-        .form-group
-          label 보유포인트
-          input.form-control#user_point(readonly)
-        .form-group
-          label 차감포인트
-          input.form-control#require_point(readonly)
-        .form-group
-          label 결제 후 포인트
-          input.form-control.text-white#afterPurchase(readonly)
-        .form-group
-          label 신청인원
-          select.form-control#selectMember(data-id=user_info.user._id)
-            while n < remain
-              option(value=++n) !{n} 명
-        ul.list-group.list-group-flush#apply_member_info(data-id=user_info.user._id)
-          li.list-group-item
-            .row
-              .col-3 이름
-              .col-9 ID(이메일)
-          li.list-group-item
-            .row
-              .col-3 #{user_info.user.user_name}
-              .col-9 #{user_info.user.user_id}
-          #apply_member_list
+      if(user_info)
+        .modal-header
+          h6 매치 정보 확인
+        .modal-body
+          - var remain = match_info.personnel.max - match_info.apply_member.length;
+          if(remain > 6) 
+            - remain = 5;
+            - var n = 0;
+          .form-group
+            label 보유포인트
+            input.form-control#user_point(readonly)
+          .form-group
+            label 차감포인트
+            input.form-control#require_point(readonly)
+          .form-group
+            label 결제 후 포인트
+            input.form-control.text-white#afterPurchase(readonly)
+          .form-group
+            label 신청인원
+            select.form-control#selectMember(data-id=user_info.user._id)
+              while n < remain
+                option(value=++n) !{n} 명
+          ul.list-group.list-group-flush#apply_member_info(data-id=user_info.user._id)
+            li.list-group-item
+              .row
+                .col-3 이름
+                .col-9 ID(이메일)
+            li.list-group-item
+              .row
+                .col-3 #{user_info.user.user_name}
+                .col-9 #{user_info.user.user_id}
+            #apply_member_list
 
       #confirmFooter.modal-footer
         button.btn.btn-primary(onclick='fnConfirmMatch()') 확인

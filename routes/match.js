@@ -6,7 +6,7 @@ const User = require("../model/user");
 const mongoose = require("mongoose");
 
 /* GET home page. */
-router.get("/:id", middle.isSignedIn, async (req, res) => {
+router.get("/:id", async (req, res) => {
   let user_info = req.session.passport;
   let match_info = await Match.aggregate([
     { $match: { _id: mongoose.Types.ObjectId(req.params.id) } },

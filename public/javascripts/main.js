@@ -6,13 +6,13 @@ if (location.search !== "") {
   location.search
     .replace("?", "")
     .split("&")
-    .forEach(function(v) {
+    .forEach(function (v) {
       curr_search[v.split("=")[0]] = v.split("=")[1];
     });
 }
 let curr_list = [];
 //  메인 슬라이더
-$(".main-slider").on("init", function(e, s) {
+$(".main-slider").on("init", function (e, s) {
   $(".full-cover-pzfutball").css("display", "none");
 });
 $(".main-slider").slick({
@@ -20,22 +20,22 @@ $(".main-slider").slick({
   arrows: false,
   fade: false,
   autoplay: true,
-  autoplaySpeed: 3000
+  autoplaySpeed: 5000,
 });
 //  날짜 선택하는 부분
 $(".calendar-slider").slick({
   slidesToShow: 7,
   slidesToScroll: 7,
   arrows: true,
-  infinite: false
+  infinite: false,
 });
 //  경기 리스트 슬라이더
 $(".ground-list-slider")
   .slick({
     arrows: false,
-    draggable: false
+    draggable: false,
   })
-  .on("afterChange", function(event, slick, currentSlide) {
+  .on("afterChange", function (event, slick, currentSlide) {
     // list swipe 발생시 이벤트
     let obj = document.querySelector(
       ".ground-list-slider .slick-active section"
@@ -47,7 +47,7 @@ $(".ground-list-slider")
       "/schedule/" + date.toISOString().slice(0, 10) + location.search
     );
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
         let res = JSON.parse(this.response);
         curr_list = res;
@@ -79,7 +79,7 @@ let tmp = navParent
   .attr("class", "tmp")
   .css("visibility", "hidden");
 
-window.addEventListener("scroll", function() {
+window.addEventListener("scroll", function () {
   if (window.pageYOffset > offset.top) {
     navParent.append(tmp);
     nav.css({ position: "fixed", top: 0 });
@@ -98,7 +98,7 @@ function fnGenerateGroundList(res, currentSlide) {
     'div[data-slick-index="' + currentSlide + '"] ul'
   ).innerHTML = "";
   if (res.length > 0) {
-    res.forEach(function(game, idx) {
+    res.forEach(function (game, idx) {
       let remain = game.personnel.max - (game.apply_member.length || 0);
       let percent = game.apply_member.length / game.personnel.max;
       let status = "available";
@@ -220,7 +220,7 @@ function fnGenerateGroundList(res, currentSlide) {
         button.appendChild(h5);
         button.appendChild(inner_div);
       }
-      button.addEventListener("click", function() {
+      button.addEventListener("click", function () {
         location.href = "/match/" + game._id;
       });
       div.appendChild(button);
@@ -389,7 +389,7 @@ function fnGenerateGroundList(res, currentSlide) {
 //  날짜 선택 이벤트
 function fnSelectDate(btn) {
   //  css 적용
-  document.querySelectorAll(".btn-date").forEach(function(v) {
+  document.querySelectorAll(".btn-date").forEach(function (v) {
     if (v.classList.contains("btn-primary")) {
       v.classList.remove("btn-primary");
       // v.classList.add('btn-light');
@@ -407,8 +407,8 @@ function fnSelectDate(btn) {
 // 매치 버튼 클릭 이벤트
 let match_buttons = document.querySelectorAll("button[data-status]");
 if (match_buttons) {
-  match_buttons.forEach(function(btn) {
-    btn.addEventListener("click", function() {
+  match_buttons.forEach(function (btn) {
+    btn.addEventListener("click", function () {
       location.href = "/match/" + this.parentNode.dataset.id;
     });
   });
@@ -435,7 +435,7 @@ if (match_buttons) {
 // 경기 타입, 경기장 선택시 필터링
 //  bootstrap switch
 $(".bootstrap-switch").bootstrapSwitch();
-$("input.bootstrap-switch").on("switchChange.bootstrapSwitch", function(
+$("input.bootstrap-switch").on("switchChange.bootstrapSwitch", function (
   event,
   state
 ) {
@@ -472,7 +472,7 @@ function fnFilterList() {
   let xhr = new XMLHttpRequest();
   xhr.open("GET", "/schedule/" + date.slice(0, 10) + location.search);
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       curr_list = res;
@@ -496,8 +496,8 @@ function fnFilterList() {
 //  지역 필터링 내 버튼 클릭시 이벤트
 document
   .querySelectorAll("#filterModalRegion .button-group button")
-  .forEach(function(btn) {
-    btn.addEventListener("click", function() {
+  .forEach(function (btn) {
+    btn.addEventListener("click", function () {
       let toggle = this.dataset.toggle;
       this.dataset.toggle = toggle === "false";
     });
@@ -505,13 +505,13 @@ document
 //  적용하기 버튼 클릭 이벤트
 document
   .querySelector("#filterModalRegion .modal-footer button")
-  .addEventListener("click", function() {
+  .addEventListener("click", function () {
     let region_list = [];
     document
       .querySelectorAll(
         '#filterModalRegion .button-group button[data-toggle="true"]'
       )
-      .forEach(function(btn) {
+      .forEach(function (btn) {
         region_list.push(btn.dataset.id);
       });
     // let query = "region=" + region_list.join(",");
@@ -521,8 +521,8 @@ document
     $("#filterModalRegion").modal("hide");
   });
 //  지역별 전체 버튼 클릭
-document.querySelectorAll('button[data-role="all"]').forEach(function(btn) {
-  btn.addEventListener("click", function() {
+document.querySelectorAll('button[data-role="all"]').forEach(function (btn) {
+  btn.addEventListener("click", function () {
     console.log(this);
     let id = this.dataset.id;
     let parent = document.querySelector('.ground-wrap[data-id="' + id + '"]');
@@ -530,7 +530,7 @@ document.querySelectorAll('button[data-role="all"]').forEach(function(btn) {
     this.dataset.toggle = parent_toggle === "false";
     if (this.dataset.toggle === "true") this.innerHTML = "전체선택";
     else this.innerHTML = "전체해제";
-    parent.querySelectorAll("button.btn-round").forEach(function(btn) {
+    parent.querySelectorAll("button.btn-round").forEach(function (btn) {
       btn.dataset.toggle = parent_toggle === "false";
     });
   });
@@ -538,8 +538,8 @@ document.querySelectorAll('button[data-role="all"]').forEach(function(btn) {
 //  구장별 버튼 클릭시 이벤트
 document
   .querySelectorAll("#filterModalGround button.btn-round")
-  .forEach(function(btn) {
-    btn.addEventListener("click", function() {
+  .forEach(function (btn) {
+    btn.addEventListener("click", function () {
       let toggle = this.dataset.toggle;
       this.dataset.toggle = toggle === "false";
     });
@@ -548,13 +548,13 @@ document
 if (isLoggedIn)
   document
     .querySelector('#filterModalGround button[data-role="apply"]')
-    .addEventListener("click", function() {
+    .addEventListener("click", function () {
       let ground_id = [];
       document
         .querySelectorAll(
           '#filterModalGround button.btn-primary[data-toggle="true"]'
         )
-        .forEach(function(btn) {
+        .forEach(function (btn) {
           ground_id.push(btn.dataset.id);
         });
 
@@ -564,7 +564,7 @@ if (isLoggedIn)
         let xhr = new XMLHttpRequest();
         xhr.open("PUT", "/users/region", true);
         xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
           if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
             let res = JSON.parse(this.response);
             if (res.code === 1) location.href = "/?" + ground_id.toString();
@@ -579,8 +579,8 @@ if (isLoggedIn)
       }
     });
 //  일반/리그 매치 버튼 클릭 이벤트
-document.querySelectorAll('a[data-role="match"]').forEach(function(a) {
-  a.addEventListener("click", function() {
+document.querySelectorAll('a[data-role="match"]').forEach(function (a) {
+  a.addEventListener("click", function () {
     curr_search["ladder"] = this.dataset.value;
     history.pushState(null, "game filter", fnGenQueryString());
     fnFilterList();

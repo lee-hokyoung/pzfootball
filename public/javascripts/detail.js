@@ -1,3 +1,6 @@
+$(".detail-slider").on("init", function (e, s) {
+  $(".full-cover-pzfutball").css("display", "none");
+});
 $(".detail-slider").slick({
   dots: true,
   arrows: false,

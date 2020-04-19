@@ -27,7 +27,8 @@ block content
       .address_wrap.pb-3
         button.btn.btn-neutral.text-primary.copy(data-copy=match_info.ground_info.groundAddress.jibun) 주소 복사하기
         button.btn.btn-neutral.text-primary(name="toggle_map" data-visible="false") 지도 보기
-        button.btn.btn-neutral.text-primary(name='toggle_theway', data-visible='false') 가는 길 보기
+        a.btn.btn-neutral.text-primary(href='https://map.kakao.com/link/to/' + match_info.ground_info.groundName + ',' + match_info.ground_info.mapInfo.Lat + ',' + match_info.ground_info.mapInfo.Lng, target='_blank') 가는 길 보기
+        //- button.btn.btn-neutral.text-primary(name='toggle_theway', data-visible='false') 가는 길 보기
       h6.description 참가비
       h5.text-primary #{new Intl.NumberFormat('ko').format(match_info.match_price)}원
     .section

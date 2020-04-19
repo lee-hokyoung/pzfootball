@@ -1,5 +1,10 @@
 extends layout
 block content
+  - var leaderGroup = [];
+  if(club.club_member)
+    each member in club.club_member
+      if(member.user_role !== 'member')
+        - leaderGroup.push(member._id.toString())
   #club_page.container
     .row
       .col
@@ -73,9 +78,11 @@ block content
                               img(src='/assets/img/default-avatar.png', alt='default avatar', width='40px')
                           .col-3 #{item.user_name}
                           .col-6.text-right
-                            if(club.club_leader.toString() === user_info.user._id.toString())
-                              if(club.club_leader.toString() !== item._id.toString())
-                                button.btn.btn-danger.btn-sm(onclick='fnApprove("' + item._id + '", "' + club._id + '")') 승인
+                            if(leaderGroup.indexOf(user_info.user._id.toString()) > -1)
+                              button.btn.btn-danger.btn-sm(onclick='fnApprove("' + item._id + '", "' + club._id + '")') 승인
+                            //- if(club.club_leader.toString() === user_info.user._id.toString())
+                            //-   if(club.club_leader.toString() !== item._id.toString())
+                            //-     button.btn.btn-danger.btn-sm(onclick='fnApprove("' + item._id + '", "' + club._id + '")') 승인
           .card-footer
             - var idx = club.club_member.indexOf(user_info.user._id);
             if(club.club_leader.toString() !== user_info.user._id.toString())

@@ -57,11 +57,19 @@ document.addEventListener("DOMContentLoaded", function () {
       if (this.value === "") regExSearch = this.value;
       table.column(eCol.depart).search(regExSearch, true, false, true).draw();
     });
+  //  직책 필터링(주장, 공동주장, 팀원)
   document
     .querySelector('select[name="role"]')
     .addEventListener("change", function () {
       var regExSearch = "^" + this.value + "$";
       if (this.value === "") regExSearch = this.value;
       table.column(eCol.role).search(regExSearch, true, false, true).draw();
+    });
+  document
+    .querySelector('select[name="useNumber"]')
+    .addEventListener("change", function () {
+      if (this.value !== "")
+        location.href = "/admin/user/list?ladder=" + this.value;
+      else location.href = "/admin/user/list";
     });
 });

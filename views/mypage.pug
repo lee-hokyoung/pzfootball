@@ -253,13 +253,22 @@ block content
                 if(myClub.status === 1)
                   .row
                     .col-md-4
-                      img(src=myClub.club_mark, width='100%')
+                      if(myClub.club_mark)
+                        img.w-100(src=myClub.club_mark)
+                      else
+                        img.w-100(src='/images/captain.png')
                     .col-md-8
                       .row
                         .col-8 #{myClub.club_name}
                         .col-4 #{myClub.club_member.length} 명
                       .row
                         a.btn.btn-primary.border.px-4.py-2(href='/clubs/' + myClub._id) 팀 정보
+                else
+                  .row
+                    .col-md-4
+                      img.w-100(src='/images/captain.png')
+                    .col-md-8.my-auto
+                      h5.text-white.m-0 팀 생성 승인 전입니다.
 
         .card.profile-card
           .card-header.text-center.pt-4
@@ -396,4 +405,4 @@ block append_js
     console.log('waiting_club : ', !{JSON.stringify(waiting_club)})
     console.log('user : ', !{JSON.stringify(user)})
     console.log('mvp_info : ', !{JSON.stringify(mvp_info)})
-    console.log('manner_info : ', !{JSON.stringify(manner_info)})
+    console.log('match_list : ', !{JSON.stringify(match_list)})

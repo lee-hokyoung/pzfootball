@@ -33,6 +33,13 @@ $("#selectPoint").on("change", function () {
 // 포인트 최종 충전
 function fnConfirmChargePoint() {
   let formData = {};
+  // 충전 타입 확인
+  let chargeType = document.querySelector('button[name="chargeType"].active');
+  if (chargeType === null) {
+    alert("충전 타입을 선택해 주세요");
+    return false;
+  }
+  formData["chargeType"] = chargeType.value;
   formData["point"] = document.getElementById("selectPoint").value;
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "/users/point/charge");
@@ -40,12 +47,8 @@ function fnConfirmChargePoint() {
   xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
-      if (res.code === 1) {
-        alert(res.message);
-        location.reload();
-      } else {
-        alert(res.message);
-      }
+      alert(res.message);
+      if (res.code === 1) location.reload();
     }
   };
   xhr.send(JSON.stringify(formData));

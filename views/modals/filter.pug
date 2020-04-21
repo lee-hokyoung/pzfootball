@@ -2,14 +2,20 @@
 #filterModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true", width='700px;')
   .modal-dialog
     .modal-content
-      .modal-body
-        section
-          header
-            button.close(type='button', data-dismiss='modal')
+      .modal-header.border-0
+        .row
+          .col
+            p.title.text-dark.text-left 카테고리
+          .col
+            button.close(type='button', data-dismiss='modal', aria-hidden='true')
               i.nc-icon.nc-simple-remove
-            p.title 카테고리
-          
-
+      .modal-body
+        h6.text-secondary 성별
+        button.btn.btn-round.btn-secondary.btn-sm(name='gender', value='male') 남성
+        button.btn.btn-round.btn-secondary.btn-sm.ml-2(name='gender', value='female') 여성
+        button.btn.btn-round.btn-secondary.btn-sm.ml-2(name='gender', value='mix') 혼성
+      .modal-body
+      
 
 
 //  지역 필터 모달창

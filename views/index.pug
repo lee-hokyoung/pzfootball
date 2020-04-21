@@ -1,4 +1,7 @@
 extends layout
+block append_css
+  link(rel="stylesheet", href="/public_css/main_modal.css")
+  link(rel="stylesheet", href="/public_css/main_screen.css")
 block content
   // slick-slider
   - var today = new Date();
@@ -79,18 +82,22 @@ block content
           .row
             .col
               .d-flex.justify-content-start
-                .form-group.ml-2
-                  p.category 2파
-                  input.bootstrap-switch(type="checkbox" data-toggle="switch" value="2" checked="" data-on-color="primary" data-off-color="primary" data-on-label="on" data-off-label="off")
-                .form-group.ml-2
-                  p.category 3파
-                  input.bootstrap-switch(type="checkbox" data-toggle="switch" value="3" checked="" data-off-color="success" data-on-color="success" data-on-label="on" data-off-label="off")
-                if(!user_info)
-                  .form-group.ml-2
-                    button.btn.btn-primary.text-primary.btn-neutral.dropdown-toggle(type='button', data-toggle='modal', data-target='#filterModalRegion') 지역
-                else
-                  .form-group.ml-2
-                    button.btn.btn-primary.text-primary.btn-neutral.dropdown-toggle(type='button', data-toggle='modal', data-target='#filterModalGround') 구장
+                .match_type_img.my-auto(data-match2='false', data-match3='false')
+                  img.w-100(src='/images/match_type_none.png')
+                .form-group.m-0
+                  button.btn.btn-primary.btn-neutral.text-primary.dropdown-toggle(type='button', data-toggle='modal', data-target='#filterModal') 구장설정
+                //- .form-group.ml-2
+                //-   p.category 2파
+                //-   input.bootstrap-switch(type="checkbox" data-toggle="switch" value="2" checked="" data-on-color="primary" data-off-color="primary" data-on-label="on" data-off-label="off")
+                //- .form-group.ml-2
+                //-   p.category 3파
+                //-   input.bootstrap-switch(type="checkbox" data-toggle="switch" value="3" checked="" data-off-color="success" data-on-color="success" data-on-label="on" data-off-label="off")
+                //- if(!user_info)
+                //-   .form-group.ml-2
+                //-     button.btn.btn-primary.text-primary.btn-neutral.dropdown-toggle(type='button', data-toggle='modal', data-target='#filterModalRegion') 지역
+                //- else
+                //-   .form-group.ml-2
+                //-     button.btn.btn-primary.text-primary.btn-neutral.dropdown-toggle(type='button', data-toggle='modal', data-target='#filterModalGround') 구장
             .col.text-right
               p.match-count 총 #{list.length || 0}매치
               

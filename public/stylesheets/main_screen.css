@@ -1,0 +1,22 @@
+.match_type_img {
+  background-size: contain;
+  background-position: center;
+  cursor: pointer;
+  background-image: url("/images/match_type_none.png");
+  background-repeat: no-repeat;
+}
+.match_type_img[data-match2="false"][data-match3="false"] {
+  background-image: url("/images/match_type_none.png");
+}
+.match_type_img[data-match2="true"][data-match3="false"] {
+  background-image: url("/images/match_type_2.png");
+}
+.match_type_img[data-match2="false"][data-match3="true"] {
+  background-image: url("/images/match_type_3.png");
+}
+.match_type_img[data-match2="true"][data-match3="true"] {
+  background-image: url("/images/match_type_all.png");
+}
+.match_type_img img {
+  visibility: collapse;
+}

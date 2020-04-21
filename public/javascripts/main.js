@@ -592,3 +592,12 @@ document.querySelectorAll('a[data-role="match"]').forEach(function (a) {
     fnFilterList();
   });
 });
+//  2파/3파 버튼 클릭 이벤트
+document
+  .querySelector(".match_type_img")
+  .addEventListener("click", function (e) {
+    let match2_toggle = this.dataset.match2;
+    let match3_toggle = this.dataset.match3;
+    if (e.offsetX > 50) this.dataset.match3 = match3_toggle === "false";
+    else this.dataset.match2 = match2_toggle === "false";
+  });

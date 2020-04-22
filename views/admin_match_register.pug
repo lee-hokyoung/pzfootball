@@ -73,11 +73,11 @@ block content
                             .col(data-title='match_score', name='match_score', data-value=item.match_score) #{item.match_score}
                           .col(data-title='sex' name='sex', data-value=item.sex)
                             case item.sex
-                              when 1
+                              when "1"
                                 | 남성
-                              when -1
+                              when "2"
                                 | 여성
-                              when 0
+                              when "3"
                                 | 혼성
                           .col(data-title='personnel', name='personnel', data-min=item.personnel.min, data-max=item.personnel.max) #{item.personnel.min} ~ #{item.personnel.max}
                           .col(data-title='match_price' name='match_price') #{item.match_price}
@@ -130,11 +130,11 @@ block content
                               span.form-check-sign 남성
                           .form-check-radio.form-check-inline
                             label.form-check-label
-                              input.form-check-input(type="radio", name="sex", value='-1')
+                              input.form-check-input(type="radio", name="sex", value='2')
                               span.form-check-sign 여성
                           .form-check-radio.form-check-inline
                             label.form-check-label
-                              input.form-check-input(type="radio", name="sex", value='0')
+                              input.form-check-input(type="radio", name="sex", value='3')
                               span.form-check-sign 혼성
                         .col(data-title='personnel')
                           .form-group

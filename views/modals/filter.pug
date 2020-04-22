@@ -11,11 +11,49 @@
               i.nc-icon.nc-simple-remove
       .modal-body
         h6.text-secondary 성별
-        button.btn.btn-round.btn-secondary.btn-sm(name='gender', value='male') 남성
-        button.btn.btn-round.btn-secondary.btn-sm.ml-2(name='gender', value='female') 여성
-        button.btn.btn-round.btn-secondary.btn-sm.ml-2(name='gender', value='mix') 혼성
+        .btn-wrap
+          button.btn.btn-round.btn-light(name='gender', value="1", class=body?body.gender.indexOf("1") > -1?"active":"":"") 남성
+          button.btn.btn-round.btn-light(name='gender', value="2", class=body?body.gender.indexOf("2") > -1?"active":"":'') 여성
+          button.btn.btn-round.btn-light(name='gender', value="3", class=body?body.gender.indexOf("3") > -1?"active":"":"") 혼성
+
+        h6.text-seconday 레벨
+        .btn-wrap
+          button.btn.btn-round.btn-light(name='skill', value='3', class=body?body.skill.indexOf("3") > -1?"active":"":"") 초급
+          button.btn.btn-round.btn-light(name='skill', value='2', class=body?body.skill.indexOf("2") > -1?"active":"":"") 중급
+          button.btn.btn-round.btn-light(name='skill', value='1', class=body?body.skill.indexOf("1") > -1?"active":"":"") 고급
+      .modal-header.border-0
+        p.title.text-dark.text-left 경기장 또는 지역
+      .modal-body#collapseWrap
+        if(user_info)
+          button.btn.btn-warning.w-100(data-toggle='collapse', data-target='#myGround', aria-expanded='false', aria-control='myGround') 내 경기장만 보기
+          #myGround.collapse.text-right(aria-labelledby='myGround', data-parent='#collapseWrap')
+            button.btn.btn-neutral.text-seconday(data-toggle='modal', data-target='#filterModalGround') 경기장 리스트 보기
+        button.btn.btn-warning.w-100(data-toggle='collapse', data-target='#myRegion', aria-expanded='false', aria-control='myRegion') 지역별로 보기
+        #myRegion.collapse(aria-labelledby='myRegion', data-parent='#collapseWrap')
+          .btn-wrap.text-left
+            - var selectdRegion;
+            if(body)
+              - selectdRegion = body.region?body.region.split(','):""
+            each r in region
+              if(body)
+                button.btn.btn-round.btn-light(name="region", class=body.region?body.region.toString().indexOf(r._id) > -1?"active":"":"", value=r._id) #{r.name}
+              else
+                button.btn.btn-round.btn-light(name="region") #{r.name}
+
+      .modal-footer
+        button.btn.btn-success(type='button', onclick="fnSetFilter()") 적용하기
+#filterGroundModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true", width='700px;')
+  .modal-dialog
+    .modal-content
+      .modal-header.border-0
+        .row
+          .col
+            p.title.text-dark.text-left 경기장
+          .col
+            button.close(type='button', data-dismiss='modal', aria-hidden='true')
+              i.nc-icon.nc-simple-remove
       .modal-body
-      
+      .modal-footer
 
 
 //  지역 필터 모달창

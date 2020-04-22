@@ -601,3 +601,97 @@ document
     if (e.offsetX > 50) this.dataset.match3 = match3_toggle === "false";
     else this.dataset.match2 = match2_toggle === "false";
   });
+//  필터 부분(성별)
+let filterGender = document.querySelectorAll(
+  '.btn-wrap .btn-light[name="gender"]'
+);
+filterGender.forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    if (this.className.indexOf("active") > -1) this.classList.remove("active");
+    else this.classList.add("active");
+    // filterGender.forEach(function (item) {
+    //   item.classList.remove("active");
+    // });
+    // this.classList.add("active");
+  });
+});
+//  필터링(스킬, 레벨)
+let filterLevel = document.querySelectorAll(
+  '.btn-wrap .btn-light[name="skill"]'
+);
+filterLevel.forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    if (this.className.indexOf("active") > -1) this.classList.remove("active");
+    else this.classList.add("active");
+    // filterLevel.forEach(function (item) {
+    //   item.classList.remove("active");
+    // });
+    // this.classList.add("active");
+  });
+});
+//  필터링(지역)
+let filterRegion = document
+  .querySelectorAll('.btn-wrap .btn-light[name="region"]')
+  .forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      if (this.className.indexOf("active") > -1)
+        this.classList.remove("active");
+      else this.classList.add("active");
+    });
+  });
+//  필터링 설정 적용하기 클릭 이벤트
+function fnSetFilter() {
+  let form = document.createElement("form");
+  form.method = "POST";
+  form.action = "/filter";
+  let formData = {};
+  let gender_list = [];
+  let skill_list = [];
+  let region_list = [];
+  document
+    .querySelectorAll(".btn-wrap .btn-light.active")
+    .forEach(function (v) {
+      if (v.name === "gender") gender_list.push(v.value);
+      else if (v.name === "skill") skill_list.push(v.value);
+      else if (v.name === "region") region_list.push(v.value);
+    });
+  let field = document.createElement("input");
+  field.type = "hidden";
+  field.name = "gender";
+  field.value = gender_list.join(",");
+  form.appendChild(field);
+
+  field = document.createElement("input");
+  field.type = "hidden";
+  field.name = "skill";
+  field.value = skill_list.join(",");
+  form.appendChild(field);
+
+  field = document.createElement("input");
+  field.type = "hidden";
+  field.name = "region";
+  field.value = region_list.join(",");
+  form.appendChild(field);
+
+  // let filter_data = document.querySelectorAll(".btn-wrap .btn-light.active");
+  // filter_data.forEach(function (v) {
+  //   if (v.name === "region") region_list.push(v.value);
+  //   else {
+  //     let field = document.createElement("input");
+  //     field.type = "hidden";
+  //     field.name = v.name;
+  //     field.value = v.value;
+  //     form.appendChild(field);
+  //   }
+  // });
+  // if (region_list.length > 0) {
+  //   let field = document.createElement("input");
+  //   field.type = "hidden";
+  //   field.name = "region";
+  //   field.value = region_list.join(",");
+  //   form.appendChild(field);
+  // }
+  document.body.appendChild(form);
+  console.log(form);
+  form.submit();
+}

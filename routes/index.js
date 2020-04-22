@@ -167,4 +167,97 @@ router.get("/ground/:id", async (req, res) => {
     ground_info: ground_info,
   });
 });
+//  구장 필터링
+router.post("/filter", async (req, res) => {
+  let today = new Date();
+  let user_info = req.session.passport;
+
+  let filter_query = { $and: [] };
+  let region_query = { $or: [] };
+  filter_query["match_date"] = { $gte: today.toISOString().slice(0, 10) };
+  //  성별 필터링
+  if (req.body.gender) {
+    filter_query["$and"].push({
+      $or: req.body.gender.split(",").map((v) => {
+        return { sex: v };
+      }),
+    });
+  }
+  //  능력 필터링
+  if (req.body.skill) {
+    filter_query["$and"].push({
+      $or: req.body.skill.split(",").map((v) => {
+        return { match_grade: v };
+      }),
+    });
+  }
+  //  필터가 없을 경우
+  if (filter_query["$and"].length === 0) {
+    filter_query["$and"].push({});
+  }
+
+  //  ground_info lookup 생성 후
+  //  지역 필터링
+  if (req.body.region) {
+    req.body.region.split(",").forEach((v) => {
+      region_query["$or"].push({
+        "ground_info.region": mongoose.Types.ObjectId(v.toString()),
+      });
+    });
+  } else {
+    region_query["$or"].push({});
+  }
+
+  //  경기 일정 리스트
+  let list = await Match.aggregate([
+    { $match: filter_query },
+    {
+      $lookup: {
+        from: "ground",
+        foreignField: "_id",
+        localField: "ground_id",
+        as: "ground_info",
+      },
+    },
+    { $unwind: "$ground_info" },
+    { $match: region_query },
+  ]);
+
+  //  그 외 기본 필요한 요소
+  let ground_list = await Ground.find({}, { groundName: 1 });
+  let region = await Region.find({});
+  let notice_list = await Notice.find({ activity: true });
+  let region_group = await Region.aggregate([
+    { $match: {} },
+    {
+      $lookup: {
+        from: "ground",
+        localField: "_id",
+        foreignField: "region",
+        as: "info",
+      },
+    },
+    { $unwind: "$info" },
+    {
+      $group: {
+        _id: "$_id",
+        name: { $first: "$name" },
+        list: { $push: "$info" },
+      },
+    },
+    { $sort: { _id: 1 } },
+  ]);
+
+  res.render("index", {
+    list: list,
+    user_info: user_info,
+    ground_list: ground_list,
+    region: region,
+    query: req.query,
+    region_group: region_group,
+    notice_list: notice_list,
+    body: req.body,
+    filter_query: filter_query,
+  });
+});
 module.exports = router;

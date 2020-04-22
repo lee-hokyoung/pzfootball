@@ -1,4 +1,4 @@
-$(function() {
+$(function () {
   // 경기시간 설정
   $("#matchTime").datetimepicker({
     format: "HH:mm", //use this format if you want the 12hours timpiecker with AM/PM toggle
@@ -11,9 +11,9 @@ $(function() {
       next: "fa fa-chevron-right",
       today: "fa fa-screenshot",
       clear: "fa fa-trash",
-      close: "fa fa-remove"
+      close: "fa fa-remove",
     },
-    stepping: 15
+    stepping: 15,
   });
 });
 // 경기장 선택 이벤트
@@ -33,7 +33,7 @@ $(function() {
 //   xhr.send();
 // }
 // 날짜선택 버튼 클릭 이벤트
-$("#selectDateBtn button").on("click", function(btn) {
+$("#selectDateBtn button").on("click", function (btn) {
   // 클릭시 색 변경
   // document.querySelectorAll("#selectDateBtn button").forEach(function(v) {
   //   v.classList.remove("btn-primary");
@@ -50,7 +50,7 @@ $("#selectDateBtn button").on("click", function(btn) {
 });
 
 // 경기장 등록
-$("#registerMatch").on("click", function(btn) {
+$("#registerMatch").on("click", function (btn) {
   let row = btn.currentTarget.parentElement.parentElement;
   fnGenerateRow(row);
 });
@@ -137,13 +137,13 @@ function fnGenerateRow(item) {
   formData["sex"] = sex.value;
   formData["personnel"] = {
     min: Number(personnel_min.value),
-    max: Number(personnel_max.value)
+    max: Number(personnel_max.value),
   };
   formData["match_price"] = match_price.value;
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "/admin/match/register", true);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       fnSetNewRow(res);
@@ -193,7 +193,7 @@ function fnSetNewRow(doc) {
   let col_3 = document.createElement("div");
   col_3.className = "col";
   col_3.dataset.title = "match_type";
-  ["2", "3"].forEach(function(v) {
+  ["2", "3"].forEach(function (v) {
     formGroup = document.createElement("div");
     formGroup.className = "form-check-radio form-check-inline";
     let label = document.createElement("label");
@@ -253,8 +253,8 @@ function fnSetNewRow(doc) {
   [
     { lbl: "상", val: "1" },
     { lbl: "중", val: "2" },
-    { lbl: "하", val: "3" }
-  ].forEach(function(v) {
+    { lbl: "하", val: "3" },
+  ].forEach(function (v) {
     formGroup = document.createElement("div");
     formGroup.className = "form-check-radio form-check-inline";
     label = document.createElement("label");
@@ -281,10 +281,10 @@ function fnSetNewRow(doc) {
   col_5.className = "col";
   col_5.dataset.title = "sex";
   [
-    { lbl: "남성", val: 1 },
-    { lbl: "여성", val: -1 },
-    { lbl: "혼성", val: 0 }
-  ].forEach(function(v) {
+    { lbl: "남성", val: "1" },
+    { lbl: "여성", val: "2" },
+    { lbl: "혼성", val: "3" },
+  ].forEach(function (v) {
     formGroup = document.createElement("div");
     formGroup.className = "form-check-radio form-check-inline";
     label = document.createElement("label");
@@ -396,7 +396,7 @@ function fnUpdate(_id) {
   let col_3 = document.createElement("div");
   col_3.className = "col";
   col_3.dataset.title = "match_type";
-  ["2", "3"].forEach(function(v) {
+  ["2", "3"].forEach(function (v) {
     formGroup = document.createElement("div");
     formGroup.className = "form-check-radio form-check-inline";
     let label = document.createElement("label");
@@ -425,11 +425,11 @@ function fnUpdate(_id) {
   input.setAttribute("type", "checkbox");
   input.setAttribute("name", "ladder");
   input.checked = ladder === "1";
-  input.addEventListener("click", function() {
+  input.addEventListener("click", function () {
     let toggle = this.dataset.toggle === "false";
     this.dataset.toggle = toggle;
     let row = this.parentElement.parentElement.parentElement.parentElement;
-    row.querySelectorAll(".grade-group").forEach(function(div) {
+    row.querySelectorAll(".grade-group").forEach(function (div) {
       let view = div.dataset.view === "false";
       div.dataset.view = view;
     });
@@ -466,8 +466,8 @@ function fnUpdate(_id) {
   [
     { lbl: "상", val: "1" },
     { lbl: "중", val: "2" },
-    { lbl: "하", val: "3" }
-  ].forEach(function(v) {
+    { lbl: "하", val: "3" },
+  ].forEach(function (v) {
     formGroup = document.createElement("div");
     formGroup.className = "form-check-radio form-check-inline";
     label = document.createElement("label");
@@ -496,9 +496,9 @@ function fnUpdate(_id) {
   col_5.dataset.title = "sex";
   [
     { lbl: "남성", val: "1" },
-    { lbl: "여성", val: "-1" },
-    { lbl: "혼성", val: "0" }
-  ].forEach(function(v) {
+    { lbl: "여성", val: "2" },
+    { lbl: "혼성", val: "3" },
+  ].forEach(function (v) {
     formGroup = document.createElement("div");
     formGroup.className = "form-check-radio form-check-inline";
     label = document.createElement("label");
@@ -561,7 +561,7 @@ function fnUpdate(_id) {
   let button = document.createElement("button");
   button.className = "btn btn-sm btn-success m-0 btn-link";
   button.setAttribute("title", "수정");
-  button.addEventListener("click", function() {
+  button.addEventListener("click", function () {
     let updateForm = {};
     let target_row = document.querySelector('.row[data-id="' + _id + '"]');
     let grade_group = target_row.querySelector(
@@ -592,7 +592,7 @@ function fnUpdate(_id) {
     ).value;
     updateForm["personnel"] = {
       min: target_row.querySelector('input[name="personnel-min"]').value,
-      max: target_row.querySelector('input[name="personnel-max"]').value
+      max: target_row.querySelector('input[name="personnel-max"]').value,
     };
     // target_row.querySelector('input[name="personnel"]').value;
     updateForm["match_price"] = target_row.querySelector(
@@ -602,7 +602,7 @@ function fnUpdate(_id) {
     let xhr = new XMLHttpRequest();
     xhr.open("PUT", "/admin/match/" + _id, true);
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
         alert("정상적으로 수정되었습니다");
         // location.reload();
@@ -620,7 +620,7 @@ function fnUpdate(_id) {
   button = document.createElement("button");
   button.className = "btn btn-sm btn-danger m-0 btn-link";
   button.setAttribute("title", "취소");
-  button.addEventListener("click", function() {
+  button.addEventListener("click", function () {
     fnDelete(_id);
   });
   icon = document.createElement("i");
@@ -643,7 +643,7 @@ function fnDelete(id) {
     let xhr = new XMLHttpRequest();
     xhr.open("DELETE", "/admin/match/" + id, true);
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
         fnDeleteRow(id);
         alert("정상적으로 삭제되었습니다");
@@ -661,10 +661,10 @@ function fnDeleteRow(id) {
 //  승점제 경기 체크시 일반/실력 활성화
 document
   .querySelector('input.form-check-input[name="ladder"]')
-  .addEventListener("click", function() {
+  .addEventListener("click", function () {
     let toggle = this.dataset.toggle === "false";
     this.dataset.toggle = toggle;
-    document.querySelectorAll(".grade-group").forEach(function(div) {
+    document.querySelectorAll(".grade-group").forEach(function (div) {
       let view = div.dataset.view === "false";
       div.dataset.view = view;
     });

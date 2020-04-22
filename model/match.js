@@ -16,10 +16,10 @@ const matchSchema = new Schema({
   match_date: String,
   match_time: String,
   match_type: String, // 2파전, 3파전
-  match_grade: String, // 실력
+  match_grade: String, // 실력  1: 고급, 2 : 중급, 3 : 초급
   match_score: Number, //  승점
   ladder: Number, // 승점제 유무, 1: 승점제, 0: 승점제 x
-  sex: Number, // 성별 1: 남성매치, -1: 여성매치, 0: 혼성매치
+  sex: String, // 성별 1: 남성매치, 2: 여성매치, 3: 혼성매치
   personnel: {
     min: Number,
     max: Number,

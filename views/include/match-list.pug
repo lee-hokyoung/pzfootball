@@ -26,11 +26,11 @@
                             .text-left.text-dark
                               small.pl-2.tagList(class=game.sex===1?'male text-primary':game.sex===-1?'female text-danger':'mix')
                                 case game.sex
-                                  when 1
+                                  when "1"
                                     | 남성매치
-                                  when -1
+                                  when "2"
                                     | 여성매치
-                                  when 0
+                                  when "3"
                                     | 혼성매치
                             if(game.ladder!==1)
                               .grade_icon.ml-2(data-grade=game.match_grade, data-title='실력')

@@ -1,5 +1,9 @@
-.modal-body button.close {
+.btn-wrap .btn-light {
+  background-color: lightgray;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.7rem;
+  margin-right: 0.5rem;
 }
-.title {
-  color: black;
+.btn-wrap .btn-light.active {
+  background-color: coral !important;
 }

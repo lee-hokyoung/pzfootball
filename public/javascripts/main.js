@@ -1,6 +1,7 @@
 //  로그인 유무
 let isLoggedIn =
-  document.querySelector("#isLoggedIn").dataset.isLogin === "true";
+  document.querySelector("#isLoggedIn").dataset.islogin === "true";
+
 let curr_search = {};
 if (location.search !== "") {
   location.search
@@ -526,29 +527,6 @@ function fnFilterList() {
 //     fnFilterList();
 //     $("#filterModalRegion").modal("hide");
 //   });
-//  지역별 전체 버튼 클릭
-document.querySelectorAll('button[data-role="all"]').forEach(function (btn) {
-  btn.addEventListener("click", function () {
-    let id = this.dataset.id;
-    let parent = document.querySelector('.ground-wrap[data-id="' + id + '"]');
-    let parent_toggle = this.dataset.toggle;
-    this.dataset.toggle = parent_toggle === "false";
-    if (this.dataset.toggle === "true") this.innerHTML = "전체선택";
-    else this.innerHTML = "전체해제";
-    parent.querySelectorAll("button.btn-round").forEach(function (btn) {
-      btn.dataset.toggle = parent_toggle === "false";
-    });
-  });
-});
-//  구장별 버튼 클릭시 이벤트
-document
-  .querySelectorAll("#filterGroundModal button.btn-round")
-  .forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      let toggle = this.dataset.toggle;
-      this.dataset.toggle = toggle === "false";
-    });
-  });
 //  적용버튼 클릭 이벤트
 // if (isLoggedIn)
 //   document
@@ -608,10 +586,6 @@ filterGender.forEach(function (btn) {
   btn.addEventListener("click", function () {
     if (this.className.indexOf("active") > -1) this.classList.remove("active");
     else this.classList.add("active");
-    // filterGender.forEach(function (item) {
-    //   item.classList.remove("active");
-    // });
-    // this.classList.add("active");
   });
 });
 //  필터링(스킬, 레벨)
@@ -622,10 +596,6 @@ filterLevel.forEach(function (btn) {
   btn.addEventListener("click", function () {
     if (this.className.indexOf("active") > -1) this.classList.remove("active");
     else this.classList.add("active");
-    // filterLevel.forEach(function (item) {
-    //   item.classList.remove("active");
-    // });
-    // this.classList.add("active");
   });
 });
 //  필터링(지역)
@@ -638,12 +608,52 @@ let filterRegion = document
       else this.classList.add("active");
     });
   });
+
+//  지역별 전체 버튼 클릭
+let selectAllRegion = document.querySelectorAll(
+  '#filterGroundModal button[data-role="all"]'
+);
+selectAllRegion.forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    let id = this.dataset.id;
+    let parent = document.querySelector('.ground-wrap[data-id="' + id + '"]');
+    let parent_toggle = this.dataset.toggle;
+    this.dataset.toggle = parent_toggle === "false";
+    if (this.dataset.toggle === "false") this.innerHTML = "전체선택";
+    else this.innerHTML = "전체해제";
+    parent.querySelectorAll("button.btn-round").forEach(function (btn) {
+      btn.dataset.toggle = parent_toggle === "false";
+    });
+  });
+});
+//  구장별 버튼 클릭시 이벤트
+document
+  .querySelectorAll("#filterGroundModal button.btn-round")
+  .forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      let toggle = this.dataset.toggle;
+      this.dataset.toggle = toggle === "false";
+    });
+  });
+//  경기장 저장하기 버튼 클릭 이벤트
+function fnSaveGround() {
+  let selectedGround = document.querySelectorAll(
+    '#filterGroundModal button[data-toggle="true"]'
+  );
+  let list = [];
+  selectedGround.forEach(function (v) {
+    list.push(v.dataset.id);
+  });
+  let myGround = document.querySelector('input[name="myGround"]');
+  myGround.value = list.join(",");
+  $("#filterGroundModal").modal("hide");
+}
+
 //  필터링 설정 적용하기 클릭 이벤트
 function fnSetFilter() {
   let form = document.createElement("form");
   form.method = "POST";
   form.action = "/filter";
-  let formData = {};
   let gender_list = [];
   let skill_list = [];
   let region_list = [];
@@ -666,31 +676,31 @@ function fnSetFilter() {
   field.value = skill_list.join(",");
   form.appendChild(field);
 
-  field = document.createElement("input");
-  field.type = "hidden";
-  field.name = "region";
-  field.value = region_list.join(",");
-  form.appendChild(field);
-
-  // let filter_data = document.querySelectorAll(".btn-wrap .btn-light.active");
-  // filter_data.forEach(function (v) {
-  //   if (v.name === "region") region_list.push(v.value);
-  //   else {
-  //     let field = document.createElement("input");
-  //     field.type = "hidden";
-  //     field.name = v.name;
-  //     field.value = v.value;
-  //     form.appendChild(field);
-  //   }
-  // });
-  // if (region_list.length > 0) {
-  //   let field = document.createElement("input");
-  //   field.type = "hidden";
-  //   field.name = "region";
-  //   field.value = region_list.join(",");
-  //   form.appendChild(field);
-  // }
+  if (
+    document
+      .querySelector('button[data-target="#myRegion"]')
+      .getAttribute("aria-expanded") === "true"
+  ) {
+    field = document.createElement("input");
+    field.type = "hidden";
+    field.name = "region";
+    field.value = region_list.join(",");
+    form.appendChild(field);
+  }
+  if (isLoggedIn) {
+    if (
+      document
+        .querySelector('button[data-target="#myGround"]')
+        .getAttribute("aria-expanded") === "true"
+    ) {
+      field = document.createElement("input");
+      field.type = "hidden";
+      field.name = "ground";
+      field.value = document.querySelector('input[name="myGround"]').value;
+      form.appendChild(field);
+    }
+  }
+  console.log("form : ", form);
   document.body.appendChild(form);
-  console.log(form);
   form.submit();
 }

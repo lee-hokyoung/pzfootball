@@ -174,6 +174,8 @@ router.post("/filter", async (req, res) => {
 
   let filter_query = { $and: [] };
   let region_query = { $or: [] };
+  let ground_query = { $or: [] };
+
   filter_query["match_date"] = { $gte: today.toISOString().slice(0, 10) };
   //  성별 필터링
   if (req.body.gender) {
@@ -208,6 +210,16 @@ router.post("/filter", async (req, res) => {
     region_query["$or"].push({});
   }
 
+  //  경기장 필터링
+  if (req.body.ground) {
+    req.body.ground.split(",").forEach((v) => {
+      ground_query["$or"].push({
+        "ground_info._id": mongoose.Types.ObjectId(v.toString()),
+      });
+    });
+  } else {
+    ground_query["$or"].push({});
+  }
   console.log("filter query : ", filter_query);
   //  경기 일정 리스트
   let list = await Match.aggregate([
@@ -222,6 +234,7 @@ router.post("/filter", async (req, res) => {
     },
     { $unwind: "$ground_info" },
     { $match: region_query },
+    { $match: ground_query },
   ]);
 
   //  그 외 기본 필요한 요소

@@ -38,7 +38,7 @@
               if(body)
                 button.btn.btn-round.btn-light(name="region", class=body.region?body.region.toString().indexOf(r._id) > -1?"active":"":"", value=r._id) #{r.name}
               else
-                button.btn.btn-round.btn-light(name="region") #{r.name}
+                button.btn.btn-round.btn-light(name="region", value=r._id) #{r.name}
 
       .modal-footer
         button.btn.btn-success(type='button', onclick="fnSetFilter()") 적용하기
@@ -60,10 +60,10 @@ if(user_info)
             .ground-wrap(data-id=r._id)
               .d-flex.justify-content-between
                 h5 #{r.name}
-                button.btn.btn-success.btn-sm(type='button', data-role='all', data-id=r._id, data-toggle='true') 전체선택
-              .d-flex.justify-content-start
+                button.btn.btn-success.btn-sm(type='button', data-role='all', data-id=r._id, data-toggle='false') 전체선택
+              .btn-wrap
                 each ground in r.list
-                  button.btn.btn-round.btn-sm.mr-1.px-3(type='button', data-id=ground._id, data-toggle=my_ground.toString().indexOf(ground._id.toString()) > -1 ? "true":"false") #{ground.groundName}
+                  button.btn.btn-round.btn-light(type='button', data-id=ground._id, data-toggle=my_ground.toString().indexOf(ground._id.toString()) > -1 ? "true":"false") #{ground.groundName}
             //- if(idx + 1 < region_group.length)
             //-   hr
             //-   .row
@@ -74,7 +74,8 @@ if(user_info)
             //-           span.form-check-sign 
             //-           | 즐겨찾는 구장으로 등록합니다.
         .modal-footer
-          button.btn.btn-success.py-3.m-0.w-100(type='button', data-role='apply') 저장
+          button.btn.btn-success.py-3.m-0.w-100(type='button', onclick='fnSaveGround()') 저장
+          input(type='hidden', name='myGround')
 
 
 //- //  지역 필터 모달창

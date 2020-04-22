@@ -4,6 +4,10 @@
   font-size: 0.7rem;
   margin-right: 0.5rem;
 }
-.btn-wrap .btn-light.active {
+.btn-wrap .btn-light.active,
+.btn-wrap .btn-light[data-toggle="true"] {
   background-color: coral !important;
+}
+#collapseWrap button[aria-expanded="false"] {
+  background-color: lightgray;
 }

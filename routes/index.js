@@ -208,6 +208,7 @@ router.post("/filter", async (req, res) => {
     region_query["$or"].push({});
   }
 
+  console.log("filter query : ", filter_query);
   //  경기 일정 리스트
   let list = await Match.aggregate([
     { $match: filter_query },

@@ -69,7 +69,7 @@ $(".ground-list-slider")
     };
     xhr.send();
   });
-//  nav sticky
+//  nav sticky  메인 페이지 하단 go to top 버튼 관련
 let offset = $(".navigation").offset();
 let navParent = $(".navigation");
 let nav = navParent.find("nav");
@@ -500,36 +500,35 @@ function fnFilterList() {
   xhr.send();
 }
 //  지역 필터링 내 버튼 클릭시 이벤트
-document
-  .querySelectorAll("#filterModalRegion .button-group button")
-  .forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      let toggle = this.dataset.toggle;
-      this.dataset.toggle = toggle === "false";
-    });
-  });
+// document
+//   .querySelectorAll("#filterModalRegion .button-group button")
+//   .forEach(function (btn) {
+//     btn.addEventListener("click", function () {
+//       let toggle = this.dataset.toggle;
+//       this.dataset.toggle = toggle === "false";
+//     });
+//   });
 //  적용하기 버튼 클릭 이벤트
-document
-  .querySelector("#filterModalRegion .modal-footer button")
-  .addEventListener("click", function () {
-    let region_list = [];
-    document
-      .querySelectorAll(
-        '#filterModalRegion .button-group button[data-toggle="true"]'
-      )
-      .forEach(function (btn) {
-        region_list.push(btn.dataset.id);
-      });
-    // let query = "region=" + region_list.join(",");
-    curr_search["region"] = region_list.join(",");
-    history.pushState(null, "game filter", fnGenQueryString());
-    fnFilterList();
-    $("#filterModalRegion").modal("hide");
-  });
+// document
+//   .querySelector("#filterModalRegion .modal-footer button")
+//   .addEventListener("click", function () {
+//     let region_list = [];
+//     document
+//       .querySelectorAll(
+//         '#filterModalRegion .button-group button[data-toggle="true"]'
+//       )
+//       .forEach(function (btn) {
+//         region_list.push(btn.dataset.id);
+//       });
+//     // let query = "region=" + region_list.join(",");
+//     curr_search["region"] = region_list.join(",");
+//     history.pushState(null, "game filter", fnGenQueryString());
+//     fnFilterList();
+//     $("#filterModalRegion").modal("hide");
+//   });
 //  지역별 전체 버튼 클릭
 document.querySelectorAll('button[data-role="all"]').forEach(function (btn) {
   btn.addEventListener("click", function () {
-    console.log(this);
     let id = this.dataset.id;
     let parent = document.querySelector('.ground-wrap[data-id="' + id + '"]');
     let parent_toggle = this.dataset.toggle;
@@ -543,7 +542,7 @@ document.querySelectorAll('button[data-role="all"]').forEach(function (btn) {
 });
 //  구장별 버튼 클릭시 이벤트
 document
-  .querySelectorAll("#filterModalGround button.btn-round")
+  .querySelectorAll("#filterGroundModal button.btn-round")
   .forEach(function (btn) {
     btn.addEventListener("click", function () {
       let toggle = this.dataset.toggle;
@@ -551,39 +550,39 @@ document
     });
   });
 //  적용버튼 클릭 이벤트
-if (isLoggedIn)
-  document
-    .querySelector('#filterModalGround button[data-role="apply"]')
-    .addEventListener("click", function () {
-      let ground_id = [];
-      document
-        .querySelectorAll(
-          '#filterModalGround button.btn-primary[data-toggle="true"]'
-        )
-        .forEach(function (btn) {
-          ground_id.push(btn.dataset.id);
-        });
+// if (isLoggedIn)
+//   document
+//     .querySelector('#filterModalGround button[data-role="apply"]')
+//     .addEventListener("click", function () {
+//       let ground_id = [];
+//       document
+//         .querySelectorAll(
+//           '#filterModalGround button.btn-primary[data-toggle="true"]'
+//         )
+//         .forEach(function (btn) {
+//           ground_id.push(btn.dataset.id);
+//         });
 
-      //  즐겨찾는 구장 등록 여부 확인
-      if (document.querySelector('input[name="chkUpdateMyGround"]').checked) {
-        console.log("update ground : ", ground_id);
-        let xhr = new XMLHttpRequest();
-        xhr.open("PUT", "/users/region", true);
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.onreadystatechange = function () {
-          if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-            let res = JSON.parse(this.response);
-            if (res.code === 1) location.href = "/?" + ground_id.toString();
-          }
-        };
-        xhr.send(JSON.stringify({ ground: ground_id }));
-      } else {
-        curr_search["ground"] = ground_id.join(",");
-        history.pushState(null, "game filter", fnGenQueryString());
-        fnFilterList();
-        $("#filterModalGround").modal("hide");
-      }
-    });
+//       //  즐겨찾는 구장 등록 여부 확인
+//       if (document.querySelector('input[name="chkUpdateMyGround"]').checked) {
+//         console.log("update ground : ", ground_id);
+//         let xhr = new XMLHttpRequest();
+//         xhr.open("PUT", "/users/region", true);
+//         xhr.setRequestHeader("Content-Type", "application/json");
+//         xhr.onreadystatechange = function () {
+//           if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+//             let res = JSON.parse(this.response);
+//             if (res.code === 1) location.href = "/?" + ground_id.toString();
+//           }
+//         };
+//         xhr.send(JSON.stringify({ ground: ground_id }));
+//       } else {
+//         curr_search["ground"] = ground_id.join(",");
+//         history.pushState(null, "game filter", fnGenQueryString());
+//         fnFilterList();
+//         $("#filterModalGround").modal("hide");
+//       }
+//     });
 //  일반/리그 매치 버튼 클릭 이벤트
 document.querySelectorAll('a[data-role="match"]').forEach(function (a) {
   a.addEventListener("click", function () {

@@ -11,7 +11,6 @@ if (location.search !== "") {
       curr_search[v.split("=")[0]] = v.split("=")[1];
     });
 }
-let curr_list = [];
 //  메인 슬라이더
 $(".main-slider").on("init", function (e, s) {
   $(".full-cover-pzfutball").css("display", "none");
@@ -42,18 +41,19 @@ $(".ground-list-slider")
       ".ground-list-slider .slick-active section"
     );
     let date = new Date(obj.dataset.date);
+    let formData = {};
     let xhr = new XMLHttpRequest();
-    xhr.open(
-      "GET",
-      "/schedule/" + date.toISOString().slice(0, 10) + location.search
-    );
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    // xhr.open(
+    //   "GET",
+    //   "/schedule/" + date.toISOString().slice(0, 10) + location.search
+    // );
+    xhr.open("POST", "/filter", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function () {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
         let res = JSON.parse(this.response);
-        curr_list = res;
-        console.log("res : ", curr_list);
-        fnGenerateGroundList(res, currentSlide);
+        body = res.body;
+        fnGenerateGroundList(res.list, currentSlide);
       } else if (this.readyState === XMLHttpRequest.HEADERS_RECEIVED) {
         let ul = document.querySelector(
           'div[data-slick-index="' + currentSlide + '"] ul'
@@ -68,7 +68,10 @@ $(".ground-list-slider")
         ul.appendChild(div);
       }
     };
-    xhr.send();
+    if (body) formData = body;
+    formData["match_date"] = date.toISOString().slice(0, 10);
+    formData["XHR"] = true;
+    xhr.send(JSON.stringify(formData));
   });
 //  nav sticky  메인 페이지 하단 go to top 버튼 관련
 let offset = $(".navigation").offset();
@@ -98,12 +101,12 @@ document.querySelector("#scrollTop").addEventListener("click", function () {
 
 //  경기 리스트 생성
 function fnGenerateGroundList(res, currentSlide) {
-  let html = "";
   document.querySelector(".match-count").innerHTML =
     "총 " + res.length + "매치";
-  document.querySelector(
+  let ul = document.querySelector(
     'div[data-slick-index="' + currentSlide + '"] ul'
-  ).innerHTML = "";
+  );
+  ul.innerHTML = "";
   if (res.length > 0) {
     res.forEach(function (game, idx) {
       let remain = game.personnel.max - (game.apply_member.length || 0);
@@ -116,12 +119,6 @@ function fnGenerateGroundList(res, currentSlide) {
       } else {
         status = "full";
       }
-
-      // if (remain >= 1 && remain < 4) {
-      //   status = "hurry";
-      // } else if (remain < 2) {
-      //   status = "full";
-      // }
       let li = document.createElement("li");
       li.classList =
         "list-group-item list-group-item-light py-1 px-0 mx-auto " +
@@ -234,101 +231,22 @@ function fnGenerateGroundList(res, currentSlide) {
       col.appendChild(div);
       row.appendChild(col);
       li.appendChild(row);
-
-      document
-        .querySelector('div[data-slick-index="' + currentSlide + '"] ul')
-        .appendChild(li);
-
-      //     html +=
-      //       '<li class="list-group-item list-group-item-light py-1 px-0 mx-auto ' +
-      //       (idx % 2 === 0 ? "bg-light" : "") +
-      //       '" style="border:none !important">' +
-      //       '<div class="row w-100 m-0">' +
-      //       '<div class="col-4 col-md-2 d-block">' +
-      //       '<small class="font-weight-bold text-secondary">TIME</small>' +
-      //       '<h5 class="text-orange">' +
-      //       game.match_time +
-      //       "</h5>" +
-      //       "</div>" +
-      //       '<div class="col-8 col-md-7 text-left">' +
-      //       '<small class="text-secondary font-weight-bold">' +
-      //       game.ground_info.groundName +
-      //       "</small>" +
-      //       '<div class="d-flex justify-content-start">' +
-      //       '<div class="match-wrap text-center pt-1">' +
-      //       '<img src="/images/match_' +
-      //       game.match_type +
-      //       '.png">' +
-      //       "<b>" +
-      //       game.match_type +
-      //       "파</b>" +
-      //       "</div>" +
-      //       '<div class="text-left text-dark">' +
-      //       '<small class="pl-2 tagList ' +
-      //       (game.sex === 1
-      //         ? "male text-primary"
-      //         : game.sex === -1
-      //         ? "female text-danger"
-      //         : "mix") +
-      //       '">' +
-      //       (game.sex === 1
-      //         ? "남성매치"
-      //         : game.sex === -1
-      //         ? "여성매치"
-      //         : "혼성매치") +
-      //       "</small>" +
-      //       "</div>" +
-      //       '<div class="grade_icon ml-2" data-grade="' +
-      //       game.match_grade +
-      //       '">실력</div>';
-      //     if (game.ladder === 1) html += '<div class="ladder_icon ml-2">승점</div>';
-      //     html +=
-      //       "</div>" +
-      //       "</div>" +
-      //       '<div class="col col-md-3 p-0" style="width:160px;" data-cnt="' +
-      //       remain +
-      //       '" data-id="' +
-      //       game._id +
-      //       '">' +
-      //       '<button class="btn btn-status text-white p-0" data-status="' +
-      //       status +
-      //       '" tabindex="0">' +
-      //       '<h5 class="m-0 py-1">' +
-      //       (status === "hurry"
-      //         ? "마감임박"
-      //         : status === "available"
-      //         ? "신청가능"
-      //         : "마  감") +
-      //       "</h5>" +
-      //       '<div class="' +
-      //       (status === "hurry"
-      //         ? "text-warning"
-      //         : status === "available"
-      //         ? "text-primary"
-      //         : "") +
-      //       ' bg-white mx-auto font-weight-bold" style="border-radius:1rem; width:100px; font-size:13px;">' +
-      //       remain +
-      //       (remain > 0 ? "자리 남음" : "") +
-      //       "</div>" +
-      //       '<small class="position-relative" style="top:-3px;">' +
-      //       new Intl.NumberFormat().format(game.match_price) +
-      //       "원</small>" +
-      //       "</button>" +
-      //       "</div>" +
-      //       "</div>" +
-      //       "</li>";
+      ul.appendChild(li);
     });
   } else {
-    html +=
-      '<li class="list-group-item list-group-item-light py-1 px-0 mx-auto">' +
-      '<div class="row w-100 m-0">' +
-      '<div class="col-12 text-center">' +
-      "<p>아직 등록된 일정이 없습니다.  </p>" +
-      "</div></div></li>";
+    let li = document.createElement("li");
+    li.className = "list-group-item list-group-item-light py-1 px-0 mx-auto";
+    let row = document.createElement("div");
+    row.className = "row w-100 m-0";
+    let col = document.createElement("div");
+    col.className = "col-12 text-center";
+    let p = document.createElement("p");
+    p.innerText = "아직 등록된 일정이 없습니다.";
+    col.appendChild(p);
+    row.appendChild(col);
+    li.appendChild(row);
+    ul.appendChild(li);
   }
-  // document.querySelector(
-  //   'div[data-slick-index="' + currentSlide + '"] ul'
-  // ).innerHTML = html;
 }
 //  datetime picker
 // let today = new Date();
@@ -441,65 +359,65 @@ if (match_buttons) {
 
 // 경기 타입, 경기장 선택시 필터링
 //  bootstrap switch
-$(".bootstrap-switch").bootstrapSwitch();
-$("input.bootstrap-switch").on("switchChange.bootstrapSwitch", function (
-  event,
-  state
-) {
-  let type_2 = $('input.bootstrap-switch[value="2"]').bootstrapSwitch("state");
-  let type_3 = $('input.bootstrap-switch[value="3"]').bootstrapSwitch("state");
-  if (!type_2 && !type_3) {
-    curr_search["game_type"] = null;
-  } else {
-    if (type_2 && !type_3) {
-      curr_search["game_type"] = 2;
-    } else if (!type_2 && type_3) {
-      curr_search["game_type"] = 3;
-    } else {
-      delete curr_search.game_type;
-    }
-  }
-  history.pushState(null, "game filter", fnGenQueryString());
-  fnFilterList();
-});
-function fnGenQueryString() {
-  let queryString = [];
-  for (let key in curr_search) {
-    queryString.push(key + "=" + curr_search[key]);
-  }
-  return "?" + queryString.join("&");
-}
-function fnFilterList() {
-  let date = $("button.btn-primary.active").data("date");
-  let currentSlide = $(".btn-primary.active")
-    .parent()
-    .parent()
-    .parent()
-    .data("slick-index");
-  let xhr = new XMLHttpRequest();
-  xhr.open("GET", "/schedule/" + date.slice(0, 10) + location.search);
-  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  xhr.onreadystatechange = function () {
-    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-      let res = JSON.parse(this.response);
-      curr_list = res;
-      fnGenerateGroundList(res, currentSlide);
-    } else if (this.readyState === XMLHttpRequest.HEADERS_RECEIVED) {
-      let ul = document.querySelector(
-        'div[data-slick-index="' + currentSlide + '"] ul'
-      );
-      let div = document.createElement("div");
-      div.classList.add("mx-auto");
-      div.classList.add("bg-dark");
-      let img = document.createElement("img");
-      img.src = "/nm/slick-slider/slick/ajax-loader.gif";
-      img.width = 32;
-      div.appendChild(img);
-      ul.appendChild(div);
-    }
-  };
-  xhr.send();
-}
+// $(".bootstrap-switch").bootstrapSwitch();
+// $("input.bootstrap-switch").on("switchChange.bootstrapSwitch", function (
+//   event,
+//   state
+// ) {
+//   let type_2 = $('input.bootstrap-switch[value="2"]').bootstrapSwitch("state");
+//   let type_3 = $('input.bootstrap-switch[value="3"]').bootstrapSwitch("state");
+//   if (!type_2 && !type_3) {
+//     curr_search["game_type"] = null;
+//   } else {
+//     if (type_2 && !type_3) {
+//       curr_search["game_type"] = 2;
+//     } else if (!type_2 && type_3) {
+//       curr_search["game_type"] = 3;
+//     } else {
+//       delete curr_search.game_type;
+//     }
+//   }
+//   history.pushState(null, "game filter", fnGenQueryString());
+//   fnFilterList();
+// });
+// function fnGenQueryString() {
+//   let queryString = [];
+//   for (let key in curr_search) {
+//     queryString.push(key + "=" + curr_search[key]);
+//   }
+//   return "?" + queryString.join("&");
+// }
+// function fnFilterList() {
+//   let date = $("button.btn-primary.active").data("date");
+//   let currentSlide = $(".btn-primary.active")
+//     .parent()
+//     .parent()
+//     .parent()
+//     .data("slick-index");
+//   let xhr = new XMLHttpRequest();
+//   xhr.open("GET", "/schedule/" + date.slice(0, 10) + location.search);
+//   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+//   xhr.onreadystatechange = function () {
+//     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+//       let res = JSON.parse(this.response);
+//       curr_list = res;
+//       fnGenerateGroundList(res, currentSlide);
+//     } else if (this.readyState === XMLHttpRequest.HEADERS_RECEIVED) {
+//       let ul = document.querySelector(
+//         'div[data-slick-index="' + currentSlide + '"] ul'
+//       );
+//       let div = document.createElement("div");
+//       div.classList.add("mx-auto");
+//       div.classList.add("bg-dark");
+//       let img = document.createElement("img");
+//       img.src = "/nm/slick-slider/slick/ajax-loader.gif";
+//       img.width = 32;
+//       div.appendChild(img);
+//       ul.appendChild(div);
+//     }
+//   };
+//   xhr.send();
+// }
 //  지역 필터링 내 버튼 클릭시 이벤트
 // document
 //   .querySelectorAll("#filterModalRegion .button-group button")
@@ -575,9 +493,46 @@ document
   .addEventListener("click", function (e) {
     let match2_toggle = this.dataset.match2;
     let match3_toggle = this.dataset.match3;
-    if (e.offsetX > 50) this.dataset.match3 = match3_toggle === "false";
-    else this.dataset.match2 = match2_toggle === "false";
+    if (e.offsetX > 50) {
+      if (match2_toggle === "false" && match3_toggle === "true")
+        this.dataset.match2 = "true";
+      this.dataset.match3 = match3_toggle === "false";
+    } else {
+      if (match2_toggle === "true" && match3_toggle === "false")
+        this.dataset.match3 = "true";
+      this.dataset.match2 = match2_toggle === "false";
+    }
+
+    let match_type = "";
+    //  2파 선택
+    if (this.dataset.match2 === "true" && this.dataset.match3 === "false")
+      match_type = "2";
+    //  3파 선택
+    else if (this.dataset.match2 === "false" && this.dataset.match3 === "true")
+      match_type = "3";
+
+    let formData = {};
+    let xhr = new XMLHttpRequest();
+    xhr.open("post", "/filter", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        let res = JSON.parse(this.response);
+        let currentSlide = $(".btn-primary.active")
+          .parent()
+          .parent()
+          .parent()
+          .data("slick-index");
+        fnGenerateGroundList(res.list, currentSlide);
+        body = res.body;
+      }
+    };
+    if (body) formData = body;
+    formData["match_type"] = match_type;
+    formData["XHR"] = true;
+    xhr.send(JSON.stringify(formData));
   });
+
 //  필터 부분(성별)
 let filterGender = document.querySelectorAll(
   '.btn-wrap .btn-light[name="gender"]'
@@ -647,6 +602,21 @@ function fnSaveGround() {
   let myGround = document.querySelector('input[name="myGround"]');
   myGround.value = list.join(",");
   $("#filterGroundModal").modal("hide");
+
+  //  즐겨찾는 구장 등록 유무
+  let isFavorite = document.querySelector('input[name="chkUpdateMyGround"]');
+  if (isFavorite.checked) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("PUT", "/users/region", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        let res = JSON.parse(this.response);
+        console.log("res : ", res);
+      }
+    };
+    xhr.send(JSON.stringify({ ground: list }));
+  }
 }
 
 //  필터링 설정 적용하기 클릭 이벤트

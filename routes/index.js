@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
   //  유저 로그인 확인 후, 즐겨찾기 등록된 구장이 있으면 리다이렉트 시킨다.
   let user = { favorite_ground: [] };
   if (user_info) {
-    //  매니저로 로그인 됐을 경우, 자동 로그아웃 시키고 유저 로그인이 디ㅗ게 한다.
+    //  매니저로 로그인 됐을 경우, 자동 로그아웃 시키고 유저 로그인이 되게 한다.
     if (user_info.user.isManager) {
       let script = `<script>alert("매니저 권한으로 로그인 했습니다. 일반 유저로 로그인해주세요"); location.href='/';</script>`;
       req.logout();
@@ -176,7 +176,7 @@ router.post("/filter", async (req, res) => {
   let region_query = { $or: [] };
   let ground_query = { $or: [] };
 
-  filter_query["match_date"] = { $gte: today.toISOString().slice(0, 10) };
+  filter_query["match_date"] = today.toISOString().slice(0, 10);
   //  성별 필터링
   if (req.body.gender) {
     filter_query["$and"].push({
@@ -193,13 +193,22 @@ router.post("/filter", async (req, res) => {
       }),
     });
   }
+  //  매치 타입(2파, 3파) 필터링
+  if (req.body.match_type) {
+    if (req.body.match_type !== "") {
+      filter_query["$and"].push({ match_type: req.body.match_type });
+    }
+  }
+  //  날짜 필터링
+  if (req.body.match_date) {
+    filter_query["$and"].push({ match_date: req.body.match_date });
+  }
   //  필터가 없을 경우
   if (filter_query["$and"].length === 0) {
     filter_query["$and"].push({});
   }
-
-  //  ground_info lookup 생성 후
-  //  지역 필터링
+  //
+  //  지역 필터링 ground_info lookup 생성 후 필터가 돼야 하므로 ground_info.region 으로 매칭해야 함.
   if (req.body.region) {
     req.body.region.split(",").forEach((v) => {
       region_query["$or"].push({
@@ -209,7 +218,6 @@ router.post("/filter", async (req, res) => {
   } else {
     region_query["$or"].push({});
   }
-
   //  경기장 필터링
   if (req.body.ground) {
     req.body.ground.split(",").forEach((v) => {
@@ -220,7 +228,6 @@ router.post("/filter", async (req, res) => {
   } else {
     ground_query["$or"].push({});
   }
-  console.log("filter query : ", filter_query);
   //  경기 일정 리스트
   let list = await Match.aggregate([
     { $match: filter_query },
@@ -237,41 +244,58 @@ router.post("/filter", async (req, res) => {
     { $match: ground_query },
   ]);
 
-  //  그 외 기본 필요한 요소
-  let ground_list = await Ground.find({}, { groundName: 1 });
-  let region = await Region.find({});
-  let notice_list = await Notice.find({ activity: true });
-  let region_group = await Region.aggregate([
-    { $match: {} },
-    {
-      $lookup: {
-        from: "ground",
-        localField: "_id",
-        foreignField: "region",
-        as: "info",
+  //  비동기 방식일 경우,
+  if (req.body.XHR) {
+    return res.json({ list: list, body: req.body });
+  }
+  //  비동기 방식이 아닌 경우
+  else {
+    //  그 외 기본 필요한 요소
+    let favorite_ground;
+    if (user_info) {
+      favorite_ground = await User.findOne(
+        {
+          _id: mongoose.Types.ObjectId(user_info.user._id),
+        },
+        { favorite_ground: 1 }
+      );
+    }
+    let ground_list = await Ground.find({}, { groundName: 1 });
+    let region = await Region.find({});
+    let notice_list = await Notice.find({ activity: true });
+    let region_group = await Region.aggregate([
+      { $match: {} },
+      {
+        $lookup: {
+          from: "ground",
+          localField: "_id",
+          foreignField: "region",
+          as: "info",
+        },
       },
-    },
-    { $unwind: "$info" },
-    {
-      $group: {
-        _id: "$_id",
-        name: { $first: "$name" },
-        list: { $push: "$info" },
+      { $unwind: "$info" },
+      {
+        $group: {
+          _id: "$_id",
+          name: { $first: "$name" },
+          list: { $push: "$info" },
+        },
       },
-    },
-    { $sort: { _id: 1 } },
-  ]);
+      { $sort: { _id: 1 } },
+    ]);
 
-  res.render("index", {
-    list: list,
-    user_info: user_info,
-    ground_list: ground_list,
-    region: region,
-    query: req.query,
-    region_group: region_group,
-    notice_list: notice_list,
-    body: req.body,
-    filter_query: filter_query,
-  });
+    return res.render("index", {
+      list: list,
+      user_info: user_info,
+      ground_list: ground_list,
+      region: region,
+      region_group: region_group,
+      notice_list: notice_list,
+      body: req.body,
+      query: req.query,
+      filter_query: filter_query,
+      favorite_ground: favorite_ground,
+    });
+  }
 });
 module.exports = router;

@@ -64,6 +64,11 @@ if(user_info)
               .btn-wrap
                 each ground in r.list
                   button.btn.btn-round.btn-light(type='button', data-id=ground._id, data-toggle=my_ground.toString().indexOf(ground._id.toString()) > -1 ? "true":"false") #{ground.groundName}
+          .form-check.pull-left
+            label.form-check-label
+              input.form-check-input(type="checkbox" name="chkUpdateMyGround")
+              span.form-check-sign 
+              | 즐겨찾는 구장으로 등록합니다.
             //- if(idx + 1 < region_group.length)
             //-   hr
             //-   .row

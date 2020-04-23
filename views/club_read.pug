@@ -79,14 +79,18 @@ block content
                           .col-3 #{item.user_name}
                           .col-6.text-right
                             if(leaderGroup.indexOf(user_info.user._id.toString()) > -1)
-                              button.btn.btn-danger.btn-sm(onclick='fnApprove("' + item._id + '", "' + club._id + '")') 승인
+                              button.btn.btn-success.btn-sm(onclick='fnApprove("' + item._id + '", "' + club._id + '")') 승인
+                              button.btn.btn-danger.btn-sm(onclick='fnReject("' + item._id + '", "' + club._id + '")') 거절
                             //- if(club.club_leader.toString() === user_info.user._id.toString())
                             //-   if(club.club_leader.toString() !== item._id.toString())
                             //-     button.btn.btn-danger.btn-sm(onclick='fnApprove("' + item._id + '", "' + club._id + '")') 승인
           .card-footer
             - var idx = club.club_member.indexOf(user_info.user._id);
             if(club.club_leader.toString() !== user_info.user._id.toString())
-              if(club.club_member.toString().indexOf(user_info.user._id) === -1)
+              - var member_list = [];
+              each member in club.club_member
+                - member_list.push(member._id)
+              if(member_list.toString().indexOf(user_info.user._id.toString()) === -1)
                 button.btn.btn-primary(onclick='fnJoinClub("' + club._id + '")') 가입
               else
                 button.btn.btn-danger(onclick='fnSecession("' + club._id + '")') 탈퇴하기
@@ -96,3 +100,4 @@ block append_js
   script.
     console.log('club : ', !{JSON.stringify(club)});
     console.log('waiting club : ', !{JSON.stringify(waiting_club)})
+    console.log('member_list : ', !{JSON.stringify(member_list)})

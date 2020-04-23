@@ -71,6 +71,22 @@ function fnJoinClub(team_id) {
   xhr.send(JSON.stringify({ _id: team_id }));
 }
 
+//  클럽 가입 취소
+function fnCancelJoin() {
+  if (!confirm("가입을 취소하시겠습니까?")) return false;
+  let xhr = new XMLHttpRequest();
+  xhr.open("PATCH", "/clubs/cancelJoin", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function () {
+    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      let res = JSON.parse(this.response);
+      alert(res.message);
+      if (res.code === 1) location.reload();
+    }
+  };
+  xhr.send();
+}
+
 //  클럽 생성
 function fnCreateClub() {
   //  1. 클럽 가입 여부 확인

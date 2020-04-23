@@ -121,6 +121,7 @@ router.get("/:id", middle.isSignedIn, async (req, res) => {
         as: "user_info",
       },
     },
+    { $project: { "user_info.user_pw": 0 } },
     {
       $lookup: {
         from: "users",
@@ -129,6 +130,7 @@ router.get("/:id", middle.isSignedIn, async (req, res) => {
         as: "waiting_info",
       },
     },
+    { $project: { "waiting_info.user_pw": 0 } },
   ]);
   res.render("club_read", {
     title: "퍼즐풋볼 - 팀",
@@ -188,6 +190,58 @@ router.patch("/approve", middle.isSignedIn, async (req, res) => {
       }
     );
     res.json({ code: 1, message: "승인되었습니다", result: result });
+  } catch (err) {
+    res.json({ code: 0, message: err.message });
+  }
+});
+//  팀 가입 신청 취소
+router.patch("/cancelJoin", middle.isSignedIn, async (req, res) => {
+  try {
+    let user_info = req.session.passport;
+    console.log("user info : ", user_info);
+    let club_info = await Club.findOne(
+      {
+        waiting_member: mongoose.Types.ObjectId(user_info.user._id),
+      },
+      { _id: 1 }
+    );
+    console.log("club info : ", club_info);
+    if (club_info) {
+      let result = await Club.updateOne(
+        {
+          _id: mongoose.Types.ObjectId(club_info._id),
+        },
+        {
+          $pull: {
+            waiting_member: mongoose.Types.ObjectId(user_info.user._id),
+          },
+        }
+      );
+      res.json({ code: 1, message: "취소되었습니다.", result: result });
+    } else {
+      res.json({
+        code: 0,
+        message: "가입 취소 에러, 관리자에게 문의해 주세요",
+      });
+    }
+  } catch (err) {
+    res.json({ code: 0, message: err.message });
+  }
+});
+//  팀 멤버 가입 거절
+router.patch("/reject", middle.isSignedIn, async (req, res) => {
+  try {
+    let member_id = req.body.user_id;
+    let team_id = req.body.team_id;
+    let result = await Club.updateOne(
+      {
+        _id: mongoose.Types.ObjectId(team_id),
+      },
+      {
+        $pull: { waiting_member: mongoose.Types.ObjectId(member_id) },
+      }
+    );
+    res.json({ code: 1, message: "거절되었습니다.", result: result });
   } catch (err) {
     res.json({ code: 0, message: err.message });
   }

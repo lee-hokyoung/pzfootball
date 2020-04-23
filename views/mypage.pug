@@ -62,6 +62,7 @@ block content
                     td
                     td 
                       input.form-control(type='text', name='user_id', value=user.user_id, readonly)
+                      input(name='_id', type='hidden', value=user._id)
                       //- div(data-toggle='true')
                       //-   button.btn.btn-link.btn-primary(data-role='edit')
                       //-     i.nc-icon.nc-ruler-pencil
@@ -243,6 +244,7 @@ block content
             .card.profile-card
               .card-body
                 h5 가입 승인 대기 중
+                button.btn.btn-danger.btn-round(onclick='fnCancelJoin()') 가입 취소
         //- 가입한 클럽이 있을 경우
         else
           .card.profile-card
@@ -323,9 +325,6 @@ block content
                   else
                     tr
                       td(colspan='5') 일정이 없습니다.
-
-
-
     .row.d-none
       .col-md-6
         .card
@@ -370,7 +369,7 @@ block content
                         .col-3 !{myClub.club_member.length} 명
                   else if(myClub.status === 0)
                     .row
-                      .col-12 승인 대기 중 
+                      .col 승인 대기 중 
             else if(waiting_club)
               ul.list-group.list-group-flush.text-center
                 li.list-group-item.list-group-item-primary

@@ -4,7 +4,10 @@
     while d < size
       - var date = new Date();
       - date.setDate(today.getDate() + d++)
-      section.ground-list(data-date=date)
+      - var year = date.getFullYear();
+      - var month = date.getMonth() < 10 ? '0' + (date.getMonth() + 1) : date.getMonth();
+      - var days = date.getDate();
+      section.ground-list(data-date=year + '-' + month + '-' + days)
         ul.list-group.list-group-flush.text-center
           if(d===1)
             if(list.length > 0)

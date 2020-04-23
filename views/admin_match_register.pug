@@ -31,8 +31,11 @@ block content
                       .pr-2
                         - var _date = new Date(); 
                         - _date.setDate(today.getDate() + d++);
+                        - var year = _date.getFullYear();
+                        - var month = _date.getMonth() < 10 ? '0' + (_date.getMonth() + 1) : _date.getMonth();
+                        - var days = _date.getDate();
                         //- - var btnDate = _date.getFullYear() + '-' + (_date.getMonth() + 1) + '-' + _date.getDate();
-                        - var btnDate = _date.toISOString().slice(0, 10);
+                        - var btnDate = year + '-' + month + '-' + days;
                         button.btn.rounded.btn-date.font-italic.m-0(type='button', 
                         class=_date.getDay()===0?'text-danger':_date.getDay()===6?'text-primary':'',
                         class=btnDate===selectedDate?'btn-warning':'',

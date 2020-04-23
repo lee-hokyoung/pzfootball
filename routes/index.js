@@ -10,6 +10,12 @@ const mongoose = require("mongoose");
 /* GET home page. */
 router.get("/", async (req, res) => {
   let today = new Date();
+  let year = today.getFullYear();
+  let month =
+    today.getMonth() < 10 ? "0" + (today.getMonth() + 1) : today.getMonth() + 1;
+  let days = today.getDate();
+  let date = year + "-" + month + "-" + days;
+
   let user_info = req.session.passport;
   //  유저 로그인 확인 후, 즐겨찾기 등록된 구장이 있으면 리다이렉트 시킨다.
   let user = { favorite_ground: [] };
@@ -32,11 +38,7 @@ router.get("/", async (req, res) => {
     }
   }
 
-  let list = await fnGetMatchList(
-    today.toISOString().slice(0, 10),
-    req.query,
-    user_info
-  );
+  let list = await fnGetMatchList(date, req.query, user_info);
   let ground_list = await Ground.find({}, { groundName: 1 });
   let region = await Region.find({});
   let notice_list = await Notice.find({ activity: true });
@@ -51,6 +53,7 @@ router.get("/", async (req, res) => {
       },
     },
     { $unwind: "$info" },
+    { $project: { "info.ground_images": 0 } },
     {
       $group: {
         _id: "$_id",
@@ -129,6 +132,7 @@ async function fnGetMatchList(date, query, user_info) {
       },
     },
     { $unwind: "$ground_info" },
+    { $project: { "ground_info.ground_images": 0 } },
   ]);
   return result;
 }
@@ -176,7 +180,6 @@ router.post("/filter", async (req, res) => {
   let region_query = { $or: [] };
   let ground_query = { $or: [] };
 
-  filter_query["match_date"] = today.toISOString().slice(0, 10);
   //  성별 필터링
   if (req.body.gender) {
     filter_query["$and"].push({
@@ -202,6 +205,12 @@ router.post("/filter", async (req, res) => {
   //  날짜 필터링
   if (req.body.match_date) {
     filter_query["$and"].push({ match_date: req.body.match_date });
+  } else {
+    let year = today.getFullYear();
+    let month =
+      today.getMonth() < 10 ? "0" + (today.getMonth() + 1) : today.getMonth();
+    let days = today.getDate();
+    filter_query["$and"].push({ match_date: year + "-" + month + "-" + days });
   }
   //  필터가 없을 경우
   if (filter_query["$and"].length === 0) {
@@ -240,6 +249,7 @@ router.post("/filter", async (req, res) => {
       },
     },
     { $unwind: "$ground_info" },
+    { $project: { "ground_info.ground_images": 0 } },
     { $match: region_query },
     { $match: ground_query },
   ]);

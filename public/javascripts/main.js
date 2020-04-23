@@ -40,13 +40,11 @@ $(".ground-list-slider")
     let obj = document.querySelector(
       ".ground-list-slider .slick-active section"
     );
+    let slider_wrap = document.querySelector(".ground-list-slider");
+    slider_wrap.classList.add("loading");
     let date = new Date(obj.dataset.date);
     let formData = {};
     let xhr = new XMLHttpRequest();
-    // xhr.open(
-    //   "GET",
-    //   "/schedule/" + date.toISOString().slice(0, 10) + location.search
-    // );
     xhr.open("POST", "/filter", true);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.onreadystatechange = function () {
@@ -54,18 +52,21 @@ $(".ground-list-slider")
         let res = JSON.parse(this.response);
         body = res.body;
         fnGenerateGroundList(res.list, currentSlide);
-      } else if (this.readyState === XMLHttpRequest.HEADERS_RECEIVED) {
-        let ul = document.querySelector(
-          'div[data-slick-index="' + currentSlide + '"] ul'
-        );
-        let div = document.createElement("div");
-        div.classList.add("mx-auto");
-        div.classList.add("bg-dark");
-        let img = document.createElement("img");
-        img.src = "/nm/slick-slider/slick/ajax-loader.gif";
-        img.width = 32;
-        div.appendChild(img);
-        ul.appendChild(div);
+        // document.querySelector("#loadingPage").className = "d-none";
+        slider_wrap.classList.remove("loading");
+      } else {
+        // document.querySelector("#loadingPage").className = "";
+        // let ul = document.querySelector(
+        //   'div[data-slick-index="' + currentSlide + '"] ul'
+        // );
+        // let div = document.createElement("div");
+        // div.classList.add("mx-auto");
+        // div.classList.add("bg-dark");
+        // let img = document.createElement("img");
+        // img.src = "/nm/slick-slider/slick/ajax-loader.gif";
+        // img.width = 32;
+        // div.appendChild(img);
+        // ul.appendChild(div);
       }
     };
     if (body) formData = body;
@@ -525,6 +526,9 @@ document
           .data("slick-index");
         fnGenerateGroundList(res.list, currentSlide);
         body = res.body;
+        document.querySelector("#loadingPage").className = "d-none";
+      } else {
+        document.querySelector("#loadingPage").className = "";
       }
     };
     if (body) formData = body;
@@ -612,7 +616,6 @@ function fnSaveGround() {
     xhr.onreadystatechange = function () {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
         let res = JSON.parse(this.response);
-        console.log("res : ", res);
       }
     };
     xhr.send(JSON.stringify({ ground: list }));

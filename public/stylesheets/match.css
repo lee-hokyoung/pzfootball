@@ -1,0 +1,16 @@
+.section h4 a {
+  display: flex;
+  justify-content: space-between;
+}
+.section h4 a.collapsed[aria-expanded="false"] i.nc-minimal-up,
+.section h4 a[aria-expanded="true"] i.nc-minimal-down {
+  display: none;
+}
+.section h4 a.collapsed[aria-expanded="false"] i.nc-minimal-down,
+.section h4 a[aria-expanded="true"] i.nc-minimal-up {
+  display: block;
+}
+.section h4 a[aria-expanded="true"] {
+  background: white;
+  color: black;
+}

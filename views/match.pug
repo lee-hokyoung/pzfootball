@@ -1,4 +1,6 @@
 extends layout
+block append_css
+  link(rel='stylesheet', href='/public_css/match.css')
 block content
   .full-cover-pzfutball
   #detail_page.container.bg-white(style='padding-top:56px;')
@@ -80,6 +82,7 @@ block content
       .ground_description_wrap
         strong 구장 특이사항
         p #{match_info.ground_info.description}
+    include include/match_comm
     .section
       .col-md-6.mx-auto
         button.btn.btn-primary.w-100.py-3(onclick='fnApplyGame()') 신청하기

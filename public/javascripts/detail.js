@@ -312,11 +312,11 @@ document
     };
     let map = new kakao.maps.Map(mapContainer, mapOption);
   });
-//  가는 길 보기 클릭 이벤트
-document
-  .querySelector('button[name="toggle_theway"]')
-  .addEventListener("click", function () {
-    this.dataset.visible = this.dataset.visible === "false";
-    let theway = document.querySelector("#theway-slider");
-    theway.dataset.visible = theway.dataset.visible === "false";
-  });
+//  가는 길 보기 클릭 이벤트 -> 카카오 맵 연결으로 변경됨.
+// document
+//   .querySelector('button[name="toggle_theway"]')
+//   .addEventListener("click", function () {
+//     this.dataset.visible = this.dataset.visible === "false";
+//     let theway = document.querySelector("#theway-slider");
+//     theway.dataset.visible = theway.dataset.visible === "false";
+//   });

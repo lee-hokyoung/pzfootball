@@ -1,36 +1,36 @@
 //  클럽 생성하기
-function fnRegisterClub() {
-  let club_mark = document.querySelector('div[name="club_mark"] img');
-  let club_name = document.querySelector('input[name="club_name"]');
-  let club_region = document.querySelector('input[name="club_region"]');
-  let club_desc = document.querySelector('textarea[name="club_desc"]');
-  if (!club_name.value) {
-    alert("클럽명을 입력해주세요");
-    return false;
-  }
-  let formData = {};
-  formData["club_mark"] = club_mark ? club_mark.src : "";
-  formData["club_name"] = club_name.value;
-  formData["club_region"] = club_region.value || "";
-  formData["club_desc"] = club_desc.value || "";
+// function fnRegisterClub() {
+//   let club_mark = document.querySelector('div[name="club_mark"] img');
+//   let club_name = document.querySelector('input[name="club_name"]');
+//   let club_region = document.querySelector('input[name="club_region"]');
+//   let club_desc = document.querySelector('textarea[name="club_desc"]');
+//   if (!club_name.value) {
+//     alert("클럽명을 입력해주세요");
+//     return false;
+//   }
+//   let formData = {};
+//   formData["club_mark"] = club_mark ? club_mark.src : "";
+//   formData["club_name"] = club_name.value;
+//   formData["club_region"] = club_region.value || "";
+//   formData["club_desc"] = club_desc.value || "";
 
-  let xhr = new XMLHttpRequest();
-  xhr.open("POST", "/clubs/create", true);
-  xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function () {
-    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-      let res = JSON.parse(this.response);
-      if (res.code === 1) {
-        alert("정상적으로 등록되었습니다");
-        location.href = "/clubs/list";
-      } else {
-        alert(res.message);
-        return false;
-      }
-    }
-  };
-  xhr.send(JSON.stringify(formData));
-}
+//   let xhr = new XMLHttpRequest();
+//   xhr.open("POST", "/clubs/create", true);
+//   xhr.setRequestHeader("Content-Type", "application/json");
+//   xhr.onreadystatechange = function () {
+//     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+//       let res = JSON.parse(this.response);
+//       if (res.code === 1) {
+//         alert("정상적으로 등록되었습니다");
+//         location.href = "/clubs/list";
+//       } else {
+//         alert(res.message);
+//         return false;
+//       }
+//     }
+//   };
+//   xhr.send(JSON.stringify(formData));
+// }
 
 //  클럽 가입하기
 function fnJoinClub(club_id) {
@@ -108,6 +108,17 @@ document
       this.dataset.toggle = toggle === "false";
     });
   });
+document.querySelectorAll('button[data-role="rating"]').forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    document
+      .querySelectorAll('button[data-role="rating"]')
+      .forEach(function (item) {
+        item.dataset.toggle = "false";
+      });
+    let toggle = this.dataset.toggle;
+    this.dataset.toggle = toggle === "false";
+  });
+});
 //  팀 이름 중복확인
 function fnChkDuplicate() {
   let club_name = document.querySelector('input[name="club_name"]');
@@ -144,6 +155,7 @@ function fnRegisterClub() {
     'button[data-role="team-gender"][data-toggle="true"]'
   );
   let mainly_ground = document.querySelector('select[name="mainly_ground"]');
+  let mainly_region = document.querySelector('select[name="mainly_region"]');
   let mainly_day = document.querySelector('select[name="mainly_day"]');
   let mainly_time = document.querySelector('select[name="mainly_time"]');
   let club_name = document.querySelector('input[name="club_name"]');
@@ -160,7 +172,10 @@ function fnRegisterClub() {
   let team_password_check = document.querySelector(
     'input[name="team_password_check"]'
   );
-  let rating = document.querySelector("fieldset.rating input:checked");
+  let rating = document.querySelector(
+    "button[data-role='rating'][data-toggle='true']"
+  );
+  // let rating = document.querySelector("fieldset.rating input:checked");
   if (!team_type) {
     alert("팀 분류를 선택해 주세요");
     return false;
@@ -169,8 +184,12 @@ function fnRegisterClub() {
     alert("팀 구분을 선택해 주세요");
     return false;
   }
-  if (mainly_ground.value === "") {
-    alert("주 이용구장을 선택해 주세요");
+  // if (mainly_ground.value === "") {
+  //   alert("주 이용구장을 선택해 주세요");
+  //   return false;
+  // }
+  if (mainly_region.value === "") {
+    alert("주 활동지역을 선택해 주세요");
     return false;
   }
   if (mainly_day.value === "") {
@@ -219,7 +238,8 @@ function fnRegisterClub() {
   let formData = {};
   formData["team_type"] = team_type.dataset.value;
   formData["team_gender"] = team_gender.dataset.value;
-  formData["mainly_ground"] = mainly_ground.value;
+  // formData["mainly_ground"] = mainly_ground.value;
+  formData["mainly_region"] = mainly_region.value;
   formData["mainly_day"] = mainly_day.value;
   formData["mainly_time"] = mainly_time.value;
   formData["club_name"] = club_name.value;
@@ -230,7 +250,7 @@ function fnRegisterClub() {
   formData["club_desc"] = club_desc.value;
   formData["uniform_top"] = uniform_top.value;
   formData["uniform_bottom"] = uniform_bottom.value;
-  formData["rating"] = rating.value;
+  formData["rating"] = rating.dataset.value;
   formData["team_password"] = team_password.value;
   if (club_mark) formData["club_mark"] = club_mark.src;
 

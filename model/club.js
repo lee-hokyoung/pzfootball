@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 const clubSchema = new Schema({
   team_type: String,
   team_gender: String,
-  mainly_ground: String,
+  // mainly_ground: String,
+  mainly_region: { type: mongoose.Schema.Types.ObjectId, ref: "Region" },
   mainly_day: String,
   mainly_time: String,
   club_name: { type: String, required: true }, // 클럽명

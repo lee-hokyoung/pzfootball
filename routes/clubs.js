@@ -67,7 +67,8 @@ router.post("/create", middle.isSignedIn, async (req, res) => {
     let insertData = {
       team_type: req.body.team_type,
       team_gender: req.body.team_gender,
-      mainly_ground: req.body.mainly_ground,
+      // mainly_ground: req.body.mainly_ground,
+      mainly_region: mongoose.Types.ObjectId(req.body.mainly_region),
       mainly_day: req.body.mainly_day,
       mainly_time: req.body.mainly_time,
       club_name: req.body.club_name,
@@ -77,7 +78,7 @@ router.post("/create", middle.isSignedIn, async (req, res) => {
       club_desc: req.body.club_desc,
       uniform_top: req.body.uniform_top,
       uniform_bottom: req.body.uniform_bottom,
-      rating: req.body.rating,
+      rating: req.body.rating, //  기존 별점에서 초중고로 변경. 1 : 초급, 2 : 중급, 3 : 고급
       team_password: req.body.team_password,
       club_mark: req.body.club_mark,
       club_region: req.body.club_region,

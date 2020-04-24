@@ -8,7 +8,13 @@ const mongoose = require("mongoose");
 /* GET home page. */
 router.get("/:id", async (req, res) => {
   let user_info = req.session.passport;
-  let favorite_ground = await User.findOne({ user_id: user_info.user.user_id });
+  let favorite_ground;
+  if (user_info) {
+    favorite_ground = await User.findOne(
+      { user_id: user_info.user.user_id },
+      { favorite_ground: 1 }
+    );
+  }
   let match_info = await Match.aggregate([
     { $match: { _id: mongoose.Types.ObjectId(req.params.id) } },
     {
@@ -25,6 +31,7 @@ router.get("/:id", async (req, res) => {
     title: "퍼즐풋볼 - 매치",
     match_info: match_info[0],
     user_info: user_info,
+    favorite_ground: favorite_ground,
   });
 });
 // router.get("/price/:id", async (req, res) => {

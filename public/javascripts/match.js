@@ -668,5 +668,4 @@ document
       let view = div.dataset.view === "false";
       div.dataset.view = view;
     });
-    console.log(toggle);
   });

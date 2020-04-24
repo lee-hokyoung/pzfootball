@@ -2,6 +2,7 @@ extends layout
 block append_css
   link(rel='stylesheet', href='/public_css/match.css')
 block content
+  - var ground_id = match_info.ground_info._id;
   .full-cover-pzfutball
   #detail_page.container
     .position-relative
@@ -40,9 +41,14 @@ block content
         .col-md-6.text-right
           button.btn.bg-purple.btn-join(onclick='fnApplyGame()') 참가하기
       if(user_info)
+        - var isFavorite = favorite_ground.favorite_ground.toString().indexOf(ground_id) > -1
         .row
           .col
-            button.btn.btn-sm(name='btnFavoriteGround') 즐겨찾기 구장 추가
+            button.btn.btn-sm(name='btnFavoriteGround', class=isFavorite? 'bg-purple':'', data-id=ground_id.toString()) 
+              if(isFavorite)
+                | 즐겨찾기 구장 해제
+              else
+                | 즐겨찾기 구장 추가
     .section
       p.text-black 구장 편의시설
       .my-3
@@ -120,5 +126,6 @@ block append_js
     let match_info = !{JSON.stringify(match_info)}
     console.log('user info : ', !{JSON.stringify(user_info)})
     console.log('ground info : ', !{JSON.stringify(match_info.ground_info)})
+    console.log('favorite : ', !{JSON.stringify(favorite_ground)})
   script(src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dd47642bb3bbc286516220872f5eb9f6")
   script(src='/public_js/detail.js', type='text/javascript')

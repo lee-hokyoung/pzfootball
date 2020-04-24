@@ -424,6 +424,34 @@ router.put("/region", middle.isSignedIn, async (req, res) => {
     res.json({ code: 0, message: err.message });
   }
 });
+//  즐겨찾기 구장 추가/제거
+router.patch("/favorite", middle.isSignedIn, async (req, res) => {
+  let user_info = req.session.passport.user;
+  let isFavorite = req.body.isFavorite;
+  let ground_id = req.body.ground_id;
+  let update_query = {};
+  try {
+    //  즐겨찾기 구장 해제
+    if (isFavorite) {
+      update_query = {
+        $pull: { favorite_ground: mongoose.Types.ObjectId(ground_id) },
+      };
+    }
+    //  즐겨찾기 구장 추가
+    else {
+      update_query = {
+        $push: { favorite_ground: mongoose.Types.ObjectId(ground_id) },
+      };
+    }
+    let result = await User.updateOne(
+      { user_id: user_info.user_id },
+      update_query
+    );
+    res.json({ code: 1, message: "수정되었습니다", result: result });
+  } catch (err) {
+    res.json({ code: 0, message: err.message });
+  }
+});
 //  휴대폰 끝 4자리로 유저 검색
 router.get("/find/:phone", middle.isSignedIn, async (req, res) => {
   try {

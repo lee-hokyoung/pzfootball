@@ -326,7 +326,31 @@ document
 //  즐겨찾기 구장 추가 버튼 클릭 이벤트
 document
   .querySelector('button[name="btnFavoriteGround"]')
-  .addEventListener("click", function () {});
+  .addEventListener("click", function () {
+    let this_btn = this;
+    let isFavorite = this.className.indexOf("bg-purple") > -1;
+    let xhr = new XMLHttpRequest();
+    xhr.open("PATCH", "/users/favorite", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        let res = JSON.parse(this.response);
+        alert(res.message);
+        if (res.code === 1) {
+          if (isFavorite) {
+            this_btn.classList.remove("bg-purple");
+            this_btn.innerText = "즐겨찾기 구장 추가";
+          } else {
+            this_btn.classList.add("bg-purple");
+            this_btn.innerText = "즐겨찾기 구장 해제";
+          }
+        }
+      }
+    };
+    xhr.send(
+      JSON.stringify({ ground_id: this.dataset.id, isFavorite: isFavorite })
+    );
+  });
 
 //  가는 길 보기 클릭 이벤트 -> 카카오 맵 연결으로 변경됨.
 // document

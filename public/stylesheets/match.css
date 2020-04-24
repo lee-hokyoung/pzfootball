@@ -1,3 +1,6 @@
+#detail_page .section {
+  border-bottom: 1px solid #d0d0d0;
+}
 .section h4 a {
   display: flex;
   justify-content: space-between;
@@ -13,4 +16,116 @@
 .section h4 a[aria-expanded="true"] {
   background: white;
   color: black;
+}
+.section h4 a[aria-expanded] span.text-black {
+  font-size: 18px;
+}
+.text-purple {
+  color: #662d91;
+}
+.bg-purple {
+  background-color: #662d91;
+}
+h4 {
+  font-size: 27px;
+}
+span {
+  font-size: 12px;
+}
+p.text-black {
+  font-size: 18px;
+}
+h6.text-secondary {
+  color: #666;
+}
+h6 {
+  font-size: 18px;
+}
+h4,
+h5,
+h6,
+p,
+span {
+  margin: 0;
+}
+a[target="_blank"] {
+  display: flex;
+  justify-content: start;
+  padding: 0.1rem 0.25rem;
+  width: fit-content;
+  align-items: center;
+}
+a[target="_blank"] img {
+  width: 14px;
+}
+div[data-role="collapse"] p {
+  font-size: 12px;
+  color: #000;
+}
+.section div[data-role="collapse"] h6.title {
+  font-size: 12px;
+  color: #000;
+  padding: 0.5rem 0;
+}
+.section div[data-role="collapse"] ul {
+  list-style: none;
+  padding: 0;
+}
+.section div[data-role="collapse"] ul li {
+  font-size: 10.5px;
+  color: #666;
+}
+.slick-prev {
+  left: 0;
+}
+.slick-prev:before {
+  content: "\ea3a";
+}
+.slick-next:before {
+  content: "\ea3b";
+}
+.slick-prev:before,
+.slick-next:before {
+  font-family: inherit;
+  font-size: 25px;
+}
+.slick-next {
+  right: 0;
+}
+.slick-next,
+.slick-prev {
+  z-index: 1;
+  font: normal normal normal 14px/1 "nucleo-icons";
+  height: 60px;
+  width: 25px;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.slick-next:hover,
+.slick-prev:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.section button[name="btnApply"] {
+  font-family: notoM;
+  font-size: 27px;
+  border-radius: 30px;
+  height: 60px;
+  width: 300px;
+}
+.facility_item {
+}
+.match_item {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: lightgray;
+  display: inline-block;
+  margin-right: 20px;
+}
+#detail_page {
+  margin-bottom: 140px;
+}
+.btn-join {
+  width: 200px;
+  height: 40px;
+  border-radius: 20px;
 }

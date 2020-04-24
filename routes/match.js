@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 /* GET home page. */
 router.get("/:id", async (req, res) => {
   let user_info = req.session.passport;
+  let favorite_ground = await User.findOne({ user_id: user_info.user.user_id });
   let match_info = await Match.aggregate([
     { $match: { _id: mongoose.Types.ObjectId(req.params.id) } },
     {

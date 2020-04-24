@@ -77,34 +77,76 @@
   src: url("/assets/fonts/GmarketSansMedium.woff") format("woff");
   font-style: normal;
 }
+/* 노토산스 폰트 */
 
+@font-face {
+  font-family: NotoSansB;
+  src: url("/assets/fonts/NotoSansKR-Bold.woff") format("woff");
+  font-style: bold;
+}
+@font-face {
+  font-family: NotoSansR;
+  src: url("/assets/fonts/NotoSansKR-Regular.woff") format("woff");
+  font-style: normal;
+}
+@font-face {
+  font-family: NotoSansM;
+  src: url("/assets/fonts/NotoSansKR-Medium.woff") format("woff");
+  font-style: lighter;
+}
+
+/* 노토산스 B 36pt */
+/* 노토산스 B 16pt */
 h4,
 h5,
+.notoB {
+  font-family: NotoSansB, sans-serif;
+  font-weight: bold;
+}
+/* 노토산스 M 24pt */
+/* 노토산스 M 16pt */
 h6,
-.h4,
+.notoM {
+  font-family: NotoSansR;
+  font-weight: normal;
+}
+/* 노토산스 R 16pt */
+p,
+span,
+.notoR {
+  font-family: NotoSansM, sans-serif;
+  font-weight: lighter;
+}
+.text-black {
+  color: #000;
+}
+.text-secondary {
+  color: #666;
+}
+/* h5,
+h6,
 .h5,
 .h6,
 label,
 span,
 p,
 input {
-  font-family: NanumSquareRoundR, sans-serif;
+  font-family: NotoSansR, sans-serif;
   font-weight: normal;
 }
+h1,
+.h1,
+h2,
+.h2,
 h3,
 .h3,
+h4,
+.h4,
 strong,
 section.ground-list {
-  font-family: NanumSquareRoundB-Bold, sans-serif;
+  font-family: NotoSansB, sans-serif;
   font-weight: bold;
-}
-h1,
-h2,
-.h1,
-.h2 {
-  font-family: NanumSquareRoundEB, sans-serif;
-  font-weight: bolder;
-}
+} */
 .calendar-slider,
 .calendar-slider .h6,
 .calendar-slider .small {

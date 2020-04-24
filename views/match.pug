@@ -3,9 +3,9 @@ block append_css
   link(rel='stylesheet', href='/public_css/match.css')
 block content
   .full-cover-pzfutball
-  #detail_page.container.bg-white(style='padding-top:56px;')
+  #detail_page.container
     .position-relative
-      .detail-slider
+      .detail-slider.m-0
         -var ground_images = match_info.ground_info.ground_images
         if(ground_images.ground_images_1)
           .detail_img_wrap(style='background-image:url("' + ground_images.ground_images_1 + '")')
@@ -20,72 +20,99 @@ block content
           each item in theway
             .theway_images(style='background-image:url("/upload/' + item + '")')
 
-    .section
+    .section#scrollPosition
       - day_list = ['일', '월', '화', '수', '목', '금', '토'];
       - match_date = new Date(match_info.match_date);
-      h4 #{match_date.getFullYear()}년 #{match_date.getMonth() + 1}월 #{match_date.getDate()}일 #{day_list[match_date.getDay()]}요일 #{match_info.match_time}
-      h3.text-primary #{match_info.ground_info.groundName}
-      p #{match_info.ground_info.groundAddress.jibun}
-      .address_wrap.pb-3
+      h4.text-purple.m-0 #{match_info.ground_info.groundName}
+      span #{match_info.ground_info.groundAddress.jibun}
+      p.text-black.my-1 #{match_date.getFullYear()}년 #{match_date.getMonth() + 1}월 #{match_date.getDate()}일 #{day_list[match_date.getDay()]}요일 #{match_info.match_time}
+      .d-flex.justify-content-start
+        h6.text-secondary 참가비
+        h6.text-black.ml-2 #{new Intl.NumberFormat('ko').format(match_info.match_price)}원
+      .row.py-3
+        .col-md-6.my-auto
+          div
+            span.notoB.text-purple #{match_info.ground_info.groundName}
+            span.notnM 의
+          a.btn.btn-round.text-white.bg-purple.m-0(href='/ground/' + match_info.ground_info._id, target='_blank')
+            .notoR 더 많은 경기 보러가기
+            img(src='/assets/svg/play_icon.svg', width='100%')
+        .col-md-6.text-right
+          button.btn.bg-purple.btn-join(onclick='fnApplyGame()') 참가하기
+      if(user_info)
+        .row
+          .col
+            button.btn.btn-sm(name='btnFavoriteGround') 즐겨찾기 구장 추가
+    .section
+      p.text-black 구장 편의시설
+      .my-3
+        each item in [1,2,3,4,5,6,7]
+          .facility_item
+    .section
+      p.text-black 일반매치
+      .my-5
+        each item in [1,2,3,4,5,6,7]
+          .match_item
+    include include/match_comm
+
+      .address_wrap.pb-3.d-none
         button.btn.btn-neutral.text-primary.copy(data-copy=match_info.ground_info.groundAddress.jibun) 주소 복사하기
         button.btn.btn-neutral.text-primary(name="toggle_map" data-visible="false") 지도 보기
         a.btn.btn-neutral.text-primary(href='https://map.kakao.com/link/to/' + match_info.ground_info.groundName + ',' + match_info.ground_info.mapInfo.Lat + ',' + match_info.ground_info.mapInfo.Lng, target='_blank') 가는 길 보기
-        //- button.btn.btn-neutral.text-primary(name='toggle_theway', data-visible='false') 가는 길 보기
-      h6.description 참가비
-      h5.text-primary #{new Intl.NumberFormat('ko').format(match_info.match_price)}원
-    .section
-      h6 
-        a(href='/ground/' + match_info.ground_info._id) 
-          b.text-primary #{match_info.ground_info.groundName}
-        | 에서는 더 많은 경기가 열리고 있습니다.
-    .section.d-none
-      .match_percent_wrap
-        h6 
-          span.description #{day_list[match_date.getDay()]}요일 #{match_info.match_time.slice(0,2)}시 
-          strong #{match_info.ground_info.groundName} 
-          span.description 의 경기는
-        h5
-          strong.text-danger 80% 
-          span.h5 확률로 정상 진행되고 있습니다.
-    .section
-      .match_process_wrap
-        h5 진행방식
-        .d-flex.justify-content-between
-          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_5vs5.svg")')
-            p 5vs5 매치
-          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_male.svg")')
-            p 남성매치
-          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_every.svg")')
-            p 일반
-          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_turf.svg")')
-            p 풋살화
-          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_minmax.svg")')
-            p 8~15명
-      .ground_description_wrap
-        strong 특이사항
-        ul
-          li 일반 매치는 실력에 상관없이 누구나 참여하실 수 있습니다.
-    .section
-      .ground_facility_wrap
-        h4 구장 시설
-        .d-flex.justify-content-between
-          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_size.svg")')
-            p #{match_info.ground_info.facility.size.x} x #{match_info.ground_info.facility.size.y}m
-          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_shower.svg")', class=(match_info.ground_info.facility.shower?'':'facility_opacity'))
-            p 샤워장
-          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_parking_free.svg")', class=(match_info.ground_info.facility.freeParking?'':'facility_opacity'))
-            p 무료주차
-          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_rentalshoes.svg")', class=(match_info.ground_info.facility.shoesRental?'':'facility_opacity'))
-            p 풋살화 대여
-          .bg-light.border-radius(style='background-image:url("/assets/svg/ic_rentalwear.svg")', class=(match_info.ground_info.facility.uniformRental?'':'facility_opacity'))
-            p 운동복 대여
-      .ground_description_wrap
-        strong 구장 특이사항
-        p #{match_info.ground_info.description}
-    include include/match_comm
-    .section
-      .col-md-6.mx-auto
-        button.btn.btn-primary.w-100.py-3(onclick='fnApplyGame()') 신청하기
+        button.btn.btn-neutral.text-primary(name='toggle_theway', data-visible='false') 가는 길 보기
+    //-   h5.text-primary 
+    //- .section
+    //-   h6 
+    //-     a(href='/ground/' + match_info.ground_info._id)
+    //-       b.text-primary #{match_info.ground_info.groundName}
+    //-     | 에서는 더 많은 경기가 열리고 있습니다.
+    //- .section.d-none
+    //-   .match_percent_wrap
+    //-     h6 
+    //-       span.description #{day_list[match_date.getDay()]}요일 #{match_info.match_time.slice(0,2)}시 
+    //-       strong #{match_info.ground_info.groundName} 
+    //-       span.description 의 경기는
+    //-     h5
+    //-       strong.text-danger 80% 
+    //-       span.h5 확률로 정상 진행되고 있습니다.
+    //- .section
+    //-   .match_process_wrap
+    //-     h5 진행방식
+    //-     .d-flex.justify-content-between
+    //-       .bg-light.border-radius(style='background-image:url("/assets/svg/ic_5vs5.svg")')
+    //-         p 5vs5 매치
+    //-       .bg-light.border-radius(style='background-image:url("/assets/svg/ic_male.svg")')
+    //-         p 남성매치
+    //-       .bg-light.border-radius(style='background-image:url("/assets/svg/ic_every.svg")')
+    //-         p 일반
+    //-       .bg-light.border-radius(style='background-image:url("/assets/svg/ic_turf.svg")')
+    //-         p 풋살화
+    //-       .bg-light.border-radius(style='background-image:url("/assets/svg/ic_minmax.svg")')
+    //-         p 8~15명
+    //-   .ground_description_wrap
+    //-     strong 특이사항
+    //-     ul
+    //-       li 일반 매치는 실력에 상관없이 누구나 참여하실 수 있습니다.
+    //- .section
+    //-   .ground_facility_wrap
+    //-     h4 구장 시설
+    //-     .d-flex.justify-content-between
+    //-       .bg-light.border-radius(style='background-image:url("/assets/svg/ic_size.svg")')
+    //-         p #{match_info.ground_info.facility.size.x} x #{match_info.ground_info.facility.size.y}m
+    //-       .bg-light.border-radius(style='background-image:url("/assets/svg/ic_shower.svg")', class=(match_info.ground_info.facility.shower?'':'facility_opacity'))
+    //-         p 샤워장
+    //-       .bg-light.border-radius(style='background-image:url("/assets/svg/ic_parking_free.svg")', class=(match_info.ground_info.facility.freeParking?'':'facility_opacity'))
+    //-         p 무료주차
+    //-       .bg-light.border-radius(style='background-image:url("/assets/svg/ic_rentalshoes.svg")', class=(match_info.ground_info.facility.shoesRental?'':'facility_opacity'))
+    //-         p 풋살화 대여
+    //-       .bg-light.border-radius(style='background-image:url("/assets/svg/ic_rentalwear.svg")', class=(match_info.ground_info.facility.uniformRental?'':'facility_opacity'))
+    //-         p 운동복 대여
+    //-   .ground_description_wrap
+    //-     strong 구장 특이사항
+    //-     p #{match_info.ground_info.description}
+  #bottomBtnWrap.container-fluid.d-fixed(style='bottom:0px')
+    .section.text-center.py-3
+      button.btn.bg-purple(onclick='fnApplyGame()', name='btnApply') 참가하기
   include modals/matchConfirm
   include modals/chargePoint
 block append_js

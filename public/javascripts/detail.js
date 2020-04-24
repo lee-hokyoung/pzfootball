@@ -3,12 +3,23 @@ $(".detail-slider").on("init", function (e, s) {
 });
 $(".detail-slider").slick({
   dots: true,
-  arrows: false,
+  arrows: true,
   fade: true,
 });
 $("#theway-slider").slick({
   fade: true,
 });
+//  하단 참가하기 버튼 픽스
+let scrollTarget = $("#scrollPosition");
+let bottomBtnWrap = document.querySelector("#bottomBtnWrap");
+window.addEventListener("scroll", function () {
+  if (window.pageYOffset > scrollTarget.offset().top + scrollTarget.height()) {
+    bottomBtnWrap.classList.add("position-fixed");
+  } else {
+    bottomBtnWrap.classList.remove("position-fixed");
+  }
+});
+
 //  클립보드에 주소 복사
 document.querySelector(".copy").addEventListener("click", function () {
   let copiedText = $(this).data().copy;
@@ -312,6 +323,11 @@ document
     };
     let map = new kakao.maps.Map(mapContainer, mapOption);
   });
+//  즐겨찾기 구장 추가 버튼 클릭 이벤트
+document
+  .querySelector('button[name="btnFavoriteGround"]')
+  .addEventListener("click", function () {});
+
 //  가는 길 보기 클릭 이벤트 -> 카카오 맵 연결으로 변경됨.
 // document
 //   .querySelector('button[name="toggle_theway"]')

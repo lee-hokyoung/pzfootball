@@ -92,15 +92,20 @@ body {
 .main-slider.slick-initialized {
   display: block;
 } */
-.slick-dotted.slick-slider {
-  padding: 2rem 0;
-}
 .slick-dots {
-  bottom: 10px;
+  bottom: 50px;
 }
 .slick-prev:before,
 .slick-next:before {
   color: #aaa;
+}
+.slick-dots li button:before {
+  color: white;
+  opacity: 1;
+}
+.slick-dots li.slick-active button:before {
+  color: #662d91;
+  opacity: 1;
 }
 .m-row {
   margin: 0;
@@ -313,9 +318,10 @@ input#datepicker {
 }
 .detail_img_wrap,
 .theway_images {
-  height: 500px;
+  height: 400px;
   background-size: cover;
   background-position: center center;
+  border-radius: 25px;
 }
 #detail_page .section {
   padding: 2rem 0;

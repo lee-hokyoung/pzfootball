@@ -464,4 +464,23 @@ router.get("/find/:phone", middle.isSignedIn, async (req, res) => {
     res.json({ code: 0, message: err.message });
   }
 });
+//  포인트 환불신청
+router.post("/refund", middle.isSignedIn, async (req, res) => {
+  let user_info = req.session.passport.user;
+  try {
+    let result = await User.updateOne(
+      { user_id: user_info.user_id },
+      { $set: { reqRefundPoint: req.body.reqRefundPoint } }
+    );
+    if (result.ok === 1)
+      res.json({ code: 1, message: "포인트 환불 신청했습니다." });
+    else
+      res.json({
+        code: 0,
+        message: "포인트 환불 신청 실패! 관리자에게 문의해주세요",
+      });
+  } catch (err) {
+    res.json({ code: 0, message: err.message });
+  }
+});
 module.exports = router;

@@ -375,3 +375,35 @@ function fnSearchTeam() {
   xhr.send();
   return false;
 }
+
+//  환불 요청
+function fnReqRefund() {
+  let reqRefundPoint = document.querySelector(
+    'input[name="requestRefundPoint"]'
+  );
+  if (reqRefundPoint.value === "") {
+    alert("요청할 포인트를 입력해 주세요");
+    return false;
+  }
+  let maxPoint = document.querySelector('input[name="inpRefund"]').value;
+  if (parseInt(reqRefundPoint.value) > parseInt(maxPoint)) {
+    alert(
+      "환불 신청 가능한 포인트는 " +
+        new Intl.NumberFormat("ko").format(maxPoint) +
+        "입니다."
+    );
+    return false;
+  }
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", "/users/refund", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function () {
+    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      let res = JSON.parse(this.response);
+      console.log("res : ", res);
+      alert(res.message);
+      if (res.code === 1) location.reload();
+    }
+  };
+  xhr.send(JSON.stringify({ reqRefundPoint: reqRefundPoint }));
+}

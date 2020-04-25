@@ -292,11 +292,14 @@ block content
           .card-header.text-center.pt-4
             h6.title 캐쉬 및 예약 현황
           .card-body
-            .form-group
-              label.title 보유 포인트
-              .point-wrap.d-flex.justify-content-start
-                p #{new Intl.NumberFormat('ko').format(user.point) || 0}
-                button.btn.btn-primary(data-toggle='modal', data-target='#modalChargePoint') 충전하기
+            .row
+              .col
+                .form-group
+                  label.title 보유 포인트
+                  .point-wrap.d-flex.justify-content-start
+                    p #{new Intl.NumberFormat('ko').format(user.point) || 0}
+                    button.btn.btn-primary(data-toggle='modal', data-target='#modalChargePoint') 충전하기
+                    button.btn.btn-danger(data-toggle='modal', data-target='#refundModal') 환불신청
             #table-reservation
               table.table
                 colgroup
@@ -398,6 +401,7 @@ block content
         
   include modals/chargePoint
   include modals/searchTeam
+  include modals/refund
 block append_js
   script(src='/public_js/mypage.js')
   script.

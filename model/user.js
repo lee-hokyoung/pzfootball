@@ -33,6 +33,7 @@ const UserSchema = new Schema({
     },
   ],
   favorite_ground: [{ type: mongoose.Schema.Types.ObjectId, ref: "Ground" }],
+  reqRefundPoint: Number,
   created_at: { type: Date, default: Date.now },
 });
 

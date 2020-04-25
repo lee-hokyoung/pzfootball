@@ -1,0 +1,27 @@
+#beforeJoinModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="beforeJoinLabel" aria-hidden="true")
+  .modal-dialog
+    .modal-content(style='border-radius:30px;')
+      .modal-header
+        .rainbow_font_wrap
+          span 함
+          span 께
+          span 하
+          span 는
+          span
+          span 스
+          span 포
+          span 츠
+        span 퍼즐풋볼
+        a(href='/users/join')
+          .button-wrap(data-role='email')
+            img(src='/images/envelope.png')
+            span.text-white 이메일로 가입
+      .modal-body
+        a(href='/auth/naver')
+          .button-wrap(data-role='naver')
+            span.text-white(data-role='snsFont') N
+            span.text-white 네이버 계정으로 가입
+        a(href='/auth/kakao')
+          .button-wrap(data-role='kakao')
+            span(data-role='snsFont') K
+            span 카카오 계정으로 가입

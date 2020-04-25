@@ -1,28 +1,28 @@
 #modalChargePoint.modal.fade(tabindex="-1" role="dialog" aria-labelledby="chargePointModalLabel" aria-hidden="true")
-    .modal-dialog
-      .modal-content
-        .modal-header
-          h6 결제
-        .modal-body
-          .form-group
-            label 보유 포인트
-            input.form-control#beforeCharge(readonly)
-          .form-group
-            label 충전할 포인트
-            - var point_list = [1000, 2000, 3000, 5000, 10000, 30000, 50000, 100000, 300000, 500000]
-            select.form-control#selectPoint
-              each point in point_list
-                option(value=point) !{new Intl.NumberFormat().format(point)}
-          .form-group
-            label 충전 후 포인트
-            input.form-control#afterCharge(readonly)
-          .form-group
-            label 충전 방식 선택
-            .radio-button-wrap
-              button(type='button', name='chargeType', value='account', data-toggle="false") 무통장입금
-              button(type='button', name='chargeType', value='realtime', data-toggle="false") 실시간 계좌이체
-              button(type='button', name='chargeType', value='credit', data-toggle="false") 신용카드
-              button(type='button', name='chargeType', value='kakao', data-toggle="false") 카카오페이
-        .modal-footer
-          button.btn.btn-primary(onclick='fnConfirmChargePoint()') 확인
-          button.btn.btn-danger(data-dismiss='modal') 취소
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h6 결제
+      .modal-body
+        .form-group
+          label 보유 포인트
+          input.form-control#beforeCharge(readonly)
+        .form-group
+          label 충전할 포인트
+          - var point_list = [1000, 2000, 3000, 5000, 10000, 30000, 50000, 100000, 300000, 500000]
+          select.form-control#selectPoint
+            each point in point_list
+              option(value=point) !{new Intl.NumberFormat().format(point)}
+        .form-group
+          label 충전 후 포인트
+          input.form-control#afterCharge(readonly)
+        .form-group
+          label 충전 방식 선택
+          .radio-button-wrap
+            button(type='button', name='chargeType', value='account', data-toggle="false") 무통장입금
+            button(type='button', name='chargeType', value='realtime', data-toggle="false") 실시간 계좌이체
+            button(type='button', name='chargeType', value='credit', data-toggle="false") 신용카드
+            button(type='button', name='chargeType', value='kakao', data-toggle="false") 카카오페이
+      .modal-footer
+        button.btn.btn-primary(onclick='fnConfirmChargePoint()') 확인
+        button.btn.btn-danger(data-dismiss='modal') 취소

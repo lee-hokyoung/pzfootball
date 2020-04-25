@@ -90,7 +90,7 @@ html
               span.text-secondary.px-2 또는
               span
                 //- a.text-primary(href='#', data-toggle='modal', data-target='#joinModal') 회원가입
-                a.text-primary(href='/users/join') 회원가입
+                a.text-primary(href='#', data-toggle='modal', data-target='#beforeJoinModal') 회원가입
             a#sidebarCollapse.pl-3(href='#')
               img(src='/images/nav_toggle.svg', width=22)
       input#isLoggedIn(type='hidden', data-isLogin=(user_info?'true':'false'))
@@ -98,6 +98,7 @@ html
       // login modal
       include modals/login
       include modals/join
+      include modals/beforeJoin
     .overlay
     button.btn.btn-round.btn-success.btn-sm.btn-icon#scrollTop(data-view='false')
       i.nc-icon.nc-minimal-up

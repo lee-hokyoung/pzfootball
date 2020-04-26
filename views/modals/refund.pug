@@ -6,7 +6,7 @@
       .modal-body
         .form-group
           label 환불 포인트 입력
-          input.form-control(name='requestRefundPoint' placeholder='환불할 포인트를 입력해 주세요')
+          input.form-control(type='number', name='requestRefundPoint' placeholder='환불할 포인트를 입력해 주세요')
           label.text-info 요청 가능 포인트는 
             span.text-danger #{new Intl.NumberFormat('ko').format(user.point) || 0}
             | 입니다.

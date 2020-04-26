@@ -1,3 +1,56 @@
+//  누적 캐시 클릭 이벤트
+document.querySelectorAll('a[data-role="pointHistory"]').forEach(function (a) {
+  a.addEventListener("click", function () {
+    let user_id = this.dataset.id;
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "/admin/user/pointHistory/" + user_id, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        let res = JSON.parse(this.response);
+        if (res.code === 1) {
+          console.log("res : ", res);
+          let point_history = res.result.point_history;
+          let tbody = document.querySelector("#pointHistoryModal tbody");
+          tbody.innerHTML = "";
+          point_history.forEach(function (v, idx) {
+            let tr = document.createElement("tr");
+            let td = document.createElement("td");
+            td.innerText = idx + 1;
+            tr.appendChild(td);
+
+            td = document.createElement("td");
+            td.innerText =
+              v.chargeType === "account"
+                ? "무통장입금"
+                : v.chargeType === "realtime"
+                ? "실시간 계좌이체"
+                : v.chargeType === "credit"
+                ? "신용카드"
+                : v.chargeType === "kakao"
+                ? "카카오페이"
+                : "";
+            tr.appendChild(td);
+
+            td = document.createElement("td");
+            td.innerText = Intl.NumberFormat().format(v.chargePoint);
+            tr.appendChild(td);
+
+            td = document.createElement("td");
+            td.innerText = v.created_at;
+            tr.appendChild(td);
+            tbody.appendChild(tr);
+          });
+          $("#pointHistoryModal").modal("show");
+        } else {
+          alert(res.message);
+        }
+      }
+    };
+    xhr.send();
+  });
+});
+//  회원 삭제
 function fnDeleteUser(user_id) {
   if (!confirm("삭제하시겠습니까?")) return false;
   let xhr = new XMLHttpRequest();
@@ -12,6 +65,8 @@ function fnDeleteUser(user_id) {
   };
   xhr.send();
 }
+
+//  datatable 설정
 document.addEventListener("DOMContentLoaded", function () {
   let eCol = {
     no: 0,

@@ -405,5 +405,5 @@ function fnReqRefund() {
       if (res.code === 1) location.reload();
     }
   };
-  xhr.send(JSON.stringify({ reqRefundPoint: reqRefundPoint }));
+  xhr.send(JSON.stringify({ reqRefundPoint: reqRefundPoint.value }));
 }

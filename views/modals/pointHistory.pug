@@ -1,0 +1,24 @@
+#pointHistoryModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="beforeJoinLabel" aria-hidden="true")
+  .modal-dialog
+    .modal-content
+      .modal-header
+        .row
+          .col.my-auto
+            p.title.m-0 포인트 적립내역
+          .col
+            button.close(type='button', data-dismiss='modal', aria-hidden='true')
+              i.nc-icon.nc-simple-remove
+      .modal-body
+        table.table
+          colgroup
+            col(title='no')
+            col(title='chargeType')
+            col(title='chargePoint')
+            col(title='created_at')
+          thead
+            th No
+            th 충전 방식
+            th 충전 포인트
+            th 충전 일시
+          tbody
+            

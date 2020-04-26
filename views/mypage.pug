@@ -300,6 +300,13 @@ block content
                     p #{new Intl.NumberFormat('ko').format(user.point) || 0}
                     button.btn.btn-primary(data-toggle='modal', data-target='#modalChargePoint') 충전하기
                     button.btn.btn-danger(data-toggle='modal', data-target='#refundModal') 환불신청
+            if(user.reqRefundPoint > 0)
+              .row
+                .col
+                  .form-group
+                    label.title 환불신청
+                    .point-wrap.d-flex
+                      p #{new Intl.NumberFormat('ko').format(user.reqRefundPoint)}
             #table-reservation
               table.table
                 colgroup

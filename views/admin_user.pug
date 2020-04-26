@@ -58,6 +58,7 @@ block content
                         option(value='all') 전체
                         option(value='1') 팀캐시
                         option(value='2') 개인캐시
+                    th 환불요청
                     th 팀워크 점수
                     th MVP 횟수
                     th 가입일자
@@ -107,8 +108,9 @@ block content
                         if(user.point_history)
                           each item in user.point_history
                             - accu_point = accu_point + item.chargePoint
-                        | #{new Intl.NumberFormat().format(accu_point || 0)}
+                        a.text-dark(href='#', data-role='pointHistory', data-id=user._id) #{new Intl.NumberFormat().format(accu_point || 0)}
                       td #{new Intl.NumberFormat().format(user.point || 0)}
+                      td #{new Intl.NumberFormat().format(user.reqRefundPoint)}
                       td #{100 - penalty} 
                       td #{mvp_list.length}
                       - var date = new Date(user.created_at)
@@ -120,6 +122,7 @@ block content
                       //- td #{user.created_at.toLocaleString('ko')}
                       td
                         button.btn.btn-danger.btn-link.text-danger.btn-neutral(type='button', onclick='fnDeleteUser("' + user._id.toString() + '")') 삭제
+  include modals/pointHistory
 block append_js
   script(src='/public_js/admin_user.js')
   script.

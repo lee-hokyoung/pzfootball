@@ -468,9 +468,12 @@ router.get("/find/:phone", middle.isSignedIn, async (req, res) => {
 router.post("/refund", middle.isSignedIn, async (req, res) => {
   let user_info = req.session.passport.user;
   try {
+    let refundPoint = Number(req.body.reqRefundPoint);
     let result = await User.updateOne(
       { user_id: user_info.user_id },
-      { $set: { reqRefundPoint: req.body.reqRefundPoint } }
+      {
+        $inc: { point: -1 * refundPoint, reqRefundPoint: refundPoint },
+      }
     );
     if (result.ok === 1)
       res.json({ code: 1, message: "포인트 환불 신청했습니다." });

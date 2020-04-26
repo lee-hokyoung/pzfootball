@@ -57,7 +57,6 @@ router.get("/user/list", middle.isAdmin, async (req, res) => {
     if (ladder) ladder_query = ["$ladder", parseInt(ladder)];
     let list = await User.aggregate([
       { $match: { admin: false } },
-      { $sort: { created_at: 1 } },
       {
         $project: {
           user_id: 1,
@@ -66,6 +65,7 @@ router.get("/user/list", middle.isAdmin, async (req, res) => {
           phone1: 1,
           phone2: 1,
           point: 1,
+          reqRefundPoint: 1,
           point_history: 1,
           manner: 1,
           created_at: 1,
@@ -163,6 +163,7 @@ router.get("/user/list", middle.isAdmin, async (req, res) => {
           phone1: { $first: "$phone1" },
           phone2: { $first: "$phone2" },
           point: { $first: "$point" },
+          reqRefundPoint: { $first: "$reqRefundPoint" },
           point_history: { $first: "$point_history" },
           club_info: { $first: "$club_info" },
           waiting_info: { $first: "$waiting_info" },
@@ -171,6 +172,7 @@ router.get("/user/list", middle.isAdmin, async (req, res) => {
           manner_info: { $push: "$manner_info" },
         },
       },
+      { $sort: { created_at: 1 } },
     ]);
     let user = req.session.passport.user;
     res.render("admin_user", {
@@ -193,6 +195,19 @@ router.delete("/user/delete/:id", middle.isAdmin, async (req, res) => {
     if (result.ok === 1)
       res.json({ code: 1, message: "삭제되었습니다", result: result });
     else res.json({ code: 0, message: "삭제실패", result: result });
+  } catch (err) {
+    res.json({ code: 0, message: err.message });
+  }
+});
+//  회원관리 - 캐쉬 내역 불러오기
+router.get("/user/pointHistory/:user_id", middle.isAdmin, async (req, res) => {
+  try {
+    let user_id = req.params.user_id;
+    let result = await User.findOne(
+      { _id: mongoose.Types.ObjectId(user_id) },
+      { point_history: 1 }
+    );
+    res.json({ code: 1, result: result });
   } catch (err) {
     res.json({ code: 0, message: err.message });
   }

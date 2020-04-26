@@ -212,4 +212,22 @@ router.get("/user/pointHistory/:user_id", middle.isAdmin, async (req, res) => {
     res.json({ code: 0, message: err.message });
   }
 });
+//  회원관리 - 캐쉬 환불하기
+router.patch("/user/refundPoint", middle.isAdmin, async (req, res) => {
+  try {
+    let refundPoint = req.body.refundPoint;
+    let result = await User.updateOne(
+      {
+        _id: mongoose.Types.ObjectId(req.body.user_id),
+      },
+      {
+        $inc: { reqRefundPoint: -1 * refundPoint },
+        $push: { point_history: { refundPoint: refundPoint } },
+      }
+    );
+    res.json({ code: 1, message: "적용되었습니다.", result: result });
+  } catch (err) {
+    res.json({ code: 0, message: err.message });
+  }
+});
 module.exports = router;

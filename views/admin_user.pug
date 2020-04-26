@@ -110,19 +110,16 @@ block content
                             - accu_point = accu_point + item.chargePoint
                         a.text-dark(href='#', data-role='pointHistory', data-id=user._id) #{new Intl.NumberFormat().format(accu_point || 0)}
                       td #{new Intl.NumberFormat().format(user.point || 0)}
-                      td #{new Intl.NumberFormat().format(user.reqRefundPoint)}
+                      td 
+                        a.text-danger.mx-3(href='#', data-role='pointRefund', data-id=user._id, data-value=user.reqRefundPoint) #{new Intl.NumberFormat().format(user.reqRefundPoint)}
                       td #{100 - penalty} 
                       td #{mvp_list.length}
                       - var date = new Date(user.created_at)
                       td #{date.toLocaleString('ko')}
-                      //- td
-                      //-   .btn-group
-                      //-     input.form-control(type='text', style='width:150px;')
-                      //-     button.btn.btn-sm.btn-success 저장
-                      //- td #{user.created_at.toLocaleString('ko')}
                       td
                         button.btn.btn-danger.btn-link.text-danger.btn-neutral(type='button', onclick='fnDeleteUser("' + user._id.toString() + '")') 삭제
   include modals/pointHistory
+  include modals/refundPoint
 block append_js
   script(src='/public_js/admin_user.js')
   script.

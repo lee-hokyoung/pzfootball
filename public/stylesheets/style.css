@@ -93,7 +93,7 @@ body {
   display: block;
 } */
 .slick-dots {
-  bottom: 50px;
+  bottom: 20px;
 }
 .slick-prev:before,
 .slick-next:before {

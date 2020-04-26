@@ -28,6 +28,7 @@ const UserSchema = new Schema({
       chargePoint: { type: Number, default: 0 },
       chargeType: String,
       usePoint: Number,
+      refundPoint: Number,
       match_id: { type: mongoose.Schema.Types.ObjectId, ref: "Match" },
       created_at: { type: Date, default: Date.now },
     },

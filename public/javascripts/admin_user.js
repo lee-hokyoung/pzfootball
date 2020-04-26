@@ -9,7 +9,6 @@ document.querySelectorAll('a[data-role="pointHistory"]').forEach(function (a) {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
         let res = JSON.parse(this.response);
         if (res.code === 1) {
-          console.log("res : ", res);
           let point_history = res.result.point_history;
           let tbody = document.querySelector("#pointHistoryModal tbody");
           tbody.innerHTML = "";
@@ -37,7 +36,16 @@ document.querySelectorAll('a[data-role="pointHistory"]').forEach(function (a) {
             tr.appendChild(td);
 
             td = document.createElement("td");
-            td.innerText = v.created_at;
+            td.innerText = Intl.NumberFormat().format(v.usePoint || 0);
+            tr.appendChild(td);
+
+            td = document.createElement("td");
+            td.innerText = Intl.NumberFormat().format(v.refundPoint || 0);
+            tr.appendChild(td);
+
+            td = document.createElement("td");
+            let date = new Date(v.created_at);
+            td.innerText = date.toLocaleString("kr");
             tr.appendChild(td);
             tbody.appendChild(tr);
           });
@@ -65,7 +73,38 @@ function fnDeleteUser(user_id) {
   };
   xhr.send();
 }
-
+//  환불요청
+document.querySelectorAll('a[data-role="pointRefund"]').forEach(function (a) {
+  a.addEventListener("click", function () {
+    document.querySelector('input[name="pointRefund"]').value =
+      a.dataset.value || 0;
+    document.querySelector('input[name="refund_user_id"]').value = a.dataset.id;
+    $("#refundPointModal").modal("show");
+  });
+});
+//  환불 승인
+function refundPoint() {
+  let refundPoint = document.querySelector('input[name="pointRefund"]');
+  let user_id = document.querySelector('input[name="refund_user_id"]').value;
+  if (refundPoint.value !== "" && refundPoint.value > 0) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("PATCH", "/admin/user/refundPoint", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        let res = JSON.parse(this.response);
+        alert(res.message);
+        if (res.code === 1) location.reload();
+      }
+    };
+    xhr.send(
+      JSON.stringify({ user_id: user_id, refundPoint: refundPoint.value })
+    );
+  } else {
+    alert("포인트를 입력하세요");
+    return false;
+  }
+}
 //  datatable 설정
 document.addEventListener("DOMContentLoaded", function () {
   let eCol = {

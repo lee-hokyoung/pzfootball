@@ -1,0 +1,12 @@
+#refundPointModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='refundPointLabel', aria-hidden='true')
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h6 포인트 환불
+      .modal-body
+        .form-group
+          label 환불 포인트
+          input.form-control(type='text', name='pointRefund')
+          input(type='hidden', name='refund_user_id')
+      .modal-footer
+        button.btn.btn-success.m-0.w-100(type='button', onclick='refundPoint()') 환불 승인

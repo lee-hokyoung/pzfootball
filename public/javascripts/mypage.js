@@ -263,7 +263,6 @@ document
               this.status === 200
             ) {
               let res = JSON.parse(this.response);
-              alert(res.message);
               if (res.code === 1) {
                 input.setAttribute("readonly", "readonly");
                 td.querySelectorAll(

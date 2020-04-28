@@ -15,7 +15,14 @@ router.get("/", function (req, res, next) {
   res.send("respond with a resource");
 });
 router.get("/login", middle.isNotSignedIn, (req, res) => {
-  res.render("login");
+  let user_id = "";
+  console.log("cookie : ", req.cookies);
+  if (req.cookies.user_id) {
+    user_id = req.cookies.user_id;
+  }
+  res.render("login", {
+    user_id: user_id,
+  });
 });
 router.get("/logout", (req, res) => {
   req.session.destroy();
@@ -36,26 +43,21 @@ router.post("/login", middle.isNotSignedIn, (req, res, next) => {
       if (!user) {
         return res.json({ code: 0, message: "등록되지 않은 회원입니다" });
       }
-      console.log("user : ", user);
+      //  아이디 기억하기
+      if (req.body.idSave) {
+        let maxAge = 7 * 24 * 3600 * 1000;
+        res.cookie("user_id", req.body.user_id, { maxAge: maxAge });
+        console.log("cookie : ", req.cookies);
+      } else {
+        res.clearCookie("user_id");
+      }
       return req.login(user, async (loginError) => {
         if (loginError) {
           return next(loginError);
         }
         res.json({ code: 1, message: "로그인 성공" });
       });
-      // console.log("authError : ", authError);
-      // console.log("user : ", user);
-      // console.log("info : ", info);
-      // res.end();
     })(req, res, next);
-
-    //   let exUser = await User.findOne({ user_id: user_id });
-    //   console.log("exuser : ", exUser);
-    //   if (exUser) {
-    //     res.json({ code: 1, message: "로그인 성공" });
-    //   } else {
-    //     res.json({ code: 0, message: "회원정보가 없습니다" });
-    //   }
   } catch (err) {
     console.error(err);
     res.json({ code: 0, message: "로그인 실패" });
@@ -74,7 +76,6 @@ router.post("/login/:target", middle.isNotLoggedIn, async (req, res, next) => {
       if (!user) {
         return res.json({ code: 0, message: "등록되지 않은 회원입니다" });
       }
-      console.log("target user : ", user);
       return req.login(user, async (loginError) => {
         if (loginError) {
           console.log("login error : ", loginError);

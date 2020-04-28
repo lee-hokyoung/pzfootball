@@ -514,34 +514,42 @@ select.form-control:not([size]):not([multiple]),
   max-width: 300px;
 }
 #beforeJoinModal .modal-header span,
-#beforeJoinModal .rainbow_font_wrap span {
+.rainbow_font_wrap span {
   font-family: scdream6;
   font-weight: 800;
   font-size: 18px;
 }
-#beforeJoinModal .rainbow_font_wrap span:nth-child(1) {
-  color: red;
+#login-page .rainbow_font_wrap span {
+  font-size: 25px;
+  letter-spacing: -2px;
 }
-#beforeJoinModal .rainbow_font_wrap span:nth-child(2) {
-  color: orange;
+.rainbow_font_wrap span:nth-child(1) {
+  color: rgb(255, 0, 0);
 }
-#beforeJoinModal .rainbow_font_wrap span:nth-child(3) {
-  color: yellow;
+.rainbow_font_wrap span:nth-child(2) {
+  color: rgb(246, 132, 38);
 }
-#beforeJoinModal .rainbow_font_wrap span:nth-child(4) {
-  color: lightseagreen;
+.rainbow_font_wrap span:nth-child(3) {
+  color: rgb(238, 238, 0);
 }
-#beforeJoinModal .rainbow_font_wrap span:nth-child(5) {
+.rainbow_font_wrap span:nth-child(4) {
+  color: rgb(0, 176, 80);
+}
+.rainbow_font_wrap span:nth-child(5) {
   padding: 0 5px;
 }
-#beforeJoinModal .rainbow_font_wrap span:nth-child(6) {
-  color: blue;
+.rainbow_font_wrap span:nth-child(6) {
+  color: rgb(31, 73, 125);
 }
-#beforeJoinModal .rainbow_font_wrap span:nth-child(7) {
-  color: navy;
+.rainbow_font_wrap span:nth-child(7) {
+  color: rgb(0, 32, 96);
 }
-#beforeJoinModal .rainbow_font_wrap span:nth-child(8) {
-  color: purple;
+.rainbow_font_wrap span:nth-child(8) {
+  color: #662d91;
+}
+.rainbow_font_wrap span:nth-child(9) {
+  color: rgb(0, 0, 0);
+  display: block;
 }
 #beforeJoinModal .modal-header {
   padding-bottom: 0.25rem;

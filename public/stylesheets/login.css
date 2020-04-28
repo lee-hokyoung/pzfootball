@@ -1,7 +1,7 @@
 #login-page,
 #join-page {
   max-width: 350px;
-  height: calc(100vh - 70px);
+  height: calc(100vh - 130px);
   display: table;
 }
 #login-page .page-wrap,
@@ -27,6 +27,66 @@
 }
 #join-page {
   max-width: 1110px;
+}
+hr,
+#login-page .d-flex.justify-content-between .vertical-line {
+  border-color: rgb(89, 89, 89);
+}
+#login-page input.form-control {
+  border-radius: 0px;
+  font-family: scdream5;
+  font-weight: normal;
+  color: rgb(127, 127, 127);
+  font-size: 14px;
+}
+#login-page button[type="submit"] {
+  background-color: #662d91;
+  color: #fff;
+  font-family: scdream6;
+  font-weight: bold;
+  font-size: 20px;
+}
+#login-page .form-check-label,
+h6.title {
+  font-family: scdream5;
+  font-weight: bold;
+  font-size: 14px;
+}
+#login-page .d-flex.justify-content-between a {
+  font-family: scdream5;
+  font-weight: bold;
+}
+#login-page .d-flex.justify-content-between a:hover {
+  color: #662d91;
+}
+#login-page .d-flex.justify-content-between .vertical-line {
+  margin: 4px 0;
+  width: 1px;
+  border-width: 1px;
+  border-style: solid;
+  border-left: none;
+  border-top: none;
+  border-bottom: none;
+}
+.sns-btn-wrap {
+  width: 100%;
+  padding: 0.75rem;
+  text-align: center;
+  border-radius: 5px;
+  position: relative;
+}
+.sns-btn-wrap[data-role="naver"] {
+  background-color: #2db400;
+  color: white;
+}
+.sns-btn-wrap[data-role="kakao"] {
+  background-color: #ffe812;
+}
+.sns-btn-wrap span.sns-font {
+  font-size: 20px;
+  position: absolute;
+  top: 8px;
+  left: 10px;
 }
 @media (max-width: 768px) {
   #join-page {

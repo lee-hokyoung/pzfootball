@@ -5,25 +5,44 @@ block content
   .container-fluid
     .container#login-page
       .page-wrap
-        h5.title SNS 로그인
-        ul
-          li
-            a(href='/auth/kakao')
-              img(src='/images/kakao_login.png', alt='카카오 아이디로 로그인')
-          li
-            a(href='/auth/naver')
-              img(src='/images/naver_login.png', alt='네이버 아이디로 로그인')
-        hr
-        h5.title 퍼즐풋볼 로그인
         form(onsubmit='return fnSubmitLoginPage()')
-          ul.local-login
-            li.text-left
-              .form-group.m-0
-                input#user_id.form-control(type='text', name='user_id', placeholder='ID')
-            li.text-left
-              .form-group.m-0
-                input#user_pw.form-control(type='password', name='user_pw', placeholder='PASSWORD')
-            li
-              button.btn.btn-primary.w-100(type='submit') login
+          .rainbow_font_wrap(style='font-size:18.75px')
+            span 함
+            span 께
+            span 하
+            span 는
+            span 
+            span 스
+            span 포
+            span 츠
+            span 퍼즐풋볼
+          .form-group.mt-5
+            input.form-control#user_id(type='text', name='user_id', placeholder='이메일', value=user_id)
+          .form-group.mt-3
+            input.form-control#user_pw(type='password', name='user_pw', placeholder='비밀번호')
+          .form-check
+            label.form-check-label
+              input.form-check-input(type='checkbox', name='idSave', checked=user_id!=='')
+              span.form-check-sign 
+              | 아이디 기억하기
+          button.btn.w-100.mb-4(type='submit') 로그인
+        hr
+        .d-flex.justify-content-between
+          a(href='#') 아이디 찾기
+          .vertical-line 
+          a(href='#') 비밀번호 찾기
+          .vertical-line
+          a(href='#', data-toggle='modal', data-target='#beforeJoinModal') 회원가입
+        
+        h6.title.mt-5 SNS 간편 로그인
+        a(href='/auth/naver', )
+          .sns-btn-wrap(data-role='naver')
+            span.sns-font N
+            span 네이버 계정으로 로그인
+        a(href='/auth/kakao')
+          .sns-btn-wrap.mt-1(data-role='kakao')
+            span.sns-font K
+            span 카카오 계정으로 로그인
+
 block append_js
   script(src='/public_js/login.js')

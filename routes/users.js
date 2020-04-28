@@ -16,7 +16,6 @@ router.get("/", function (req, res, next) {
 });
 router.get("/login", middle.isNotSignedIn, (req, res) => {
   let user_id = "";
-  console.log("cookie : ", req.cookies);
   if (req.cookies.user_id) {
     user_id = req.cookies.user_id;
   }
@@ -47,7 +46,6 @@ router.post("/login", middle.isNotSignedIn, (req, res, next) => {
       if (req.body.idSave) {
         let maxAge = 7 * 24 * 3600 * 1000;
         res.cookie("user_id", req.body.user_id, { maxAge: maxAge });
-        console.log("cookie : ", req.cookies);
       } else {
         res.clearCookie("user_id");
       }

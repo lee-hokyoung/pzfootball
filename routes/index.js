@@ -7,7 +7,7 @@ const Notice = require("../model/notice");
 const User = require("../model/user");
 const mongoose = require("mongoose");
 
-/* GET home page. */
+/*  일반 접속의 경우, ladder = 0(일반 리그) 로 정함. */
 router.get("/", async (req, res) => {
   let today = new Date();
   let year = today.getFullYear();
@@ -43,7 +43,7 @@ router.get("/", async (req, res) => {
   let region = await Region.find({});
   let notice_list = await Notice.find({ activity: true });
   let region_group = await Region.aggregate([
-    { $match: {} },
+    { $match: { ladder: 0 } },
     {
       $lookup: {
         from: "ground",
@@ -72,6 +72,7 @@ router.get("/", async (req, res) => {
     region_group: region_group,
     notice_list: notice_list,
     favorite_ground: user.favorite_ground,
+    active: "normal",
   });
 });
 router.get("/search", async (req, res) => {
@@ -307,5 +308,12 @@ router.post("/filter", async (req, res) => {
       favorite_ground: favorite_ground,
     });
   }
+});
+
+//  리그 매치 화면
+router.get("/league", async (req, res) => {
+  res.render("league", {
+    active: "league",
+  });
 });
 module.exports = router;

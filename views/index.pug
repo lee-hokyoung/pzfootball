@@ -6,33 +6,40 @@ block content
   // slick-slider
   - var today = new Date();
   .full-cover-pzfutball
-  .container(style='max-width:938px')
+  .container.inner-container
+    .main-tab-wrap.mb-2
+      a.btn(href='/', class=active==='normal'?'active':'') 일반
+      a.btn(href='/league', class=active==='league'?'active':'') 리그
+      a.btn(href='/cup', class=active==='cup'?'active':'') 컵
     .main-slider
       .d-flex.justify-content-center
-        .d-none.d-sm-block.main-slide-item(style='background-image:url(/images/main_1.png)')
-          .title-wrap.left
-            h3 General Game
-            h1 일반매치
-            a(href='#', data-role='match', data-value='0')
-              img.mx-auto(src='/images/lets_go.png')
-          .title-wrap.right
-            h3 League Game
-            h1 리그매치
-            a(href='#', data-role='match', data-value='1')
-              img.mx-auto(src='/images/lets_go.png')
-          //- img(src='/images/main_1.png', alt='pc')
-        .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/main_slide_1_m.png)')
+        .d-none.d-sm-block.main-slide-item(style='background-image:url(/images/normal_main.png)')
+        .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/normal_main.png)')
       .d-flex.justify-content-center
-        .d-none.d-sm-block.main-slide-item(style='background:url(/images/main_2.png)')
-          .title-wrap.rank-title.center
-            h4 20-21 시즌
-            h2 순위표 바로가기
-            .text-light /
-            h5 Go to the Rank
-            a(href='#')
-              img.mx-auto.mt-3(src='/images/lets_go.png')
+        .d-none.d-sm-block.main-slide-item(style='background-image:url(/images/league_main1.png)')
+          //- .title-wrap.left
+          //-   h3 General Game
+          //-   h1 일반매치
+          //-   a(href='#', data-role='match', data-value='0')
+          //-     img.mx-auto(src='/images/lets_go.png')
+          //- .title-wrap.right
+          //-   h3 League Game
+          //-   h1 리그매치
+          //-   a(href='#', data-role='match', data-value='1')
+          //-     img.mx-auto(src='/images/lets_go.png')
+          //- img(src='/images/main_1.png', alt='pc')
+        .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/league_main1.png)')
+      .d-flex.justify-content-center
+        .d-none.d-sm-block.main-slide-item(style='background:url(/images/league_main2.png)')
+          //- .title-wrap.rank-title.center
+          //-   h4 20-21 시즌
+          //-   h2 순위표 바로가기
+          //-   .text-light /
+          //-   h5 Go to the Rank
+          //-   a(href='#')
+          //-     img.mx-auto.mt-3(src='/images/lets_go.png')
           //- img(src='/images/main_2.png', alt='pc')
-        .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/main_slide_3_m.png)')
+        .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/league_main2.png)')
       each notice in notice_list
         .d-none.d-sm-block.main-slide-item(style='background-image:url(' + notice.notice_img + ')')
           //- img(src=notice.notice_img, alt='pc')
@@ -117,10 +124,4 @@ block content
 block append_js
   script(src='/public_js/main.js', type='text/javascript')
   script.
-    let body = !{JSON.stringify(body)}
-
-    console.log('list : ', !{JSON.stringify(list)})
-    console.log('query : ', !{JSON.stringify(query)})
-    console.log('body : ', !{JSON.stringify(body)})
-
-    
+    let body = !{JSON.stringify(body)}    

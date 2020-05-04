@@ -1,0 +1,125 @@
+#season-wrap button {
+  width: 45%;
+  padding: 1rem;
+  border-radius: 0.65rem;
+  background-color: #ccc;
+  color: gray;
+}
+#season-wrap button.active,
+#season-wrap button:hover,
+#season-wrap button:focus,
+button[name="btnRanking"]:hover,
+button[name="btnRanking"]:focus {
+  background-color: #662d91 !important;
+}
+#season-wrap button img {
+  margin-right: 0.5rem;
+}
+#season-wrap button span {
+  font-size: 15px;
+  vertical-align: top;
+}
+#season-wrap .search-league-wrap {
+  display: flex;
+}
+#season-wrap .search-league-wrap select {
+}
+#nav-tab button.active,
+#nav-tab button:focus,
+#nav-tab button:hover {
+  color: #662d91 !important;
+  text-decoration: underline;
+}
+#nav-tab .vertical-line {
+  margin: 3px 0;
+  width: 1px;
+  border-width: 1px;
+  border-style: solid;
+  border-left: none;
+  border-top: none;
+  border-bottom: none;
+}
+#round-wrap {
+  width: 90%;
+  margin: 0 auto;
+}
+#round-wrap button.btn {
+  background-color: #ccc;
+  width: 95%;
+}
+#round-wrap .slick-prev:before {
+  content: "\ea3a";
+  font-family: "nucleo-icons";
+}
+#round-wrap .slick-next:before {
+  content: "\ea3b";
+  font-family: "nucleo-icons";
+}
+h5 {
+  font-family: scdream5;
+  font-weight: normal;
+}
+#filter-wrap {
+}
+#filter-wrap .form-group button {
+  margin: 0;
+  padding: 0 1.5rem 0 0;
+}
+#league-list-wrap {
+  border-top: 1px solid #111;
+}
+#league-list-wrap .row {
+  padding: 0.5rem 0;
+}
+#league-list-wrap div[data-col] {
+  padding: 0 1rem;
+}
+#league-list-wrap div[data-col="date"] {
+  margin: auto 0 auto 15px;
+}
+#league-list-wrap div[data-col="date"] h5 {
+  margin: 0;
+}
+#league-list-wrap div[data-col="time"] {
+  text-align: center;
+  margin: auto 0;
+}
+#league-list-wrap div[data-col="time"] h6 {
+  font-size: 19px;
+  font-family: scdream5;
+  margin: 0;
+}
+#league-list-wrap div[data-col="time"] span {
+  font-family: scdream5;
+  font-size: 12px;
+}
+#league-list-wrap div[data-col="match-result"] {
+  display: flex;
+  justify-content: center;
+  flex: 1;
+}
+#league-list-wrap div[data-col="match-result"] img,
+#league-list-wrap div[data-col="match-result"] .col-wrap,
+#league-list-wrap div[data-col="match-result"] .point-wrap {
+  margin: auto 0.5rem;
+}
+#league-list-wrap div[data-col="match-result"] img {
+  width: 50px;
+}
+#league-list-wrap div[data-col="match-result"] .col-wrap h5 {
+  margin: 0;
+}
+#league-list-wrap div[data-col="match-result"] .point-wrap span {
+  font-size: 30px;
+  font-weight: 300;
+  font-family: NotoSansR;
+}
+#league-list-wrap div[data-col="btn-detail"] {
+  margin-right: 15px;
+}
+button[name="btnRanking"] {
+  background-color: #662d91;
+  font-size: 20px;
+  border-radius: 0.5rem;
+  font-family: scdream6;
+}

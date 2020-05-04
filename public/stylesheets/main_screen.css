@@ -44,3 +44,19 @@
   background-color: white;
   z-index: 1;
 }
+.main-tab-wrap a {
+  background-color: #ddd;
+  padding: 0.35rem 1rem;
+  margin-right: 0.5rem;
+  width: 60px;
+  color: black;
+  font-family: scdream6;
+}
+.main-tab-wrap a:hover,
+.main-tab-wrap a:focus,
+.main-tab-wrap a.active {
+  background-color: #662d91 !important;
+}
+.container.inner-container {
+  max-width: 938px;
+}

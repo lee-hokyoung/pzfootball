@@ -9,6 +9,14 @@ body {
 .container {
   padding: 0;
 } */
+.row-wrap {
+  display: flex;
+  flex-direction: row;
+}
+.col-wrap {
+  display: flex;
+  flex-direction: column;
+}
 .pz_bg {
   /* background: url(/images/back_reverse.png) repeat; */
   -webkit-background-size: 300px;
@@ -365,7 +373,6 @@ input#datepicker {
 .division {
   border-top: 1px solid lightgray;
 }
-#mypage-wrap,
 #club_page,
 #club_list,
 #match_detail {
@@ -388,7 +395,7 @@ input#datepicker {
 #club_list .card,
 #match_detail .card {
   margin-bottom: 1rem;
-  box-shadow: 0px 5px 10px 5px lightgray;
+  box-shadow: 0px 0px 9px 0px lightgrey;
 }
 #mypage-wrap label.title,
 #club_list label.title,

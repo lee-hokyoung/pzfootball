@@ -227,15 +227,14 @@ ul#match-register li .row .col[data-title="match_time"] {
   max-width: 100px;
 }
 ul#match-register li .row .col[data-title="match_type"] {
-  max-width: 300px;
-  min-width: 300px;
+  min-width: 180px;
 }
 ul#match-register li .row .col[data-title="match_grade"],
 ul#match-register li .row .col[data-title="match_score"] {
   max-width: 200px;
 }
 ul#match-register li .row .col[data-title="sex"] {
-  max-width: 250px;
+  min-width: 250px;
 }
 ul#match-register li .row .col[data-title="personnel"] {
   max-width: 250px;

@@ -19,7 +19,9 @@ router.get("/list", async (req, res) => {
 // 일별, 경기장별 등록화면(리스트)
 router.get("/register/:date?/:ground_id?", async (req, res) => {
   let d = new Date();
-  let today = d.getFullYear() + "-" + d.getMonth() + 1 + "-" + d.getDate();
+  let month = parseInt(d.getMonth()) < 10 ? "0" + (parseInt(d.getMonth()) + 1) : parseInt(d.getMonth()) + 1;
+  let _date = parseInt(d.getDate()) < 10 ? "0" + parseInt(d.getDate()) : d.getDate();
+  let today = d.getFullYear() + "-" + month + "-" + _date;
   let date = req.params.date || today;
   let ground_id = req.params.ground_id || "";
   let user = req.session.passport.user;
@@ -53,10 +55,7 @@ router.post("/register", async (req, res) => {
 });
 // 일정 수정
 router.put("/:id", async (req, res) => {
-  let result = await Match.updateOne(
-    { _id: req.params.id },
-    { $set: req.body }
-  );
+  let result = await Match.updateOne({ _id: req.params.id }, { $set: req.body });
   res.json(result);
 });
 // 일정 삭제
@@ -90,9 +89,7 @@ router.get("/result/manage", async (req, res) => {
 });
 // 경기 정보 읽기
 router.get("/:id", async (req, res) => {
-  let match = await Match.aggregate([
-    { $match: { _id: mongoose.Types.ObjectId(req.params.id) } },
-  ]);
+  let match = await Match.aggregate([{ $match: { _id: mongoose.Types.ObjectId(req.params.id) } }]);
   res.json(match[0]);
 });
 // 경기 결과 입력
@@ -107,10 +104,7 @@ router.put("/result/:id", async (req, res) => {
     if (key !== "mvp_id") list.push({ _id: key, val: data[key] });
   }
   try {
-    await Match.updateOne(
-      { _id: mongoose.Types.ObjectId(req.params.id) },
-      { $set: { mvp: mongoose.Types.ObjectId(req.body.mvp_id), isPlay: true } }
-    );
+    await Match.updateOne({ _id: mongoose.Types.ObjectId(req.params.id) }, { $set: { mvp: mongoose.Types.ObjectId(req.body.mvp_id), isPlay: true } });
     for (var item of list) {
       await Match.updateOne(
         {
@@ -133,14 +127,8 @@ router.put("/result/:id", async (req, res) => {
 //  매니저 경기 매칭
 router.put("/assign/manager", async (req, res) => {
   try {
-    let manager_id =
-      req.body.manager_id !== ""
-        ? mongoose.Types.ObjectId(req.body.manager_id)
-        : new mongoose.Types.ObjectId();
-    let result = await Match.updateOne(
-      { _id: mongoose.Types.ObjectId(req.body.game_id) },
-      { $set: { manager_id: mongoose.Types.ObjectId(manager_id) } }
-    );
+    let manager_id = req.body.manager_id !== "" ? mongoose.Types.ObjectId(req.body.manager_id) : new mongoose.Types.ObjectId();
+    let result = await Match.updateOne({ _id: mongoose.Types.ObjectId(req.body.game_id) }, { $set: { manager_id: mongoose.Types.ObjectId(manager_id) } });
     if (result.ok === 1) {
       res.json({ code: 1, message: "매칭 성공", result: result });
     } else {

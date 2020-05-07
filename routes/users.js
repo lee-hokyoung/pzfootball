@@ -5,9 +5,10 @@ const passport = require("passport");
 const User = require("../model/user");
 const Match = require("../model/match");
 const Club = require("../model/club");
-const nodemailer = require("nodemailer");
+const Ground = require("../model/ground");
 const Mail = require("../model/mail");
 const Region = require("../model/region");
+const nodemailer = require("nodemailer");
 const mongoose = require("mongoose");
 
 /* GET users listing. */
@@ -164,10 +165,7 @@ router.post("/register", async (req, res) => {
 router.get("/point", middle.isSignedIn, async (req, res) => {
   try {
     let user_info = req.session.passport;
-    let point = await User.findOne(
-      { user_id: user_info.user.user_id },
-      { point: 1 }
-    );
+    let point = await User.findOne({ user_id: user_info.user.user_id }, { point: 1 });
     res.json(point);
   } catch (err) {
     console.error(err);
@@ -216,6 +214,11 @@ router.post("/point/charge", middle.isSignedIn, async (req, res) => {
 });
 // 마이페이지 화면
 router.get("/mypage", middle.isSignedIn, async (req, res) => {
+  let d = new Date();
+  let month = d.getMonth() < 10 ? "0" + (d.getMonth() + 1) : d.getMonth() + 1;
+  let date = d.getDate() < 10 ? "0" + d.getDate() : d.getDate();
+  let today = d.getFullYear() + "-" + month + "-" + date;
+
   let user_info = req.session.passport;
   let user_id = user_info.user.user_id;
   let user = await User.findOne({ user_id: user_id }, { user_pw: 0 });
@@ -271,7 +274,7 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
     },
     { $unwind: "$ground_info" },
   ]);
-  //  즐겨찾기 구장
+  //  구장 전체 리스트(즐겨찾기 구장 포함)
   let region_group = await Region.aggregate([
     { $match: {} },
     {
@@ -292,6 +295,39 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
     },
     { $sort: { _id: 1 } },
   ]);
+  //  즐겨찾는 구장
+  let favorite_ground = await Ground.aggregate([
+    {
+      $match: {
+        $or: user.favorite_ground.map((v) => {
+          return { _id: mongoose.Types.ObjectId(v) };
+        }),
+      },
+    },
+    {
+      $project: {
+        ground_images: 0,
+      },
+    },
+    {
+      $lookup: {
+        from: "match",
+        localField: "_id",
+        foreignField: "ground_id",
+        as: "match_info",
+      },
+    },
+    { $unwind: { path: "$match_info", preserveNullAndEmptyArrays: true } },
+    {
+      $group: {
+        _id: "$_id",
+        groundName: { $first: "$groundName" },
+        groundAddress: { $first: "$groundAddress" },
+        count: { $sum: { $cond: [{ $gt: ["$match_info", null] }, 1, 0] } },
+      },
+    },
+  ]);
+
   //  가입 요청한 팀
   let waiting_club = await Club.findOne({
     waiting_member: mongoose.Types.ObjectId(user_info.user._id),
@@ -310,6 +346,7 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
     waiting_club: waiting_club,
     manner_info: manner_info,
     mvp_info: mvp_info,
+    favorite_ground: favorite_ground,
   });
 });
 //  내 정보 수정
@@ -406,8 +443,7 @@ router.get("/match/:id", middle.isSignedIn, async (req, res) => {
 router.put("/region", middle.isSignedIn, async (req, res) => {
   let user_info = req.session.passport.user;
   try {
-    if (!req.body.ground)
-      return res.json({ code: 0, message: "구장을 선택해주세요" });
+    if (!req.body.ground) return res.json({ code: 0, message: "구장을 선택해주세요" });
     let result = await User.updateOne(
       { _id: user_info._id },
       {
@@ -442,11 +478,33 @@ router.patch("/favorite", middle.isSignedIn, async (req, res) => {
         $push: { favorite_ground: mongoose.Types.ObjectId(ground_id) },
       };
     }
-    let result = await User.updateOne(
-      { user_id: user_info.user_id },
-      update_query
-    );
+    let result = await User.updateOne({ user_id: user_info.user_id }, update_query);
     res.json({ code: 1, message: "수정되었습니다", result: result });
+  } catch (err) {
+    res.json({ code: 0, message: err.message });
+  }
+});
+//  즐겨찾기 구장 해제
+router.delete("/favorite", middle.isSignedIn, async (req, res) => {
+  try {
+    console.log(
+      "body : ",
+      req.body.ground_id.map((v) => {
+        return mongoose.Types.ObjectId(v);
+      })
+    );
+    let user_info = req.session.passport.user;
+    let result = await User.updateOne(
+      { _id: user_info._id },
+      {
+        $pullAll: {
+          favorite_ground: req.body.ground_id.map((v) => {
+            return mongoose.Types.ObjectId(v);
+          }),
+        },
+      }
+    );
+    res.json({ code: 1, message: "정상적으로 삭제되었습니다", result: result });
   } catch (err) {
     res.json({ code: 0, message: err.message });
   }
@@ -454,10 +512,7 @@ router.patch("/favorite", middle.isSignedIn, async (req, res) => {
 //  휴대폰 끝 4자리로 유저 검색
 router.get("/find/:phone", middle.isSignedIn, async (req, res) => {
   try {
-    let result = await User.find(
-      { phone2: req.params.phone },
-      { user_name: 1, user_id: 1 }
-    );
+    let result = await User.find({ phone2: req.params.phone }, { user_name: 1, user_id: 1 });
     res.json({ code: 1, result: result });
   } catch (err) {
     res.json({ code: 0, message: err.message });
@@ -474,13 +529,25 @@ router.post("/refund", middle.isSignedIn, async (req, res) => {
         $inc: { point: -1 * refundPoint, reqRefundPoint: refundPoint },
       }
     );
-    if (result.ok === 1)
-      res.json({ code: 1, message: "포인트 환불 신청했습니다." });
+    if (result.ok === 1) res.json({ code: 1, message: "포인트 환불 신청했습니다." });
     else
       res.json({
         code: 0,
         message: "포인트 환불 신청 실패! 관리자에게 문의해주세요",
       });
+  } catch (err) {
+    res.json({ code: 0, message: err.message });
+  }
+});
+//  예약 취소
+router.delete("/reservation", middle.isSignedIn, async (req, res) => {
+  let user_info = req.session.passport.user;
+  try {
+    let result = await Match.updateOne(
+      { _id: mongoose.Types.ObjectId(req.body.match_id) },
+      { $pull: { apply_member: { _id: mongoose.Types.ObjectId(user_info._id) } } }
+    );
+    res.json({ code: 1, message: "예약이 취소되었습니다.", result: result });
   } catch (err) {
     res.json({ code: 0, message: err.message });
   }

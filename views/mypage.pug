@@ -191,9 +191,9 @@ block content
                 .text-right
                   label ※ 내 포지션과 등급은 중복체크가 불가합니다.
               .skill-wrap
-                h6 초급 : 축구를 취미로 즐기는 수준
-                h6 중급 : 기본기에 능숙하며 볼 다루는 게 익숙함
-                h6 고급 : 정식 축구부에 등록되어 대회를 뛰어본 경우(KFA 인증 필요)            
+                b 초급 : 축구를 취미로 즐기는 수준
+                b 중급 : 기본기에 능숙하며 볼 다루는 게 익숙함
+                b 고급 : 정식 축구부에 등록되어 대회를 뛰어본 경우(KFA 인증 필요)            
               .guide_wrap
                 p 위 정보를 토대로 추후 등급배치 시스템을 통하여
                 p 신체, 능력 등 여러 사항을 종합적으로 고려해서
@@ -238,7 +238,7 @@ block content
             else
               .card.profile-card
                 .card-body
-                  h5 가입 승인 대기 중
+                  h6.title 가입 승인 대기 중
                   button.btn.btn-danger.btn-round(onclick='fnCancelJoin()') 가입 취소
           //- 가입한 클럽이 있을 경우
           else
@@ -268,33 +268,67 @@ block content
                         h5.text-white.m-0 팀 생성 승인 전입니다.
 
           .card.profile-card
-            .card-header.text-center.pt-4
-              h6.title 내 구장 설정
             .card-body
-              each r, idx in region_group
-                .ground-wrap(data-id=r._id)
-                  .d-flex.justify-content-between
-                    h5 #{r.name}
-                    button.btn.btn-success.btn-sm(type='button', data-role='all', data-id=r._id, data-toggle='true') 전체선택
-                  .d-flex.justify-content-start
-                    - var my_ground = user.favorite_ground.join(',')
-                    each ground in r.list
-                      button.btn.btn-primary.btn-round.btn-sm.mr-1.px-3(type='button', data-id=ground._id, data-toggle=my_ground.toString().indexOf(ground._id.toString()) > -1 ? "true":"false", data-role='ground') #{ground.groundName}
-                if(idx + 1 < region_group.length)
-                  hr
-              button.btn.btn-success.w-100.m-0(type='button', data-role='saveGround') 적용
+              .favorite-wrap
+                i.fa.fa-star
+                h6.title 즐겨찾는 구장
+              .text-right
+                .form-check.check-custom-wrap
+                  label.form-check-label.pl-3
+                    input.form-check-input(type="checkbox", name='chkAllGround', data-toggle='false')
+                    span.form-check-sign
+                    | 전체선택
+              hr.mb-0
+              .table-borderedr
+                table.table#favorite-table
+                  colgroup
+                    col(width='18px')
+                    col
+                    col
+                    col
+                  tbody
+                    each item in favorite_ground
+                      tr
+                        td
+                          .form-check.check-custom-wrap
+                            label.form-check-label.pl-3
+                              input.form-check-input(type="checkbox", name='ground-item', data-id=item._id)
+                              span.form-check-sign
+                        - var addr = item.groundAddress.jibun.split(' ')
+                        td !{addr[0]} !{addr[1]}
+                        td !{item.groundName}
+                        td(name='apply-game') 
+                          if(item.count > 0)
+                            | 신청가능&nbsp;
+                            a(href='#') !{item.count}건
+                          else
+                            | 경기 없음
+              .text-right
+                button.btn.btn-round(type='button', name='btnRemoveFavorite') 선택삭제
+                //- .ground-wrap(data-id=r._id)
+                //-   .d-flex.justify-content-between
+                //-     h5 #{r.name}
+                //-     button.btn.btn-success.btn-sm(type='button', data-role='all', data-id=r._id, data-toggle='true') 전체선택
+                //-   .d-flex.justify-content-start
+                //-     - var my_ground = user.favorite_ground.join(',')
+                //-     each ground in r.list
+                //-       button.btn.btn-primary.btn-round.btn-sm.mr-1.px-3(type='button', data-id=ground._id, data-toggle=my_ground.toString().indexOf(ground._id.toString()) > -1 ? "true":"false", data-role='ground') #{ground.groundName}
+                //- if(idx + 1 < region_group.length)
+                //-   hr
+              //- button.btn.btn-success.w-100.m-0(type='button', data-role='saveGround') 적용
           .card.profile-card
-            .card-header.text-center.pt-4
-              h6.title 캐쉬 및 예약 현황
             .card-body
+              h6.title.text-left 포인트 및 예약현황
               .row
                 .col
                   .form-group
-                    label.title 보유 포인트
-                    .point-wrap.d-flex.justify-content-start
-                      p #{new Intl.NumberFormat('ko').format(user.point) || 0}
-                      button.btn.btn-primary(data-toggle='modal', data-target='#modalChargePoint') 충전하기
-                      button.btn.btn-danger(data-toggle='modal', data-target='#refundModal') 환불신청
+                    label.title.mt-3 보유 포인트
+                    .point-wrap.d-flex.justify-content-between
+                      p #{new Intl.NumberFormat('ko').format(user.point) || 0} 
+                        strong P
+                      .point-button-wrap
+                        button.btn(data-toggle='modal', data-target='#modalChargePoint') 충전하기
+                        button.btn(data-toggle='modal', data-target='#refundModal') 환불신청
               if(user.reqRefundPoint > 0)
                 .row
                   .col
@@ -302,34 +336,36 @@ block content
                       label.title 환불신청
                       .point-wrap.d-flex
                         p #{new Intl.NumberFormat('ko').format(user.reqRefundPoint)}
+              hr.mb-0
               #table-reservation
                 table.table
                   colgroup
-                    col
-                    col
-                    col
-                    col
-                    col
-                  thead
-                    tr.table-success
-                      th 날짜
-                      th 시간
-                      th 경기장
-                      th 신청수
-                      th 상태
+                    col(title='날짜')
+                    col(title='경기장')
+                    col(title='신청')
+                    col(title='취소')
+                  //- thead
+                  //-   tr.table-success
+                  //-     th 날짜
+                  //-     th 시간
+                  //-     th 경기장
+                  //-     th 신청수
+                  //-     th 상태
                   tbody
                     if(match_list.length > 0)
                       each match in match_list
+                        - var d = new Date(match.match_date);
+                        - var year = d.getFullYear().toString().slice(2)
                         tr
-                          td #{match.match_date.slice(5)}
-                          td #{match.match_time}
+                          td #{year}년 #{d.getMonth() + 1}월 #{d.getDate()}일 #{match.match_time}
                           td #{match.ground_info.groundName}
                           td #{match.apply_member.length} / #{match.personnel.max}
-                          td 
-                            a.btn.btn-danger.btn-link(href='/users/match/' + match._id) #{match.isPlay?"종료":"진행중"}
+                          td.text-right
+                            button.btn.btn-round(type='button', data-role='cancelReservation', data-id=match._id) 예약취소
+                            //- a.btn.btn-round(href='/users/match/' + match._id) #{match.isPlay?"취소불가":"예약취소"}
                     else
                       tr
-                        td(colspan='5') 일정이 없습니다.
+                        td(colspan='4') 일정이 없습니다.
       .row.d-none
         .col-md-6
           .card
@@ -410,4 +446,4 @@ block append_js
     console.log('waiting_club : ', !{JSON.stringify(waiting_club)})
     console.log('user : ', !{JSON.stringify(user)})
     console.log('mvp_info : ', !{JSON.stringify(mvp_info)})
-    console.log('match_list : ', !{JSON.stringify(match_list)})
+    console.log('favorite ground : ', !{JSON.stringify(favorite_ground)})

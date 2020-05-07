@@ -1,6 +1,5 @@
 //  로그인 유무
-let isLoggedIn =
-  document.querySelector("#isLoggedIn").dataset.islogin === "true";
+let isLoggedIn = document.querySelector("#isLoggedIn").dataset.islogin === "true";
 
 let curr_search = {};
 if (location.search !== "") {
@@ -37,12 +36,12 @@ $(".ground-list-slider")
   })
   .on("afterChange", function (event, slick, currentSlide) {
     // list swipe 발생시 이벤트
-    let obj = document.querySelector(
-      ".ground-list-slider .slick-active section"
-    );
+    let obj = document.querySelector(".ground-list-slider .slick-active section");
     let slider_wrap = document.querySelector(".ground-list-slider");
     slider_wrap.classList.add("loading");
     let date = new Date(obj.dataset.date);
+    let month = date.getMonth() < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+    let _date = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
     let formData = {};
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "/filter", true);
@@ -70,7 +69,7 @@ $(".ground-list-slider")
       }
     };
     if (body) formData = body;
-    formData["match_date"] = date.toISOString().slice(0, 10);
+    formData["match_date"] = date.getFullYear() + "-" + month + "-" + _date;
     formData["XHR"] = true;
     xhr.send(JSON.stringify(formData));
   });
@@ -78,11 +77,7 @@ $(".ground-list-slider")
 let offset = $(".navigation").offset();
 let navParent = $(".navigation");
 let nav = navParent.find("nav");
-let tmp = navParent
-  .find("nav")
-  .clone()
-  .attr("class", "tmp")
-  .css("visibility", "hidden");
+let tmp = navParent.find("nav").clone().attr("class", "tmp").css("visibility", "hidden");
 let scrollTopButton = document.querySelector("#scrollTop");
 window.addEventListener("scroll", function () {
   if (window.pageYOffset > offset.top) {
@@ -102,11 +97,8 @@ document.querySelector("#scrollTop").addEventListener("click", function () {
 
 //  경기 리스트 생성
 function fnGenerateGroundList(res, currentSlide) {
-  document.querySelector(".match-count").innerHTML =
-    "총 " + res.length + "매치";
-  let ul = document.querySelector(
-    'div[data-slick-index="' + currentSlide + '"] ul'
-  );
+  document.querySelector(".match-count").innerHTML = "총 " + res.length + "매치";
+  let ul = document.querySelector('div[data-slick-index="' + currentSlide + '"] ul');
   ul.innerHTML = "";
   if (res.length > 0) {
     res.forEach(function (game, idx) {
@@ -121,9 +113,7 @@ function fnGenerateGroundList(res, currentSlide) {
         status = "full";
       }
       let li = document.createElement("li");
-      li.classList =
-        "list-group-item list-group-item-light py-1 px-0 mx-auto " +
-        (idx % 2 === 0 ? "bg-light" : "");
+      li.classList = "list-group-item list-group-item-light py-1 px-0 mx-auto " + (idx % 2 === 0 ? "bg-light" : "");
 
       let row = document.createElement("div");
       row.className = "row";
@@ -136,8 +126,7 @@ function fnGenerateGroundList(res, currentSlide) {
       let inner_col = document.createElement("div");
       inner_col.className = "col-md-6";
       let time_group_wrap = document.createElement("div");
-      time_group_wrap.className =
-        "time-ground-wrap d-flex justify-content-start";
+      time_group_wrap.className = "time-ground-wrap d-flex justify-content-start";
       let p = document.createElement("p");
       p.className = "ml-3 text-info";
       p.innerText = game.match_time;
@@ -165,14 +154,8 @@ function fnGenerateGroundList(res, currentSlide) {
       inner_div.className = "text-left text-dark";
       let small = document.createElement("small");
       small.className =
-        "pl-2 tagList" +
-        (game.sex === 1
-          ? " male text-primary"
-          : game.sex === -1
-          ? " female text-danger"
-          : " mix");
-      small.innerText =
-        game.sex === 1 ? "남성매치" : game.sex === -1 ? "여성매치" : "혼성매치";
+        "pl-2 tagList" + (game.sex === 1 ? " male text-primary" : game.sex === -1 ? " female text-danger" : " mix");
+      small.innerText = game.sex === 1 ? "남성매치" : game.sex === -1 ? "여성매치" : "혼성매치";
       inner_div.appendChild(small);
       flex.appendChild(inner_div);
       //    grade_icon.ml-2
@@ -217,11 +200,9 @@ function fnGenerateGroundList(res, currentSlide) {
         h5.className = "m-0 py-1";
         h5.innerText = status === "hurry" ? "곧 마감!" : "신청가능!";
         inner_div = document.createElement("div");
-        inner_div.className =
-          "text-danger bg-white mx-auto font-weight-bold mb-1";
+        inner_div.className = "text-danger bg-white mx-auto font-weight-bold mb-1";
         inner_div.style = "border-radius:1rem; width:80%; font-size:.75rem";
-        inner_div.innerText =
-          game.apply_member.length + " / " + game.personnel.max;
+        inner_div.innerText = game.apply_member.length + " / " + game.personnel.max;
         button.appendChild(h5);
         button.appendChild(inner_div);
       }
@@ -489,58 +470,46 @@ document.querySelectorAll('a[data-role="match"]').forEach(function (a) {
   });
 });
 //  2파/3파 버튼 클릭 이벤트
-document
-  .querySelector(".match_type_img")
-  .addEventListener("click", function (e) {
-    let match2_toggle = this.dataset.match2;
-    let match3_toggle = this.dataset.match3;
-    if (e.offsetX > 50) {
-      if (match2_toggle === "false" && match3_toggle === "true")
-        this.dataset.match2 = "true";
-      this.dataset.match3 = match3_toggle === "false";
+document.querySelector(".match_type_img").addEventListener("click", function (e) {
+  let match2_toggle = this.dataset.match2;
+  let match3_toggle = this.dataset.match3;
+  if (e.offsetX > 50) {
+    if (match2_toggle === "false" && match3_toggle === "true") this.dataset.match2 = "true";
+    this.dataset.match3 = match3_toggle === "false";
+  } else {
+    if (match2_toggle === "true" && match3_toggle === "false") this.dataset.match3 = "true";
+    this.dataset.match2 = match2_toggle === "false";
+  }
+
+  let match_type = "";
+  //  2파 선택
+  if (this.dataset.match2 === "true" && this.dataset.match3 === "false") match_type = "2";
+  //  3파 선택
+  else if (this.dataset.match2 === "false" && this.dataset.match3 === "true") match_type = "3";
+
+  let formData = {};
+  let xhr = new XMLHttpRequest();
+  xhr.open("post", "/filter", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function () {
+    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      let res = JSON.parse(this.response);
+      let currentSlide = $(".btn-primary.active").parent().parent().parent().data("slick-index");
+      fnGenerateGroundList(res.list, currentSlide);
+      body = res.body;
+      document.querySelector("#loadingPage").className = "d-none";
     } else {
-      if (match2_toggle === "true" && match3_toggle === "false")
-        this.dataset.match3 = "true";
-      this.dataset.match2 = match2_toggle === "false";
+      document.querySelector("#loadingPage").className = "";
     }
-
-    let match_type = "";
-    //  2파 선택
-    if (this.dataset.match2 === "true" && this.dataset.match3 === "false")
-      match_type = "2";
-    //  3파 선택
-    else if (this.dataset.match2 === "false" && this.dataset.match3 === "true")
-      match_type = "3";
-
-    let formData = {};
-    let xhr = new XMLHttpRequest();
-    xhr.open("post", "/filter", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function () {
-      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-        let res = JSON.parse(this.response);
-        let currentSlide = $(".btn-primary.active")
-          .parent()
-          .parent()
-          .parent()
-          .data("slick-index");
-        fnGenerateGroundList(res.list, currentSlide);
-        body = res.body;
-        document.querySelector("#loadingPage").className = "d-none";
-      } else {
-        document.querySelector("#loadingPage").className = "";
-      }
-    };
-    if (body) formData = body;
-    formData["match_type"] = match_type;
-    formData["XHR"] = true;
-    xhr.send(JSON.stringify(formData));
-  });
+  };
+  if (body) formData = body;
+  formData["match_type"] = match_type;
+  formData["XHR"] = true;
+  xhr.send(JSON.stringify(formData));
+});
 
 //  필터 부분(성별)
-let filterGender = document.querySelectorAll(
-  '.btn-wrap .btn-light[name="gender"]'
-);
+let filterGender = document.querySelectorAll('.btn-wrap .btn-light[name="gender"]');
 filterGender.forEach(function (btn) {
   btn.addEventListener("click", function () {
     if (this.className.indexOf("active") > -1) this.classList.remove("active");
@@ -548,9 +517,7 @@ filterGender.forEach(function (btn) {
   });
 });
 //  필터링(스킬, 레벨)
-let filterLevel = document.querySelectorAll(
-  '.btn-wrap .btn-light[name="skill"]'
-);
+let filterLevel = document.querySelectorAll('.btn-wrap .btn-light[name="skill"]');
 filterLevel.forEach(function (btn) {
   btn.addEventListener("click", function () {
     if (this.className.indexOf("active") > -1) this.classList.remove("active");
@@ -558,20 +525,15 @@ filterLevel.forEach(function (btn) {
   });
 });
 //  필터링(지역)
-let filterRegion = document
-  .querySelectorAll('.btn-wrap .btn-light[name="region"]')
-  .forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      if (this.className.indexOf("active") > -1)
-        this.classList.remove("active");
-      else this.classList.add("active");
-    });
+let filterRegion = document.querySelectorAll('.btn-wrap .btn-light[name="region"]').forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    if (this.className.indexOf("active") > -1) this.classList.remove("active");
+    else this.classList.add("active");
   });
+});
 
 //  지역별 전체 버튼 클릭
-let selectAllRegion = document.querySelectorAll(
-  '#filterGroundModal button[data-role="all"]'
-);
+let selectAllRegion = document.querySelectorAll('#filterGroundModal button[data-role="all"]');
 selectAllRegion.forEach(function (btn) {
   btn.addEventListener("click", function () {
     let id = this.dataset.id;
@@ -586,19 +548,15 @@ selectAllRegion.forEach(function (btn) {
   });
 });
 //  구장별 버튼 클릭시 이벤트
-document
-  .querySelectorAll("#filterGroundModal button.btn-round")
-  .forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      let toggle = this.dataset.toggle;
-      this.dataset.toggle = toggle === "false";
-    });
+document.querySelectorAll("#filterGroundModal button.btn-round").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    let toggle = this.dataset.toggle;
+    this.dataset.toggle = toggle === "false";
   });
+});
 //  경기장 저장하기 버튼 클릭 이벤트
 function fnSaveGround() {
-  let selectedGround = document.querySelectorAll(
-    '#filterGroundModal button[data-toggle="true"]'
-  );
+  let selectedGround = document.querySelectorAll('#filterGroundModal button[data-toggle="true"]');
   let list = [];
   selectedGround.forEach(function (v) {
     list.push(v.dataset.id);
@@ -630,13 +588,11 @@ function fnSetFilter() {
   let gender_list = [];
   let skill_list = [];
   let region_list = [];
-  document
-    .querySelectorAll(".btn-wrap .btn-light.active")
-    .forEach(function (v) {
-      if (v.name === "gender") gender_list.push(v.value);
-      else if (v.name === "skill") skill_list.push(v.value);
-      else if (v.name === "region") region_list.push(v.value);
-    });
+  document.querySelectorAll(".btn-wrap .btn-light.active").forEach(function (v) {
+    if (v.name === "gender") gender_list.push(v.value);
+    else if (v.name === "skill") skill_list.push(v.value);
+    else if (v.name === "region") region_list.push(v.value);
+  });
   let field = document.createElement("input");
   field.type = "hidden";
   field.name = "gender";
@@ -649,11 +605,7 @@ function fnSetFilter() {
   field.value = skill_list.join(",");
   form.appendChild(field);
 
-  if (
-    document
-      .querySelector('button[data-target="#myRegion"]')
-      .getAttribute("aria-expanded") === "true"
-  ) {
+  if (document.querySelector('button[data-target="#myRegion"]').getAttribute("aria-expanded") === "true") {
     field = document.createElement("input");
     field.type = "hidden";
     field.name = "region";
@@ -661,11 +613,7 @@ function fnSetFilter() {
     form.appendChild(field);
   }
   if (isLoggedIn) {
-    if (
-      document
-        .querySelector('button[data-target="#myGround"]')
-        .getAttribute("aria-expanded") === "true"
-    ) {
+    if (document.querySelector('button[data-target="#myGround"]').getAttribute("aria-expanded") === "true") {
       field = document.createElement("input");
       field.type = "hidden";
       field.name = "ground";

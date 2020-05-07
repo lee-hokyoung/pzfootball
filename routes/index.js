@@ -11,9 +11,8 @@ const mongoose = require("mongoose");
 router.get("/", async (req, res) => {
   let today = new Date();
   let year = today.getFullYear();
-  let month =
-    today.getMonth() < 10 ? "0" + (today.getMonth() + 1) : today.getMonth() + 1;
-  let days = today.getDate();
+  let month = today.getMonth() < 10 ? "0" + (today.getMonth() + 1) : today.getMonth() + 1;
+  let days = today.getDate() < 10 ? "0" + today.getDate() : today.getDate();
   let date = year + "-" + month + "-" + days;
 
   let user_info = req.session.passport;
@@ -43,7 +42,7 @@ router.get("/", async (req, res) => {
   let region = await Region.find({});
   let notice_list = await Notice.find({ activity: true });
   let region_group = await Region.aggregate([
-    { $match: { ladder: 0 } },
+    { $match: {} },
     {
       $lookup: {
         from: "ground",
@@ -53,7 +52,13 @@ router.get("/", async (req, res) => {
       },
     },
     { $unwind: "$info" },
-    { $project: { "info.ground_images": 0 } },
+    {
+      $project: {
+        info: {
+          ground_images: 0,
+        },
+      },
+    },
     {
       $group: {
         _id: "$_id",
@@ -73,6 +78,7 @@ router.get("/", async (req, res) => {
     notice_list: notice_list,
     favorite_ground: user.favorite_ground,
     active: "normal",
+    body: null,
   });
 });
 router.get("/search", async (req, res) => {
@@ -93,8 +99,7 @@ async function fnGetMatchList(date, query, user_info) {
   match_query["match_date"] = date;
   if (query.game_type) match_query["match_type"] = query.game_type;
   if (query.ladder) match_query["ladder"] = parseInt(query.ladder);
-  if (query.ground_id)
-    match_query["ground_id"] = mongoose.Types.ObjectId(query.ground_id);
+  if (query.ground_id) match_query["ground_id"] = mongoose.Types.ObjectId(query.ground_id);
   //  지역으로 필터링 할 경우, 지역 내 구장 아이디를 가져온다
   if (query.region) {
     let ground_list = await Ground.aggregate([
@@ -208,10 +213,9 @@ router.post("/filter", async (req, res) => {
     filter_query["$and"].push({ match_date: req.body.match_date });
   } else {
     let year = today.getFullYear();
-    let month =
-      today.getMonth() < 10 ? "0" + (today.getMonth() + 1) : today.getMonth();
-    let days = today.getDate();
-    filter_query["$and"].push({ match_date: year + "-" + month + "-" + days });
+    let month = today.getMonth() < 10 ? "0" + (today.getMonth() + 1) : today.getMonth();
+    let _date = today.getDate() < 10 ? "0" + today.getDate() : today.getDate();
+    filter_query["$and"].push({ match_date: year + "-" + month + "-" + _date });
   }
   //  필터가 없을 경우
   if (filter_query["$and"].length === 0) {

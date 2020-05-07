@@ -24,7 +24,6 @@ b {
   font-family: NotoSansR;
   font-weight: normal;
 }
-
 .title-wrap {
   background-color: #662d91;
   margin-bottom: 0.5rem;
@@ -42,7 +41,10 @@ b {
 .title-wrap span {
   font-family: scdream3;
 }
-
+.fileinput img {
+  width: 130px;
+  height: 130px;
+}
 .user-name-wrap {
   margin-bottom: 0.5rem;
   display: flex;

@@ -25,9 +25,9 @@
   list-style-type: none;
   padding-bottom: 0.5rem;
 }
-#join-page {
+/* #join-page {
   max-width: 1110px;
-}
+} */
 hr,
 #login-page .d-flex.justify-content-between .vertical-line {
   border-color: rgb(89, 89, 89);
@@ -68,6 +68,13 @@ h6.title {
   border-top: none;
   border-bottom: none;
 }
+.row-wrap .form-group {
+  flex: 1;
+}
+.skill-btn-wrap button {
+  margin: 0;
+  width: 33.3%;
+}
 .sns-btn-wrap {
   width: 100%;
   padding: 0.75rem;
@@ -87,6 +94,24 @@ h6.title {
   position: absolute;
   top: 8px;
   left: 10px;
+}
+.profile-wrap .fileinput {
+  text-align: center;
+}
+.rainbow_font_wrap span {
+  font-size: 25px;
+}
+.fileinput .thumbnail.img-circle {
+  max-width: 120px;
+}
+.profile-wrap .fileinput .position-absolute {
+  bottom: 10px;
+  left: 55%;
+}
+.profile-wrap .fileinput .position-absolute span.btn {
+  padding: 7px;
+  margin: 0;
+  width: 30px;
 }
 @media (max-width: 768px) {
   #join-page {

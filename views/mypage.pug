@@ -20,7 +20,10 @@ block content
                 .col-md-5
                   .fileinput.fileinput-new.text-center.position-relative(data-provides="fileinput")
                     .fileinput-new.thumbnail.img-circle
-                      img(src="/assets/img/placeholder.jpg" alt="...")
+                      if(user.profile_image)
+                        img(src=user.profile_image, alt="내 프로필")
+                      else  
+                        img(src="/assets/img/placeholder.jpg", alt="기본 프로필")
                     .fileinput-preview.fileinput-exists.thumbnail.img-circle
                     .position-absolute
                       span.btn.btn-round.btn-rose.btn-file

@@ -49,7 +49,7 @@ b {
   margin-bottom: 0.5rem;
   display: flex;
   font-size: 33px;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .user-name-wrap b[data-role="user_name"] {

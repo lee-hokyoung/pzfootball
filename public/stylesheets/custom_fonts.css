@@ -95,11 +95,7 @@
   font-style: lighter;
 }
 
-/* 에스코어 드림 폰트 3, 5, 6 */
-@font-face{
-  font-family:scdream3;
-  src:url('/assets/fonts/scdream3.woff') format('woff');
-}
+/* 에스코어 드림 폰트 5, 6 */
 @font-face {
   font-family: scdream5;
   src: url("/assets/fonts/scdream5.woff") format("woff");
@@ -222,7 +218,7 @@ section.ground-list {
 }
 .card.profile-card h2,
 .card.profile-card h4 {
-  font-family: scdream5;
+  font-family: Tmon;
 }
 .fontGmarket {
   font-family: Gmarket;

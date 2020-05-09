@@ -1,17 +1,15 @@
-document
-  .querySelector('input[name="chk_all"]')
-  .addEventListener("click", function () {
-    console.log(this);
-    let chk_term = document.querySelector('input[name="chk_terms"]');
-    let chk_privacy = document.querySelector('input[name="chk_privacy"]');
-    if (this.checked) {
-      chk_term.checked = true;
-      chk_privacy.checked = true;
-    } else {
-      chk_term.checked = false;
-      chk_privacy.checked = false;
-    }
-  });
+document.querySelector('input[name="chk_all"]').addEventListener("click", function () {
+  console.log(this);
+  let chk_term = document.querySelector('input[name="chk_terms"]');
+  let chk_privacy = document.querySelector('input[name="chk_privacy"]');
+  if (this.checked) {
+    chk_term.checked = true;
+    chk_privacy.checked = true;
+  } else {
+    chk_term.checked = false;
+    chk_privacy.checked = false;
+  }
+});
 
 // 회원가입
 function fnJoin() {
@@ -157,4 +155,13 @@ function fnAddInfo(target) {
 //  모달 닫혔을 때 이벤트
 $("#modalJoin").on("hidden.bs.modal", function () {
   fnAddInfo("main");
+});
+let skill_btns = document.querySelectorAll(".skill-btn-wrap button");
+skill_btns.forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    skill_btns.forEach(function (b) {
+      b.dataset.toggle = "false";
+    });
+    btn.dataset.toggle = "true";
+  });
 });

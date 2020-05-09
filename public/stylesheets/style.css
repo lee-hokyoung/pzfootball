@@ -29,8 +29,7 @@ body {
 }
 .nav-button-wrap span {
   font-size: 14px;
-  font-weight: 700;
-  color: #662d91;
+  font-weight: bold;
 }
 .nav-button-wrap a {
   color: black;

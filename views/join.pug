@@ -2,7 +2,7 @@ extends layout
 block append_css
   link(rel='stylesheet', href='/public_css/login.css')
 block content
-  #join-page.mx-auto
+  #join-page.mx-auto.pb-5
     form.page-wrap(onsubmit='return fnJoin()')
       .row.d-none
         .col-md-6
@@ -56,9 +56,11 @@ block content
             a.btn.btn-danger.btn-round.fileinput-exists.d-none(href="#pablo" data-dismiss="fileinput")
               i.fa.fa-times
               |  Remove
-      .form-group
-        label 이메일(아이디)
-        input.form-control(type='text', name='user_id')
+        .text-center.profile-desc * 150x150사이즈 권장
+      .row-wrap
+        .form-group
+          label 이메일(아이디)
+          input.form-control(type='text', name='user_id')
       .row-wrap
         .form-group.mr-1
           label 비밀번호
@@ -109,31 +111,31 @@ block content
             input.form-control(type='tel', name='phone1', maxlength='4')
             .mx-1.my-auto -
             input.form-control(type='tel', name='phone2', maxlength='4')
-            button.btn.m-0.rounded-0.ml-1(type='button', name='btnSendCertify') 인증번호 발송
+            button.btn.btn-primary.m-0.rounded-0.ml-1(type='button', name='btnSendCertify') 인증번호 발송
       .row-wrap
         .form-group
-          label 인증번호 인증
+          label 인증번호 입력
           input.form-control(type='text', name='certifiedNumber')
       .row-wrap
         .form-group
           label 나의 포지션
           select.form-control(name='position')
-            option(value='FW')
-            option(value='MF')
-            option(value='DF')
-            option(value='GF')
+            option(value='FW') FW
+            option(value='MF') MF
+            option(value='DF') DF
+            option(value='GF') GF
         .form-group.ml-1(style='flex:3')
           label 나의 실력
           .skill-btn-wrap
-            button.btn.rounded-0(type='button', name='skill', data-value='1') 초급
-            button.btn.rounded-0(type='button', name='skill', data-value='2') 중급
-            button.btn.rounded-0(type='button', name='skill', data-value='3') 고급
+            button.btn.rounded-0(type='button', name='skill', data-value='1', data-toggle='false') 초급
+            button.btn.rounded-0(type='button', name='skill', data-value='2', data-toggle='false') 중급
+            button.btn.rounded-0(type='button', name='skill', data-value='3', data-toggle='false') 고급
       .row-wrap
-        button.btn.btn-success.w-100.py-3(type='submit') 회원가입
-      hr
-      .row
-        .col-12.text-center
-          a.btn-link(href='/users/login') 아이디가 있으면 여기서 로그인 하세요
+
+      .row-wrap
+        button.btn.btn-primary.w-100.py-3(type='submit') 가입완료
+      .row-wrap
+        a.text-primary.mx-auto(href='/users/login', data-role='login') 이미 아이디가 있다면 여기에서 로그인하세요
   #modalJoin.modal.fade(tabindex="-1" role="dialog" aria-labelledby="joinModalLabel" aria-hidden="true")
     .modal-dialog
       .modal-content

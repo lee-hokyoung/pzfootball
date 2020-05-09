@@ -28,8 +28,12 @@ body {
   width: 100%;
 }
 .nav-button-wrap span {
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 700;
+  color: #662d91;
+}
+.nav-button-wrap a {
+  color: black;
 }
 /*.pz_bg:before{*/
 /*content:'';*/

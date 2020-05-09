@@ -87,7 +87,7 @@ html
               span
                 //- a.text-primary(href='#' data-toggle='modal', data-target='#loginModal') 로그인
                 a.text-primary(href='/users/login') 로그인
-              span.text-secondary.px-2 또는
+              span.text-black.px-2 또는
               span
                 //- a.text-primary(href='#', data-toggle='modal', data-target='#joinModal') 회원가입
                 a.text-primary(href='#', data-toggle='modal', data-target='#beforeJoinModal') 회원가입
@@ -100,8 +100,9 @@ html
       include modals/join
       include modals/beforeJoin
     .overlay
-    button.btn.btn-round.btn-success.btn-sm.btn-icon#scrollTop(data-view='false')
-      i.nc-icon.nc-minimal-up
+    button.btn.btn-icon.btn-neutral#scrollTop(data-view='false')
+      img(src='images/gotoTop.png')
+      //- i.nc-icon.nc-minimal-up
     //- script(src='/nm/jquery/dist/jquery.min.js', type='text/javascript')
     script(src="/assets/js/core/jquery.min.js")
     script(src="/assets/js/core/popper.min.js")

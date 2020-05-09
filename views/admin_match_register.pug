@@ -33,7 +33,7 @@ block content
                         - _date.setDate(today.getDate() + d++);
                         - var year = _date.getFullYear();
                         - var month = _date.getMonth() < 10 ? '0' + (_date.getMonth() + 1) : _date.getMonth();
-                        - var days = _date.getDate();
+                        - var days = _date.getDate() < 10 ? '0' + _date.getDate() : _date.getDate();
                         //- - var btnDate = _date.getFullYear() + '-' + (_date.getMonth() + 1) + '-' + _date.getDate();
                         - var btnDate = year + '-' + month + '-' + days;
                         button.btn.rounded.btn-date.font-italic.m-0(type='button', 

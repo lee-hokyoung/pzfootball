@@ -1,7 +1,7 @@
 #beforeJoinModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="beforeJoinLabel" aria-hidden="true")
   .modal-dialog
     .modal-content(style='border-radius:30px;')
-      .modal-header
+      .modal-header.px-3
         .rainbow_font_wrap
           span 함
           span 께
@@ -15,8 +15,8 @@
         a(href='/users/join')
           .button-wrap(data-role='email')
             img(src='/images/envelope.png')
-            span.text-white 이메일로 가입
-      .modal-body
+            span.text-black 이메일로 가입
+      .modal-body.px-3
         a(href='/auth/naver')
           .button-wrap(data-role='naver')
             span.text-white(data-role='snsFont') N

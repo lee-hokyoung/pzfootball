@@ -1,50 +1,50 @@
 #map.position-relative.overflow-hidden.mb-3(style='width:100%; height:600px;')
 #menu_wrap
-	.option
-		div
-			| 주소 :
-			input#keyword(type='text', placeholder='주소를 검색해 주세요', size='15')
-			button(type='button', onclick='searchPlaces()') 검색하기
-	hr
-	ul#placesList.pl-0
-	#pagination
+  .option
+    div
+      | 주소 :
+      input#keyword(type='text', placeholder='주소를 검색해 주세요', size='15')
+      button(type='button', onclick='searchPlaces()') 검색하기
+  hr
+  ul#placesList.pl-0
+  #pagination
 .form-row
-	.col-md-4
-		.input-group
-			.input-group-prepend
-				span.input-group-text
-					i.nc-icon.nc-map-big
-			input.form-control#groundName(type="text" placeholder="경기장명 입력" name="groundName", data-ground, value=ground?ground.groundName:'')
-	.col-md-4
-		.input-group
-			.input-group-prepend
-				span.input-group-text
-					i.nc-icon.nc-pin-3
-			input.form-control#groundAddr(type="text" placeholder="경기장 주소 입력" name="road", data-ground, value=ground?ground.groundAddress.road:'')
-	.col-md-4
-		.input-group
-			.input-group-prepend
-				span.input-group-text
-					i.nc-icon.nc-pin-3
-			input.form-control(type="text" placeholder="지번주소" name="jibun", data-ground, value=ground?ground.groundAddress.jibun:'')
-	.col-md-4
-		.input-group
-			.input-group-prepend
-				span.input-group-text
-					i.nc-icon.nc-globe
-			input.form-control(type="text" placeholder="위도 정보" name="x", data-ground, about='lng', value=ground?ground.mapInfo.Lng:'')
-	.col-md-4
-		.input-group
-			.input-group-prepend
-				span.input-group-text
-					i.nc-icon.nc-globe
-			input.form-control(type="text" placeholder="경도 정보" name="y", data-ground, about='lat', value=ground?ground.mapInfo.Lat:'')
-	.col-md-4
-		select.form-control(name='region', data-ground)
-			option(value='', disabled, selected) 지역 선택
-			- var region_id = '';
-			if(ground)
-				if(ground.region)
-					- region_id = ground.region.toString();
-				each r, idx in region
-					option(value=r._id, selected=r._id.toString()===region_id) #{r.name}
+  .col-md-4
+    .input-group
+      .input-group-prepend
+        span.input-group-text
+          i.nc-icon.nc-map-big
+      input.form-control#groundName(type="text" placeholder="경기장명 입력" name="groundName", data-ground, value=ground?ground.groundName:'')
+  .col-md-4
+    .input-group
+      .input-group-prepend
+        span.input-group-text
+          i.nc-icon.nc-pin-3
+      input.form-control#groundAddr(type="text" placeholder="경기장 주소 입력" name="road", data-ground, value=ground?ground.groundAddress.road:'')
+  .col-md-4
+    .input-group
+      .input-group-prepend
+        span.input-group-text
+          i.nc-icon.nc-pin-3
+      input.form-control(type="text" placeholder="지번주소" name="jibun", data-ground, value=ground?ground.groundAddress.jibun:'')
+  .col-md-4
+    .input-group
+      .input-group-prepend
+        span.input-group-text
+          i.nc-icon.nc-globe
+      input.form-control(type="text" placeholder="위도 정보" name="x", data-ground, about='lng', value=ground?ground.mapInfo.Lng:'')
+  .col-md-4
+    .input-group
+      .input-group-prepend
+        span.input-group-text
+          i.nc-icon.nc-globe
+      input.form-control(type="text" placeholder="경도 정보" name="y", data-ground, about='lat', value=ground?ground.mapInfo.Lat:'')
+  .col-md-4
+    select.form-control(name='region', data-ground)
+      option(value='', disabled, selected) 지역 선택
+      - var region_id = '';
+      if(ground)
+        if(ground.region)
+          - region_id = ground.region.toString();
+      each r, idx in region
+        option(value=r._id, selected=r._id.toString()===region_id) #{r.name}

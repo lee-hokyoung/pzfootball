@@ -16,7 +16,7 @@ const UserSchema = new Schema({
   height: String, //  키
   weight: String, //  몸무게
   position: String, //  포지션
-  skill: String, //  스킬 1 : 초금, 2 : 중급, 3 : 고급
+  skill: String, //  스킬 1 : 초급, 2 : 중급, 3 : 고급
   snsId: String,
   provider: String,
   profile_image: String,

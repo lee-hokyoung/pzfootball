@@ -65,12 +65,8 @@ function fnGenerateRow(item) {
   let match_type = item.querySelector('input[name="match_type"]:checked');
   let ladder = item.querySelector('input[name="ladder"]');
   let grade_group = item.querySelector('.grade-group[data-view="true"]');
-  let match_grade = item.querySelector(
-    '.grade-group[data-view="true"] input[name="match_grade"]:checked'
-  );
-  let grade_score = item.querySelector(
-    '.grade-group[data-view="true"] input[name="grade-score"]'
-  );
+  let match_grade = item.querySelector('.grade-group[data-view="true"] input[name="match_grade"]:checked');
+  let grade_score = item.querySelector('.grade-group[data-view="true"] input[name="grade-score"]');
   // let match_grade = item.querySelector('input[name="match_grade"]:checked');
   let sex = item.querySelector('input[name="sex"]:checked');
   let personnel_min = item.querySelector('input[name="personnel-min"]');
@@ -92,20 +88,11 @@ function fnGenerateRow(item) {
     alert("경기 타입을 선택해 주세요");
     return false;
   }
-  console.log("match grade : ", match_grade);
-  console.log("garde score : ", grade_score);
-  console.log("grade_group : ", grade_group);
-  if (
-    grade_group.getAttribute("name") === "grade" &&
-    (match_grade === null || match_grade.value === "")
-  ) {
+  if (grade_group.getAttribute("name") === "grade" && (match_grade === null || match_grade.value === "")) {
     alert("실력을 선택해 주세요");
     return false;
   }
-  if (
-    grade_group.getAttribute("name") === "score" &&
-    (grade_score === null || grade_score.value === "")
-  ) {
+  if (grade_group.getAttribute("name") === "score" && (grade_score === null || grade_score.value === "")) {
     alert("승점을 입력해 주세요");
     return false;
   }
@@ -124,15 +111,11 @@ function fnGenerateRow(item) {
   }
   let formData = {};
   formData["ground_id"] = ground_id.value;
-  formData["match_date"] = document.querySelector(
-    "button.btn-warning"
-  ).dataset.date;
+  formData["match_date"] = document.querySelector("button.btn-warning").dataset.date;
   formData["match_time"] = match_time.value;
   formData["match_type"] = match_type.value;
-  if (grade_group.getAttribute("name") === "grade")
-    formData["match_grade"] = match_grade.value;
-  if (grade_group.getAttribute("name") === "score")
-    formData["match_score"] === grade_score.value;
+  if (grade_group.getAttribute("name") === "grade") formData["match_grade"] = match_grade.value;
+  if (grade_group.getAttribute("name") === "score") formData["match_score"] === grade_score.value;
   formData["ladder"] = ladder.checked ? 1 : 0;
   formData["sex"] = sex.value;
   formData["personnel"] = {
@@ -228,7 +211,7 @@ function fnSetNewRow(doc) {
   label.appendChild(input);
   label.appendChild(span);
   formGroup.appendChild(label);
-  col_3.appendChild(formGroup);
+  // col_3.appendChild(formGroup);    //  승점제 경기 등록 부분(현재 리그는 다른 창으로 옮겨야 하므로 주석처리함)
 
   // 네번째 컬럼(실력: 상, 중, 하 또는 승점)
   let col_4 = document.createElement("div");
@@ -478,8 +461,7 @@ function fnUpdate(_id) {
     input.setAttribute("name", "match_grade_" + _id);
     input.setAttribute("value", v.val);
     // input.setAttribute("disabled", true);
-    if (match_grade)
-      if (match_grade.dataset.value === v.val) input.checked = true;
+    if (match_grade) if (match_grade.dataset.value === v.val) input.checked = true;
     span = document.createElement("span");
     span.className = "form-check-sign";
     span.innerText = v.lbl;
@@ -564,40 +546,23 @@ function fnUpdate(_id) {
   button.addEventListener("click", function () {
     let updateForm = {};
     let target_row = document.querySelector('.row[data-id="' + _id + '"]');
-    let grade_group = target_row.querySelector(
-      '.grade-group[data-view="true"]'
-    );
-    updateForm["match_time"] = target_row.querySelector(
-      'input[name="match_time"]'
-    ).value;
-    updateForm["match_type"] = target_row.querySelector(
-      'input[name="match_type_' + _id + '"]:checked'
-    ).value;
-    updateForm["ladder"] = target_row.querySelector('input[name="ladder"]')
-      .checked
-      ? 1
-      : 0;
+    let grade_group = target_row.querySelector('.grade-group[data-view="true"]');
+    updateForm["match_time"] = target_row.querySelector('input[name="match_time"]').value;
+    updateForm["match_type"] = target_row.querySelector('input[name="match_type_' + _id + '"]:checked').value;
+    updateForm["ladder"] = target_row.querySelector('input[name="ladder"]').checked ? 1 : 0;
     if (grade_group.getAttribute("name") === "grade") {
-      updateForm["match_grade"] = target_row.querySelector(
-        'input[name="match_grade_' + _id + '"]:checked'
-      ).value;
+      updateForm["match_grade"] = target_row.querySelector('input[name="match_grade_' + _id + '"]:checked').value;
     }
     if (grade_group.getAttribute("name") === "score") {
-      updateForm["match_score"] = target_row.querySelector(
-        'input[name="grade-score"]'
-      ).value;
+      updateForm["match_score"] = target_row.querySelector('input[name="grade-score"]').value;
     }
-    updateForm["sex"] = target_row.querySelector(
-      'input[name="sex_' + _id + '"]:checked'
-    ).value;
+    updateForm["sex"] = target_row.querySelector('input[name="sex_' + _id + '"]:checked').value;
     updateForm["personnel"] = {
       min: target_row.querySelector('input[name="personnel-min"]').value,
       max: target_row.querySelector('input[name="personnel-max"]').value,
     };
     // target_row.querySelector('input[name="personnel"]').value;
-    updateForm["match_price"] = target_row.querySelector(
-      'input[name="match_price"]'
-    ).value;
+    updateForm["match_price"] = target_row.querySelector('input[name="match_price"]').value;
 
     let xhr = new XMLHttpRequest();
     xhr.open("PUT", "/admin/match/" + _id, true);
@@ -659,13 +624,11 @@ function fnDeleteRow(id) {
 }
 
 //  승점제 경기 체크시 일반/실력 활성화
-document
-  .querySelector('input.form-check-input[name="ladder"]')
-  .addEventListener("click", function () {
-    let toggle = this.dataset.toggle === "false";
-    this.dataset.toggle = toggle;
-    document.querySelectorAll(".grade-group").forEach(function (div) {
-      let view = div.dataset.view === "false";
-      div.dataset.view = view;
-    });
+document.querySelector('input.form-check-input[name="ladder"]').addEventListener("click", function () {
+  let toggle = this.dataset.toggle === "false";
+  this.dataset.toggle = toggle;
+  document.querySelectorAll(".grade-group").forEach(function (div) {
+    let view = div.dataset.view === "false";
+    div.dataset.view = view;
   });
+});

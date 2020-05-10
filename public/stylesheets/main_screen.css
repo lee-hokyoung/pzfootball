@@ -44,19 +44,49 @@
   background-color: white;
   z-index: 1;
 }
-.main-tab-wrap a {
-  background-color: #ddd;
-  padding: 0.35rem 1rem;
-  margin-right: 0.5rem;
-  width: 60px;
-  color: black;
-  font-family: scdream6;
+.calendar-slider-wrap {
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
 }
-.main-tab-wrap a:hover,
-.main-tab-wrap a:focus,
-.main-tab-wrap a.active {
-  background-color: #662d91 !important;
+.calendar-slider .btn-date {
+  margin: 0;
+  padding: 17px 7px 11px 7px;
+  transition-duration: 0s !important;
 }
-.container.inner-container {
-  max-width: 938px;
+.calendar-slider .btn-date.active,
+.calendar-slider .btn-date:hover {
+  color: black !important;
+  border-bottom: 6px solid #662d91 !important;
+}
+.calendar-slider .btn-date.active .h6,
+.calendar-slider .btn-date.active .small {
+  font-weight: bold;
+}
+.filter-wrap {
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+/* .filter-wrap a {
+  display: flex;
+  justify-content: space-between;
+} */
+#matchFilter {
+  background-color: #eee;
+}
+#matchFilter .col-md-3 .row-wrap {
+  padding-top: 5px;
+  justify-content: space-around;
+}
+#matchFilter .col-md-3 span {
+  padding-left: 15px;
+}
+#matchFilter .col-md-3 button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  font-family: NotoSansR;
+  color: #aaa;
 }

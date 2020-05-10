@@ -71,9 +71,11 @@ html
           //-   a(href='https://band.us/band/74014925', target='_blank') 퍼즐풋볼 밴드
 
       //- #content.container-fluid.pz_bg
+      input#isLoggedIn(type='hidden', data-isLogin=(user_info?'true':'false'))
       .container
         .d-flex.justify-content-between.px-3
-          img.py-2(src='/images/pz_logo.png', style='cursor:pointer; z-index:10; width:70px', onclick='location.href="/"', alt='퍼즐풋볼 메인 로고')
+          //- img.py-2(src='/images/pz_logo.png', style='cursor:pointer; z-index:10; width:70px', onclick='location.href="/"', alt='퍼즐풋볼 메인 로고')
+          a.py-3.font-weight-bold(href='/') PZ SPORT
           .nav-button-wrap.my-auto
             if(user_info)
               span.text-black
@@ -93,7 +95,6 @@ html
                 a.text-primary(href='#', data-toggle='modal', data-target='#beforeJoinModal') 회원가입
             a#sidebarCollapse.pl-3(href='#')
               img(src='/images/nav_toggle.svg', width=22)
-      input#isLoggedIn(type='hidden', data-isLogin=(user_info?'true':'false'))
       block content
       // login modal
       include modals/login

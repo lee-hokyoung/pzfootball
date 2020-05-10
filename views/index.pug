@@ -6,39 +6,19 @@ block content
   // slick-slider
   - var today = new Date();
   .full-cover-pzfutball
-  .container.inner-container
-    .main-tab-wrap.mb-2
-      a.btn(href='/', class=active==='normal'?'active':'') 일반
-      a.btn(href='/league', class=active==='league'?'active':'') 리그
-      a.btn(href='/cup', class=active==='cup'?'active':'') 컵
+  .container-fluid
+    .container
+      include include/nav
+  .container-fluid.px-0
     .main-slider
       .d-flex.justify-content-center
         .d-none.d-sm-block.main-slide-item(style='background-image:url(/images/normal_main.png)')
         .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/normal_main.png)')
       .d-flex.justify-content-center
         .d-none.d-sm-block.main-slide-item(style='background-image:url(/images/league_main1.png)')
-          //- .title-wrap.left
-          //-   h3 General Game
-          //-   h1 일반매치
-          //-   a(href='#', data-role='match', data-value='0')
-          //-     img.mx-auto(src='/images/lets_go.png')
-          //- .title-wrap.right
-          //-   h3 League Game
-          //-   h1 리그매치
-          //-   a(href='#', data-role='match', data-value='1')
-          //-     img.mx-auto(src='/images/lets_go.png')
-          //- img(src='/images/main_1.png', alt='pc')
         .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/league_main1.png)')
       .d-flex.justify-content-center
         .d-none.d-sm-block.main-slide-item(style='background:url(/images/league_main2.png)')
-          //- .title-wrap.rank-title.center
-          //-   h4 20-21 시즌
-          //-   h2 순위표 바로가기
-          //-   .text-light /
-          //-   h5 Go to the Rank
-          //-   a(href='#')
-          //-     img.mx-auto.mt-3(src='/images/lets_go.png')
-          //- img(src='/images/main_2.png', alt='pc')
         .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/league_main2.png)')
       each notice in notice_list
         .d-none.d-sm-block.main-slide-item(style='background-image:url(' + notice.notice_img + ')')
@@ -46,47 +26,67 @@ block content
   //  날짜 선택 slick-slider
   - var size = 28;
   - var day = ['일', '월', '화', '수', '목', '금', '토'];
+  .container.text-right
+    button.btn.btn-neutral.text-black.m-0.p-0
+      .favorite-wrap
+        i.fa.fa-star
+        h6.title 즐겨찾는 구장 보기
   .navigation
     nav.d-flex.justify-content-center.w-100(style='z-index:5')
       .container-fluid.py-1.bg-white
-        .mx-auto.d-flex.justify-content-between.mobile-menu-wrap
-          //- .game-icons-wrap.mx-auto(style='width:230px;')
-          //-   button.btn.btn-link.p-0.mr-3(type='button', data-game='2')
-          //-     img(src='/images/game_2match.png', alt='2파전')
-          //-   button.btn.btn-link.p-0.mr-3(type='button', data-game='3', style='top:-16px; position:relative;')
-          //-     img(src='/images/game_3match.png', alt='3파전')
-          //-   button#dropdownGroundList.btn.btn-link.p-0(href='#', role='button',data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-          //-     img(src='/images/game_ground.png', alt='구장')
-          //-     .dropdown-menu.p-0(aria-labelledby='dropdownGroundList')
-          //-       ul.list-group.list-group-flush
-          //-         li.list-group-item.list-group-item-action(data-id='') 전체
-          //-         each ground in ground_list
-          //-           a(href='#')
-          //-             li.list-group-item.list-group-item-action(data-id=ground._id) #{ground.groundName}
-          .calendar-slider.w-100.mx-auto(style='max-width:750px;')
+        .container.calendar-slider-wrap
+          .calendar-slider.w-100.mx-auto(style='max-width:850px;')
             - var d = 0;
             while d < size
               //.col
-              .pr-2
+              .text-center
                 - var date = new Date();
                 - date.setDate(today.getDate() + d++)
                 - var year = date.getFullYear();
                 - var month = date.getMonth() < 10 ? '0' + (date.getMonth() + 1): date.getMonth() + 1;
                 - var days = date.getDate();
-                button.btn.rounded.btn-date.font-italic.w-100.btn-link(type='button', onclick='fnSelectDate(this)',
+                button.btn.btn-neutral.btn-date.rounded-0(type='button', onclick='fnSelectDate(this)',
                 class=d===1?'active':'',
-                class=date.getDay()===0?'text-danger':date.getDay()===6?'text-primary':'text-secondary',
+                class=date.getDay()===0?'text-danger':date.getDay()===6?'text-primary':'text-black',
                 class=d===1?'btn-primary':'', data-date=year + '-' + month + '-' + days)
-                  .h6.m-0 #{days}
+                  .h6.mb-3 #{days}
                   .small #{day[date.getDay()]}
-          //- .position-relative.mx-auto(style='line-height:50px;')
-          //-   - var today = new Date();
-          //-   - var m = today.getMonth() + 1;
-          //-   - var d = today.getDate();
-          //-   - var y = today.getFullYear();
-          //-   img(src='/images/calendar_btn.png', alt='전체달력', data-date=y + '.' + m)
-          //-   input#datepicker.ml-3.position-absolute(type='text', value=m + '-' + d + '-' + y)
         //  경기 필터링 부분
+        .container.filter-wrap
+          span 총 #{list.length || 0}매치
+          a.collapsed(href='#matchFilter', data-toggle='collapse', aria-expanded='false') 구장 상세설정
+            i.nc-icon.nc-minimal-down.pl-2
+            i.nc-icon.nc-minimal-up.pl-2
+        #matchFilter.container.collapse(data-role='collapse')
+          .row.p-3
+            .col-md-3
+              span 성별
+              .row-wrap
+                button(data-toggle='false') 전체
+                button(data-toggle='false') 남성
+                button(data-toggle='false') 여성
+                button(data-toggle='false') 혼성
+            .col-md-3
+              span 레벨
+              .row-wrap
+                button 전체
+                button 초급
+                button 중급
+                button 고급
+            .col-md-3
+              span 매치 형태
+              .row-wrap
+                button 전체
+                button 2파전
+                button 3파전
+            .col-md-3
+              span 매치 인원
+              .row-wrap
+                button 전체
+                button 5 vs 5
+                button 6 vs 6
+          .row
+            .col
         .mobile-menu-wrap.mx-auto
           .row
             .col
@@ -95,18 +95,6 @@ block content
                   img.w-100(src='/images/match_type_none.png', alt='경기타입')
                 .form-group.m-0
                   button.btn.btn-primary.btn-neutral.text-primary.dropdown-toggle(type='button', data-toggle='modal', data-target='#filterModal') 구장설정
-                //- .form-group.ml-2
-                //-   p.category 2파
-                //-   input.bootstrap-switch(type="checkbox" data-toggle="switch" value="2" checked="" data-on-color="primary" data-off-color="primary" data-on-label="on" data-off-label="off")
-                //- .form-group.ml-2
-                //-   p.category 3파
-                //-   input.bootstrap-switch(type="checkbox" data-toggle="switch" value="3" checked="" data-off-color="success" data-on-color="success" data-on-label="on" data-off-label="off")
-                //- if(!user_info)
-                //-   .form-group.ml-2
-                //-     button.btn.btn-primary.text-primary.btn-neutral.dropdown-toggle(type='button', data-toggle='modal', data-target='#filterModalRegion') 지역
-                //- else
-                //-   .form-group.ml-2
-                //-     button.btn.btn-primary.text-primary.btn-neutral.dropdown-toggle(type='button', data-toggle='modal', data-target='#filterModalGround') 구장
             .col.text-right
               p.match-count 총 #{list.length || 0}매치
               

@@ -91,6 +91,7 @@ h6.title {
   font-family: scdream5;
   font-weight: bold;
   color: rgb(127, 127, 127);
+  height: 40px;
 }
 .skill-btn-wrap button.btn:hover,
 .skill-btn-wrap button.btn:focus,
@@ -154,11 +155,15 @@ button[type="submit"] {
 button[name="btnSendCertify"] {
   font-family: scdream5;
   font-size: 15px;
+  height: 40px;
 }
 .profile-desc {
   font-family: scdream5;
   font-size: 12px;
   color: rgb(255, 0, 0);
+}
+.term-wrap .form-check-sign {
+  font-size: 14px;
 }
 @media (max-width: 768px) {
   /* #join-page {

@@ -130,8 +130,15 @@ block content
             button.btn.rounded-0(type='button', name='skill', data-value='1', data-toggle='false') 초급
             button.btn.rounded-0(type='button', name='skill', data-value='2', data-toggle='false') 중급
             button.btn.rounded-0(type='button', name='skill', data-value='3', data-toggle='false') 고급
-      .row-wrap
-
+      .row-wrap.term-wrap
+        .form-check
+          label.form-check-label.pl-4
+            input.form-check-input(type="checkbox", name='chkAllTerms', data-toggle='false')
+            span.form-check-sign.pl-1
+              a.text-primary.font-weight-bold(data-toggle='modal', data-target='#modalPersonal') 개인정보 처리방침 
+              | 및
+              a.text-primary.font-weight-bold(data-toggle='modal', data-target='#modalTerms') 퍼즐풋볼 이용약관
+              | 에 동의합니다. 
       .row-wrap
         button.btn.btn-primary.w-100.py-3(type='submit') 가입완료
       .row-wrap
@@ -142,5 +149,15 @@ block content
         .modal-body.text-center
           h5.text-warning.font-weight-bold.my-3 가입을 축하드립니다!
           button.btn.text-primary.btn-neutral(type='button', onclick='fnAddInfo("mypage")') 추가 정보를 입력하시겠어요?
+  #modalPersonal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='termModalLabel', aria-hidden='true')
+    .modal-dialog
+      .modal-content
+        .modal-body
+          h6 개인정보 처리방침
+  #modalTerms.modal.fade(tabindex='-1', role='dialog', aria-labelledby='personalModalLabel', aria-hidden='true')
+    .modal-dialog
+      .modal-content
+        .modal-body
+          h6 퍼즐풋볼 이용약관
 block append_js
   script(src='/public_js/join.js')

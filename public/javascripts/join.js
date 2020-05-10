@@ -14,19 +14,12 @@ document.querySelector('input[name="chk_all"]').addEventListener("click", functi
 // 회원가입
 function fnJoin() {
   //  이용약관, 개인정보 수집 및 이용에 대한 안내
-  let chk_terms = document.querySelector('input[name="chk_terms"]');
-  let chk_privacy = document.querySelector('input[name="chk_privacy"]');
-  if (!chk_terms.checked) {
-    alert("이용약관에 동의해 주세요");
-    chk_terms.focus();
+  let chkAllTerms = document.querySelector('input[name="chkAllTerms"]');
+  if (!chkAllTerms.checked) {
+    alert("개인정보 처리방침 및 퍼즐풋볼 이용약관에 동의해주세요");
     return false;
   }
-  if (!chk_privacy.checked) {
-    alert("개인정보 수집에 동의해 주세요");
-    chk_privacy.focus();
-    return false;
-  }
-
+  let profile_img = document.querySelector(".fileinput-preview img");
   let user_id = document.querySelector('input[name="user_id"]');
   let user_pw = document.querySelector('input[name="user_pw"]');
   let user_pw_chk = document.querySelector('input[name="user_pw_chk"]');
@@ -42,6 +35,9 @@ function fnJoin() {
     document.querySelector('select[name="birth_m"]').value +
     "-" +
     document.querySelector('select[name="birth_d"]').value;
+  let certifiedNumber = document.querySelector('input[name="certifiedNumber"]');
+  let position = document.querySelector('select[name="position"]');
+  let skill = document.querySelector('button[name="skill"][data-toggle="true"]');
 
   // let user_nickname = document.querySelector('input[name="user_nickname"]');
   // let user_email = document.querySelector('input[name="user_email"]');
@@ -107,6 +103,9 @@ function fnJoin() {
   formData["phone1"] = phone1.value;
   formData["phone2"] = phone2.value;
   formData["birth"] = birth;
+  formData["position"] = position.value;
+  if (skill) formData["skill"] = skill.dataset.value;
+  if (profile_img) formData["profile_image"] = profile_img.src;
   console.log("formData : ", formData);
 
   // formData["user_nickname"] = user_nickname.value;
@@ -126,7 +125,7 @@ function fnJoin() {
       }
     }
   };
-  xhr.send(JSON.stringify(formData));
+  // xhr.send(JSON.stringify(formData));
   return false;
 }
 //  추가정보 입력 선택했을 경우

@@ -94,7 +94,11 @@ window.addEventListener("scroll", function () {
 document.querySelector("#scrollTop").addEventListener("click", function () {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
-
+document.querySelectorAll("li[data-id]").forEach(function (li) {
+  li.addEventListener("click", function () {
+    location.href = "/match/" + this.dataset.id;
+  });
+});
 //  경기 리스트 생성
 function fnGenerateGroundList(res, currentSlide) {
   document.querySelector(".match-count").innerHTML = "총 " + res.length + "매치";
@@ -105,17 +109,24 @@ function fnGenerateGroundList(res, currentSlide) {
     res.forEach(function (game, idx) {
       let remain = game.personnel.max - (game.apply_member.length || 0);
       let percent = game.apply_member.length / game.personnel.max;
-      let status = "available";
+      let status = "available",
+        statusText = "";
       if (percent <= 0.6) {
         status = "available";
+        statusText = "신청가능";
       } else if (percent < 1 && percent > 0.6) {
         status = "hurry";
+        statusText = "마감임박";
       } else {
         status = "full";
+        statusText = "마  감";
       }
       let li = document.createElement("li");
       li.classList = "list-group-item";
       li.dataset.id = game._id;
+      li.addEventListener("click", function () {
+        location.href = "/match/" + game._id;
+      });
 
       let row = document.createElement("div");
       row.className = "row";
@@ -166,6 +177,7 @@ function fnGenerateGroundList(res, currentSlide) {
         inner_div.className = "grade_icon ml-2";
         inner_div.dataset.grade = game.match_grade;
         inner_div.dataset.title = "실력";
+        inner_div.innerText = game.match_grade === "1" ? "고급" : game.match_grade === "2" ? "중급" : "초급";
         flex.appendChild(inner_div);
       } else {
         inner_div.className = "ladder_icon ml-2";
@@ -183,36 +195,45 @@ function fnGenerateGroundList(res, currentSlide) {
       //  col-md-2.col-4
       col = document.createElement("div");
       col.className = "col-md-2 col-4";
-      let div = document.createElement("div");
-      div.className = "pull-right w-100";
-      div.dataset.cnt = remain;
-      div.dataset.id = game._id;
+      let skew = document.createElement("div");
+      skew.className = "skew-wrap";
+      inner_div = document.createElement("div");
+      inner_div.className = "apply-btn-wrap";
+      inner_div.dataset.status = status;
+      inner_div.innerText = statusText;
+      skew.appendChild(inner_div);
+      col.appendChild(skew);
 
-      let button = document.createElement("button");
-      if (status === "full") {
-        button.className = "btn btn-neutral btn-status text-white";
-        button.dataset.status = "full";
-        small.className = "m-0";
-        small.innerText = "마  감";
-        button.appendChild(small);
-      } else {
-        button.className = "btn btn-neutral btn-status text-white p-0";
-        button.dataset.status = status;
-        let h5 = document.createElement("h5");
-        h5.className = "m-0 py-1";
-        h5.innerText = status === "hurry" ? "곧 마감!" : "신청가능!";
-        inner_div = document.createElement("div");
-        inner_div.className = "text-danger bg-white mx-auto font-weight-bold mb-1";
-        inner_div.style = "border-radius:1rem; width:80%; font-size:.75rem";
-        inner_div.innerText = game.apply_member.length + " / " + game.personnel.max;
-        button.appendChild(h5);
-        button.appendChild(inner_div);
-      }
-      button.addEventListener("click", function () {
-        location.href = "/match/" + game._id;
-      });
-      div.appendChild(button);
-      col.appendChild(div);
+      // let div = document.createElement("div");
+      // div.className = "pull-right w-100";
+      // div.dataset.cnt = remain;
+      // div.dataset.id = game._id;
+
+      // let button = document.createElement("button");
+      // if (status === "full") {
+      //   button.className = "btn btn-neutral btn-status text-white";
+      //   button.dataset.status = "full";
+      //   small.className = "m-0";
+      //   small.innerText = "마  감";
+      //   button.appendChild(small);
+      // } else {
+      //   button.className = "btn btn-neutral btn-status text-white p-0";
+      //   button.dataset.status = status;
+      //   let h5 = document.createElement("h5");
+      //   h5.className = "m-0 py-1";
+      //   h5.innerText = status === "hurry" ? "곧 마감!" : "신청가능!";
+      //   inner_div = document.createElement("div");
+      //   inner_div.className = "text-danger bg-white mx-auto font-weight-bold mb-1";
+      //   inner_div.style = "border-radius:1rem; width:80%; font-size:.75rem";
+      //   inner_div.innerText = game.apply_member.length + " / " + game.personnel.max;
+      //   button.appendChild(h5);
+      //   button.appendChild(inner_div);
+      // }
+      // button.addEventListener("click", function () {
+      //   location.href = "/match/" + game._id;
+      // });
+      // div.appendChild(button);
+      // col.appendChild(div);
       row.appendChild(col);
       li.appendChild(row);
       ul.appendChild(li);

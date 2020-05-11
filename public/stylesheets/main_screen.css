@@ -199,8 +199,8 @@
 }
 .ground-list li.list-group-item[data-id] {
   background-color: #eee;
-  padding: 0.25rem 0;
   margin: 0.2rem 0;
+  padding: 0;
   border: none;
   cursor: pointer;
   border-left: 6px solid transparent;
@@ -209,9 +209,9 @@
   border-left: 6px solid #662d91;
 }
 .apply-btn-wrap {
-  margin: -0.25rem 0 -0.25rem auto;
-  height: 50px;
-  line-height: 50px;
+  margin-left: auto;
+  height: 70px;
+  line-height: 70px;
   color: white;
   position: relative;
   max-width: 100px;
@@ -231,12 +231,12 @@
   content: "";
   position: absolute;
   width: 20px;
-  height: 50px;
+  height: 70px;
   left: 0;
   border-left: 25px solid #eee;
 }
 .apply-btn-wrap[data-status="available"]::before {
-  border-bottom: 50px solid #662d91;
+  border-bottom: 70px solid #662d91;
 }
 .apply-btn-wrap[data-status="hurry"]::before {
   border-bottom: 50px solid red;

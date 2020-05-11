@@ -81,8 +81,7 @@ ul.list-group li.list-group-item {
 }
 #placesList .info .jibun {
   padding-left: 26px;
-  background: url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png)
-    no-repeat;
+  background: url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;
 }
 #placesList .info .tel {
   color: #009900;
@@ -93,8 +92,7 @@ ul.list-group li.list-group-item {
   width: 36px;
   height: 37px;
   margin: 10px 0 0 5px;
-  background: url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png)
-    no-repeat;
+  background: url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;
 }
 #placesList .item .marker_1 {
   background-position: 0 -10px;
@@ -231,16 +229,16 @@ ul#match-register li .row .col[data-title="match_type"] {
 }
 ul#match-register li .row .col[data-title="match_grade"],
 ul#match-register li .row .col[data-title="match_score"] {
-  max-width: 200px;
+  max-width: 250px;
 }
 ul#match-register li .row .col[data-title="sex"] {
   min-width: 250px;
 }
 ul#match-register li .row .col[data-title="personnel"] {
-  max-width: 250px;
+  max-width: 150px;
 }
 ul#match-register li .row .col[data-title="match_price"] {
-  max-width: 150px;
+  max-width: 130px;
 }
 ul#match-register li .row .col[data-title="buttons"] {
   min-width: 100px;
@@ -250,7 +248,7 @@ ul#match-register li .row .col[data-title="personnel"] .form-group {
   justify-content: space-between;
 }
 ul#match-register li .row .col[data-title="personnel"] input {
-  width: 90px;
+  width: 50px;
 }
 .grade-group[data-view="false"] {
   display: none;

@@ -52,8 +52,9 @@ block content
                         .col(data-title='#') #
                         .col(data-title='match_time') 시간
                         .col(data-title='match_type') 타입
-                        .col(data-title='match_grade') 실력 또는 승점
+                        .col(data-title='match_grade') 실력
                         .col(data-title='sex') 성별
+                        .col(data-title='match_vs') 매치 인원
                         .col(data-title='personnel') 인원수
                         .col(data-title='match_price') 금액
                         .col(data-title='buttons')
@@ -82,6 +83,7 @@ block content
                                 | 여성
                               when "3"
                                 | 혼성
+                          .col(data-title='match_vs', name='match_vs', data-value=item.match_vs) #{item.match_vs}
                           .col(data-title='personnel', name='personnel', data-min=item.personnel.min, data-max=item.personnel.max) #{item.personnel.min} ~ #{item.personnel.max}
                           .col(data-title='match_price' name='match_price') #{item.match_price}
                           .col(data-title='buttons')
@@ -139,6 +141,15 @@ block content
                             label.form-check-label
                               input.form-check-input(type="radio", name="sex", value='3')
                               span.form-check-sign 혼성
+                        .col(data-title='match_vs') 
+                          .form-check-radio.form-check-inline
+                            label.form-check-label
+                              input.form-check-input(type="radio", name="match_vs", value='5')
+                              span.form-check-sign 5 vs 5
+                          .form-check-radio.form-check-inline
+                            label.form-check-label
+                              input.form-check-input(type="radio", name="match_vs", value='6')
+                              span.form-check-sign 6 vs 6
                         .col(data-title='personnel')
                           .form-group
                             input.form-control.py-1(type='number', name='personnel-min')

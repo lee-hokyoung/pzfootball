@@ -10,7 +10,7 @@ const UserSchema = new Schema({
   phone2: String,
   user_email: String,
   user_nickname: String,
-  gender: String, //  남성 : 1, 여성 : -1
+  gender: String, //  남성 : male, 여성 : female
   birth: String,
 
   height: String, //  키

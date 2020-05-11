@@ -69,6 +69,7 @@ function fnGenerateRow(item) {
   let grade_score = item.querySelector('.grade-group[data-view="true"] input[name="grade-score"]');
   // let match_grade = item.querySelector('input[name="match_grade"]:checked');
   let sex = item.querySelector('input[name="sex"]:checked');
+  let match_vs = item.querySelector('input[name="match_vs"]:checked');
   let personnel_min = item.querySelector('input[name="personnel-min"]');
   let personnel_max = item.querySelector('input[name="personnel-max"]');
   let match_price = item.querySelector('input[name="match_price"]');
@@ -100,6 +101,10 @@ function fnGenerateRow(item) {
     alert("성별을 선택해 주세요");
     return false;
   }
+  if (match_vs === null || match_vs.value === "") {
+    alert("매치 인원을 선택해 주세요");
+    return false;
+  }
   if (personnel_min.value === "" || personnel_max.value === "") {
     alert("인원수를 입력해 주세요");
     return false;
@@ -118,6 +123,7 @@ function fnGenerateRow(item) {
   if (grade_group.getAttribute("name") === "score") formData["match_score"] === grade_score.value;
   formData["ladder"] = ladder.checked ? 1 : 0;
   formData["sex"] = sex.value;
+  formData["match_vs"] = match_vs.value;
   formData["personnel"] = {
     min: Number(personnel_min.value),
     max: Number(personnel_max.value),
@@ -145,6 +151,7 @@ function fnSetNewRow(doc) {
   let match_grade = doc.match_grade;
   let ladder = doc.ladder;
   let sex = doc.sex;
+  let match_vs = doc.match_vs;
   let personnel = doc.personnel;
   let match_price = doc.match_price;
 
@@ -287,10 +294,38 @@ function fnSetNewRow(doc) {
     formGroup.appendChild(label);
     col_5.appendChild(formGroup);
   });
-  // 여섯번째 컬럼(인원수)
+  //  여섯번쨰 컬럼(매치인원)
   let col_6 = document.createElement("div");
   col_6.className = "col";
-  col_6.dataset.title = "personnel";
+  col_6.dataset.title = "match_vs";
+  [
+    { lbl: "5 vs 5", val: "5" },
+    { lbl: "6 vs 6", val: "6" },
+  ].forEach(function (v) {
+    formGroup = document.createElement("div");
+    formGroup.className = "form-check-radio form-check-inline";
+    label = document.createElement("label");
+    label.className = "form-check-label";
+    input = document.createElement("input");
+    input.className = "form-check-input";
+    input.setAttribute("type", "radio");
+    input.setAttribute("name", "match_vs_" + _id);
+    input.setAttribute("value", v.val);
+    // input.setAttribute("disabled", true);
+    if (match_vs === v.val) input.checked = true;
+    span = document.createElement("span");
+    span.className = "form-check-sign";
+    span.innerText = v.lbl;
+    label.appendChild(input);
+    label.appendChild(span);
+    formGroup.appendChild(label);
+    col_6.appendChild(formGroup);
+  });
+
+  // 일곱번째 컬럼(인원수)
+  let col_7 = document.createElement("div");
+  col_7.className = "col";
+  col_7.dataset.title = "personnel";
   formGroup = document.createElement("div");
   formGroup.className = "form-group";
   input = document.createElement("input");
@@ -308,11 +343,11 @@ function fnSetNewRow(doc) {
   input.setAttribute("name", "personnel-max");
   input.value = personnel.max;
   formGroup.appendChild(input);
-  col_6.appendChild(formGroup);
-  // 일곱번째 컬럼(금액)
-  let col_7 = document.createElement("div");
-  col_7.className = "col";
-  col_7.dataset.title = "match_price";
+  col_7.appendChild(formGroup);
+  // 여덟번째 컬럼(금액)
+  let col_8 = document.createElement("div");
+  col_8.className = "col";
+  col_8.dataset.title = "match_price";
   formGroup = document.createElement("div");
   formGroup.className = "form-group";
   input = document.createElement("input");
@@ -322,11 +357,11 @@ function fnSetNewRow(doc) {
   input.value = match_price;
   // input.readOnly = true;
   formGroup.appendChild(input);
-  col_7.appendChild(formGroup);
-  // 여덟번째 컬럼
-  let col_8 = document.createElement("div");
-  col_8.className = "col";
-  col_8.dataset.title = "buttons";
+  col_8.appendChild(formGroup);
+  // 아홉번째 컬럼
+  let col_9 = document.createElement("div");
+  col_9.className = "col";
+  col_9.dataset.title = "buttons";
 
   row.appendChild(col_1);
   row.appendChild(col_2);
@@ -336,6 +371,7 @@ function fnSetNewRow(doc) {
   row.appendChild(col_6);
   row.appendChild(col_7);
   row.appendChild(col_8);
+  row.appendChild(col_9);
   li.appendChild(row);
 
   let match_list = document.querySelector("#match_list");
@@ -353,6 +389,8 @@ function fnUpdate(_id) {
   let match_score = r.querySelector("div[name='match_score']");
 
   let sex = r.querySelector("div[name='sex']").dataset.value;
+  let match_vs = r.querySelector('div[name="match_vs"]').dataset.value;
+
   let personnel = r.querySelector("div[name='personnel']");
   let match_price = r.querySelector("div[name='match_price']").innerText;
   let ladder = r.querySelector("input").value;
@@ -423,7 +461,7 @@ function fnUpdate(_id) {
   label.appendChild(input);
   label.appendChild(span);
   formGroup.appendChild(label);
-  col_3.appendChild(formGroup);
+  // col_3.appendChild(formGroup);  //  승점제 경기 주석 처리
 
   // 네번째 컬럼(실력: 상, 중, 하)
   let col_4 = document.createElement("div");
@@ -500,10 +538,39 @@ function fnUpdate(_id) {
     formGroup.appendChild(label);
     col_5.appendChild(formGroup);
   });
-  // 여섯번째 컬럼(인원수)
+
+  // 여섯번째 컬럼(매치 인원)
   let col_6 = document.createElement("div");
   col_6.className = "col";
-  col_6.dataset.title = "personnel";
+  col_6.dataset.title = "match_vs";
+  [
+    { lbl: "5 vs 5", val: "5" },
+    { lbl: "6 vs 6", val: "6" },
+  ].forEach(function (v) {
+    formGroup = document.createElement("div");
+    formGroup.className = "form-check-radio form-check-inline";
+    label = document.createElement("label");
+    label.className = "form-check-label";
+    input = document.createElement("input");
+    input.className = "form-check-input";
+    input.setAttribute("type", "radio");
+    input.setAttribute("name", "match_vs_" + _id);
+    input.setAttribute("value", v.val);
+    // input.setAttribute("disabled", true);
+    if (match_vs === v.val) input.checked = true;
+    span = document.createElement("span");
+    span.className = "form-check-sign";
+    span.innerText = v.lbl;
+    label.appendChild(input);
+    label.appendChild(span);
+    formGroup.appendChild(label);
+    col_6.appendChild(formGroup);
+  });
+
+  // 일곱번째 컬럼(인원수)
+  let col_7 = document.createElement("div");
+  col_7.className = "col";
+  col_7.dataset.title = "personnel";
   formGroup = document.createElement("div");
   formGroup.className = "form-group";
   input = document.createElement("input");
@@ -521,11 +588,11 @@ function fnUpdate(_id) {
   input.setAttribute("name", "personnel-max");
   input.value = personnel.dataset.max;
   formGroup.appendChild(input);
-  col_6.appendChild(formGroup);
-  // 일곱번째 컬럼(금액)
-  let col_7 = document.createElement("div");
-  col_7.className = "col";
-  col_7.dataset.title = "match_price";
+  col_7.appendChild(formGroup);
+  // 여덟번째 컬럼(금액)
+  let col_8 = document.createElement("div");
+  col_8.className = "col";
+  col_8.dataset.title = "match_price";
   formGroup = document.createElement("div");
   formGroup.className = "form-group";
   input = document.createElement("input");
@@ -535,11 +602,11 @@ function fnUpdate(_id) {
   input.value = match_price;
   // input.readOnly = true;
   formGroup.appendChild(input);
-  col_7.appendChild(formGroup);
-  // 여덟번째 컬럼
-  let col_8 = document.createElement("div");
-  col_8.className = "col";
-  col_8.dataset.title = "buttons";
+  col_8.appendChild(formGroup);
+  // 아홉번째 컬럼
+  let col_9 = document.createElement("div");
+  col_9.className = "col";
+  col_9.dataset.title = "buttons";
   let button = document.createElement("button");
   button.className = "btn btn-sm btn-success m-0 btn-link";
   button.setAttribute("title", "수정");
@@ -580,7 +647,7 @@ function fnUpdate(_id) {
   let icon = document.createElement("i");
   icon.className = "fa fa-check";
   button.appendChild(icon);
-  col_8.appendChild(button);
+  col_9.appendChild(button);
 
   button = document.createElement("button");
   button.className = "btn btn-sm btn-danger m-0 btn-link";
@@ -591,7 +658,7 @@ function fnUpdate(_id) {
   icon = document.createElement("i");
   icon.className = "fa fa-times";
   button.appendChild(icon);
-  col_8.appendChild(button);
+  col_9.appendChild(button);
 
   r.innerHTML = "";
   r.appendChild(col_1);
@@ -602,6 +669,7 @@ function fnUpdate(_id) {
   r.appendChild(col_6);
   r.appendChild(col_7);
   r.appendChild(col_8);
+  r.appendChild(col_9);
 }
 function fnDelete(id) {
   if (confirm("삭제하면 복구할 수 없습니다. 계속하시겠습니까?")) {

@@ -100,6 +100,7 @@ function fnGenerateGroundList(res, currentSlide) {
   document.querySelector(".match-count").innerHTML = "총 " + res.length + "매치";
   let ul = document.querySelector('div[data-slick-index="' + currentSlide + '"] ul');
   ul.innerHTML = "";
+  document.querySelector(".filter-wrap span").innerText = "총 " + res.length + "매치";
   if (res.length > 0) {
     res.forEach(function (game, idx) {
       let remain = game.personnel.max - (game.apply_member.length || 0);
@@ -113,7 +114,8 @@ function fnGenerateGroundList(res, currentSlide) {
         status = "full";
       }
       let li = document.createElement("li");
-      li.classList = "list-group-item list-group-item-light py-1 px-0 mx-auto " + (idx % 2 === 0 ? "bg-light" : "");
+      li.classList = "list-group-item";
+      li.dataset.id = game._id;
 
       let row = document.createElement("div");
       row.className = "row";
@@ -128,11 +130,11 @@ function fnGenerateGroundList(res, currentSlide) {
       let time_group_wrap = document.createElement("div");
       time_group_wrap.className = "time-ground-wrap d-flex justify-content-start";
       let p = document.createElement("p");
-      p.className = "ml-3 text-info";
+      p.className = "pl-5";
       p.innerText = game.match_time;
       time_group_wrap.appendChild(p);
       p = document.createElement("p");
-      p.className = "ml-3 text-dark";
+      p.className = favorite_ground.indexOf(game.ground_info._id) > -1 ? "position-relative pl-5 star" : "pl-5";
       p.innerText = game.ground_info.groundName;
       time_group_wrap.appendChild(p);
       inner_col.appendChild(time_group_wrap);
@@ -155,7 +157,7 @@ function fnGenerateGroundList(res, currentSlide) {
       let small = document.createElement("small");
       small.className =
         "pl-2 tagList" + (game.sex === 1 ? " male text-primary" : game.sex === -1 ? " female text-danger" : " mix");
-      small.innerText = game.sex === 1 ? "남성매치" : game.sex === -1 ? "여성매치" : "혼성매치";
+      small.innerText = game.sex === 1 ? "남성" : game.sex === -1 ? "여성" : "혼성";
       inner_div.appendChild(small);
       flex.appendChild(inner_div);
       //    grade_icon.ml-2
@@ -625,3 +627,21 @@ function fnSetFilter() {
   document.body.appendChild(form);
   form.submit();
 }
+//  필터링
+let filter_labels = ["sex", "match_grade", "match_type", "match_vs", "region"];
+filter_labels.forEach(function (lb) {
+  document.querySelectorAll('button[name="' + lb + '"]').forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      document.querySelectorAll('button[name="' + lb + '"]').forEach(function (b) {
+        b.dataset.toggle = "false";
+      });
+      this.dataset.toggle = "true";
+      fnMatchFilter();
+    });
+  });
+});
+//  경기장 필터링, XMLHttpRequest
+const fnMatchFilter = function () {
+  let xml = new XMLHttpRequest();
+  xml.open("POST", "/filter");
+};

@@ -7,6 +7,77 @@ const Notice = require("../model/notice");
 const User = require("../model/user");
 const mongoose = require("mongoose");
 
+//  일반 필터링 (성별, 레벨, 매치형태, 매치인원, 지역)
+const fnGetFilterQuery = (req) => {
+  let filter_query = { $and: [] };
+  let today = new Date();
+  //  성별 필터링
+  if (req.body.gender) {
+    filter_query["$and"].push({
+      $or: req.body.gender.split(",").map((v) => {
+        return { sex: v };
+      }),
+    });
+  }
+  //  능력 필터링
+  if (req.body.skill) {
+    filter_query["$and"].push({
+      $or: req.body.skill.split(",").map((v) => {
+        return { match_grade: v };
+      }),
+    });
+  }
+  //  매치 타입(2파, 3파) 필터링
+  if (req.body.match_type) {
+    if (req.body.match_type !== "") {
+      filter_query["$and"].push({ match_type: req.body.match_type });
+    }
+  }
+  //  날짜 필터링
+  if (req.body.match_date) {
+    filter_query["$and"].push({ match_date: req.body.match_date });
+  } else {
+    let year = today.getFullYear();
+    let month = today.getMonth() < 10 ? "0" + (today.getMonth() + 1) : today.getMonth();
+    let _date = today.getDate() < 10 ? "0" + today.getDate() : today.getDate();
+    filter_query["$and"].push({ match_date: year + "-" + month + "-" + _date });
+  }
+  //  필터가 없을 경우
+  if (filter_query["$and"].length === 0) {
+    filter_query["$and"].push({});
+  }
+  return filter_query;
+};
+//  지역 필터링
+const fnGetRegionFilter = (req) => {
+  let region_query = { $or: [] };
+  //  지역 필터링 ground_info lookup 생성 후 필터가 돼야 하므로 ground_info.region 으로 매칭해야 함.
+  if (req.body.region) {
+    req.body.region.split(",").forEach((v) => {
+      region_query["$or"].push({
+        "ground_info.region": mongoose.Types.ObjectId(v.toString()),
+      });
+    });
+  } else {
+    region_query["$or"].push({});
+  }
+  return region_query;
+};
+//  경기장 필터링
+const fnGetGroundFilter = (req) => {
+  let ground_query = { $or: [] };
+  if (req.body.ground) {
+    req.body.ground.split(",").forEach((v) => {
+      ground_query["$or"].push({
+        "ground_info._id": mongoose.Types.ObjectId(v.toString()),
+      });
+    });
+  } else {
+    ground_query["$or"].push({});
+  }
+  return ground_query;
+};
+
 /*  일반 접속의 경우, ladder = 0(일반 리그) 로 정함. */
 router.get("/", async (req, res) => {
   let today = new Date();
@@ -179,69 +250,11 @@ router.get("/ground/:id", async (req, res) => {
 });
 //  구장 필터링
 router.post("/filter", async (req, res) => {
-  let today = new Date();
   let user_info = req.session.passport;
+  let filter_query = fnGetFilterQuery(req);
+  let region_query = fnGetRegionFilter(req);
+  let ground_query = fnGetGroundFilter(req);
 
-  let filter_query = { $and: [] };
-  let region_query = { $or: [] };
-  let ground_query = { $or: [] };
-
-  //  성별 필터링
-  if (req.body.gender) {
-    filter_query["$and"].push({
-      $or: req.body.gender.split(",").map((v) => {
-        return { sex: v };
-      }),
-    });
-  }
-  //  능력 필터링
-  if (req.body.skill) {
-    filter_query["$and"].push({
-      $or: req.body.skill.split(",").map((v) => {
-        return { match_grade: v };
-      }),
-    });
-  }
-  //  매치 타입(2파, 3파) 필터링
-  if (req.body.match_type) {
-    if (req.body.match_type !== "") {
-      filter_query["$and"].push({ match_type: req.body.match_type });
-    }
-  }
-  //  날짜 필터링
-  if (req.body.match_date) {
-    filter_query["$and"].push({ match_date: req.body.match_date });
-  } else {
-    let year = today.getFullYear();
-    let month = today.getMonth() < 10 ? "0" + (today.getMonth() + 1) : today.getMonth();
-    let _date = today.getDate() < 10 ? "0" + today.getDate() : today.getDate();
-    filter_query["$and"].push({ match_date: year + "-" + month + "-" + _date });
-  }
-  //  필터가 없을 경우
-  if (filter_query["$and"].length === 0) {
-    filter_query["$and"].push({});
-  }
-  //
-  //  지역 필터링 ground_info lookup 생성 후 필터가 돼야 하므로 ground_info.region 으로 매칭해야 함.
-  if (req.body.region) {
-    req.body.region.split(",").forEach((v) => {
-      region_query["$or"].push({
-        "ground_info.region": mongoose.Types.ObjectId(v.toString()),
-      });
-    });
-  } else {
-    region_query["$or"].push({});
-  }
-  //  경기장 필터링
-  if (req.body.ground) {
-    req.body.ground.split(",").forEach((v) => {
-      ground_query["$or"].push({
-        "ground_info._id": mongoose.Types.ObjectId(v.toString()),
-      });
-    });
-  } else {
-    ground_query["$or"].push({});
-  }
   //  경기 일정 리스트
   let list = await Match.aggregate([
     { $match: filter_query },

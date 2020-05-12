@@ -20,11 +20,12 @@
                           .time-ground-wrap.d-flex.justify-content-start
                             p.pl-5 #{game.match_time}
                             p.pl-5(class=favorite_ground.toString().indexOf(game.ground_info._id) > -1?'star position-relative':'') #{game.ground_info.groundName}
-                        .col-md-5.ml-3
+                        .col-md-4
                           .d-flex.justify-content-start
                             .match-wrap.text-center.pt-1
                               //- img(src=game.match_type==="2"?'/images/match_2.png':'/images/match_3.png')
-                              b #{game.match_type}파
+                              b #{game.match_type}파 &nbsp;
+                              b #{game.match_vs} vs #{game.match_vs}
                             .text-left
                               small.pl-2.tagList(class=game.sex===1?'male text-primary':game.sex===-1?'female text-danger':'mix')
                                 case game.sex
@@ -47,6 +48,8 @@
                             if(game.ladder===1)
                               .ladder_icon.ml-2(data-title='승점')
                               b (+#{game.match_score})
+                        .col-md-2.text-right
+                          b #{game.apply_member.length} / #{game.personnel.max}
                     .col-md-2.col-4
                       - var status ='available';
                       - var statusText = '';

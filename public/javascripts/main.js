@@ -150,16 +150,19 @@ function fnGenerateGroundList(res, currentSlide) {
       time_group_wrap.appendChild(p);
       inner_col.appendChild(time_group_wrap);
       inner_row.appendChild(inner_col);
-      //  col-md-5.ml-3
+      //  col-md-4
       inner_col = document.createElement("div");
-      inner_col.className = "col-md-5 ml-3";
+      inner_col.className = "col-md-4";
       let flex = document.createElement("div");
       flex.className = "d-flex justify-content-start";
       //    match-wrap
       let inner_div = document.createElement("div");
       inner_div.className = "match-wrap text-center pt-1";
       let b = document.createElement("b");
-      b.innerText = game.match_type + "파";
+      b.innerText = game.match_type + "파 ";
+      inner_div.appendChild(b);
+      b = document.createElement("b");
+      b.innerText = game.match_vs + " vs " + game.match_vs;
       inner_div.appendChild(b);
       flex.appendChild(inner_div);
       //    text-left.text-dark
@@ -188,6 +191,15 @@ function fnGenerateGroundList(res, currentSlide) {
         flex.appendChild(b);
       }
       inner_col.appendChild(flex);
+      inner_row.appendChild(inner_col);
+      col.appendChild(inner_row);
+      row.appendChild(col);
+
+      inner_col = document.createElement("div");
+      inner_col.className = "col-md-2 text-right";
+      b = document.createElement("b");
+      b.innerText = game.apply_member.length + " / " + game.personnel.max;
+      inner_col.appendChild(b);
       inner_row.appendChild(inner_col);
       col.appendChild(inner_row);
       row.appendChild(col);
@@ -603,53 +615,8 @@ function fnSaveGround() {
   }
 }
 
-//  필터링 설정 적용하기 클릭 이벤트
-function fnSetFilter() {
-  let form = document.createElement("form");
-  form.method = "POST";
-  form.action = "/filter";
-  let gender_list = [];
-  let skill_list = [];
-  let region_list = [];
-  document.querySelectorAll(".btn-wrap .btn-light.active").forEach(function (v) {
-    if (v.name === "gender") gender_list.push(v.value);
-    else if (v.name === "skill") skill_list.push(v.value);
-    else if (v.name === "region") region_list.push(v.value);
-  });
-  let field = document.createElement("input");
-  field.type = "hidden";
-  field.name = "gender";
-  field.value = gender_list.join(",");
-  form.appendChild(field);
-
-  field = document.createElement("input");
-  field.type = "hidden";
-  field.name = "skill";
-  field.value = skill_list.join(",");
-  form.appendChild(field);
-
-  if (document.querySelector('button[data-target="#myRegion"]').getAttribute("aria-expanded") === "true") {
-    field = document.createElement("input");
-    field.type = "hidden";
-    field.name = "region";
-    field.value = region_list.join(",");
-    form.appendChild(field);
-  }
-  if (isLoggedIn) {
-    if (document.querySelector('button[data-target="#myGround"]').getAttribute("aria-expanded") === "true") {
-      field = document.createElement("input");
-      field.type = "hidden";
-      field.name = "ground";
-      field.value = document.querySelector('input[name="myGround"]').value;
-      form.appendChild(field);
-    }
-  }
-  console.log("form : ", form);
-  document.body.appendChild(form);
-  form.submit();
-}
 //  필터링
-let filter_labels = ["sex", "match_grade", "match_type", "match_vs", "region"];
+let filter_labels = ["gender", "skill", "match_type", "match_vs", "region"];
 filter_labels.forEach(function (lb) {
   document.querySelectorAll('button[name="' + lb + '"]').forEach(function (btn) {
     btn.addEventListener("click", function () {
@@ -664,25 +631,30 @@ filter_labels.forEach(function (lb) {
 //  경기장 필터링, XMLHttpRequest
 const fnMatchFilter = function () {
   let selectedBtns = document.querySelectorAll('button[name][data-toggle="true"]');
-  let query = [];
+  let query = {};
   //  구장 상세 설정 필터링
   selectedBtns.forEach((v) => {
     if (v.dataset.value !== "") {
       console.log("dataset : ", v.dataset);
-      let obj = {};
-      obj[v.name] = v.dataset.value;
-      query.push(obj);
+      query[v.name] = v.dataset.value;
+      // query.push(obj);
     }
   });
-  //  날짜 추가
-  query.push({ match_date: document.querySelector("button[data-date].active").dataset.date });
-  let xml = new XMLHttpRequest();
-  xml.open("POST", "/filter", true);
-  xml.setRequestHeader("Content-Type", "application/json");
-  xml.onreadystatechange = function () {
+  //  날짜 및 XHR 변수 추가
+  query["match_date"] = document.querySelector("button[data-date].active").dataset.date;
+  query["XHR"] = true;
+  // query.push({ match_date: document.querySelector("button[data-date].active").dataset.date, XHR: true });
+
+  //  필터링 POST
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", "/filter", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      let currentSlide = $(".btn-primary.active").parent().parent().parent().data("slick-index");
       let res = JSON.parse(this.response);
+      fnGenerateGroundList(res.list, currentSlide);
     }
   };
-  xml.send(JSON.stringify(query));
+  xhr.send(JSON.stringify(query));
 };

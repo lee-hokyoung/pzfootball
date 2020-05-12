@@ -197,6 +197,9 @@
   top: -4px;
   position: relative;
 }
+.ground-list {
+  min-height: calc(100vh - 400px);
+}
 .ground-list li.list-group-item[data-id] {
   background-color: #eee;
   margin: 0.2rem 0;
@@ -214,9 +217,8 @@
   line-height: 70px;
   color: white;
   position: relative;
-  max-width: 100px;
   text-align: right;
-  padding-right: 10px;
+  padding-right: 30px;
 }
 .apply-btn-wrap[data-status="available"] {
   background-color: #662d91;

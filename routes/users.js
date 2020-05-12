@@ -8,6 +8,7 @@ const Club = require("../model/club");
 const Ground = require("../model/ground");
 const Mail = require("../model/mail");
 const Region = require("../model/region");
+const SessionStore = require("../model/sessionStore");
 const nodemailer = require("nodemailer");
 const mongoose = require("mongoose");
 
@@ -142,23 +143,21 @@ router.get("/join", middle.isNotSignedIn, (req, res) => {
 });
 router.post("/register", async (req, res) => {
   let exUser = await User.findOne({ user_id: req.body.user_id });
+  //  사용중인 아이디 확인
   if (exUser) {
     return res.json({ code: 0, message: "이미 사용 중인 아이디가 있습니다" });
   }
-  let result = await User.create({
-    user_id: req.body.user_id,
-    user_pw: req.body.user_pw,
-    user_name: req.body.user_name,
-    gender: req.body.gender,
-    birth: req.body.birth,
-    user_phone: req.body.user_phone,
-    phone1: req.body.phone1,
-    phone2: req.body.phone2,
-  });
-  if (result) {
-    res.json({ code: 1, result: result });
+  //  인증번호 확인
+  let certified = await SessionStore.findOne({ sessionID: req.sessionID, randomNumber: req.body.certifiedNumber });
+  if (certified) {
+    let result = await User.create(req.body);
+    if (result) {
+      res.json({ code: 1, result: result });
+    } else {
+      res.json({ code: 0, result: result });
+    }
   } else {
-    res.json({ code: 0, result: result });
+    res.json({ code: 0, message: "인증번호가 다릅니다. 다시 확인해주세요" });
   }
 });
 // 포인트 조회
@@ -296,38 +295,41 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
     { $sort: { _id: 1 } },
   ]);
   //  즐겨찾는 구장
-  let favorite_ground = await Ground.aggregate([
-    {
-      $match: {
-        $or: user.favorite_ground.map((v) => {
-          return { _id: mongoose.Types.ObjectId(v) };
-        }),
+  let favorite_match_query = user.favorite_ground.map((v) => {
+    return { _id: mongoose.Types.ObjectId(v) };
+  });
+  let favorite_ground = [];
+  if (favorite_match_query.length > 0) {
+    favorite_ground = await Ground.aggregate([
+      {
+        $match: {
+          $or: favorite_match_query,
+        },
       },
-    },
-    {
-      $project: {
-        ground_images: 0,
+      {
+        $project: {
+          ground_images: 0,
+        },
       },
-    },
-    {
-      $lookup: {
-        from: "match",
-        localField: "_id",
-        foreignField: "ground_id",
-        as: "match_info",
+      {
+        $lookup: {
+          from: "match",
+          localField: "_id",
+          foreignField: "ground_id",
+          as: "match_info",
+        },
       },
-    },
-    { $unwind: { path: "$match_info", preserveNullAndEmptyArrays: true } },
-    {
-      $group: {
-        _id: "$_id",
-        groundName: { $first: "$groundName" },
-        groundAddress: { $first: "$groundAddress" },
-        count: { $sum: { $cond: [{ $gt: ["$match_info", null] }, 1, 0] } },
+      { $unwind: { path: "$match_info", preserveNullAndEmptyArrays: true } },
+      {
+        $group: {
+          _id: "$_id",
+          groundName: { $first: "$groundName" },
+          groundAddress: { $first: "$groundAddress" },
+          count: { $sum: { $cond: [{ $gt: ["$match_info", null] }, 1, 0] } },
+        },
       },
-    },
-  ]);
-
+    ]);
+  }
   //  가입 요청한 팀
   let waiting_club = await Club.findOne({
     waiting_member: mongoose.Types.ObjectId(user_info.user._id),
@@ -552,4 +554,27 @@ router.delete("/reservation", middle.isSignedIn, async (req, res) => {
     res.json({ code: 0, message: err.message });
   }
 });
+//  인증번호 발송
+router.get("/certify", async (req, res) => {
+  try {
+    console.log("req : ", req.session);
+    let rnd = parseInt(Math.random() * 10000000)
+      .toString()
+      .substr(0, 4);
+    await SessionStore.updateOne({ sessionID: req.sessionID }, { $set: { randomNumber: rnd } }, { upsert: true });
+    res.json({ code: 1, rnd: rnd, req: req.session, sesId: req.sessionID });
+  } catch (err) {
+    res.json({ code: 0, message: "인증번호 생성 실패" });
+  }
+});
+//  인증번호 확인
+router.post("/certify", async (req, res) => {
+  try {
+    let result = await SessionStore.findOne({ sessionID: req.sessionID, randomNumber: req.body.certifiedNumber });
+    res.json({ code: 1, result: result });
+  } catch (err) {
+    res.json({ code: 0, message: "인증번호 확인 오류" });
+  }
+});
+
 module.exports = router;

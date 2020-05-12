@@ -115,7 +115,9 @@ block content
       .row-wrap
         .form-group
           label 인증번호 입력
-          input.form-control(type='text', name='certifiedNumber')
+          .d-flex
+            input.form-control(type='text', name='certifiedNumber')
+            button.btn.btn-primary.rounded-0.m-0.ml-1(type='button', name='btnCertify') 확인
       .row-wrap
         .form-group
           label 나의 포지션

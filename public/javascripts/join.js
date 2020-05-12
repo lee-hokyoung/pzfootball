@@ -84,6 +84,11 @@ function fnJoin() {
     phone2.focus();
     return false;
   }
+  if (certifiedNumber.value === "") {
+    alert("인증번호를 입력해 주세요");
+    certifiedNumber.focus();
+    return false;
+  }
   // if (user_email.value === "") {
   //   alert("이메일을 입력해 주세요");
   //   user_email.focus();
@@ -104,6 +109,7 @@ function fnJoin() {
   formData["phone2"] = phone2.value;
   formData["birth"] = birth;
   formData["position"] = position.value;
+  formData["certifiedNumber"] = certifiedNumber.value;
   if (skill) formData["skill"] = skill.dataset.value;
   if (profile_img) formData["profile_image"] = profile_img.src;
   console.log("formData : ", formData);
@@ -125,7 +131,7 @@ function fnJoin() {
       }
     }
   };
-  // xhr.send(JSON.stringify(formData));
+  xhr.send(JSON.stringify(formData));
   return false;
 }
 //  추가정보 입력 선택했을 경우
@@ -163,4 +169,42 @@ skill_btns.forEach(function (btn) {
     });
     btn.dataset.toggle = "true";
   });
+});
+//  인증번호 발송
+document.querySelector('button[name="btnSendCertify"]').addEventListener("click", function () {
+  let xhr = new XMLHttpRequest();
+  xhr.open("GET", "/users/certify", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function () {
+    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      let res = JSON.parse(this.response);
+      console.log("res : ", res);
+      if (res.code === 1) {
+        alert("인증번호를 발송했습니다. (" + res.rnd + ")");
+      }
+    }
+  };
+  xhr.send();
+});
+//  인증번호 확인
+document.querySelector('button[name="btnCertify"]').addEventListener("click", function () {
+  let inpCertifyNumber = document.querySelector('input[name="certifiedNumber"]');
+  if (inpCertifyNumber.value === "") {
+    alert("인증번호를 입력해주세요");
+    return false;
+  }
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", "/users/certify", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function () {
+    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      let res = JSON.parse(this.response);
+      if (res.result) {
+        alert("인증 성공");
+      } else {
+        alert("인증 번호가 다릅니다. 다시 확인해주세요");
+      }
+    }
+  };
+  xhr.send(JSON.stringify({ certifiedNumber: inpCertifyNumber.value }));
 });

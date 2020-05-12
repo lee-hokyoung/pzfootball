@@ -152,7 +152,8 @@ button[type="submit"] {
   font-size: 20px;
   font-weight: bold;
 }
-button[name="btnSendCertify"] {
+button[name="btnSendCertify"],
+button[name="btnCertify"] {
   font-family: scdream5;
   font-size: 15px;
   height: 40px;

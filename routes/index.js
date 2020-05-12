@@ -33,6 +33,12 @@ const fnGetFilterQuery = (req) => {
       filter_query["$and"].push({ match_type: req.body.match_type });
     }
   }
+  //  매치 형태(5vs5, 6vs6) 필터링
+  if (req.body.match_vs) {
+    if (req.body.match_vs !== "") {
+      filter_query["$and"].push({ match_vs: req.body.match_vs });
+    }
+  }
   //  날짜 필터링
   if (req.body.match_date) {
     filter_query["$and"].push({ match_date: req.body.match_date });

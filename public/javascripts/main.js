@@ -663,6 +663,26 @@ filter_labels.forEach(function (lb) {
 });
 //  경기장 필터링, XMLHttpRequest
 const fnMatchFilter = function () {
+  let selectedBtns = document.querySelectorAll('button[name][data-toggle="true"]');
+  let query = [];
+  //  구장 상세 설정 필터링
+  selectedBtns.forEach((v) => {
+    if (v.dataset.value !== "") {
+      console.log("dataset : ", v.dataset);
+      let obj = {};
+      obj[v.name] = v.dataset.value;
+      query.push(obj);
+    }
+  });
+  //  날짜 추가
+  query.push({ match_date: document.querySelector("button[data-date].active").dataset.date });
   let xml = new XMLHttpRequest();
-  xml.open("POST", "/filter");
+  xml.open("POST", "/filter", true);
+  xml.setRequestHeader("Content-Type", "application/json");
+  xml.onreadystatechange = function () {
+    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      let res = JSON.parse(this.response);
+    }
+  };
+  xml.send(JSON.stringify(query));
 };

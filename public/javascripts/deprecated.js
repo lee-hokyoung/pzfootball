@@ -221,3 +221,132 @@ function fnSetFilter() {
   document.body.appendChild(form);
   form.submit();
 }
+//  예전에 get 방식으로 필터링 할 때 방식....
+let curr_search = {};
+if (location.search !== "") {
+  location.search
+    .replace("?", "")
+    .split("&")
+    .forEach(function (v) {
+      curr_search[v.split("=")[0]] = v.split("=")[1];
+    });
+}
+
+//  일반/리그 매치 버튼 클릭 이벤트
+document.querySelectorAll('a[data-role="match"]').forEach(function (a) {
+  a.addEventListener("click", function () {
+    curr_search["ladder"] = this.dataset.value;
+    history.pushState(null, "game filter", fnGenQueryString());
+    fnFilterList();
+  });
+});
+//  2파/3파 버튼 클릭 이벤트
+document.querySelector(".match_type_img").addEventListener("click", function (e) {
+  let match2_toggle = this.dataset.match2;
+  let match3_toggle = this.dataset.match3;
+  if (e.offsetX > 50) {
+    if (match2_toggle === "false" && match3_toggle === "true") this.dataset.match2 = "true";
+    this.dataset.match3 = match3_toggle === "false";
+  } else {
+    if (match2_toggle === "true" && match3_toggle === "false") this.dataset.match3 = "true";
+    this.dataset.match2 = match2_toggle === "false";
+  }
+
+  let match_type = "";
+  //  2파 선택
+  if (this.dataset.match2 === "true" && this.dataset.match3 === "false") match_type = "2";
+  //  3파 선택
+  else if (this.dataset.match2 === "false" && this.dataset.match3 === "true") match_type = "3";
+
+  let formData = {};
+  let xhr = new XMLHttpRequest();
+  xhr.open("post", "/filter", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function () {
+    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      let res = JSON.parse(this.response);
+      let currentSlide = $(".btn-primary.active").parent().parent().parent().data("slick-index");
+      fnGenerateGroundList(res.list, currentSlide);
+      body = res.body;
+      document.querySelector("#loadingPage").className = "d-none";
+    } else {
+      document.querySelector("#loadingPage").className = "";
+    }
+  };
+  if (body) formData = body;
+  formData["match_type"] = match_type;
+  formData["XHR"] = true;
+  xhr.send(JSON.stringify(formData));
+});
+
+//  필터 부분(성별)
+let filterGender = document.querySelectorAll('.btn-wrap .btn-light[name="gender"]');
+filterGender.forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    if (this.className.indexOf("active") > -1) this.classList.remove("active");
+    else this.classList.add("active");
+  });
+});
+//  필터링(스킬, 레벨)
+let filterLevel = document.querySelectorAll('.btn-wrap .btn-light[name="skill"]');
+filterLevel.forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    if (this.className.indexOf("active") > -1) this.classList.remove("active");
+    else this.classList.add("active");
+  });
+});
+//  필터링(지역)
+let filterRegion = document.querySelectorAll('.btn-wrap .btn-light[name="region"]').forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    if (this.className.indexOf("active") > -1) this.classList.remove("active");
+    else this.classList.add("active");
+  });
+});
+
+//  지역별 전체 버튼 클릭
+let selectAllRegion = document.querySelectorAll('#filterGroundModal button[data-role="all"]');
+selectAllRegion.forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    let id = this.dataset.id;
+    let parent = document.querySelector('.ground-wrap[data-id="' + id + '"]');
+    let parent_toggle = this.dataset.toggle;
+    this.dataset.toggle = parent_toggle === "false";
+    if (this.dataset.toggle === "false") this.innerHTML = "전체선택";
+    else this.innerHTML = "전체해제";
+    parent.querySelectorAll("button.btn-round").forEach(function (btn) {
+      btn.dataset.toggle = parent_toggle === "false";
+    });
+  });
+});
+//  구장별 버튼 클릭시 이벤트
+document.querySelectorAll("#filterGroundModal button.btn-round").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    let toggle = this.dataset.toggle;
+    this.dataset.toggle = toggle === "false";
+  });
+});
+//  경기장 저장하기 버튼 클릭 이벤트
+function fnSaveGround() {
+  let selectedGround = document.querySelectorAll('#filterGroundModal button[data-toggle="true"]');
+  let list = [];
+  selectedGround.forEach(function (v) {
+    list.push(v.dataset.id);
+  });
+  let myGround = document.querySelector('input[name="myGround"]');
+  myGround.value = list.join(",");
+  $("#filterGroundModal").modal("hide");
+
+  //  즐겨찾는 구장 등록 유무
+  let isFavorite = document.querySelector('input[name="chkUpdateMyGround"]');
+  if (isFavorite.checked) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("PUT", "/users/region", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        let res = JSON.parse(this.response);
+      }
+    };
+    xhr.send(JSON.stringify({ ground: list }));
+  }
+}

@@ -24,10 +24,11 @@
                           .d-flex.justify-content-start
                             .match-wrap.text-center.pt-1
                               //- img(src=game.match_type==="2"?'/images/match_2.png':'/images/match_3.png')
-                              b #{game.match_type}파 &nbsp;
-                              b #{game.match_vs} vs #{game.match_vs}
+                              b #{game.match_type}파
+                              b.pl-2 #{game.match_vs} vs #{game.match_vs}
                             .text-left
-                              small.pl-2.tagList(class=game.sex===1?'male text-primary':game.sex===-1?'female text-danger':'mix')
+                              small.pl-2.tagList
+                                //- (class=game.sex===1?'male text-primary':game.sex===-1?'female text-danger':'mix')
                                 case game.sex
                                   when "1"
                                     | 남성

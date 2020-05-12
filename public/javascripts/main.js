@@ -14,6 +14,12 @@ const fnMatchFilter = function () {
   //  날짜 및 XHR 변수 추가
   query["match_date"] = document.querySelector("button[data-date].active").dataset.date;
   query["XHR"] = true;
+  //  즐겨찾는 구장 설정 여부
+  let favorite_ground = document.querySelector("button.btn-favorite");
+  if (favorite_ground.dataset.toggle === "true") {
+    query["ground"] = favorite_ground.dataset.id;
+  }
+
   //  필터링 POST
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "/filter", true);
@@ -32,6 +38,9 @@ let filter_labels = ["gender", "skill", "match_type", "match_vs", "region"];
 filter_labels.forEach(function (lb) {
   document.querySelectorAll('button[name="' + lb + '"]').forEach(function (btn) {
     btn.addEventListener("click", function () {
+      if (lb === "region") {
+        document.querySelector("button.btn-favorite").dataset.toggle = "false";
+      }
       document.querySelectorAll('button[name="' + lb + '"]').forEach(function (b) {
         b.dataset.toggle = "false";
       });
@@ -39,6 +48,21 @@ filter_labels.forEach(function (lb) {
       fnMatchFilter();
     });
   });
+});
+//  즐겨찾는 구장 버튼 클릭 이벤트
+document.querySelector("button.btn-favorite").addEventListener("click", function () {
+  let toggle = this.dataset.toggle;
+  let regionBtns = document.querySelectorAll('button[name="region"]');
+  this.dataset.toggle = toggle === "false";
+  if (this.dataset.toggle === "true") {
+    regionBtns.forEach(function (btn) {
+      btn.dataset.toggle = "false";
+    });
+    document.querySelector('button[name="region"][data-value=""]').dataset.toggle = "true";
+    fnMatchFilter();
+  } else {
+    document.querySelector('button[name="region"][data-value=""]').click();
+  }
 });
 //  메인 슬라이더
 $(".main-slider").on("init", function (e, s) {
@@ -175,9 +199,10 @@ function fnGenerateGroundList(res, currentSlide) {
       let inner_div = document.createElement("div");
       inner_div.className = "match-wrap text-center pt-1";
       let b = document.createElement("b");
-      b.innerText = game.match_type + "파 ";
+      b.innerText = game.match_type + "파";
       inner_div.appendChild(b);
       b = document.createElement("b");
+      b.className = "pl-2";
       b.innerText = game.match_vs + " vs " + game.match_vs;
       inner_div.appendChild(b);
       flex.appendChild(inner_div);
@@ -185,9 +210,9 @@ function fnGenerateGroundList(res, currentSlide) {
       inner_div = document.createElement("div");
       inner_div.className = "text-left text-dark";
       let small = document.createElement("small");
-      small.className =
-        "pl-2 tagList" + (game.sex === 1 ? " male text-primary" : game.sex === -1 ? " female text-danger" : " mix");
-      small.innerText = game.sex === 1 ? "남성" : game.sex === -1 ? "여성" : "혼성";
+      small.className = "pl-2 tagList";
+      //  + (game.sex === "1" ? " male text-primary" : game.sex === "2" ? " female text-danger" : " mix");
+      small.innerText = game.sex === "1" ? "남성" : game.sex === "2" ? "여성" : "혼성";
       inner_div.appendChild(small);
       flex.appendChild(inner_div);
       //    grade_icon.ml-2

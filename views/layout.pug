@@ -94,7 +94,7 @@ html
                 //- a.text-primary(href='#', data-toggle='modal', data-target='#joinModal') 회원가입
                 a.text-primary(href='#', data-toggle='modal', data-target='#beforeJoinModal') 회원가입
             a#sidebarCollapse.pl-3(href='#')
-              img(src='/images/nav_toggle.svg', width=22)
+              img(src='/images/nav_toggle.png', width=22)
       block content
       footer.footer.bg-dark
 
@@ -103,8 +103,8 @@ html
       include modals/join
       include modals/beforeJoin
     .overlay
-    button.btn.btn-icon.btn-neutral#scrollTop(data-view='false')
-      img(src='images/gotoTop.png')
+    button.btn.btn-icon#scrollTop(data-view='false')
+      img(src='images/top.png')
       //- i.nc-icon.nc-minimal-up
     //- script(src='/nm/jquery/dist/jquery.min.js', type='text/javascript')
     script(src="/assets/js/core/jquery.min.js")

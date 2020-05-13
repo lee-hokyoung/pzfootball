@@ -524,6 +524,10 @@ select.form-control:not([size]):not([multiple]),
   position: fixed;
   bottom: 20px;
   right: 20px;
+  background: transparent;
+}
+#scrollTop:hover {
+  background: transparent !important;
 }
 #scrollTop[data-view="true"] {
   display: block;

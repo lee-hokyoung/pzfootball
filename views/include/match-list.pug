@@ -27,8 +27,7 @@
                               b #{game.match_type}파
                               b.pl-2 #{game.match_vs} vs #{game.match_vs}
                             .text-left
-                              small.pl-2.tagList
-                                //- (class=game.sex===1?'male text-primary':game.sex===-1?'female text-danger':'mix')
+                              small.pl-3.tagList(data-gender=game.sex)
                                 case game.sex
                                   when "1"
                                     | 남성

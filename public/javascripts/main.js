@@ -216,6 +216,7 @@ function fnGenerateGroundList(res, currentSlide) {
       small.className = "pl-2 tagList";
       //  + (game.sex === "1" ? " male text-primary" : game.sex === "2" ? " female text-danger" : " mix");
       small.innerText = game.sex === "1" ? "남성" : game.sex === "2" ? "여성" : "혼성";
+      small.dataset.gender = game.sex;
       inner_div.appendChild(small);
       flex.appendChild(inner_div);
       //    grade_icon.ml-2

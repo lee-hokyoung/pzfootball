@@ -257,3 +257,21 @@
 .apply-btn-wrap[data-status="full"]::before {
   border-bottom: 50px solid gray;
 }
+small[data-gender]::before {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  content: "";
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-right: 3px;
+}
+small[data-gender="1"]::before {
+  background-image: url("/images/icon_male.png");
+}
+small[data-gender="2"]::before {
+  background-image: url("/images/icon_female.png");
+}
+small[data-gender="3"]::before {
+  background-image: url("/images/icon_mix.png");
+}

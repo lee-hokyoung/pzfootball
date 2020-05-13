@@ -153,7 +153,7 @@ router.get("/", async (req, res) => {
     query: req.query,
     region_group: region_group,
     notice_list: notice_list,
-    favorite_ground: user.favorite_ground,
+    favorite_ground: user.favorite_ground.join(","),
     active: "normal",
     body: null,
   });

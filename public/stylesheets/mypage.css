@@ -416,6 +416,11 @@ span.fileinput-exists i.nc-icon {
 .user-info-wrap .radio-button-wrap button:hover {
   color: black;
 }
+.user-info-wrap .radio-button-wrap button[disabled]:hover {
+  background-color: rgb(240, 240, 240) !important;
+  color: #777;
+  cursor: not-allowed;
+}
 hr {
   border-color: #662d91;
   border-width: 2px;

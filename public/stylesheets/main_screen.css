@@ -128,9 +128,20 @@
   border: none;
   cursor: pointer;
 }
+.btn-favorite:focus {
+  outline: none;
+}
 .btn-favorite i {
   color: #ffc107;
   margin-top: 1px;
+}
+.btn-favorite[data-toggle="false"] .fa-star,
+.btn-favorite[data-toggle="true"] .fa-star-o {
+  display: none;
+}
+.btn-favorite[data-toggle="false"] .fa-star-o,
+.btn-favorite[data-toggle="true"] .fa-star {
+  display: inline-block;
 }
 .btn-favorite h6 {
   padding-left: 0.25rem;

@@ -28,10 +28,11 @@ block content
   - var day = ['일', '월', '화', '수', '목', '금', '토'];
   .navigation
     nav.d-flex.justify-content-center.w-100(style='z-index:5')
-      .container-fluid.py-1.bg-white
+      .container-fluid.py-3.bg-white
         .container
-          button.btn-favorite
+          button.btn-favorite(data-id=favorite_ground ,data-toggle=Object.keys(query).length > 0?'true':'false')
             i.fa.fa-star
+            i.fa.fa-star-o
             h6.title 즐겨찾는 구장 보기
         .container.calendar-slider-wrap
           .calendar-slider.w-100.mx-auto(style='max-width:850px;')
@@ -108,7 +109,7 @@ block content
   include include/match-list
   
   //  경기 필터링 모달창
-  include modals/filter
+  //- include modals/filter
 
   //  필터링 할 때 loading 이미지 띄우기
   #loadingPage.d-none
@@ -119,7 +120,7 @@ block append_js
   script.
     let body = !{JSON.stringify(body)}
     let favorite_ground = !{JSON.stringify(favorite_ground)}
-    console.log('body : ', !{JSON.stringify(body)})
+    console.log('query : ', !{JSON.stringify(query)})
     console.log('filter_query : ', !{JSON.stringify(filter_query)})
     console.log('favorite_ground : ', !{JSON.stringify(favorite_ground)})
     console.log('region_group : ', !{JSON.stringify(region_group)})

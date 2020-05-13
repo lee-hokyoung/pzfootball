@@ -10,7 +10,7 @@ select.form-control:focus {
 #login-page,
 #join-page {
   max-width: 350px;
-  height: calc(100vh - 130px);
+  height: calc(100vh - 101px);
   display: table;
 }
 #login-page .page-wrap,

@@ -29,11 +29,12 @@ block content
   .navigation
     nav.d-flex.justify-content-center.w-100(style='z-index:5')
       .container-fluid.py-3.bg-white
-        .container
-          button.btn-favorite(data-id=favorite_ground ,data-toggle=Object.keys(query).length > 0?'true':'false')
-            i.fa.fa-star
-            i.fa.fa-star-o
-            h6.title 즐겨찾는 구장 보기
+        if(user_info)
+          .container
+            button.btn-favorite(data-id=favorite_ground ,data-toggle=Object.keys(query).length > 0?'true':'false')
+              i.fa.fa-star
+              i.fa.fa-star-o
+              h6.title 즐겨찾는 구장 보기
         .container.calendar-slider-wrap
           .calendar-slider.w-100.mx-auto(style='max-width:850px;')
             - var d = 0;

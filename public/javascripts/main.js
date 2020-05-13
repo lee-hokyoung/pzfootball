@@ -50,20 +50,23 @@ filter_labels.forEach(function (lb) {
   });
 });
 //  즐겨찾는 구장 버튼 클릭 이벤트
-document.querySelector("button.btn-favorite").addEventListener("click", function () {
-  let toggle = this.dataset.toggle;
-  let regionBtns = document.querySelectorAll('button[name="region"]');
-  this.dataset.toggle = toggle === "false";
-  if (this.dataset.toggle === "true") {
-    regionBtns.forEach(function (btn) {
-      btn.dataset.toggle = "false";
-    });
-    document.querySelector('button[name="region"][data-value=""]').dataset.toggle = "true";
-    fnMatchFilter();
-  } else {
-    document.querySelector('button[name="region"][data-value=""]').click();
-  }
-});
+let btnFavorite = document.querySelector("button.btn-favorite");
+if (btnFavorite) {
+  btnFavorite.addEventListener("click", function () {
+    let toggle = this.dataset.toggle;
+    let regionBtns = document.querySelectorAll('button[name="region"]');
+    this.dataset.toggle = toggle === "false";
+    if (this.dataset.toggle === "true") {
+      regionBtns.forEach(function (btn) {
+        btn.dataset.toggle = "false";
+      });
+      document.querySelector('button[name="region"][data-value=""]').dataset.toggle = "true";
+      fnMatchFilter();
+    } else {
+      document.querySelector('button[name="region"][data-value=""]').click();
+    }
+  });
+}
 //  메인 슬라이더
 $(".main-slider").on("init", function (e, s) {
   $(".full-cover-pzfutball").css("display", "none");

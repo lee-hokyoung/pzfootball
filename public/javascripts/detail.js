@@ -11,14 +11,23 @@ $("#theway-slider").slick({
 });
 //  하단 참가하기 버튼 픽스
 let scrollTarget = $("#scrollPosition");
+let footer = document.querySelector("footer");
 let bottomBtnWrap = document.querySelector("#bottomBtnWrap");
-window.addEventListener("scroll", function () {
+window.onscroll = function () {
   if (window.pageYOffset > scrollTarget.offset().top + scrollTarget.height()) {
     bottomBtnWrap.classList.add("position-fixed");
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - footer.scrollHeight) {
+      let scroll = window.innerHeight + window.scrollY;
+      let offHeight = document.body.offsetHeight - footer.scrollHeight;
+      bottomBtnWrap.style.bottom = scroll - offHeight + "px";
+    } else {
+      bottomBtnWrap.style.bottom = "0px";
+    }
   } else {
     bottomBtnWrap.classList.remove("position-fixed");
   }
-});
+};
+window.addEventListener("scroll", function () {});
 
 //  클립보드에 주소 복사
 document.querySelector(".copy").addEventListener("click", function () {
@@ -53,14 +62,10 @@ function fnGetUserPoint() {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       let user_point = res.point || 0;
-      document.getElementById(
-        "user_point"
-      ).value = new Intl.NumberFormat().format(user_point);
+      document.getElementById("user_point").value = new Intl.NumberFormat().format(user_point);
       let selectMember = document.getElementById("selectMember").value;
       let match_price = match_info.match_price * selectMember;
-      document.getElementById(
-        "require_point"
-      ).value = new Intl.NumberFormat().format(match_price);
+      document.getElementById("require_point").value = new Intl.NumberFormat().format(match_price);
       let after_purchase = user_point - match_price;
       let inpAfterPurchase = document.getElementById("afterPurchase");
       inpAfterPurchase.value = new Intl.NumberFormat().format(after_purchase);
@@ -81,8 +86,7 @@ function fnConfirmMatch() {
   let formData = {};
   let match_id = match_info._id;
   let member_cnt = $("#selectMember").val();
-  let apply_member_list = document.querySelector("#modalMatchConfirm ul")
-    .dataset.id;
+  let apply_member_list = document.querySelector("#modalMatchConfirm ul").dataset.id;
   console.log("apply member list : ", apply_member_list);
   console.log("member cnt ", member_cnt);
   if (parseInt(member_cnt) !== parseInt(apply_member_list.split(",").length)) {
@@ -111,15 +115,11 @@ function fnConfirmMatch() {
 // 신청인원 수 조정 이벤트
 $("#selectMember").on("change", function () {
   //  포인트 변동
-  let user_point = Number(
-    document.getElementById("user_point").value.replace(/[^0-9.-]+/g, "")
-  );
+  let user_point = Number(document.getElementById("user_point").value.replace(/[^0-9.-]+/g, ""));
   let member_cnt = $(this).val();
   let user_id = $(this).data("id");
   let match_price = match_info.match_price * member_cnt;
-  document.getElementById(
-    "require_point"
-  ).value = new Intl.NumberFormat().format(match_price);
+  document.getElementById("require_point").value = new Intl.NumberFormat().format(match_price);
   let afterPurchase = user_point - match_price;
   let inpAfterPurchase = document.getElementById("afterPurchase");
   inpAfterPurchase.value = new Intl.NumberFormat().format(afterPurchase);
@@ -260,8 +260,7 @@ function fnChargePoint() {
       beforeCharge.value = new Intl.NumberFormat().format(user_point);
       let inpAfterCharge = document.getElementById("afterCharge");
       inpAfterCharge.value = new Intl.NumberFormat().format(
-        Number(user_point) +
-          Number(document.getElementById("selectPoint").value)
+        Number(user_point) + Number(document.getElementById("selectPoint").value)
       );
       $("#modalChargePoint").modal("show");
     }
@@ -271,13 +270,9 @@ function fnChargePoint() {
 // 충전할 금액 선택 이벤트
 $("#selectPoint").on("change", function () {
   let selectedPoint = Number($(this).val());
-  let beforeCharge = Number(
-    document.getElementById("beforeCharge").value.replace(/[^0-9.-]+/g, "")
-  );
+  let beforeCharge = Number(document.getElementById("beforeCharge").value.replace(/[^0-9.-]+/g, ""));
   let inpAfterCharge = document.getElementById("afterCharge");
-  inpAfterCharge.value = new Intl.NumberFormat().format(
-    selectedPoint + beforeCharge
-  );
+  inpAfterCharge.value = new Intl.NumberFormat().format(selectedPoint + beforeCharge);
 });
 // 포인트 최종 충전
 function fnConfirmChargePoint() {
@@ -300,63 +295,44 @@ function fnConfirmChargePoint() {
   xhr.send(JSON.stringify(formData));
 }
 
-//  지도 보기 클릭 이벤트
-document
-  .querySelector('button[name="toggle_map"]')
-  .addEventListener("click", function () {
-    //  지도를 놓을 곳의 위치 정보를 알아낸다
-    let target = document
-      .querySelector(".detail_img_wrap")
-      .getBoundingClientRect();
-    console.log("target : ", target);
-    let map_info = match_info.ground_info.mapInfo;
-    let mapContainer = document.querySelector("#kakao_map");
-    mapContainer.style.width = target.width + "px";
-    mapContainer.style.height = target.height + "px";
-    mapContainer.style.top = "2rem";
-    mapContainer.style.position = "absolute";
-    mapContainer.dataset.visible = mapContainer.dataset.visible === "false";
-
-    let mapOption = {
-      center: new kakao.maps.LatLng(map_info.Lat, map_info.Lng),
-      level: 3,
-    };
-    let map = new kakao.maps.Map(mapContainer, mapOption);
-  });
+//  카카오 지도 보기
+let map_info = match_info.ground_info.mapInfo;
+let mapContainer = document.querySelector("#kakao_map");
+let mapOption = {
+  center: new kakao.maps.LatLng(map_info.Lat, map_info.Lng),
+  level: 3,
+};
+let map = new kakao.maps.Map(mapContainer, mapOption);
+let markerPosition = new kakao.maps.LatLng(map_info.Lat, map_info.Lng);
+let marker = new kakao.maps.Marker({
+  position: markerPosition,
+});
+marker.setMap(map);
 //  즐겨찾기 구장 추가 버튼 클릭 이벤트
-document
-  .querySelector('button[name="btnFavoriteGround"]')
-  .addEventListener("click", function () {
-    let this_btn = this;
-    let isFavorite = this.className.indexOf("bg-purple") > -1;
-    let xhr = new XMLHttpRequest();
-    xhr.open("PATCH", "/users/favorite", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function () {
-      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-        let res = JSON.parse(this.response);
-        alert(res.message);
-        if (res.code === 1) {
-          if (isFavorite) {
-            this_btn.classList.remove("bg-purple");
-            this_btn.innerText = "즐겨찾기 구장 추가";
-          } else {
-            this_btn.classList.add("bg-purple");
-            this_btn.innerText = "즐겨찾기 구장 해제";
-          }
+document.querySelector('button[name="btnFavoriteGround"]').addEventListener("click", function () {
+  let this_btn = this;
+  let isFavorite = this.dataset.toggle === "true";
+  let xhr = new XMLHttpRequest();
+  xhr.open("PATCH", "/users/favorite", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function () {
+    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      let res = JSON.parse(this.response);
+      alert(res.message);
+      if (res.code === 1) {
+        if (isFavorite) {
+          this_btn.dataset.toggle = "false";
+        } else {
+          this_btn.dataset.toggle = "true";
         }
       }
-    };
-    xhr.send(
-      JSON.stringify({ ground_id: this.dataset.id, isFavorite: isFavorite })
-    );
-  });
-
-//  가는 길 보기 클릭 이벤트 -> 카카오 맵 연결으로 변경됨.
-// document
-//   .querySelector('button[name="toggle_theway"]')
-//   .addEventListener("click", function () {
-//     this.dataset.visible = this.dataset.visible === "false";
-//     let theway = document.querySelector("#theway-slider");
-//     theway.dataset.visible = theway.dataset.visible === "false";
-//   });
+    }
+  };
+  xhr.send(JSON.stringify({ ground_id: this.dataset.id, isFavorite: isFavorite }));
+});
+//  주의사항, 취소/환불 클릭시 아래 픽스 움직임 부자연스러운 부분 수정..
+$("div[data-role='collapse']").on("shown.bs.collapse", function () {
+  let scroll = document.body.scrollHeight + document.querySelector("footer").offsetHeight;
+  console.log("scroll : ", scroll);
+  window.scrollTo({ top: scroll, behavior: "smooth" });
+});

@@ -1,9 +1,13 @@
 #detail_page .section {
   border-bottom: 1px solid #d0d0d0;
+  padding: 2rem;
+}
+#detail_page .section:last-child {
+  border-bottom: none;
 }
 .section h4 a {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 .section h4 a.collapsed[aria-expanded="false"] i.nc-minimal-up,
 .section h4 a[aria-expanded="true"] i.nc-minimal-down {
@@ -12,6 +16,8 @@
 .section h4 a.collapsed[aria-expanded="false"] i.nc-minimal-down,
 .section h4 a[aria-expanded="true"] i.nc-minimal-up {
   display: block;
+  font-size: 12px;
+  margin: auto 0.75rem;
 }
 .section h4 a[aria-expanded="true"] {
   background: white;
@@ -23,8 +29,9 @@
 .text-purple {
   color: #662d91;
 }
-.bg-purple {
-  background-color: #662d91;
+.bg-purple,
+.bg-purple:hover {
+  background-color: #662d91 !important;
 }
 h4 {
   font-size: 27px;
@@ -122,10 +129,55 @@ div[data-role="collapse"] p {
   margin-right: 20px;
 }
 #detail_page {
-  margin-bottom: 140px;
+  padding-bottom: 100px;
 }
 .btn-join {
-  width: 200px;
-  height: 40px;
-  border-radius: 20px;
+  width: 160px;
+  border-radius: 7px;
+  margin: 0;
+  padding: 0.5rem 0;
+}
+.match-price-wrap {
+  display: flex;
+  justify-content: flex-end;
+}
+.match-price-wrap h6 {
+  font-size: 15px;
+  margin-right: 0.25rem;
+  margin-top: auto;
+  margin-bottom: 0.2rem;
+  color: #666;
+}
+.match-price-wrap h5 {
+  font-size: 25px;
+}
+button[name="btnFavoriteGround"] {
+  background: transparent;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: auto 5px;
+  vertical-align: middle;
+  padding: 4px;
+  width: 31px;
+  cursor: pointer;
+}
+button[name="btnFavoriteGround"] i {
+  color: #ffce00;
+  font-size: 18px;
+}
+button[name="btnFavoriteGround"][data-toggle="true"] i.fa-star,
+button[name="btnFavoriteGround"][data-toggle="false"] i.fa-star-o {
+  display: inline-block;
+}
+button[name="btnFavoriteGround"][data-toggle="false"] i.fa-star,
+button[name="btnFavoriteGround"][data-toggle="true"] i.fa-star-o {
+  display: none;
+}
+#kakao_map {
+  height: 400px;
+  margin: 3rem 3rem 0rem 3rem;
+}
+#bottomBtnWrap {
+  z-index: 10;
+  border-top: 1px solid #ccc;
 }

@@ -350,3 +350,10 @@ function fnSaveGround() {
     xhr.send(JSON.stringify({ ground: list }));
   }
 }
+
+//  가는 길 보기 클릭 이벤트 -> 카카오 맵 연결으로 변경됨.
+document.querySelector('button[name="toggle_theway"]').addEventListener("click", function () {
+  this.dataset.visible = this.dataset.visible === "false";
+  let theway = document.querySelector("#theway-slider");
+  theway.dataset.visible = theway.dataset.visible === "false";
+});

@@ -62,7 +62,7 @@ block content
             i.nc-icon.nc-minimal-down.pl-2
             i.nc-icon.nc-minimal-up.pl-2
         #matchFilter.container.collapse(data-role='collapse')
-          .row.p-3
+          .row.pt-3
             .col-md-3
               span 성별
               .row-wrap
@@ -89,10 +89,10 @@ block content
                 button(name='match_vs', data-toggle=body?body.match_vs===''?'true':'false':'true', data-value='', data-type='all') 전체
                 button(name='match_vs', data-toggle=body?body.match_vs==='5'?'true':'false':'false', data-value='5') 5 vs 5
                 button(name='match_vs', data-toggle=body?body.match_vs==='6'?'true':'false':'false', data-value='6') 6 vs 6
-          .row.p-3
+          .row.pb-3
             .col
               span 지역
-              .row-wrap
+              .row-wrap(style='overflow-x:auto')
                 button(name='region', data-toggle=body?body.region==''?'true':'false':'true', data-value='', data-type='all') 전체
                 each item in region
                   button(name='region', data-toggle=body?body.region==item._id.toString()?'true':'false':'false', data-value=item._id) #{item.name}
@@ -124,8 +124,3 @@ block append_js
   script.
     let body = !{JSON.stringify(body)}
     let favorite_ground = !{JSON.stringify(favorite_ground)}
-    console.log('query : ', !{JSON.stringify(query)})
-    console.log('filter_query : ', !{JSON.stringify(filter_query)})
-    console.log('favorite_ground : ', !{JSON.stringify(favorite_ground)})
-    console.log('region_group : ', !{JSON.stringify(region_group)})
-    console.log('region : ', !{JSON.stringify(region)})

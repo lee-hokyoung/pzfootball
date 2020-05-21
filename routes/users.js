@@ -314,11 +314,27 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
           ground_images: 0,
         },
       },
+      // {
+      //   $lookup: {
+      //     from: "match",
+      //     localField: "_id",
+      //     foreignField: "ground_id",
+      //     as: "match_info",
+      //   },
+      // },
       {
         $lookup: {
           from: "match",
-          localField: "_id",
-          foreignField: "ground_id",
+          let: { local_id: "$_id" },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [{ $eq: ["$$local_id", "$ground_id"] }, { $gte: ["$match_date", today] }],
+                },
+              },
+            },
+          ],
           as: "match_info",
         },
       },

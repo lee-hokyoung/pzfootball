@@ -95,6 +95,7 @@
   font-family: NotoSansR;
   color: #666;
   padding: 1px 9px;
+  white-space: nowrap;
 }
 #matchFilter [class*="col"] button[data-toggle="true"] {
   background-color: #662d91;

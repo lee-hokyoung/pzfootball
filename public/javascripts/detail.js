@@ -13,12 +13,16 @@ $("#theway-slider").slick({
 let scrollTarget = $("#scrollPosition");
 let footer = document.querySelector("footer");
 let bottomBtnWrap = document.querySelector("#bottomBtnWrap");
+let footerImg = document.querySelector(".footer-img-wrap");
 window.onscroll = function () {
   if (window.pageYOffset > scrollTarget.offset().top + scrollTarget.height()) {
     bottomBtnWrap.classList.add("position-fixed");
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - footer.scrollHeight) {
+    if (
+      window.innerHeight + window.scrollY >=
+      document.body.offsetHeight - footer.scrollHeight - footerImg.scrollHeight
+    ) {
       let scroll = window.innerHeight + window.scrollY;
-      let offHeight = document.body.offsetHeight - footer.scrollHeight;
+      let offHeight = document.body.offsetHeight - footer.scrollHeight - footerImg.scrollHeight;
       bottomBtnWrap.style.bottom = scroll - offHeight + "px";
     } else {
       bottomBtnWrap.style.bottom = "0px";
@@ -270,7 +274,9 @@ function fnChargePoint() {
 // 충전할 금액 선택 이벤트
 $("#selectPoint").on("change", function () {
   let selectedPoint = Number($(this).val());
-  let beforeCharge = Number(document.getElementById("beforeCharge").value.replace(/[^0-9.-]+/g, ""));
+  let beforeCharge = Number(
+    document.getElementById("beforeCharge").value.replace(/[^0-9.-]+/g, "")
+  );
   let inpAfterCharge = document.getElementById("afterCharge");
   inpAfterCharge.value = new Intl.NumberFormat().format(selectedPoint + beforeCharge);
 });
@@ -331,8 +337,11 @@ document.querySelector('button[name="btnFavoriteGround"]').addEventListener("cli
   xhr.send(JSON.stringify({ ground_id: this.dataset.id, isFavorite: isFavorite }));
 });
 //  주의사항, 취소/환불 클릭시 아래 픽스 움직임 부자연스러운 부분 수정..
+// $("div[data-role='collapse']").on("show.bs.collapse", function () {
+//   let scroll = document.body.scrollHeight + document.querySelector("footer").offsetHeight;
+//   window.scrollTo({ top: scroll });
+// });
 $("div[data-role='collapse']").on("shown.bs.collapse", function () {
   let scroll = document.body.scrollHeight + document.querySelector("footer").offsetHeight;
-  console.log("scroll : ", scroll);
-  window.scrollTo({ top: scroll, behavior: "smooth" });
+  window.scrollTo({ top: scroll });
 });

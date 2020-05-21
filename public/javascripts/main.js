@@ -7,17 +7,23 @@ const fnMatchFilter = function () {
   //  구장 상세 설정 필터링
   selectedBtns.forEach((v) => {
     if (v.dataset.value !== "") {
-      query[v.name] = v.dataset.value;
-      // query.push(obj);
+      if (query[v.name]) {
+        query[v.name].push(v.dataset.value);
+      } else {
+        query[v.name] = [v.dataset.value];
+      }
     }
   });
+  console.log("query : ", query);
   //  날짜 및 XHR 변수 추가
   query["match_date"] = document.querySelector("button[data-date].active").dataset.date;
   query["XHR"] = true;
   //  즐겨찾는 구장 설정 여부
   let favorite_ground = document.querySelector("button.btn-favorite");
-  if (favorite_ground.dataset.toggle === "true") {
-    query["ground"] = favorite_ground.dataset.id;
+  if (favorite_ground) {
+    if (favorite_ground.dataset.toggle === "true") {
+      query["ground"] = favorite_ground.dataset.id;
+    }
   }
 
   //  필터링 POST
@@ -39,12 +45,36 @@ filter_labels.forEach(function (lb) {
   document.querySelectorAll('button[name="' + lb + '"]').forEach(function (btn) {
     btn.addEventListener("click", function () {
       if (lb === "region") {
-        document.querySelector("button.btn-favorite").dataset.toggle = "false";
+        let favoriteBtn = document.querySelector("button.btn-favorite");
+        if (favoriteBtn) favoriteBtn.dataset.toggle = "false";
       }
-      document.querySelectorAll('button[name="' + lb + '"]').forEach(function (b) {
-        b.dataset.toggle = "false";
-      });
-      this.dataset.toggle = "true";
+      // document.querySelectorAll('button[name="' + lb + '"]').forEach(function (b) {
+      //   b.dataset.toggle = "false";
+      // });
+      let toggle = this.dataset.toggle;
+      this.dataset.toggle = toggle === "false";
+
+      //  전체 외의 필터 적용 유무 확인
+      if (!this.dataset.type) {
+        let cntBtn = document.querySelectorAll(
+          'button[name="' + lb + '"][data-toggle="true"]:not([data-type])'
+        ).length;
+        //  필터 적용이 되었을 경우, 전체 필터는 해제시킨다.
+        let btnAll = document.querySelector('button[name="' + lb + '"][data-type="all"]');
+        if (cntBtn > 0) {
+          btnAll.dataset.toggle = "false";
+        }
+        //  필터 적용이 해제되었을 경우, 전체 필터를 적용시킨다.
+        else {
+          btnAll.dataset.toggle = "true";
+        }
+      } else {
+        document
+          .querySelectorAll('button[name="' + lb + '"][data-toggle="true"]:not([data-type])')
+          .forEach(function (f) {
+            f.dataset.toggle = "false";
+          });
+      }
       fnMatchFilter();
     });
   });
@@ -187,7 +217,8 @@ function fnGenerateGroundList(res, currentSlide) {
       p.innerText = game.match_time;
       time_group_wrap.appendChild(p);
       p = document.createElement("p");
-      p.className = favorite_ground.indexOf(game.ground_info._id) > -1 ? "position-relative pl-5 star" : "pl-5";
+      p.className =
+        favorite_ground.indexOf(game.ground_info._id) > -1 ? "position-relative pl-5 star" : "pl-5";
       p.innerText = game.ground_info.groundName;
       time_group_wrap.appendChild(p);
       inner_col.appendChild(time_group_wrap);
@@ -225,7 +256,8 @@ function fnGenerateGroundList(res, currentSlide) {
         inner_div.className = "grade_icon ml-2";
         inner_div.dataset.grade = game.match_grade;
         inner_div.dataset.title = "실력";
-        inner_div.innerText = game.match_grade === "1" ? "고급" : game.match_grade === "2" ? "중급" : "초급";
+        inner_div.innerText =
+          game.match_grade === "1" ? "고급" : game.match_grade === "2" ? "중급" : "초급";
         flex.appendChild(inner_div);
       } else {
         inner_div.className = "ladder_icon ml-2";

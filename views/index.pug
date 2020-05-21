@@ -66,34 +66,34 @@ block content
             .col-md-3
               span 성별
               .row-wrap
-                button(name='gender', data-toggle=body?body.gender===''?'true':'false':'true', data-value='') 전체
+                button(name='gender', data-toggle=body?body.gender===''?'true':'false':'true', data-value='', data-type='all') 전체
                 button(name='gender', data-toggle=body?body.gender==='1'?'true':'false':'false', data-value='1') 남성
                 button(name='gender', data-toggle=body?body.gender==='2'?'true':'false':'false', data-value='2') 여성
                 button(name='gender', data-toggle=body?body.gender==='3'?'true':'false':'false', data-value='3') 혼성
             .col-md-3
               span 레벨
               .row-wrap
-                button(name='skill', data-toggle=body?body.match_grade===''?'true':'false':'true', data-value='') 전체
+                button(name='skill', data-toggle=body?body.match_grade===''?'true':'false':'true', data-value='', data-type='all') 전체
                 button(name='skill', data-toggle=body?body.match_grade==='3'?'true':'false':'false', data-value='3') 초급
                 button(name='skill', data-toggle=body?body.match_grade==='2'?'true':'false':'false', data-value='2') 중급
                 button(name='skill', data-toggle=body?body.match_grade==='1'?'true':'false':'false', data-value='1') 고급
             .col-md-3
               span 매치 형태
               .row-wrap
-                button(name='match_type', data-toggle=body?body.match_type===''?'true':'false':'true', data-value='') 전체
+                button(name='match_type', data-toggle=body?body.match_type===''?'true':'false':'true', data-value='', data-type='all') 전체
                 button(name='match_type', data-toggle=body?body.match_type==='2'?'true':'false':'false', data-value='2') 2파전
                 button(name='match_type', data-toggle=body?body.match_type==='3'?'true':'false':'false', data-value='3') 3파전
             .col-md-3
               span 매치 인원
               .row-wrap
-                button(name='match_vs', data-toggle=body?body.match_vs===''?'true':'false':'true', data-value='') 전체
+                button(name='match_vs', data-toggle=body?body.match_vs===''?'true':'false':'true', data-value='', data-type='all') 전체
                 button(name='match_vs', data-toggle=body?body.match_vs==='5'?'true':'false':'false', data-value='5') 5 vs 5
                 button(name='match_vs', data-toggle=body?body.match_vs==='6'?'true':'false':'false', data-value='6') 6 vs 6
           .row.p-3
             .col
               span 지역
               .row-wrap
-                button(name='region', data-toggle=body?body.region==''?'true':'false':'true', data-value='') 전체
+                button(name='region', data-toggle=body?body.region==''?'true':'false':'true', data-value='', data-type='all') 전체
                 each item in region
                   button(name='region', data-toggle=body?body.region==item._id.toString()?'true':'false':'false', data-value=item._id) #{item.name}
         //- 경기 필터링 옛 버전 지금 안 씀

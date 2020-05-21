@@ -148,7 +148,10 @@ router.post("/register", async (req, res) => {
     return res.json({ code: 0, message: "이미 사용 중인 아이디가 있습니다" });
   }
   //  인증번호 확인
-  let certified = await SessionStore.findOne({ sessionID: req.sessionID, randomNumber: req.body.certifiedNumber });
+  let certified = await SessionStore.findOne({
+    sessionID: req.sessionID,
+    randomNumber: req.body.certifiedNumber,
+  });
   if (certified) {
     let result = await User.create(req.body);
     if (result) {
@@ -561,7 +564,11 @@ router.get("/certify", async (req, res) => {
     let rnd = parseInt(Math.random() * 10000000)
       .toString()
       .substr(0, 4);
-    await SessionStore.updateOne({ sessionID: req.sessionID }, { $set: { randomNumber: rnd } }, { upsert: true });
+    await SessionStore.updateOne(
+      { sessionID: req.sessionID },
+      { $set: { randomNumber: rnd } },
+      { upsert: true }
+    );
     res.json({ code: 1, rnd: rnd, req: req.session, sesId: req.sessionID });
   } catch (err) {
     res.json({ code: 0, message: "인증번호 생성 실패" });
@@ -570,11 +577,14 @@ router.get("/certify", async (req, res) => {
 //  인증번호 확인
 router.post("/certify", async (req, res) => {
   try {
-    let result = await SessionStore.findOne({ sessionID: req.sessionID, randomNumber: req.body.certifiedNumber });
+    let result = await SessionStore.findOne({
+      sessionID: req.sessionID,
+      randomNumber: req.body.certifiedNumber,
+    });
     res.json({ code: 1, result: result });
   } catch (err) {
     res.json({ code: 0, message: "인증번호 확인 오류" });
   }
 });
-
+//  비밀번호 재설정(이메일 인증 방식)
 module.exports = router;

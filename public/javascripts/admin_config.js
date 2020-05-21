@@ -36,13 +36,13 @@ function fnRemoveRow() {
 //  신규 테이블 로우 저장
 function fnSaveRegion() {
   let list = [];
-  document.querySelectorAll("#region-card input").forEach(function(v) {
+  document.querySelectorAll("#region-card input").forEach(function (v) {
     if (v.value !== "") list.push({ name: v.value });
   });
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "/admin/config/region", true);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       alert(res.message);
@@ -52,8 +52,8 @@ function fnSaveRegion() {
   xhr.send(JSON.stringify({ data: list }));
 }
 //  지역명 수정
-document.querySelectorAll('button[data-role="edit"]').forEach(function(v) {
-  v.addEventListener("click", function() {
+document.querySelectorAll('button[data-role="edit"]').forEach(function (v) {
+  v.addEventListener("click", function () {
     let this_tr = this.parentElement.parentElement;
     let td = this_tr.querySelector("td[data-status]");
     let status = td.dataset.status;
@@ -73,7 +73,7 @@ document.querySelectorAll('button[data-role="edit"]').forEach(function(v) {
       let xhr = new XMLHttpRequest();
       xhr.open("PATCH", "/admin/config/region", true);
       xhr.setRequestHeader("Content-Type", "application/json");
-      xhr.onreadystatechange = function() {
+      xhr.onreadystatechange = function () {
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
           let res = JSON.parse(this.response);
           if (res.code === 1) {
@@ -89,14 +89,14 @@ document.querySelectorAll('button[data-role="edit"]').forEach(function(v) {
   });
 });
 //  지역명 삭제
-document.querySelectorAll('button[data-role="remove"]').forEach(function(v) {
-  v.addEventListener("click", function() {
+document.querySelectorAll('button[data-role="remove"]').forEach(function (v) {
+  v.addEventListener("click", function () {
     if (confirm("삭제하시면 복구할 수 없습니다. 계속하시겠습니까?")) {
       let this_tr = this.parentElement.parentElement;
       let xhr = new XMLHttpRequest();
       xhr.open("DELETE", "/admin/config/region", true);
       xhr.setRequestHeader("Content-Type", "application/json");
-      xhr.onreadystatechange = function() {
+      xhr.onreadystatechange = function () {
         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
           let res = JSON.parse(this.response);
           if (res.code === 1) {
@@ -111,143 +111,128 @@ document.querySelectorAll('button[data-role="remove"]').forEach(function(v) {
 
 //  공지사항
 //  새 글 등록 모달 띄우기
-document
-  .querySelector('button[data-role="notice-upload"]')
-  .addEventListener("click", function() {
-    //  image 파일 등록 여부 확인
-    let notice_img = document.querySelector(
-      "#modalNoticeWrite .fileinput-preview img"
-    );
-    if (!notice_img) {
-      alert("이미지를 등록해주세요");
-      return false;
+document.querySelector('button[data-role="notice-upload"]').addEventListener("click", function () {
+  //  image 파일 등록 여부 확인
+  let notice_img = document.querySelector("#modalNoticeWrite .fileinput-preview img");
+  if (!notice_img) {
+    alert("이미지를 등록해주세요");
+    return false;
+  }
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", "/admin/config/notice", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function () {
+    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      let res = JSON.parse(this.response);
+      alert(res.message);
+      if (res.code === 1) location.reload();
     }
+  };
+  xhr.send(JSON.stringify({ notice_img: notice_img.src }));
+});
+//  공지사항 글 수정
+document.querySelectorAll('button[data-role="editNotice"]').forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    let id = this.dataset.id;
+    let notice_img = document.querySelector("#modalNoticeWrite .fileinput-preview img");
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "/admin/config/notice", true);
+    xhr.open("GET", "/admin/config/notice/" + id);
+    xhr.setRequestHeader("Content-Type", "application/json", true);
+    xhr.onreadystatechange = function () {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        let res = JSON.parse(this.response);
+        if (res.code === 1) {
+          //  모달창 띄우기
+          let item = res.result;
+          notice_img.src = item.notice_img;
+          $("#modalNoticeWrite").modal("show");
+        } else {
+          alert(res.message);
+          return false;
+        }
+      }
+    };
+    xhr.send();
+  });
+});
+//  공지사항 글 삭제
+document.querySelectorAll('button[data-role="removeNotice"]').forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    if (!confirm("삭제하시겠습니까?")) return false;
+    let id = this.dataset.id;
+    let xhr = new XMLHttpRequest();
+    xhr.open("DELETE", "/admin/config/notice/" + id, true);
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
         let res = JSON.parse(this.response);
         alert(res.message);
         if (res.code === 1) location.reload();
       }
     };
-    xhr.send(JSON.stringify({ notice_img: notice_img.src }));
+    xhr.send();
   });
-//  공지사항 글 수정
-document
-  .querySelectorAll('button[data-role="editNotice"]')
-  .forEach(function(btn) {
-    btn.addEventListener("click", function() {
-      let id = this.dataset.id;
-      let notice_img = document.querySelector(
-        "#modalNoticeWrite .fileinput-preview img"
-      );
-      let xhr = new XMLHttpRequest();
-      xhr.open("GET", "/admin/config/notice/" + id);
-      xhr.setRequestHeader("Content-Type", "application/json", true);
-      xhr.onreadystatechange = function() {
-        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-          let res = JSON.parse(this.response);
-          if (res.code === 1) {
-            //  모달창 띄우기
-            let item = res.result;
-            notice_img.src = item.notice_img;
-            $("#modalNoticeWrite").modal("show");
-          } else {
-            alert(res.message);
-            return false;
-          }
-        }
-      };
-      xhr.send();
-    });
-  });
-//  공지사항 글 삭제
-document
-  .querySelectorAll('button[data-role="removeNotice"]')
-  .forEach(function(btn) {
-    btn.addEventListener("click", function() {
-      if (!confirm("삭제하시겠습니까?")) return false;
-      let id = this.dataset.id;
-      let xhr = new XMLHttpRequest();
-      xhr.open("DELETE", "/admin/config/notice/" + id, true);
-      xhr.setRequestHeader("Content-Type", "application/json");
-      xhr.onreadystatechange = function() {
-        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-          let res = JSON.parse(this.response);
-          alert(res.message);
-          if (res.code === 1) location.reload();
-        }
-      };
-      xhr.send();
-    });
-  });
+});
 //  공지사항 등록 활성화/비활성화
-document
-  .querySelectorAll('button[data-role="activeNotice"]')
-  .forEach(function(btn) {
-    btn.addEventListener("click", function() {
-      let id = this.dataset.id;
-      let toggle = this.dataset.toggle;
-      let activityLabel = "활성화";
-      if (toggle === "true") activityLabel = "비활성화";
-      if (!confirm("해당 공지를 " + activityLabel + "하시겠습니까?"))
-        return false;
-      this.dataset.toggle = toggle === "false";
-      let xhr = new XMLHttpRequest();
-      xhr.open("PUT", "/admin/config/notice", true);
-      xhr.setRequestHeader("Content-Type", "application/json");
-      xhr.onreadystatechange = function() {
-        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-          let res = JSON.parse(this.response);
-          alert(res.message);
-        }
-      };
-      xhr.send(JSON.stringify({ id: id, activity: this.dataset.toggle }));
-    });
+document.querySelectorAll('button[data-role="activeNotice"]').forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    let id = this.dataset.id;
+    let toggle = this.dataset.toggle;
+    let activityLabel = "활성화";
+    if (toggle === "true") activityLabel = "비활성화";
+    if (!confirm("해당 공지를 " + activityLabel + "하시겠습니까?")) return false;
+    this.dataset.toggle = toggle === "false";
+    let xhr = new XMLHttpRequest();
+    xhr.open("PUT", "/admin/config/notice", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        let res = JSON.parse(this.response);
+        alert(res.message);
+      }
+    };
+    xhr.send(JSON.stringify({ id: id, activity: this.dataset.toggle }));
   });
+});
 //  매너점수 플러스 버튼 클릭 이벤트
-document
-  .querySelector('button[name="btnAddRowManner"]')
-  .addEventListener("click", function() {
-    let tr = document.createElement("tr");
-    let td = document.createElement("td");
-    let input = document.createElement("input");
-    input.className = "form-control";
-    input.setAttribute("type", "text");
-    input.setAttribute("name", "manner-title");
-    td.appendChild(input);
-    tr.appendChild(td);
+document.querySelector('button[name="btnAddRowManner"]').addEventListener("click", function () {
+  let tr = document.createElement("tr");
+  let td = document.createElement("td");
+  let input = document.createElement("input");
+  input.className = "form-control";
+  input.setAttribute("type", "text");
+  input.setAttribute("name", "manner-title");
+  td.appendChild(input);
+  tr.appendChild(td);
 
-    td = document.createElement("td");
-    input = document.createElement("input");
-    input.className = "form-control";
-    input.setAttribute("type", "text");
-    input.setAttribute("name", "manner-point");
-    td.appendChild(input);
-    tr.appendChild(td);
+  td = document.createElement("td");
+  input = document.createElement("input");
+  input.className = "form-control";
+  input.setAttribute("type", "text");
+  input.setAttribute("name", "manner-point");
+  td.appendChild(input);
+  tr.appendChild(td);
 
-    td = document.createElement("td");
-    button = document.createElement("button");
-    button.className = "btn btn-danger btn-sm btn-icon btn-icon-mini";
-    button.setAttribute("type", "button");
-    button.setAttribute("name", "removeMannerRow");
-    button.addEventListener("click", function() {
-      this.parentElement.parentElement.remove();
-    });
-    let i = document.createElement("i");
-    i.className = "nc-icon nc-simple-remove";
-    button.appendChild(i);
-    td.appendChild(button);
-    tr.appendChild(td);
-
-    document.querySelector("#manner-table tbody").appendChild(tr);
+  td = document.createElement("td");
+  button = document.createElement("button");
+  button.className = "btn btn-danger btn-sm btn-icon btn-icon-mini";
+  button.setAttribute("type", "button");
+  button.setAttribute("name", "removeMannerRow");
+  button.addEventListener("click", function () {
+    this.parentElement.parentElement.remove();
   });
+  let i = document.createElement("i");
+  i.className = "nc-icon nc-simple-remove";
+  button.appendChild(i);
+  td.appendChild(button);
+  tr.appendChild(td);
+
+  document.querySelector("#manner-table tbody").appendChild(tr);
+});
 //  매너 점수 저장
 function fnSaveManner() {
   let list = [];
-  document.querySelectorAll("#manner-table tbody tr").forEach(function(v) {
+  document.querySelectorAll("#manner-table tbody tr").forEach(function (v) {
     let title = v.querySelector('input[name="manner-title"]');
     let point = v.querySelector('input[name="manner-point"]');
     if (title.value !== "" && point.value !== "") {
@@ -258,7 +243,7 @@ function fnSaveManner() {
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "/admin/config/manner", true);
   xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function() {
+  xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
       alert(res.message);
@@ -268,13 +253,13 @@ function fnSaveManner() {
   xhr.send(JSON.stringify(list));
 }
 //  매너 항목 삭제
-document.querySelectorAll('button[name="removeManner"]').forEach(function(btn) {
-  btn.addEventListener("click", function() {
+document.querySelectorAll('button[name="removeManner"]').forEach(function (btn) {
+  btn.addEventListener("click", function () {
     if (!confirm("삭제하시겠습니까?")) return false;
     let xhr = new XMLHttpRequest();
     xhr.open("DELETE", "/admin/config/manner/" + this.dataset.id, true);
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function() {
+    xhr.onreadystatechange = function () {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
         let res = JSON.parse(this.response);
         alert(res.message);
@@ -282,5 +267,21 @@ document.querySelectorAll('button[name="removeManner"]').forEach(function(btn) {
       }
     };
     xhr.send();
+  });
+});
+// 공지사항 등록(temp 폴더 업로드)
+document.querySelectorAll('input[data-role="upload-notice"]').forEach(function (btn) {
+  btn.addEventListener("change", function () {
+    let formData = new FormData();
+    formData.append("notice_img", this.files[0]);
+    formData.append("url", this.name);
+
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "/admin/config/uploadTemp", true);
+    xhr.onreadystatechange = function () {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      }
+    };
+    xhr.send(formData);
   });
 });

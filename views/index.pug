@@ -12,14 +12,17 @@ block content
   .container-fluid.px-0
     .main-slider
       .d-flex.justify-content-center
-        .d-none.d-sm-block.main-slide-item(style='background-image:url(/images/normal_main.png)')
-        .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/normal_main.png)')
+        .d-none.d-sm-block.main-slide-item(style='background-image:url(/images/banner/main_banner1_pc.png)')
+        .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/banner/main_banner1_mobile.png)')
       .d-flex.justify-content-center
-        .d-none.d-sm-block.main-slide-item(style='background-image:url(/images/league_main1.png)')
-        .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/league_main1.png)')
+        .d-none.d-sm-block.main-slide-item(style='background-image:url(/images/banner/main_banner2_pc.png)')
+        .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/banner/main_banner2_mobile.png)')
       .d-flex.justify-content-center
-        .d-none.d-sm-block.main-slide-item(style='background:url(/images/league_main2.png)')
-        .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/league_main2.png)')
+        .d-none.d-sm-block.main-slide-item(style='background:url(/images/banner/main_banner3_pc.png)')
+        .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/banner/main_banner3_mobile.png)')
+      .d-flex.justify-content-center
+        .d-none.d-sm-block.main-slide-item(style='background:url(/images/banner/main_banner_point_pc.png)')
+        .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/banner/main_banner_point_mobile.png)')
       each notice in notice_list
         .d-none.d-sm-block.main-slide-item(style='background-image:url(' + notice.notice_img + ')')
           //- img(src=notice.notice_img, alt='pc')

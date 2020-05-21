@@ -1,0 +1,16 @@
+.file-upload-wrap {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.file-upload-wrap input[type="file"] {
+  border: none;
+  padding: 0.5rem 0;
+}
+.file-upload-wrap button {
+  background-color: #662d91;
+  margin: 0;
+  border-radius: 0;
+  color: white !important;
+  width: 100px;
+}

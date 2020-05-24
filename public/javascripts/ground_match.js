@@ -15,11 +15,15 @@ document.querySelectorAll('a[data-toggle="tab"]').forEach(function (a) {
   a.addEventListener("click", function () {
     let tab = document.querySelector(a.getAttribute("href"));
     console.log(tab);
-    document
-      .querySelectorAll('.tab-content div[role="tabpanel"]')
-      .forEach(function (panel) {
-        panel.className = "tab-pane fade";
-      });
+    document.querySelectorAll('.tab-content div[role="tabpanel"]').forEach(function (panel) {
+      panel.className = "tab-pane fade";
+    });
     tab.className = "tab-pane fade show active";
+  });
+});
+//  경기장 선택시 이동
+document.querySelectorAll("li[data-id]").forEach(function (li) {
+  li.addEventListener("click", function () {
+    location.href = "/match/" + this.dataset.id;
   });
 });

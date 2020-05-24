@@ -63,7 +63,7 @@ body {
 }
 
 .main-slide-item {
-  height: 320px;
+  height: 500px;
   background-size: cover;
   width: 100%;
 }
@@ -318,7 +318,7 @@ input#datepicker {
 
 .mobile_slide {
   background-repeat: no-repeat !important;
-  height: 300px;
+  height: calc(100vw * 5 / 12 + 1px);
   background-size: contain !important;
   background-position: center center !important;
 }
@@ -617,6 +617,12 @@ select.form-control:not([size]):not([multiple]),
   top: 6px;
   font-weight: 800;
 }
+.footer-img-wrap {
+  height: 150px;
+  background-image: url("/images/banner/footer_tie.png");
+  background-position: center center;
+  background-size: contain;
+}
 @media (min-width: 576px) {
   .main-slider .slick-list {
     /* border-radius: 2rem;
@@ -638,21 +644,19 @@ select.form-control:not([size]):not([multiple]),
   .slick-dots {
     display: none !important;
   }
-}
-/* .form-group .form-control {
-  height: 44px !important;
-  line-height: 44px;
-} */
-.form-group label {
-  font-size: 0.7rem;
-  margin-bottom: 0.1rem;
-}
-@media (max-width: 575px) {
+  .form-group label {
+    font-size: 0.7rem;
+    margin-bottom: 0.1rem;
+  }
   .main-tab-wrap a {
     margin: 0 0.1rem;
     padding: 0.5rem 0.1rem;
   }
   .main-tab-wrap img {
     display: none;
+  }
+  .footer-img-wrap {
+    background-size: cover;
+    height: 50px;
   }
 }

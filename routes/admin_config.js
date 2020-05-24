@@ -5,6 +5,10 @@ const Region = require("../model/region");
 const Notice = require("../model/notice");
 const Manner = require("../model/manner");
 
+const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
+
 //  환경설정 페이지
 router.get("/", async (req, res) => {
   let user = req.session.passport.user;
@@ -17,7 +21,7 @@ router.get("/", async (req, res) => {
     title: "퍼즐풋볼 - 환경설정",
     region: region,
     notice: notice,
-    manner: manner
+    manner: manner,
   });
 });
 //  지역 등록
@@ -34,12 +38,11 @@ router.patch("/region", async (req, res) => {
   try {
     let result = await Region.updateOne(
       {
-        _id: mongoose.Types.ObjectId(req.body.id)
+        _id: mongoose.Types.ObjectId(req.body.id),
       },
       { $set: { name: req.body.val } }
     );
-    if (result.ok === 1)
-      res.json({ code: 1, message: "수정 성공", result: result });
+    if (result.ok === 1) res.json({ code: 1, message: "수정 성공", result: result });
     else res.json({ code: 0, message: "수정 실패" });
   } catch (err) {
     res.json({ code: 0, message: err.message });
@@ -49,14 +52,28 @@ router.patch("/region", async (req, res) => {
 router.delete("/region", async (req, res) => {
   try {
     let result = await Region.deleteOne({
-      _id: mongoose.Types.ObjectId(req.body.id)
+      _id: mongoose.Types.ObjectId(req.body.id),
     });
     res.json({ code: 1, result: result });
   } catch (err) {
     res.json({ code: 0, message: err.message });
   }
 });
-//  공지사항 등록
+//  공지사항 등록(temp 폴더 업데이트);
+const upload = multer({
+  storage: multer.diskStorage({
+    destination(req, file, cb) {
+      cb(null, "./temps/notice");
+    },
+    filename(req, file, cb) {
+      const ext = path.extname(file.originalname);
+      cb(null, path.basename(file.originalname, ext) + new Date().valueOf() + ext);
+    },
+  }),
+  limits: { fileSize: 2 * 1024 * 1024 },
+});
+router.post("/uploadTemp", upload.single("notice_img"), async (req, res) => {});
+//  공지사항 등록 -> deprecated
 router.post("/notice", async (req, res) => {
   try {
     let result = await Notice.create(req.body);
@@ -69,7 +86,7 @@ router.post("/notice", async (req, res) => {
 router.get("/notice/:id", async (req, res) => {
   try {
     let result = await Notice.findOne({
-      _id: mongoose.Types.ObjectId(req.params.id)
+      _id: mongoose.Types.ObjectId(req.params.id),
     });
     res.json({ code: 1, result: result });
   } catch (err) {
@@ -80,7 +97,7 @@ router.get("/notice/:id", async (req, res) => {
 router.delete("/notice/:id", async (req, res) => {
   try {
     let result = await Notice.deleteOne({
-      _id: mongoose.Types.ObjectId(req.params.id)
+      _id: mongoose.Types.ObjectId(req.params.id),
     });
     if (result.ok === 1) {
       res.json({ code: 1, message: "삭제되었습니다", result: result });
@@ -96,7 +113,7 @@ router.put("/notice", async (req, res) => {
   try {
     let result = await Notice.updateOne(
       {
-        _id: mongoose.Types.ObjectId(req.body.id)
+        _id: mongoose.Types.ObjectId(req.body.id),
       },
       { $set: { activity: req.body.activity } }
     );
@@ -123,7 +140,7 @@ router.post("/manner", async (req, res) => {
 router.delete("/manner/:id", async (req, res) => {
   try {
     let result = await Manner.deleteOne({
-      _id: mongoose.Types.ObjectId(req.params.id)
+      _id: mongoose.Types.ObjectId(req.params.id),
     });
     if (result.ok === 1) res.json({ code: 1, message: "삭제되었습니다." });
     else res.json({ code: 0, message: "삭제 실패!" });

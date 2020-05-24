@@ -303,7 +303,7 @@ block content
                         td(name='apply-game') 
                           if(item.count > 0)
                             | 신청가능&nbsp;
-                            a(href='#') !{item.count}건
+                            a(href='/ground/' + item._id) !{item.count}건
                           else
                             | 경기 없음
               .text-right

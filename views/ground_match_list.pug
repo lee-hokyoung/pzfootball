@@ -1,4 +1,6 @@
 extends layout
+block append_css
+  link(rel="stylesheet", href="/public_css/main_screen.css")
 block content
   .container
     .detail-slider
@@ -17,27 +19,68 @@ block content
     #nav-tabContent.tab-content
       //- 매칭 리스트
       #nav-match-list.tab-pane.fade.show.active(role="tabpanel" aria-labelledby="nav-match-list-tab")
-        - var n = 0
-        each list in match_list       
-          ul.list-group.list-group-flush
-            h6.mt-3 #{list._id}
-            each match in list.list
-              li.list-group-item
-                .row
-                  .col-md-2 #{match.match_time}
-                  .col-md-8 
-                    h6 #{ground_info.groundName}
-                    span #{match.sex === 1 ? "남성":match.sex === -1?"여성":"혼성"}매치
-                  .col-md-2
-                    - var status ='available';
-                    - var remains = match.personnel.max - (match.apply_member.length || 0);
-                    if(remains >= 4)
-                      - status = 'available'
-                    else if(remains >= 1 && remains < 4)
-                      - status = 'hurry'
-                    else
-                      - status = 'full'
-                    .pull-right.w-100(data-cnt=remains, data-id=match._id)
+        section.ground-list
+          - var n = 0
+          each list in match_list       
+            ul.list-group.list-group-flush
+              h6.mt-3 #{list._id}
+              p.match-count 총 #{list.list.length || 0}매치
+              each match in list.list
+                li.list-group-item(data-id=match._id)
+                  .row
+                    .col-md-10.col-8.my-auto
+                      .row
+                        .col-md-6
+                          .time-ground-wrap.d-flex.justify-content-start
+                            p.pl-5 #{match.match_time}
+                            p.pl-5 #{ground_info.groundName}
+                        .col-md-4
+                          .d-flex.justify-content-start
+                            .match-wrap.text-center.pt-1
+                              b #{match.match_type}파
+                              b.pl-2 #{match.match_vs} vs #{match.match_vs}
+                            .text-left
+                              small.pl-3.tagList(data-gender=match.sex)
+                                case match.sex
+                                  when "1"
+                                    | 남성
+                                  when "2"
+                                    | 여성
+                                  when "3"
+                                    | 혼성
+                            
+                            if(match.ladder!==1)
+                              .grade_icon.ml-2(data-grade=match.match_grade, data-title='실력')
+                                case match.match_grade
+                                  when '1'
+                                    | 고급
+                                  when '2'
+                                    | 중급
+                                  when '3'
+                                    | 초급
+                            if(match.ladder===1)
+                              .ladder_icon.ml-2(data-title='승점')
+                              b (+#{match.match_score})
+                        .col-md-2.text-right
+                          b #{match.apply_member.length} / #{match.personnel.max}
+                    .col-md-2.col-4
+                      - var status ='available';
+                      - var statusText = '';
+                      - var remains = match.personnel.max - (match.apply_member.length || 0);
+                      - var percent = match.apply_member.length / match.personnel.max;
+                      if(percent <= 0.6)
+                        - status = 'available'
+                        - statusText = '신청가능'
+                      else if(percent < 1 && percent > 0.6)
+                        - status = 'hurry'
+                        - status = '마감임박'
+                      else
+                        - status = 'full'
+                        - status = '마  감'
+                      .skew-wrap
+                        .apply-btn-wrap(data-status=status) #{statusText}
+
+                      .pull-right.w-100.d-none(data-cnt=remains, data-id=match._id)
                         if(status === 'full')
                           button.btn.btn-neutral.btn-status.text-white(data-status='full')
                             small.m-0 마  감
@@ -45,7 +88,6 @@ block content
                           button.btn.btn-neutral.btn-status.text-white.p-0(data-status=status)
                             h5.m-0.py-1 #{status === 'hurry'?"곧 마감!":"신청가능!"}
                             .text-danger.bg-white.mx-auto.font-weight-bold.mb-1(style='border-radius:1rem; width:80%; font-size:.75rem;') #{match.apply_member.length} / #{match.personnel.max}
-                      
       //- 시설 및 구장정보
       #nav-facility.tab-pane.fade(role="tabpanel" aria-labelledby="nav-facility-tab") 
         h6 기본정보

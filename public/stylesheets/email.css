@@ -1,0 +1,42 @@
+.container {
+  width: 960px;
+}
+.card {
+  margin: 4rem auto;
+  width: 400px;
+  border-radius: 30px;
+  border: 1px solid;
+  padding: 1.5rem 2rem;
+  background-color: whitesmoke;
+}
+.card-header {
+  padding-bottom: 1rem;
+}
+.card-header b {
+  font-size: 30px;
+}
+.card-header span {
+  font-size: 25px;
+  font-weight: bold;
+  padding-left: 5px;
+}
+.card-body {
+  border: 1px solid;
+  background: white;
+  padding: 0.5rem 1rem;
+}
+.card-body .content {
+  font-size: 13px;
+}
+.card-footer {
+  margin-top: 1.5rem;
+}
+.card-footer a {
+  padding: 0.75rem 0;
+  display: block;
+  text-align: center;
+  color: white;
+  background-color: #662d91;
+  text-decoration: none;
+  border-radius: 5px;
+}

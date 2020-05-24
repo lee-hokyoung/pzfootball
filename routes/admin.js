@@ -26,9 +26,7 @@ router.post("/login", middle.isNotLoggedIn, (req, res, next) => {
   passport.authenticate("local", (authError, user, info) => {
     if (info) {
       return res.send(
-        '<script>alert("' +
-          info.message +
-          '"); location.href = "/admin/login";</script>'
+        '<script>alert("' + info.message + '"); location.href = "/admin/login";</script>'
       );
     }
     if (authError) {
@@ -79,10 +77,7 @@ router.get("/user/list", middle.isAdmin, async (req, res) => {
             {
               $match: {
                 $expr: {
-                  $gt: [
-                    { $indexOfArray: ["$club_member._id", "$$local_id"] },
-                    -1,
-                  ],
+                  $gt: [{ $indexOfArray: ["$club_member._id", "$$local_id"] }, -1],
                 },
               },
             },
@@ -100,10 +95,7 @@ router.get("/user/list", middle.isAdmin, async (req, res) => {
             {
               $match: {
                 $expr: {
-                  $gt: [
-                    { $indexOfArray: ["$waiting_member", "$$local_id"] },
-                    -1,
-                  ],
+                  $gt: [{ $indexOfArray: ["$waiting_member", "$$local_id"] }, -1],
                 },
               },
             },
@@ -128,10 +120,7 @@ router.get("/user/list", middle.isAdmin, async (req, res) => {
                 $expr: {
                   $and: [
                     {
-                      $gt: [
-                        { $indexOfArray: ["$apply_member._id", "$$local_id"] },
-                        -1,
-                      ],
+                      $gt: [{ $indexOfArray: ["$apply_member._id", "$$local_id"] }, -1],
                     },
                     {
                       $eq: ladder_query,
@@ -192,8 +181,7 @@ router.delete("/user/delete/:id", middle.isAdmin, async (req, res) => {
     let result = await User.deleteOne({
       _id: mongoose.Types.ObjectId(req.params.id),
     });
-    if (result.ok === 1)
-      res.json({ code: 1, message: "삭제되었습니다", result: result });
+    if (result.ok === 1) res.json({ code: 1, message: "삭제되었습니다", result: result });
     else res.json({ code: 0, message: "삭제실패", result: result });
   } catch (err) {
     res.json({ code: 0, message: err.message });

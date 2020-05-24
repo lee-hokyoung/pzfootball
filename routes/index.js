@@ -14,7 +14,7 @@ const fnGetFilterQuery = (req) => {
   //  성별 필터링
   if (req.body.gender) {
     filter_query["$and"].push({
-      $or: req.body.gender.split(",").map((v) => {
+      $or: req.body.gender.map((v) => {
         return { sex: v };
       }),
     });
@@ -22,22 +22,26 @@ const fnGetFilterQuery = (req) => {
   //  능력 필터링
   if (req.body.skill) {
     filter_query["$and"].push({
-      $or: req.body.skill.split(",").map((v) => {
+      $or: req.body.skill.map((v) => {
         return { match_grade: v };
       }),
     });
   }
   //  매치 타입(2파, 3파) 필터링
   if (req.body.match_type) {
-    if (req.body.match_type !== "") {
-      filter_query["$and"].push({ match_type: req.body.match_type });
-    }
+    filter_query["$and"].push({
+      $or: req.body.match_type.map((v) => {
+        return { match_type: v };
+      }),
+    });
   }
   //  매치 형태(5vs5, 6vs6) 필터링
   if (req.body.match_vs) {
-    if (req.body.match_vs !== "") {
-      filter_query["$and"].push({ match_vs: req.body.match_vs });
-    }
+    filter_query["$and"].push({
+      $or: req.body.match_vs.map((v) => {
+        return { match_vs: v };
+      }),
+    });
   }
   //  날짜 필터링
   if (req.body.match_date) {
@@ -59,11 +63,16 @@ const fnGetRegionFilter = (req) => {
   let region_query = { $or: [] };
   //  지역 필터링 ground_info lookup 생성 후 필터가 돼야 하므로 ground_info.region 으로 매칭해야 함.
   if (req.body.region) {
-    req.body.region.split(",").forEach((v) => {
-      region_query["$or"].push({
-        "ground_info.region": mongoose.Types.ObjectId(v.toString()),
-      });
+    region_query["$or"].push({
+      $or: req.body.region.map((v) => {
+        return { "ground_info.region": mongoose.Types.ObjectId(v.toString()) };
+      }),
     });
+    // req.body.region.split(",").forEach((v) => {
+    //   region_query["$or"].push({
+    //     "ground_info.region": mongoose.Types.ObjectId(v.toString()),
+    //   });
+    // });
   } else {
     region_query["$or"].push({});
   }

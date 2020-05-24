@@ -223,7 +223,7 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
 
   let user_info = req.session.passport;
   let user_id = user_info.user.user_id;
-  let user = await User.findOne({ user_id: user_id }, { user_pw: 0 });
+  let user = await User.findOne({ user_id: user_id });
 
   //  팀워크 점수 계산
   let manner_info = await Match.aggregate([

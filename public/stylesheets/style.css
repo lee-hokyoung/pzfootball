@@ -623,6 +623,15 @@ select.form-control:not([size]):not([multiple]),
   background-position: center center;
   background-size: contain;
 }
+.modal-footer button {
+  margin: 0 !important;
+}
+.modal-footer button:first-child {
+  border-bottom-right-radius: 0px;
+}
+.modal-footer button:last-child {
+  border-bottom-left-radius: 0;
+}
 @media (min-width: 576px) {
   .main-slider .slick-list {
     /* border-radius: 2rem;

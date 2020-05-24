@@ -28,7 +28,7 @@ block content
           button.btn.w-100.mb-4(type='submit') 로그인
         hr
         .d-flex.justify-content-between
-          a(href='#') 아이디 찾기
+          a(href='#', data-toggle='modal', data-target='#modalFindId') 아이디 찾기
           .vertical-line 
           a(href='#') 비밀번호 찾기
           .vertical-line
@@ -43,6 +43,8 @@ block content
           .sns-btn-wrap.mt-1(data-role='kakao')
             span.sns-font K
             span 카카오 계정으로 로그인
-
+  include modals/findId
+  include modals/findPw
 block append_js
   script(src='/public_js/login.js')
+  script(src='/public_js/mail.js')

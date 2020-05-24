@@ -22,6 +22,7 @@ const adminConfigRouter = require("./routes/admin_config");
 const adminFaqRouter = require("./routes/admin_faq");
 const managerRouter = require("./routes/manager");
 const queryRouter = require("./routes/query");
+const mailRouter = require("./routes/mail");
 const middle = require("./routes/middle");
 
 const app = express();
@@ -51,18 +52,9 @@ app.use(
     maxAge: "",
   })
 );
-app.use(
-  "/images",
-  express.static(path.join(__dirname, "public/images"), { maxAge: "30d" })
-);
-app.use(
-  "/assets",
-  express.static(path.join(__dirname, "public/assets"), { maxAge: "30d" })
-);
-app.use(
-  "/nm",
-  express.static(path.join(__dirname, "node_modules"), { maxAge: "30d" })
-);
+app.use("/images", express.static(path.join(__dirname, "public/images"), { maxAge: "30d" }));
+app.use("/assets", express.static(path.join(__dirname, "public/assets"), { maxAge: "30d" }));
+app.use("/nm", express.static(path.join(__dirname, "node_modules"), { maxAge: "30d" }));
 app.use("/upload", express.static(path.join(__dirname, "upload")));
 
 app.use(
@@ -89,6 +81,7 @@ app.use("/admin/manager", middle.isAdmin, adminManagerRouter);
 app.use("/admin/config", middle.isAdmin, adminConfigRouter);
 app.use("/admin/faq", middle.isAdmin, adminFaqRouter);
 app.use("/manager", managerRouter);
+app.use("/mail", mailRouter);
 app.use("/query", queryRouter);
 
 // catch 404 and forward to error handler

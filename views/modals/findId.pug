@@ -1,0 +1,12 @@
+#modalFindId.modal.fade(tabindex="-1" role="dialog" aria-labelledby="findIdModalLabel" aria-hidden="true")
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h6 아이디 찾기
+      .modal-body
+        .form-group
+          label 가입시 사용한 이메일을 입력해주세요.
+          input.form-control(name='email')
+      .modal-footer
+        button.btn.btn-primary(onclick='findEmail()') 확인
+        button.btn.btn-danger(data-dismiss='modal') 취소

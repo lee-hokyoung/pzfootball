@@ -14,7 +14,6 @@ const fnMatchFilter = function () {
       }
     }
   });
-  console.log("query : ", query);
   //  날짜 및 XHR 변수 추가
   query["match_date"] = document.querySelector("button[data-date].active").dataset.date;
   query["XHR"] = true;

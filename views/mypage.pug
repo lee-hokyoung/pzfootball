@@ -81,6 +81,19 @@ block content
                         input.form-control(type='text', name='user_id', value=user.user_id, readonly)
                         input(name='_id', type='hidden', value=user._id)
                     tr
+                      th 비밀번호
+                      td
+                      td
+                        input.form-control(type='password', name='user_pw', value=user.user_pw, readonly)
+                        div(data-toggle='true')
+                          button.btn.btn-link.btn-primary(data-role='edit')
+                            i.nc-icon.nc-ruler-pencil
+                        div(data-toggle='false')
+                          button.btn.btn-link.btn-success(data-role='confirm')
+                            i.nc-icon.nc-check-2
+                          button.btn.btn-link.btn-danger(data-role='cancel')
+                            i.nc-icon.nc-simple-remove
+                    tr
                       th 휴대폰 번호
                       td
                       td(about='user_phone')

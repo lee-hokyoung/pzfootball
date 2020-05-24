@@ -1,12 +1,23 @@
 #modalFindId.modal.fade(tabindex="-1" role="dialog" aria-labelledby="findIdModalLabel" aria-hidden="true")
-  .modal-dialog
+  .modal-dialog(style='max-width:350px')
     .modal-content
       .modal-header
         h6 아이디 찾기
       .modal-body
         .form-group
-          label 가입시 사용한 이메일을 입력해주세요.
-          input.form-control(name='email')
+          label 이름
+          input.form-control(name='user_name')
+        .form-group
+          label 휴대폰 번호
+          .d-flex.justify-content-between
+            input.form-control(type='tel', name='user_phone', value='010', maxlength='3')
+            .mx-1.my-auto -
+            input.form-control(type='tel', name='phone1', maxlength='4')
+            .mx-1.my-auto -
+            input.form-control(type='tel', name='phone2', maxlength='4')
+        #findIdResult.form-group.d-none
+          label 조회 결과
+          input.form-control(type='text', name='result', readonly, style='cursor:text')
       .modal-footer
-        button.btn.btn-primary(onclick='findEmail()') 확인
-        button.btn.btn-danger(data-dismiss='modal') 취소
+        button.btn.btn-primary(onclick='fnFindEmail()') 확인
+        button.btn.btn-danger(data-dismiss='modal') 닫기

@@ -2,14 +2,11 @@
   .modal-dialog
     .modal-content
       .modal-header
-        h6 이메일 찾기
+        h6 비밀번호 찾기
       .modal-body
         .form-group
-          label 이메일
-          input.form-control(name='email')
-        .form-group
-          label 이메일
+          label 가입시 사용한 이메일을 입력해주세요.
           input.form-control(name='email')
       .modal-footer
-        button.btn.btn-primary(onclick='findEmail()') 확인
+        button.btn.btn-primary(onclick='fnResetPw()') 확인
         button.btn.btn-danger(data-dismiss='modal') 취소

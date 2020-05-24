@@ -91,13 +91,13 @@ block content
               else
                 option(value=year - n) #{year - n++}
         .form-group.mx-1
-          label
+          label &nbsp;
           select.form-control(name='birth_m')
             - var n = 0
             while n < 12
               option(value=++n) #{n}월
         .form-group.ml-1
-          label
+          label &nbsp;
           select.form-control(name='birth_d')
             -var n =0
             while n < 31

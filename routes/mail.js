@@ -4,13 +4,35 @@ const User = require("../model/user");
 const mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
 
+//  아이디 찾기
+router.post("/findId", async (req, res) => {
+  try {
+    let user = await User.findOne(
+      {
+        user_name: req.body.user_name,
+        user_phone: req.body.user_phone,
+        phone1: req.body.phone1,
+        phone2: req.body.phone2,
+        provider: { $exists: false }, //  sns로 가입한 경우는 제외
+      },
+      { user_id: 1 }
+    );
+    if (user) {
+      res.json({ code: 1, result: user });
+    } else {
+      res.json({ code: 0, message: "입력하신 내용에 맞는 결과가 없습니다." });
+    }
+  } catch (err) {
+    res.json({ code: 0, message: err.message });
+  }
+});
+//  비밀번호 찾기(재설정)
 router.post("/resetPw", async (req, res) => {
   try {
     let referer = req.headers.referer;
     let user_id = req.body.email;
     let newPw = Math.random().toString(16).substr(2);
     let result = await User.updateOne({ user_id: user_id }, { $set: { user_pw: newPw } });
-    console.log("result : ", result);
     if (result.n === 1) {
       let transporter = nodemailer.createTransport({
         service: "gmail",

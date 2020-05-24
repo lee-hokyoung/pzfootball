@@ -166,6 +166,20 @@ button[name="btnCertify"] {
 .term-wrap .form-check-sign {
   font-size: 14px;
 }
+#loadingPage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+  z-index: 1100;
+}
+#loadingPage .d-flex {
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
 @media (max-width: 768px) {
   /* #join-page {
     max-width: 100%;

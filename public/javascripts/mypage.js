@@ -21,7 +21,9 @@ $("#modalChargePoint").on("show.bs.modal", function (v) {
 // 충전할 금액 선택 이벤트
 $("#selectPoint").on("change", function () {
   let selectedPoint = Number($(this).val());
-  let beforeCharge = Number(document.getElementById("beforeCharge").value.replace(/[^0-9.-]+/g, ""));
+  let beforeCharge = Number(
+    document.getElementById("beforeCharge").value.replace(/[^0-9.-]+/g, "")
+  );
   let inpAfterCharge = document.getElementById("afterCharge");
   inpAfterCharge.value = new Intl.NumberFormat().format(selectedPoint + beforeCharge);
 });
@@ -227,9 +229,11 @@ let saveGround = document.querySelector('button[data-role="saveGround"]');
 if (saveGround) {
   saveGround.addEventListener("click", function () {
     let ground_list = [];
-    document.querySelectorAll('button[data-role="ground"][data-toggle="true"]').forEach(function (btn) {
-      ground_list.push(btn.dataset.id);
-    });
+    document
+      .querySelectorAll('button[data-role="ground"][data-toggle="true"]')
+      .forEach(function (btn) {
+        ground_list.push(btn.dataset.id);
+      });
     let xhr = new XMLHttpRequest();
     xhr.open("PUT", "/users/region", true);
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -294,7 +298,8 @@ document.querySelectorAll(".user-info-wrap tbody td button[data-role]").forEach(
                 td.querySelector('input[name="gender"]').value =
                   input.value === "male" ? "남자" : input.value === "female" ? "여자" : "선택안함";
               } else if (input.name === "user_phone") {
-                input.value = multi_input[0].value + "-" + multi_input[1].value + "-" + multi_input[2].value;
+                input.value =
+                  multi_input[0].value + "-" + multi_input[1].value + "-" + multi_input[2].value;
               }
             }
           }
@@ -429,4 +434,24 @@ document.querySelectorAll('button[data-role="cancelReservation"]').forEach(funct
       xhr.send(JSON.stringify({ match_id: match_id }));
     }
   });
+});
+
+//  프로필 사진 변경 이벤트
+$('input[name="profile_image"]').on("change.bs.fileinput", function () {
+  document.querySelector("button[name='profile_image']").dataset.view = "true";
+});
+document.querySelector('button[name="profile_image"]').addEventListener("click", function () {
+  let profile_image = document.querySelector(".fileinput-preview img").src;
+  let xhr = new XMLHttpRequest();
+  xhr.open("POST", "/users/mypage/myinfo", true);
+  xhr.setRequestHeader("Content-Type", "application/json");
+  xhr.onreadystatechange = function () {
+    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+      let res = JSON.parse(this.response);
+      alert(res.message);
+      if (res.code === 1)
+        document.querySelector('button[name="profile_image"]').dataset.view = "false";
+    }
+  };
+  xhr.send(JSON.stringify({ profile_image: profile_image }));
 });

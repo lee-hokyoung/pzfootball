@@ -450,7 +450,11 @@ hr {
 }
 #favorite-table td .check-custom-wrap.form-check .form-check-sign::before,
 #favorite-table td .check-custom-wrap.form-check .form-check-sign::after,
-#favorite-table td .check-custom-wrap.form-check-label input[type="checkbox"]:checked + .form-check-sign:before {
+#favorite-table
+  td
+  .check-custom-wrap.form-check-label
+  input[type="checkbox"]:checked
+  + .form-check-sign:before {
   top: -12px;
   left: 0px;
 }
@@ -472,6 +476,16 @@ button[name="btnRemoveFavorite"] {
 }
 .point-button-wrap button:nth-child(2) {
   background-color: darkred;
+}
+.fileinput button[data-view] {
+  margin: 0;
+  padding: 0.5rem 0;
+}
+.fileinput button[data-view="true"] {
+  display: block;
+}
+.fileinput button[data-view="false"] {
+  display: none;
 }
 @media (max-width: 768px) {
   .card.profile-card .card-body {

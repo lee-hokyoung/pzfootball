@@ -116,31 +116,45 @@ function fnConfirmMatch() {
   };
   xhr.send(JSON.stringify(formData));
 }
-// 신청인원 수 조정 이벤트
-$("#selectMember").on("change", function () {
-  //  포인트 변동
+//  쿠폰 선택 이벤트 (결제 후 포인트 계산)
+const fnSetPoint = function () {
+  // 보유 포인트
   let user_point = Number(document.getElementById("user_point").value.replace(/[^0-9.-]+/g, ""));
-  let member_cnt = $(this).val();
-  let user_id = $(this).data("id");
-  let match_price = match_info.match_price * member_cnt;
+  let member_cnt = Number(document.querySelector("#selectMember").value);
+  // 보유 쿠폰
+  let user_coupon =
+    Number(document.querySelector('select[name="user_coupon"] option:checked').dataset.point) || 0;
+
+  // 차감포인트
+  let match_price = match_info.match_price * member_cnt - user_coupon;
   document.getElementById("require_point").value = new Intl.NumberFormat().format(match_price);
   let afterPurchase = user_point - match_price;
   let inpAfterPurchase = document.getElementById("afterPurchase");
   inpAfterPurchase.value = new Intl.NumberFormat().format(afterPurchase);
   // 결제 후 포인트 잔여여부
   if (afterPurchase >= 0) {
-    // inpAfterPurchase.classList.remove("bg-danger");
-    // inpAfterPurchase.classList.add("bg-success");
     inpAfterPurchase.className = "form-control text-white bg-success";
     document.getElementById("confirmFooter").className = "";
     document.getElementById("requireFooter").className = "d-none";
   } else {
-    // inpAfterPurchase.classList.remove("bg-success");
-    // inpAfterPurchase.classList.add("bg-danger");
     inpAfterPurchase.className = "form-control text-white bg-danger";
     document.getElementById("confirmFooter").className = "d-none";
     document.getElementById("requireFooter").className = "";
   }
+};
+let isCoupon = document.querySelector('select[name="user_coupon"]');
+if (isCoupon) {
+  isCoupon.addEventListener("change", function () {
+    fnSetPoint();
+  });
+}
+// 신청인원 수 조정 이벤트
+$("#selectMember").on("change", function () {
+  let user_id = $(this).data("id");
+  //  포인트 변경
+  fnSetPoint();
+
+  let member_cnt = Number(document.querySelector("#selectMember").value);
   //  참여인원 칸 늘리기
   let apply_member_info = document.querySelector("#apply_member_info");
   apply_member_info.dataset.id = user_id;

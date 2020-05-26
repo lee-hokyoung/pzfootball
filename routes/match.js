@@ -3,17 +3,36 @@ const router = express.Router();
 const middle = require("../routes/middle");
 const Match = require("../model/match");
 const User = require("../model/user");
+const CouponHistory = require("../model/coupon_history");
 const mongoose = require("mongoose");
 
 /* GET home page. */
 router.get("/:id", async (req, res) => {
   let user_info = req.session.passport;
-  let favorite_ground;
+  let favorite_ground, coupon_list;
+  /**
+   *  로그인 한 경우
+   *  즐겨찾기 구장 추가 가능
+   *  쿠폰 정보 확인 가능
+   */
   if (user_info) {
     favorite_ground = await User.findOne(
       { user_id: user_info.user.user_id },
       { favorite_ground: 1 }
     );
+    //  쿠폰 정보
+    coupon_list = await CouponHistory.aggregate([
+      { $match: { user_id: mongoose.Types.ObjectId(user_info.user._id), status: 1 } },
+      {
+        $lookup: {
+          from: "coupon",
+          localField: "coupon_id",
+          foreignField: "_id",
+          as: "coupon_info",
+        },
+      },
+      { $unwind: "$coupon_info" },
+    ]);
   }
   let match_info = await Match.aggregate([
     { $match: { _id: mongoose.Types.ObjectId(req.params.id) } },
@@ -32,6 +51,7 @@ router.get("/:id", async (req, res) => {
     match_info: match_info[0],
     user_info: user_info,
     favorite_ground: favorite_ground,
+    coupon_list: coupon_list,
   });
 });
 // router.get("/price/:id", async (req, res) => {
@@ -47,8 +67,7 @@ router.post("/apply", async (req, res) => {
   let match_info = await Match.findOne({
     _id: mongoose.Types.ObjectId(match_id),
   });
-  if (!match_info)
-    return res.json({ code: 9, message: "잘못된 매칭 정보입니다" });
+  if (!match_info) return res.json({ code: 9, message: "잘못된 매칭 정보입니다" });
 
   let user_info = req.session.passport.user;
   let user = await User.findOne({ user_id: user_info.user_id });

@@ -12,6 +12,13 @@
           .form-group
             label 보유포인트
             input.form-control#user_point(readonly)
+          if(coupon_list.length > 0)
+            .form-group
+              label 보유 쿠폰
+              select.form-control(name='user_coupon')
+                option(value='') 사용할 쿠폰을 선택해 주세요
+                each item in coupon_list
+                  option(value=item._id, data-point=item.coupon_info.cp_point) #{item.coupon_info.cp_name} (#{new Intl.NumberFormat('ko').format(item.coupon_info.cp_point)})
           .form-group
             label 차감포인트
             input.form-control#require_point(readonly)

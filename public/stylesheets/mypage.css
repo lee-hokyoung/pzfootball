@@ -372,21 +372,21 @@ span.fileinput-exists i.nc-icon {
   margin: auto 0;
 }
 
-#table-reservation > .table > thead > tr > th,
-#table-reservation > .table > tbody > tr > th,
-#table-reservation > .table > tfoot > tr > th,
-#table-reservation > .table > thead > tr > td,
-#table-reservation > .table > tbody > tr > td,
-#table-reservation > .table > tfoot > tr > td {
+.table-custom > .table > thead > tr > th,
+.table-custom > .table > tbody > tr > th,
+.table-custom > .table > tfoot > tr > th,
+.table-custom > .table > thead > tr > td,
+.table-custom > .table > tbody > tr > td,
+.table-custom > .table > tfoot > tr > td {
   padding: 10px 2px !important;
   font-size: 12px;
   white-space: nowrap;
 }
-#table-reservation > .table > tbody button.btn {
+.table-custom > .table > tbody button.btn {
   padding: 0.25rem 0.75rem;
   font-size: 12px;
 }
-#table-reservation > .table > tbody > tr > td {
+.table-custom > .table > tbody > tr > td {
   border-bottom: 1px solid #ccc;
 }
 .radio-button-wrap {

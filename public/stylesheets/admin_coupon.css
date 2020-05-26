@@ -1,0 +1,9 @@
+table.table[data-role="table"] tbody tr td {
+  padding: 0.25rem;
+  height: 35px;
+}
+table.table[data-role="table"] tbody tr td button {
+  height: 30px;
+  line-height: 30px;
+  padding: 0 1rem;
+}

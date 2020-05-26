@@ -1,0 +1,88 @@
+extends admin_layout
+block public_css
+  link(href='/public_css/admin_coupon.css', rel='stylesheet')
+block content
+  .content
+    .row
+      .col-md-6
+        .card
+          .card-header
+            h4.card-title 쿠폰관리
+          .card-body
+            table.table#table-coupon(data-role='table')
+              colgroup
+                col(width=200 title='cp_name')
+                col(width=100 title='cp_point')
+                col(width='auto')
+                col(width=60)
+              thead
+                th 쿠폰명
+                th 포인트
+                th 설명
+                th
+              tbody
+                each item in coupon
+                  tr
+                    td #{item.cp_name}
+                    td #{item.cp_point}
+                    td #{item.cp_description}
+                    td
+                      button.btn.btn-danger.btn-neutral(data-role='cp-delete', data-id=item._id) 
+                        i.nc-icon.nc-simple-remove
+                tr
+                  td
+                    input.form-control.m-0(type='text', name='cp_name')
+                  td
+                    input.form-control.m-0(type='number', name='cp_point')
+                  td
+                    input.form-control.m-0(type='text', name='cp_description')
+                  td
+                    button.btn.btn-primary(name='btnCreateCp') 쿠폰생성
+    .row
+      .col-md-12
+        .card
+          .card-header
+            h4.card-title 쿠폰 발행 리스트
+            button.btn.btn-primary(data-toggle='modal', data-target='#modalCoupon') 쿠폰발행
+          .card-body
+            table.table.text-center
+              colgroup
+                col(width='30')
+                col(width='200')
+                col(width='200')
+                col(width='200')
+                col(width='200')
+                col(width='50')
+              thead
+                th #
+                th 회원명
+                th 이메일(ID)
+                th 발행 쿠폰
+                th 상태
+                th 
+              tbody
+                each item, idx in published_list
+                  tr
+                    td #{idx + 1}
+                    td #{item.user_info.user_name}
+                    td #{item.user_info.user_id}
+                    td #{item.coupon_info.cp_name}
+                    - var status = ''
+                    case item.status
+                      when 1
+                        - status = '발행';
+                      when 2
+                        - status = '사용완료';
+                      when 3
+                        - status = '유효기간 만료';
+                      when 4
+                        - status = '발행취소';
+                    td #{status}
+                    td
+                      button.btn.btn-danger.btn-neutral.m-0.p-0
+                        i.nc-icon.nc-simple-remove
+  include modals/coupon
+block append_js
+  script(src='/public_js/admin_coupon.js')
+  script.
+    console.log('list : ', !{JSON.stringify(published_list)})

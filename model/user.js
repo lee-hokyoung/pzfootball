@@ -34,6 +34,14 @@ const UserSchema = new Schema({
     },
   ],
   favorite_ground: [{ type: mongoose.Schema.Types.ObjectId, ref: "Ground" }],
+  coupon: [{ type: mongoose.Schema.Types.ObjectId, ref: "Coupon" }],
+  // [
+  //   {
+  //     id: { type: mongoose.Schema.Types.ObjectId, ref: "Coupon" },
+  //     status: { type: Number, default: 1 },
+  //     created_at: { type: Date, default: Date.now },
+  //   },
+  // ],
   reqRefundPoint: { type: Number, default: 0 },
   created_at: { type: Date, default: Date.now },
 });

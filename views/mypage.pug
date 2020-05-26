@@ -354,7 +354,7 @@ block content
                       .point-wrap.d-flex
                         p #{new Intl.NumberFormat('ko').format(user.reqRefundPoint)}
               hr.mb-0
-              #table-reservation
+              #table-reservation.table-custom
                 table.table
                   colgroup
                     col(title='날짜')
@@ -383,75 +383,101 @@ block content
                     else
                       tr
                         td(colspan='4') 일정이 없습니다.
-      .row.d-none
-        .col-md-6
-          .card
-            .card-header
-              label.title ID
-              p #{user.user_id}
+          .card.profile-card
             .card-body
-              .form-group
-                label.title 이름
-                input.form-control(type='text', value=user.user_name, name='user_name')
-              .form-group
-                label.title 닉네임
-                input.form-control(type='text', value=user.user_nickname, name='user_nickname')
-              .from-group
-                label.title E-mail
-                input.form-control(type='text', value=user.user_email, name='user_email')
-            .card-footer
-              button.btn.btn-primary(type='button', onclick='fnSaveUserInfo()') 저장
-          .card
-            .card-header
-              .d-flex.justify-content-between
-                label.title 내 클럽
-                a.text-primary(href='/clubs/list') 전체보기
-            .card-body
-              if(myClub)
-                ul.list-group.list-group-flush.text-center
-                  li.list-group-item.list-group-item-primary
-                    .row
-                      .col-2 마크
-                      .col-7 클럽명
-                      .col-3 회원수
-                  li.list-group-item.list-group-item-action
-                    if(myClub.status === 1)
-                      a(href='/clubs/' + myClub._id)
-                        .row
-                          .col-2
-                            if(myClub.club_mark === "")
-                              img(src='/images/pz_logo.png', width='100%')
-                            else
-                              img(src=myClub.club_mark, width='100%')
-                          .col-7 !{myClub.club_name}
-                          .col-3 !{myClub.club_member.length} 명
-                    else if(myClub.status === 0)
-                      .row
-                        .col 승인 대기 중 
-              else if(waiting_club)
-                ul.list-group.list-group-flush.text-center
-                  li.list-group-item.list-group-item-primary
-                    .row
-                      .col-2 마크
-                      .col-7 클럽명
-                      .col-3 회원수
-                  li.list-group-item.list-group-item-action
-                    .row
-                      .col-12 승인 대기 중 
-              else
-                .row
-                  .col-8
-                    span 아직 가입한 클럽이 없습니다.
-                  .col-4
-                    a.btn.btn-sm.btn-link.text-primary(href='/clubs/list') 가입
-                    button.btn.btn-sm.btn-link.text-success(onclick='fnCreateClub()') 생성
-        .col-md-6
-          .card
-            .card-header
-              .d-flex.justify-content-between
-                label.title 내 경기 일정
-                //- a.text-info(href='#users/match/list') 더 보기
-            .card-body
+              h6.title.text-left 내 쿠폰함
+              .row
+                .col
+                  .form-group
+                    label.title.mt-3 보유 쿠폰
+              hr.m-0
+              #table-coupon.table-custom
+                table.table
+                  colgroup
+                    col(title='쿠폰명')
+                    col(title='point')
+                    col(title='발행일')
+                  thead.thead-light
+                    th 쿠폰명
+                    th 포인트
+                    th 발행일
+                  tbody
+                    each item in user.coupon_info
+                      tr
+                        td #{item.cp_name}
+                        td #{item.cp_point}
+                        - var cp_created = new Date(item.created_at).toLocaleString('ko')
+                        td #{cp_created.substr(0,10)}
+
+      //- .row.d-none
+      //-   .col-md-6
+      //-     .card
+      //-       .card-header
+      //-         label.title ID
+      //-         p #{user.user_id}
+      //-       .card-body
+      //-         .form-group
+      //-           label.title 이름
+      //-           input.form-control(type='text', value=user.user_name, name='user_name')
+      //-         .form-group
+      //-           label.title 닉네임
+      //-           input.form-control(type='text', value=user.user_nickname, name='user_nickname')
+      //-         .from-group
+      //-           label.title E-mail
+      //-           input.form-control(type='text', value=user.user_email, name='user_email')
+      //-       .card-footer
+      //-         button.btn.btn-primary(type='button', onclick='fnSaveUserInfo()') 저장
+      //-     .card
+      //-       .card-header
+      //-         .d-flex.justify-content-between
+      //-           label.title 내 클럽
+      //-           a.text-primary(href='/clubs/list') 전체보기
+      //-       .card-body
+      //-         if(myClub)
+      //-           ul.list-group.list-group-flush.text-center
+      //-             li.list-group-item.list-group-item-primary
+      //-               .row
+      //-                 .col-2 마크
+      //-                 .col-7 클럽명
+      //-                 .col-3 회원수
+      //-             li.list-group-item.list-group-item-action
+      //-               if(myClub.status === 1)
+      //-                 a(href='/clubs/' + myClub._id)
+      //-                   .row
+      //-                     .col-2
+      //-                       if(myClub.club_mark === "")
+      //-                         img(src='/images/pz_logo.png', width='100%')
+      //-                       else
+      //-                         img(src=myClub.club_mark, width='100%')
+      //-                     .col-7 !{myClub.club_name}
+      //-                     .col-3 !{myClub.club_member.length} 명
+      //-               else if(myClub.status === 0)
+      //-                 .row
+      //-                   .col 승인 대기 중 
+      //-         else if(waiting_club)
+      //-           ul.list-group.list-group-flush.text-center
+      //-             li.list-group-item.list-group-item-primary
+      //-               .row
+      //-                 .col-2 마크
+      //-                 .col-7 클럽명
+      //-                 .col-3 회원수
+      //-             li.list-group-item.list-group-item-action
+      //-               .row
+      //-                 .col-12 승인 대기 중 
+      //-         else
+      //-           .row
+      //-             .col-8
+      //-               span 아직 가입한 클럽이 없습니다.
+      //-             .col-4
+      //-               a.btn.btn-sm.btn-link.text-primary(href='/clubs/list') 가입
+      //-               button.btn.btn-sm.btn-link.text-success(onclick='fnCreateClub()') 생성
+      //-   .col-md-6
+      //-     .card
+      //-       .card-header
+      //-         .d-flex.justify-content-between
+      //-           label.title 내 경기 일정
+      //-           //- a.text-info(href='#users/match/list') 더 보기
+      //-       .card-body
             
         
   include modals/chargePoint

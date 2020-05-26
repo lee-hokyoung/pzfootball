@@ -1,0 +1,32 @@
+#modalCoupon.modal.fade(tabindex="-1" role="dialog" aria-labelledby="couponModalLabel" aria-hidden="true")
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h6 쿠폰발행
+      .modal-body.px-3
+        .form-group
+          label 적용할 쿠폰
+          select.form-control.py-2(name='coupon')
+            each item in coupon
+              option(value=item._id) #{item.cp_name}
+        .form-group
+          label 회원 검색
+          .input-group
+            input.form-control(type='text', name='search_user', placeholder='회원명 입력')
+            .input-group-append
+              button.btn.btn-primary.m-0(onclick='fnSearchUser()') 검색
+        table.table
+          colgroup
+            col(width='auto')
+            col(width=30)
+          thead
+            th 이름
+            th 
+          tbody(name='searchUserList')
+            //- tr
+            //-   td 이호경 (supereggsong@gmail.com)
+            //-   td
+            //-     button.btn.btn-primary.btn-neutral 선택
+      .modal-footer
+        button.btn.btn-primary(onclick='fnResetPw()') 확인
+        button.btn.btn-danger(data-dismiss='modal') 닫기

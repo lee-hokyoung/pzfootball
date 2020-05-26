@@ -129,13 +129,15 @@ $("#selectMember").on("change", function () {
   inpAfterPurchase.value = new Intl.NumberFormat().format(afterPurchase);
   // 결제 후 포인트 잔여여부
   if (afterPurchase >= 0) {
-    inpAfterPurchase.classList.remove("bg-danger");
-    inpAfterPurchase.classList.add("bg-success");
+    // inpAfterPurchase.classList.remove("bg-danger");
+    // inpAfterPurchase.classList.add("bg-success");
+    inpAfterPurchase.className = "form-control text-white bg-success";
     document.getElementById("confirmFooter").className = "";
     document.getElementById("requireFooter").className = "d-none";
   } else {
-    inpAfterPurchase.classList.remove("bg-success");
-    inpAfterPurchase.classList.add("bg-danger");
+    // inpAfterPurchase.classList.remove("bg-success");
+    // inpAfterPurchase.classList.add("bg-danger");
+    inpAfterPurchase.className = "form-control text-white bg-danger";
     document.getElementById("confirmFooter").className = "d-none";
     document.getElementById("requireFooter").className = "";
   }
@@ -273,13 +275,14 @@ document.querySelector('button[name="btnFavoriteGround"]').addEventListener("cli
   xhr.onreadystatechange = function () {
     if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
       let res = JSON.parse(this.response);
-      alert(res.message);
       if (res.code === 1) {
         if (isFavorite) {
           this_btn.dataset.toggle = "false";
         } else {
           this_btn.dataset.toggle = "true";
         }
+      } else {
+        alert(res.message);
       }
     }
   };

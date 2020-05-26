@@ -82,17 +82,22 @@ filter_labels.forEach(function (lb) {
 let btnFavorite = document.querySelector("button.btn-favorite");
 if (btnFavorite) {
   btnFavorite.addEventListener("click", function () {
+    if (this.dataset.id === "") {
+      alert("즐겨찾기로 등록된 구장이 없습니다.");
+      return false;
+    }
     let toggle = this.dataset.toggle;
     let regionBtns = document.querySelectorAll('button[name="region"]');
+    let regionEntire = document.querySelector('button[name="region"][data-value=""]');
     this.dataset.toggle = toggle === "false";
     if (this.dataset.toggle === "true") {
       regionBtns.forEach(function (btn) {
         btn.dataset.toggle = "false";
       });
-      document.querySelector('button[name="region"][data-value=""]').dataset.toggle = "true";
+      regionEntire.dataset.toggle = "true";
       fnMatchFilter();
     } else {
-      document.querySelector('button[name="region"][data-value=""]').click();
+      if (regionEntire.dataset.toggle === "false") regionEntire.click();
     }
   });
 }
@@ -243,7 +248,7 @@ function fnGenerateGroundList(res, currentSlide) {
       inner_div = document.createElement("div");
       inner_div.className = "text-left text-dark";
       let small = document.createElement("small");
-      small.className = "pl-2 tagList";
+      small.className = "pl-3 tagList";
       //  + (game.sex === "1" ? " male text-primary" : game.sex === "2" ? " female text-danger" : " mix");
       small.innerText = game.sex === "1" ? "남성" : game.sex === "2" ? "여성" : "혼성";
       small.dataset.gender = game.sex;

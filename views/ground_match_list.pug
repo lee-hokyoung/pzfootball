@@ -2,7 +2,7 @@ extends layout
 block append_css
   link(rel="stylesheet", href="/public_css/main_screen.css")
 block content
-  .container
+  .container.p-0.mb-5
     .detail-slider
       -var ground_images = ground_info.ground_images
       if(ground_images.ground_images_1)
@@ -50,7 +50,7 @@ block content
                                     | 혼성
                             
                             if(match.ladder!==1)
-                              .grade_icon.ml-2(data-grade=match.match_grade, data-title='실력')
+                              .grade_icon.text-center.ml-2(data-grade=match.match_grade, data-title='실력')
                                 case match.match_grade
                                   when '1'
                                     | 고급

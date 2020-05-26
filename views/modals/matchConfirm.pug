@@ -34,13 +34,15 @@
                 .col-9 #{user_info.user.user_id}
             #apply_member_list
 
-      #confirmFooter.modal-footer
-        button.btn.btn-primary(onclick='fnConfirmMatch()') 확인
-        button.btn.btn-danger(data-dismiss='modal') 취소
-      #requireFooter.modal-footer
-        p 포인트가 부족합니다. 충전하시겠습니까?
-        button.btn.btn-primary(onclick='fnChargePoint()') 확인
-        button.btn.btn-danger(data-dismiss='modal') 취소
+      #confirmFooter
+        .modal-footer
+          button.btn.btn-primary(onclick='fnConfirmMatch()') 확인
+          button.btn.btn-danger(data-dismiss='modal') 취소
+      #requireFooter
+        p.text-center 포인트가 부족합니다. 충전하시겠습니까?
+        .modal-footer
+          button.btn.btn-primary(data-toggle='modal', data-target='#modalChargePoint') 확인
+          button.btn.btn-danger(data-dismiss='modal') 취소
 #searchResultModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='searchResultModalLabel', aria-hidden='true')
   .modal-dialog
     .modal-content

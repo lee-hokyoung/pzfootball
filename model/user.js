@@ -34,7 +34,7 @@ const UserSchema = new Schema({
     },
   ],
   favorite_ground: [{ type: mongoose.Schema.Types.ObjectId, ref: "Ground" }],
-  coupon: [{ type: mongoose.Schema.Types.ObjectId, ref: "Coupon" }],
+  // coupon: [{ type: mongoose.Schema.Types.ObjectId, ref: "Coupon" }],
   // [
   //   {
   //     id: { type: mongoose.Schema.Types.ObjectId, ref: "Coupon" },

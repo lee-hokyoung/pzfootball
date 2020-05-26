@@ -8,7 +8,7 @@ const Club = require("../model/club");
 const Ground = require("../model/ground");
 const Mail = require("../model/mail");
 const Region = require("../model/region");
-const Coupon = require("../model/coupon");
+const CouponHistory = require("../model/coupon_history");
 const SessionStore = require("../model/sessionStore");
 const nodemailer = require("nodemailer");
 const mongoose = require("mongoose");
@@ -224,29 +224,19 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
 
   let user_info = req.session.passport;
   let user_id = user_info.user.user_id;
-  let user_obj = await User.aggregate([
-    { $match: { user_id: user_id } },
-    {
-      $lookup: {
-        from: "coupon",
-        let: { local_id: "$_id", cp_created: "$coupon.created_at" },
-        pipeline: [
-          {
-            $match: {
-              $expr: {
-                $eq: ["$$local_id", mongoose.Types.ObjectId(user_info.user._id)],
-              },
-            },
-          },
-          { $addFields: { cp_created: "$$cp_created" } },
-        ],
-        // localField: "coupon.id",
-        // foreignField: "_id",
-        as: "coupon_info",
-      },
-    },
-  ]);
-  let user = user_obj[0];
+  let user = await User.findOne({ user_id: user_id });
+  // [
+  //   { $match: { user_id: user_id } },
+  //   {
+  //     $lookup: {
+  //       from: "coupon",
+  //       localField: "coupon._id",
+  //       foreignField: "_id",
+  //       as: "coupon_info",
+  //     },
+  //   },
+  // ]);
+  // let user = user_obj[0];
   //  팀워크 점수 계산
   let manner_info = await Match.aggregate([
     {
@@ -379,6 +369,19 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
   let myClub = await Club.findOne({
     "club_member._id": mongoose.Types.ObjectId(user_info.user._id),
   });
+  //  쿠폰 정보
+  let coupon_list = await CouponHistory.aggregate([
+    { $match: { user_id: mongoose.Types.ObjectId(user_info.user._id) } },
+    {
+      $lookup: {
+        from: "coupon",
+        localField: "coupon_id",
+        foreignField: "_id",
+        as: "coupon_info",
+      },
+    },
+    { $unwind: "$coupon_info" },
+  ]);
   res.render("mypage", {
     title: "내 정보",
     user_info: user_info,
@@ -390,6 +393,7 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
     manner_info: manner_info,
     mvp_info: mvp_info,
     favorite_ground: favorite_ground,
+    coupon_list: coupon_list,
   });
 });
 //  내 정보 수정

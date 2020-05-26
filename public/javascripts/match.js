@@ -65,7 +65,9 @@ function fnGenerateRow(item) {
   let match_type = item.querySelector('input[name="match_type"]:checked');
   let ladder = item.querySelector('input[name="ladder"]');
   let grade_group = item.querySelector('.grade-group[data-view="true"]');
-  let match_grade = item.querySelector('.grade-group[data-view="true"] input[name="match_grade"]:checked');
+  let match_grade = item.querySelector(
+    '.grade-group[data-view="true"] input[name="match_grade"]:checked'
+  );
   let grade_score = item.querySelector('.grade-group[data-view="true"] input[name="grade-score"]');
   // let match_grade = item.querySelector('input[name="match_grade"]:checked');
   let sex = item.querySelector('input[name="sex"]:checked');
@@ -89,11 +91,17 @@ function fnGenerateRow(item) {
     alert("경기 타입을 선택해 주세요");
     return false;
   }
-  if (grade_group.getAttribute("name") === "grade" && (match_grade === null || match_grade.value === "")) {
+  if (
+    grade_group.getAttribute("name") === "grade" &&
+    (match_grade === null || match_grade.value === "")
+  ) {
     alert("실력을 선택해 주세요");
     return false;
   }
-  if (grade_group.getAttribute("name") === "score" && (grade_score === null || grade_score.value === "")) {
+  if (
+    grade_group.getAttribute("name") === "score" &&
+    (grade_score === null || grade_score.value === "")
+  ) {
     alert("승점을 입력해 주세요");
     return false;
   }
@@ -140,7 +148,6 @@ function fnGenerateRow(item) {
       return false;
     }
   };
-  console.log("for data : ", formData);
   xhr.send(JSON.stringify(formData));
 }
 
@@ -615,10 +622,14 @@ function fnUpdate(_id) {
     let target_row = document.querySelector('.row[data-id="' + _id + '"]');
     let grade_group = target_row.querySelector('.grade-group[data-view="true"]');
     updateForm["match_time"] = target_row.querySelector('input[name="match_time"]').value;
-    updateForm["match_type"] = target_row.querySelector('input[name="match_type_' + _id + '"]:checked').value;
-    updateForm["ladder"] = target_row.querySelector('input[name="ladder"]').checked ? 1 : 0;
+    updateForm["match_type"] = target_row.querySelector(
+      'input[name="match_type_' + _id + '"]:checked'
+    ).value;
+    // updateForm["ladder"] = target_row.querySelector('input[name="ladder"]').checked ? 1 : 0;
     if (grade_group.getAttribute("name") === "grade") {
-      updateForm["match_grade"] = target_row.querySelector('input[name="match_grade_' + _id + '"]:checked').value;
+      updateForm["match_grade"] = target_row.querySelector(
+        'input[name="match_grade_' + _id + '"]:checked'
+      ).value;
     }
     if (grade_group.getAttribute("name") === "score") {
       updateForm["match_score"] = target_row.querySelector('input[name="grade-score"]').value;
@@ -692,11 +703,13 @@ function fnDeleteRow(id) {
 }
 
 //  승점제 경기 체크시 일반/실력 활성화
-document.querySelector('input.form-check-input[name="ladder"]').addEventListener("click", function () {
-  let toggle = this.dataset.toggle === "false";
-  this.dataset.toggle = toggle;
-  document.querySelectorAll(".grade-group").forEach(function (div) {
-    let view = div.dataset.view === "false";
-    div.dataset.view = view;
+document
+  .querySelector('input.form-check-input[name="ladder"]')
+  .addEventListener("click", function () {
+    let toggle = this.dataset.toggle === "false";
+    this.dataset.toggle = toggle;
+    document.querySelectorAll(".grade-group").forEach(function (div) {
+      let view = div.dataset.view === "false";
+      div.dataset.view = view;
+    });
   });
-});

@@ -381,6 +381,7 @@ span.fileinput-exists i.nc-icon {
   padding: 10px 2px !important;
   font-size: 12px;
   white-space: nowrap;
+  text-align: center;
 }
 .table-custom > .table > tbody button.btn {
   padding: 0.25rem 0.75rem;

@@ -74,10 +74,10 @@ function fnGetUserPoint() {
       let inpAfterPurchase = document.getElementById("afterPurchase");
       inpAfterPurchase.value = new Intl.NumberFormat().format(after_purchase);
       if (after_purchase > 0) {
-        document.getElementById("requireFooter").classList.add("d-none");
+        document.getElementById("requireFooter").className = "d-none";
         $("#afterPurchase").addClass("bg-success");
       } else {
-        document.getElementById("confirmFooter").classList.add("d-none");
+        document.getElementById("confirmFooter").className = "d-none";
         $("#afterPurchase").addClass("bg-danger");
       }
       $("#modalMatchConfirm").modal("show");
@@ -131,13 +131,13 @@ $("#selectMember").on("change", function () {
   if (afterPurchase >= 0) {
     inpAfterPurchase.classList.remove("bg-danger");
     inpAfterPurchase.classList.add("bg-success");
-    document.getElementById("confirmFooter").className = "modal-footer";
-    document.getElementById("requireFooter").className = "modal-footer d-none";
+    document.getElementById("confirmFooter").className = "";
+    document.getElementById("requireFooter").className = "d-none";
   } else {
     inpAfterPurchase.classList.remove("bg-success");
     inpAfterPurchase.classList.add("bg-danger");
-    document.getElementById("confirmFooter").className = "modal-footer d-none";
-    document.getElementById("requireFooter").className = "modal-footer";
+    document.getElementById("confirmFooter").className = "d-none";
+    document.getElementById("requireFooter").className = "";
   }
   //  참여인원 칸 늘리기
   let apply_member_info = document.querySelector("#apply_member_info");
@@ -250,57 +250,6 @@ $("#selectMember").on("change", function () {
     }
   }
 });
-// 포인트 충전 모달창 띄우기
-function fnChargePoint() {
-  $("#modalMatchConfirm").modal("hide");
-  let xhr = new XMLHttpRequest();
-  xhr.open("GET", "/users/point", true);
-  xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function () {
-    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-      let res = JSON.parse(this.response);
-      let user_point = res.point || 0;
-      let beforeCharge = document.getElementById("beforeCharge");
-      beforeCharge.value = new Intl.NumberFormat().format(user_point);
-      let inpAfterCharge = document.getElementById("afterCharge");
-      inpAfterCharge.value = new Intl.NumberFormat().format(
-        Number(user_point) + Number(document.getElementById("selectPoint").value)
-      );
-      $("#modalChargePoint").modal("show");
-    }
-  };
-  xhr.send();
-}
-// 충전할 금액 선택 이벤트
-$("#selectPoint").on("change", function () {
-  let selectedPoint = Number($(this).val());
-  let beforeCharge = Number(
-    document.getElementById("beforeCharge").value.replace(/[^0-9.-]+/g, "")
-  );
-  let inpAfterCharge = document.getElementById("afterCharge");
-  inpAfterCharge.value = new Intl.NumberFormat().format(selectedPoint + beforeCharge);
-});
-// 포인트 최종 충전
-function fnConfirmChargePoint() {
-  let formData = {};
-  formData["point"] = document.getElementById("selectPoint").value;
-  let xhr = new XMLHttpRequest();
-  xhr.open("POST", "/users/point/charge");
-  xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function () {
-    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-      let res = JSON.parse(this.response);
-      if (res.code === 1) {
-        alert(res.message);
-        location.reload();
-      } else {
-        alert(res.message);
-      }
-    }
-  };
-  xhr.send(JSON.stringify(formData));
-}
-
 //  카카오 지도 보기
 let map_info = match_info.ground_info.mapInfo;
 let mapContainer = document.querySelector("#kakao_map");

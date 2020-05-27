@@ -157,7 +157,6 @@ router.post("/apply", async (req, res) => {
   );
 
   // 포인트 내역 기록
-  console.log("coupon info : ", coupon_info);
   await PointHistory.create({
     user_id: mongoose.Types.ObjectId(user._id),
     coupon_id: coupon_info

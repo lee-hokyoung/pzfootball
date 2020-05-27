@@ -5,7 +5,7 @@ const fnMatchFilter = function () {
   let selectedBtns = document.querySelectorAll('button[name][data-toggle="true"]');
   let query = {};
   //  구장 상세 설정 필터링
-  selectedBtns.forEach((v) => {
+  selectedBtns.forEach(function (v) {
     if (v.dataset.value !== "") {
       if (query[v.name]) {
         query[v.name].push(v.dataset.value);

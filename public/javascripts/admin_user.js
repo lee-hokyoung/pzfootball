@@ -9,15 +9,16 @@ document.querySelectorAll('a[data-role="pointHistory"]').forEach(function (a) {
       if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
         let res = JSON.parse(this.response);
         if (res.code === 1) {
-          let point_history = res.result.point_history;
+          let point_history = res.result;
           let tbody = document.querySelector("#pointHistoryModal tbody");
           tbody.innerHTML = "";
           point_history.forEach(function (v, idx) {
             let tr = document.createElement("tr");
+            // no
             let td = document.createElement("td");
             td.innerText = idx + 1;
             tr.appendChild(td);
-
+            // 충전 방식
             td = document.createElement("td");
             td.innerText =
               v.chargeType === "account"
@@ -30,19 +31,31 @@ document.querySelectorAll('a[data-role="pointHistory"]').forEach(function (a) {
                 ? "카카오페이"
                 : "";
             tr.appendChild(td);
-
+            // 충전 포인트
             td = document.createElement("td");
             td.innerText = Intl.NumberFormat().format(v.chargePoint);
             tr.appendChild(td);
-
+            // 사용 포인트
             td = document.createElement("td");
             td.innerText = Intl.NumberFormat().format(v.usePoint || 0);
             tr.appendChild(td);
-
+            // 사용 쿠폰
+            td = document.createElement("td");
+            if (v.coupon_info.length > 0) {
+              td.innerText =
+                v.coupon_info[0].cp_name +
+                " (" +
+                Intl.NumberFormat().format(v.coupon_info[0].cp_point) +
+                ")";
+            } else {
+              td.innerText = 0;
+            }
+            tr.appendChild(td);
+            // 환불 포인트
             td = document.createElement("td");
             td.innerText = Intl.NumberFormat().format(v.refundPoint || 0);
             tr.appendChild(td);
-
+            // 시간
             td = document.createElement("td");
             let date = new Date(v.created_at);
             td.innerText = date.toLocaleString("kr");
@@ -76,8 +89,7 @@ function fnDeleteUser(user_id) {
 //  환불요청
 document.querySelectorAll('a[data-role="pointRefund"]').forEach(function (a) {
   a.addEventListener("click", function () {
-    document.querySelector('input[name="pointRefund"]').value =
-      a.dataset.value || 0;
+    document.querySelector('input[name="pointRefund"]').value = a.dataset.value || 0;
     document.querySelector('input[name="refund_user_id"]').value = a.dataset.id;
     $("#refundPointModal").modal("show");
   });
@@ -97,9 +109,7 @@ function refundPoint() {
         if (res.code === 1) location.reload();
       }
     };
-    xhr.send(
-      JSON.stringify({ user_id: user_id, refundPoint: refundPoint.value })
-    );
+    xhr.send(JSON.stringify({ user_id: user_id, refundPoint: refundPoint.value }));
   } else {
     alert("포인트를 입력하세요");
     return false;
@@ -144,26 +154,19 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   let table = $("#datatable").DataTable();
   //  소속 필터링
-  document
-    .querySelector('select[name="depart"]')
-    .addEventListener("change", function () {
-      var regExSearch = "^" + this.value + "$";
-      if (this.value === "") regExSearch = this.value;
-      table.column(eCol.depart).search(regExSearch, true, false, true).draw();
-    });
+  document.querySelector('select[name="depart"]').addEventListener("change", function () {
+    var regExSearch = "^" + this.value + "$";
+    if (this.value === "") regExSearch = this.value;
+    table.column(eCol.depart).search(regExSearch, true, false, true).draw();
+  });
   //  직책 필터링(주장, 공동주장, 팀원)
-  document
-    .querySelector('select[name="role"]')
-    .addEventListener("change", function () {
-      var regExSearch = "^" + this.value + "$";
-      if (this.value === "") regExSearch = this.value;
-      table.column(eCol.role).search(regExSearch, true, false, true).draw();
-    });
-  document
-    .querySelector('select[name="useNumber"]')
-    .addEventListener("change", function () {
-      if (this.value !== "")
-        location.href = "/admin/user/list?ladder=" + this.value;
-      else location.href = "/admin/user/list";
-    });
+  document.querySelector('select[name="role"]').addEventListener("change", function () {
+    var regExSearch = "^" + this.value + "$";
+    if (this.value === "") regExSearch = this.value;
+    table.column(eCol.role).search(regExSearch, true, false, true).draw();
+  });
+  document.querySelector('select[name="useNumber"]').addEventListener("change", function () {
+    if (this.value !== "") location.href = "/admin/user/list?ladder=" + this.value;
+    else location.href = "/admin/user/list";
+  });
 });

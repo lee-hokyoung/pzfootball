@@ -8,6 +8,7 @@ const Club = require("../model/club");
 const Ground = require("../model/ground");
 const Mail = require("../model/mail");
 const Region = require("../model/region");
+const PointHistory = require("../model/point_history");
 const CouponHistory = require("../model/coupon_history");
 const SessionStore = require("../model/sessionStore");
 const nodemailer = require("nodemailer");
@@ -183,18 +184,23 @@ router.post("/point/charge", middle.isSignedIn, async (req, res) => {
     let current_user_point = Number(user_info.point || 0);
     let request_point = Number(req.body.point);
     let after_charge_point = current_user_point + request_point;
-    //  누적 포인트
-    await User.updateOne(
-      { user_id: req.session.passport.user.user_id },
-      {
-        $push: {
-          point_history: {
-            chargePoint: request_point,
-            chargeType: req.body.chargeType,
-          },
-        },
-      }
-    );
+    //  포인트 내역 기록
+    await PointHistory.create({
+      user_id: mongoose.Types.ObjectId(req.session.passport.user._id),
+      chargePoint: request_point,
+      chargeType: req.body.chargeType,
+    });
+    // await User.updateOne(
+    //   { user_id: req.session.passport.user.user_id },
+    //   {
+    //     $push: {
+    //       point_history: {
+    //         chargePoint: request_point,
+    //         chargeType: req.body.chargeType,
+    //       },
+    //     },
+    //   }
+    // );
     //  포인트 충전
     let result = await User.updateOne(
       {

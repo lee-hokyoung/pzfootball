@@ -4,6 +4,7 @@ const middle = require("../routes/middle");
 const Match = require("../model/match");
 const User = require("../model/user");
 const CouponHistory = require("../model/coupon_history");
+const PointHistory = require("../model/point_history");
 const mongoose = require("mongoose");
 
 /* GET home page. */
@@ -139,27 +140,40 @@ router.post("/apply", async (req, res) => {
   }
 
   // 포인트 차감
-  let usePoint = match_info.match_price * req.body.member_cnt;
-  let remain_point = user.point + coupon_point - usePoint;
+  let usePoint = match_info.match_price * req.body.member_cnt - coupon_point;
+  let remain_point = user.point - usePoint;
   await User.updateOne(
     { _id: mongoose.Types.ObjectId(user._id) },
     {
       $set: { point: remain_point },
-      $push: {
-        point_history: {
-          usePoint: usePoint,
-          useCoupon: mongoose.Types.ObjectId(coupon_id),
-          match_id: mongoose.Types.ObjectId(match_id),
-        },
-      },
+      // $push: {
+      //   point_history: {
+      //     usePoint: usePoint,
+      //     match_id: mongoose.Types.ObjectId(match_id),
+      //     useCoupon: coupon_id ? mongoose.Types.ObjectId(coupon_id) : new mongoose.Types.ObjectId(),
+      //   },
+      // },
     }
   );
 
+  // 포인트 내역 기록
+  console.log("coupon info : ", coupon_info);
+  await PointHistory.create({
+    user_id: mongoose.Types.ObjectId(user._id),
+    coupon_id: coupon_info
+      ? mongoose.Types.ObjectId(coupon_info[0].coupon._id)
+      : new mongoose.Types.ObjectId(),
+    match_id: mongoose.Types.ObjectId(match_id),
+    usePoint: usePoint,
+  });
+
   // 쿠폰 상태 변경
-  await CouponHistory.updateOne(
-    { _id: mongoose.Types.ObjectId(coupon_id) },
-    { $set: { status: 2 } }
-  );
+  if (coupon_info) {
+    await CouponHistory.updateOne(
+      { _id: mongoose.Types.ObjectId(coupon_id) },
+      { $set: { status: 2 } }
+    );
+  }
   return res.json({
     code: 1,
     result: match_result,

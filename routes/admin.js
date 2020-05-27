@@ -4,6 +4,7 @@ const passport = require("passport");
 const middle = require("../routes/middle");
 const mongoose = require("mongoose");
 const User = require("../model/user");
+const PointHistory = require("../model/point_history");
 
 router.get("/", middle.isAdmin, async (req, res) => {
   let user = req.session.passport.user;
@@ -64,7 +65,7 @@ router.get("/user/list", middle.isAdmin, async (req, res) => {
           phone2: 1,
           point: 1,
           reqRefundPoint: 1,
-          point_history: 1,
+          // point_history: 1,
           manner: 1,
           created_at: 1,
         },
@@ -144,6 +145,14 @@ router.get("/user/list", middle.isAdmin, async (req, res) => {
         },
       },
       {
+        $lookup: {
+          from: "pointHistory",
+          localField: "_id",
+          foreignField: "user_id",
+          as: "point_history",
+        },
+      },
+      {
         $group: {
           _id: "$_id",
           user_id: { $first: "$user_id" },
@@ -191,10 +200,36 @@ router.delete("/user/delete/:id", middle.isAdmin, async (req, res) => {
 router.get("/user/pointHistory/:user_id", middle.isAdmin, async (req, res) => {
   try {
     let user_id = req.params.user_id;
-    let result = await User.findOne(
-      { _id: mongoose.Types.ObjectId(user_id) },
-      { point_history: 1 }
-    );
+    // let result = await User.aggregate([
+    //   { $match: { _id: mongoose.Types.ObjectId(user_id) } },
+    //   { $project: { point_history: 1 } },
+    //   {
+    //     $lookup: {
+    //       from: "couponHistory",
+    //       localField: "point_history.useCoupon",
+    //       foreignField: "_id",
+    //       as: "coupon_info",
+    //     },
+    //   },
+    //   // {
+    //   //   $replaceRoot: {
+    //   //     newRoot: { $mergeObjects: [{ $arrayElemAt: ["$coupon_info", 0] }, "$$ROOT"] },
+    //   //   },
+    //   // },
+    //   { $unwind: { path: "$coupon_info", preserveNullAndEmptyArrays: true } },
+    // ]);
+    let result = await PointHistory.aggregate([
+      { $match: { user_id: mongoose.Types.ObjectId(user_id) } },
+      {
+        $lookup: {
+          from: "coupon",
+          localField: "coupon_id",
+          foreignField: "_id",
+          as: "coupon_info",
+        },
+      },
+      { $unwind: { path: "$coupoin_info", preserveNullAndEmptyArrays: true } },
+    ]);
     res.json({ code: 1, result: result });
   } catch (err) {
     res.json({ code: 0, message: err.message });

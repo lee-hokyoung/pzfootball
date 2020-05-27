@@ -118,9 +118,29 @@ router.post("/apply", async (req, res) => {
     },
     { $push: { apply_member: { $each: apply_list } } }
   );
+  // 쿠폰 사용여부 확인
+  let coupon_id = req.body.user_coupon,
+    coupon_info,
+    coupon_point = 0;
+  if (coupon_id) {
+    coupon_info = await CouponHistory.aggregate([
+      { $match: { _id: mongoose.Types.ObjectId(coupon_id), status: 1 } },
+      {
+        $lookup: {
+          from: "coupon",
+          localField: "coupon_id",
+          foreignField: "_id",
+          as: "coupon",
+        },
+      },
+      { $unwind: "$coupon" },
+    ]);
+    coupon_point = coupon_info[0].coupon.cp_point;
+  }
+
   // 포인트 차감
   let usePoint = match_info.match_price * req.body.member_cnt;
-  let remain_point = user.point - usePoint;
+  let remain_point = user.point + coupon_point - usePoint;
   await User.updateOne(
     { _id: mongoose.Types.ObjectId(user._id) },
     {
@@ -128,10 +148,17 @@ router.post("/apply", async (req, res) => {
       $push: {
         point_history: {
           usePoint: usePoint,
+          useCoupon: mongoose.Types.ObjectId(coupon_id),
           match_id: mongoose.Types.ObjectId(match_id),
         },
       },
     }
+  );
+
+  // 쿠폰 상태 변경
+  await CouponHistory.updateOne(
+    { _id: mongoose.Types.ObjectId(coupon_id) },
+    { $set: { status: 2 } }
   );
   return res.json({
     code: 1,

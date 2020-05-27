@@ -73,7 +73,7 @@ function fnGetUserPoint() {
       let after_purchase = user_point - match_price;
       let inpAfterPurchase = document.getElementById("afterPurchase");
       inpAfterPurchase.value = new Intl.NumberFormat().format(after_purchase);
-      if (after_purchase > 0) {
+      if (after_purchase >= 0) {
         document.getElementById("requireFooter").className = "d-none";
         $("#afterPurchase").addClass("bg-success");
       } else {
@@ -91,12 +91,16 @@ function fnConfirmMatch() {
   let match_id = match_info._id;
   let member_cnt = $("#selectMember").val();
   let apply_member_list = document.querySelector("#modalMatchConfirm ul").dataset.id;
-  console.log("apply member list : ", apply_member_list);
-  console.log("member cnt ", member_cnt);
   if (parseInt(member_cnt) !== parseInt(apply_member_list.split(",").length)) {
     alert("신청 인원을 모두 입력해주세요");
     return false;
   }
+  //  쿠폰 사용 여부 확인
+  let user_coupon = document.querySelector('select[name="user_coupon"]');
+  if (user_coupon) {
+    formData["user_coupon"] = user_coupon.value;
+  }
+
   formData["match_id"] = match_id;
   formData["member_cnt"] = member_cnt;
   formData["apply_member_list"] = apply_member_list;
@@ -114,6 +118,7 @@ function fnConfirmMatch() {
       }
     }
   };
+  console.log("form data : ", formData);
   xhr.send(JSON.stringify(formData));
 }
 //  쿠폰 선택 이벤트 (결제 후 포인트 계산)
@@ -131,6 +136,7 @@ const fnSetPoint = function () {
   let afterPurchase = user_point - match_price;
   let inpAfterPurchase = document.getElementById("afterPurchase");
   inpAfterPurchase.value = new Intl.NumberFormat().format(afterPurchase);
+  console.log("afterPurchase : ", afterPurchase);
   // 결제 후 포인트 잔여여부
   if (afterPurchase >= 0) {
     inpAfterPurchase.className = "form-control text-white bg-success";

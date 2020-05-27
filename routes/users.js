@@ -371,7 +371,7 @@ router.get("/mypage", middle.isSignedIn, async (req, res) => {
   });
   //  쿠폰 정보
   let coupon_list = await CouponHistory.aggregate([
-    { $match: { user_id: mongoose.Types.ObjectId(user_info.user._id) } },
+    { $match: { user_id: mongoose.Types.ObjectId(user_info.user._id), status: 1 } },
     {
       $lookup: {
         from: "coupon",

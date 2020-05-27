@@ -29,6 +29,7 @@ const UserSchema = new Schema({
       chargeType: String,
       usePoint: Number,
       refundPoint: Number,
+      useCoupon: { type: mongoose.Schema.Types.ObjectId, ref: "CouponHistory" },
       match_id: { type: mongoose.Schema.Types.ObjectId, ref: "Match" },
       created_at: { type: Date, default: Date.now },
     },

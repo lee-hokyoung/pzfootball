@@ -24,6 +24,7 @@ html
 
     link(rel='stylesheet', href='/public_css/style.css')
     link(rel='stylesheet', href='/public_css/sidebar.css')
+    link(rel='stylesheet', href='/public_css/mobile.css')
     // font style
     link(rel="stylesheet", href="/public_css/custom_fonts.css")
     block append_css
@@ -72,7 +73,7 @@ html
 
       //- #content.container-fluid.pz_bg
       input#isLoggedIn(type='hidden', data-isLogin=(user_info?'true':'false'))
-      .container
+      .container.px-0
         .d-flex.justify-content-between.px-3
           //- img.py-2(src='/images/pz_logo.png', style='cursor:pointer; z-index:10; width:70px', onclick='location.href="/"', alt='퍼즐풋볼 메인 로고')
           a.py-3.font-weight-bold(href='/') PZ SPORT

@@ -77,6 +77,9 @@ button:focus {
 .nav-button-wrap a {
   color: black;
 }
+#sidebarCollapse {
+  margin-right: -1rem;
+}
 /*.pz_bg:before{*/
 /*content:'';*/
 /*position:absolute;*/
@@ -556,6 +559,7 @@ select.form-control:not([size]):not([multiple]),
 }
 #beforeJoinModal .modal-dialog {
   max-width: 300px;
+  margin: auto;
 }
 #beforeJoinModal .modal-header span,
 .rainbow_font_wrap span {
@@ -681,30 +685,5 @@ select.form-control:not([size]):not([multiple]),
   }
   .m-row .col {
     padding: 0 15px;
-  }
-}
-@media (max-width: 575px) {
-  .mobile-menu-wrap {
-    flex-direction: column;
-  }
-  .slick-prev,
-  .slick-next,
-  .slick-dots {
-    display: none !important;
-  }
-  .form-group label {
-    font-size: 0.7rem;
-    margin-bottom: 0.1rem;
-  }
-  .main-tab-wrap a {
-    margin: 0 0.1rem;
-    padding: 0.5rem 0.1rem;
-  }
-  .main-tab-wrap img {
-    display: none;
-  }
-  .footer-img-wrap {
-    background-size: cover;
-    height: 50px;
   }
 }

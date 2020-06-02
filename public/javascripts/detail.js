@@ -17,11 +17,10 @@ let footerImg = document.querySelector(".footer-img-wrap");
 window.onscroll = function () {
   if (window.pageYOffset > scrollTarget.offset().top + scrollTarget.height()) {
     bottomBtnWrap.classList.add("position-fixed");
-    if (
-      window.innerHeight + window.scrollY >=
-      document.body.offsetHeight - footer.scrollHeight - footerImg.scrollHeight
-    ) {
-      let scroll = window.innerHeight + window.scrollY;
+    let clientY = window.innerHeight + document.documentElement.scrollTop; // window.scrollY;
+    let offsetHeight = document.body.offsetHeight - footer.scrollHeight - footerImg.scrollHeight;
+    if (clientY >= offsetHeight) {
+      let scroll = window.innerHeight + document.documentElement.scrollTop; // window.scrollY;
       let offHeight = document.body.offsetHeight - footer.scrollHeight - footerImg.scrollHeight;
       bottomBtnWrap.style.bottom = scroll - offHeight + "px";
     } else {
@@ -286,34 +285,33 @@ let marker = new kakao.maps.Marker({
 });
 marker.setMap(map);
 //  즐겨찾기 구장 추가 버튼 클릭 이벤트
-document.querySelector('button[name="btnFavoriteGround"]').addEventListener("click", function () {
-  let this_btn = this;
-  let isFavorite = this.dataset.toggle === "true";
-  let xhr = new XMLHttpRequest();
-  xhr.open("PATCH", "/users/favorite", true);
-  xhr.setRequestHeader("Content-Type", "application/json");
-  xhr.onreadystatechange = function () {
-    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-      let res = JSON.parse(this.response);
-      if (res.code === 1) {
-        if (isFavorite) {
-          this_btn.dataset.toggle = "false";
+let btnFavoriteGround = document.querySelector('button[name="btnFavoriteGround"]');
+if (btnFavoriteGround) {
+  document.querySelector('button[name="btnFavoriteGround"]').addEventListener("click", function () {
+    let this_btn = this;
+    let isFavorite = this.dataset.toggle === "true";
+    let xhr = new XMLHttpRequest();
+    xhr.open("PATCH", "/users/favorite", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onreadystatechange = function () {
+      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        let res = JSON.parse(this.response);
+        if (res.code === 1) {
+          if (isFavorite) {
+            this_btn.dataset.toggle = "false";
+          } else {
+            this_btn.dataset.toggle = "true";
+          }
         } else {
-          this_btn.dataset.toggle = "true";
+          alert(res.message);
         }
-      } else {
-        alert(res.message);
       }
-    }
-  };
-  xhr.send(JSON.stringify({ ground_id: this.dataset.id, isFavorite: isFavorite }));
-});
+    };
+    xhr.send(JSON.stringify({ ground_id: this.dataset.id, isFavorite: isFavorite }));
+  });
+}
+
 //  주의사항, 취소/환불 클릭시 아래 픽스 움직임 부자연스러운 부분 수정..
-// $("div[data-role='collapse']").on("show.bs.collapse", function () {
-//   let scroll = document.body.scrollHeight + document.querySelector("footer").offsetHeight;
-//   window.scrollTo({ top: scroll });
-// });
-$("div[data-role='collapse']").on("shown.bs.collapse", function () {
-  let scroll = document.body.scrollHeight + document.querySelector("footer").offsetHeight;
-  window.scrollTo({ top: scroll });
+$("div[data-role='collapse']").on("show.bs.collapse", function () {
+  document.querySelector("#bottomBtnWrap").style.bottom = "0px";
 });

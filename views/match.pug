@@ -4,7 +4,7 @@ block append_css
 block content
   - var ground_id = match_info.ground_info._id;
   .full-cover-pzfutball
-  .container-fluid.bg-light.border-top-primary.mb-5
+  .container-fluid.bg-light.border-top-primary.pb-5
     #detail_page.container
       .position-relative.bg-white
         .detail-slider.m-0
@@ -97,9 +97,6 @@ block content
 block append_js
   script.
     let match_info = !{JSON.stringify(match_info)}
-    console.log('user info : ', !{JSON.stringify(user_info)})
-    console.log('ground info : ', !{JSON.stringify(match_info.ground_info)})
-    console.log('favorite : ', !{JSON.stringify(favorite_ground)})
   script(src="//dapi.kakao.com/v2/maps/sdk.js?appkey=dd47642bb3bbc286516220872f5eb9f6")
   script(src='/public_js/charge.js', type='text/javascript')
   script(src='/public_js/detail.js', type='text/javascript')

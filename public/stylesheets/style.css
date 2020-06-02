@@ -644,7 +644,7 @@ select.form-control:not([size]):not([multiple]),
   height: 150px;
   background-image: url("/images/banner/footer_tie.png");
   background-position: center center;
-  background-size: contain;
+  background-size: cover;
 }
 .modal-footer button {
   margin: 0 !important;

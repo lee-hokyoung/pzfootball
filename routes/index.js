@@ -231,6 +231,7 @@ async function fnGetMatchList(date, query, user_info) {
 //  구장별 조회 화면
 router.get("/ground/:id", async (req, res) => {
   let date = new Date();
+  let user_info = req.session.passport;
   let today = date.toISOString().slice(0, 10);
   let ground_info = await Ground.findOne({
     _id: mongoose.Types.ObjectId(req.params.id),
@@ -261,6 +262,7 @@ router.get("/ground/:id", async (req, res) => {
   res.render("ground_match_list", {
     match_list: match_list,
     ground_info: ground_info,
+    user_info: user_info,
   });
 });
 //  구장 필터링

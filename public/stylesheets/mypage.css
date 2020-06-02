@@ -49,7 +49,7 @@ b {
   margin-bottom: 0.5rem;
   display: flex;
   font-size: 33px;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .user-name-wrap b[data-role="user_name"] {
@@ -102,6 +102,12 @@ b {
 }
 .card.profile-card .card-body h6 {
   font-size: 20px;
+}
+.card.profile-card .col-flex-end {
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  padding-bottom: 1rem;
 }
 #mypage-wrap .point-wrap p {
   font-size: 30px;
@@ -422,6 +428,31 @@ span.fileinput-exists i.nc-icon {
   color: #777;
   cursor: not-allowed;
 }
+/* .user-info-wrap .radio-button-wrap button[name="skill"] {
+  padding-left: 10px;
+  position: relative;
+}
+.user-info-wrap .radio-button-wrap button[name="skill"]::before {
+  content: "";
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  position: absolute;
+  left: 15px;
+  top: 5.5px;
+}
+.user-info-wrap .radio-button-wrap button[name="skill"][value="1"]::before {
+  background-image: url("/images/icon-skill-1.png");
+}
+.user-info-wrap .radio-button-wrap button[name="skill"][value="2"]::before {
+  background-image: url("/images/icon-skill-2.png");
+}
+.user-info-wrap .radio-button-wrap button[name="skill"][value="3"]::before {
+  background-image: url("/images/icon-skill-3.png");
+} */
 hr {
   border-color: #662d91;
   border-width: 2px;
@@ -487,6 +518,40 @@ button[name="btnRemoveFavorite"] {
 }
 .fileinput button[data-view="false"] {
   display: none;
+}
+.team-card-wrap {
+  display: flex;
+  width: 250px;
+  margin: 10px auto;
+  border-radius: 15px;
+  padding: 10px;
+  color: white;
+  justify-content: space-between;
+}
+.team-card-wrap[data-color="purple"] {
+  background-color: #662d91;
+}
+.team-card-wrap[data-color="red"] {
+  background-color: red;
+}
+.team-card-wrap img {
+  margin: auto 0;
+  margin-left: 15px;
+}
+.team-card-wrap .col-wrap {
+  margin-right: 15px;
+}
+.team-card-wrap p {
+  margin: 0;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+.team-card-wrap span {
+  font-size: 12px;
+}
+.team-card-wrap i {
+  margin: auto 0;
 }
 @media (max-width: 768px) {
   .card.profile-card .card-body {

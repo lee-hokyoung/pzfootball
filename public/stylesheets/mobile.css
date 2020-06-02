@@ -63,6 +63,9 @@
     padding-right: inherit;
     max-width: 29%;
   }
+  section.ground-list ul li .row > div.col-12 {
+    max-width: 100% !important;
+  }
   .filter-wrap {
     padding: 1rem 0.5rem 0rem 0.5rem !important;
   }

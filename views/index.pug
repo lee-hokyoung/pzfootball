@@ -48,7 +48,7 @@ block content
                 - date.setDate(today.getDate() + d++)
                 - var year = date.getFullYear();
                 - var month = date.getMonth() < 10 ? '0' + (date.getMonth() + 1): date.getMonth() + 1;
-                - var days = date.getDate();
+                - var days = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
                 button.btn.btn-neutral.btn-date.rounded-0(type='button', onclick='fnSelectDate(this)',
                 class=d===1?'active':'',
                 class=date.getDay()===0?'text-danger':date.getDay()===6?'text-primary':'text-black',

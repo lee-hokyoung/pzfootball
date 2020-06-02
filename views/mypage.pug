@@ -227,43 +227,18 @@ block content
                   h6.title 아직 소속된 클럽이 없습니다
                   h6.description 팀을 생성하거나 참여해보세요
                 .card-body.pt-2
-                  .team-card-wrap(data-color='red')
+                  a.team-card-wrap(href='/clubs/create', data-color='red')
                     img(src='/images/icon-create-team.png')
                     .col-wrap
                       p 팀생성하기
                       span 감독으로 참여
                     i.nc-icon.nc-minimal-right
-                  .team-card-wrap(data-color='purple')
+                  a.team-card-wrap(href='#', data-toggle='modal', data-target='#modalSearchTeam', data-color='purple')
                     img(src='/images/icon-search-code.png')
                     .col-wrap
                       p 팀코드 검색
                       span 팀원으로 참여
                     i.nc-icon.nc-minimal-right
-
-                  .row
-                    .col-md-10.mx-auto
-                      .find-club-wrap(data-color='red')
-                        .row
-                          .col-4
-                            img(src='/images/captain.png', width='100%')
-                          .col-8.my-auto.text-center
-                            p.m-0
-                              span.text-warning 감독
-                              span.text-white 으로 참가하기
-                            a.btn.btn-danger.border.px-4.py-2(href='/clubs/create') 팀 생성 
-                  .row.mt-4
-                    .col-md-10.mx-auto
-                      .find-club-wrap(data-color='purple')
-                        .row
-                          .col-4
-                            img(src='/images/captain.png', width='100%')
-                          .col-8.my-auto
-                            p.m-0
-                              span.text-warning 팀원
-                              span.text-white 으로 참여하기
-                            .input-wrap
-                              input.form-control(type='text', placeholder='팀 코드를 입력하세요.')
-                              button.btn.btn-danger(type='button', name='btnFindTeam', data-toggle='modal', data-target='#modalSearchTeam') 팀 찾기
             //- 가입 요청한 팀이 있을 경우
             else
               .card.profile-card
@@ -309,13 +284,13 @@ block content
                     span.form-check-sign
                     | 전체선택
               hr.mb-0
-              .table-borderedr
+              .table-borderedr.table-responsive
                 table.table#favorite-table
                   colgroup
-                    col(width='18px')
-                    col
-                    col
-                    col
+                    col(width='20')
+                    col(width='100')
+                    col(width='200')
+                    col(width='100')
                   tbody
                     each item in favorite_ground
                       tr
@@ -367,13 +342,13 @@ block content
                       .point-wrap.d-flex
                         p #{new Intl.NumberFormat('ko').format(user.reqRefundPoint)}
               hr.mb-0
-              #table-reservation.table-custom
+              #table-reservation.table-responsive.table-custom
                 table.table
                   colgroup
-                    col(title='날짜')
-                    col(title='경기장')
-                    col(title='신청')
-                    col(title='취소')
+                    col(width='50', title='날짜')
+                    col(width='100', title='경기장')
+                    col(width='50', title='신청')
+                    col(width='80', title='취소')
                   //- thead
                   //-   tr.table-success
                   //-     th 날짜
@@ -382,8 +357,14 @@ block content
                   //-     th 신청수
                   //-     th 상태
                   tbody
+                    - var _match_time;
+                    - var t_list = [];
+                    - var now = new Date();
                     if(match_list.length > 0)
                       each match in match_list
+                        - _match_time = new Date(match.match_date)
+                        - _match_time.setHours(parseInt(match.match_time.split(':')[0]))
+                        - _match_time.setMinutes(parseInt(match.match_time.split(':')[1]))
                         - var d = new Date(match.match_date);
                         - var year = d.getFullYear().toString().slice(2)
                         tr
@@ -391,7 +372,10 @@ block content
                           td #{match.ground_info.groundName}
                           td #{match.apply_member.length} / #{match.personnel.max}
                           td.text-right
-                            button.btn.btn-round(type='button', data-role='cancelReservation', data-id=match._id) 예약취소
+                            if(_match_time > now)
+                              button.btn.btn-round.btn-danger(type='button', data-role='cancelReservation', data-id=match._id) 예약취소
+                            else 
+                              button.btn.btn-round(type='button') 취소불가
                             //- a.btn.btn-round(href='/users/match/' + match._id) #{match.isPlay?"취소불가":"예약취소"}
                     else
                       tr
@@ -425,78 +409,6 @@ block content
                     else
                       tr
                         td 사용 가능한 쿠폰이 없습니다.
-
-      //- .row.d-none
-      //-   .col-md-6
-      //-     .card
-      //-       .card-header
-      //-         label.title ID
-      //-         p #{user.user_id}
-      //-       .card-body
-      //-         .form-group
-      //-           label.title 이름
-      //-           input.form-control(type='text', value=user.user_name, name='user_name')
-      //-         .form-group
-      //-           label.title 닉네임
-      //-           input.form-control(type='text', value=user.user_nickname, name='user_nickname')
-      //-         .from-group
-      //-           label.title E-mail
-      //-           input.form-control(type='text', value=user.user_email, name='user_email')
-      //-       .card-footer
-      //-         button.btn.btn-primary(type='button', onclick='fnSaveUserInfo()') 저장
-      //-     .card
-      //-       .card-header
-      //-         .d-flex.justify-content-between
-      //-           label.title 내 클럽
-      //-           a.text-primary(href='/clubs/list') 전체보기
-      //-       .card-body
-      //-         if(myClub)
-      //-           ul.list-group.list-group-flush.text-center
-      //-             li.list-group-item.list-group-item-primary
-      //-               .row
-      //-                 .col-2 마크
-      //-                 .col-7 클럽명
-      //-                 .col-3 회원수
-      //-             li.list-group-item.list-group-item-action
-      //-               if(myClub.status === 1)
-      //-                 a(href='/clubs/' + myClub._id)
-      //-                   .row
-      //-                     .col-2
-      //-                       if(myClub.club_mark === "")
-      //-                         img(src='/images/pz_logo.png', width='100%')
-      //-                       else
-      //-                         img(src=myClub.club_mark, width='100%')
-      //-                     .col-7 !{myClub.club_name}
-      //-                     .col-3 !{myClub.club_member.length} 명
-      //-               else if(myClub.status === 0)
-      //-                 .row
-      //-                   .col 승인 대기 중 
-      //-         else if(waiting_club)
-      //-           ul.list-group.list-group-flush.text-center
-      //-             li.list-group-item.list-group-item-primary
-      //-               .row
-      //-                 .col-2 마크
-      //-                 .col-7 클럽명
-      //-                 .col-3 회원수
-      //-             li.list-group-item.list-group-item-action
-      //-               .row
-      //-                 .col-12 승인 대기 중 
-      //-         else
-      //-           .row
-      //-             .col-8
-      //-               span 아직 가입한 클럽이 없습니다.
-      //-             .col-4
-      //-               a.btn.btn-sm.btn-link.text-primary(href='/clubs/list') 가입
-      //-               button.btn.btn-sm.btn-link.text-success(onclick='fnCreateClub()') 생성
-      //-   .col-md-6
-      //-     .card
-      //-       .card-header
-      //-         .d-flex.justify-content-between
-      //-           label.title 내 경기 일정
-      //-           //- a.text-info(href='#users/match/list') 더 보기
-      //-       .card-body
-            
-        
   include modals/chargePoint
   include modals/searchTeam
   include modals/refund
@@ -506,5 +418,6 @@ block append_js
   script.
     console.log('waiting_club : ', !{JSON.stringify(waiting_club)})
     console.log('user : ', !{JSON.stringify(user)})
-    console.log('mvp_info : ', !{JSON.stringify(mvp_info)})
-    console.log('coupon_list : ', !{JSON.stringify(coupon_list)})
+    console.log('_match_time : ', !{JSON.stringify(_match_time.toISOString())})
+    console.log('t_list : ', !{JSON.stringify(t_list)})
+    

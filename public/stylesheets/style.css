@@ -657,16 +657,18 @@ select.form-control:not([size]):not([multiple]),
 }
 /* 충전타입 버튼 css */
 .chargeType-button-wrap {
-  display: flex;
-  justify-content: space-around;
+  /* display: flex; */
+  /* justify-content: space-around; */
 }
 .chargeType-button-wrap button[name="chargeType"] {
   background-color: transparent;
   border: 1px solid #ccc;
-  border-left: none;
+  /* border-left: none; */
   flex: 1;
   height: 40px;
   cursor: pointer;
+  width: calc(50% - 2px);
+  margin: 1px;
 }
 .chargeType-button-wrap button[name="chargeType"]:first-child {
   border-left: 1px solid #ccc;
@@ -674,6 +676,23 @@ select.form-control:not([size]):not([multiple]),
 .chargeType-button-wrap button[name="chargeType"][data-toggle="true"] {
   color: white;
   background-color: #662d91;
+}
+button[data-dismiss="modal"] {
+  border: none;
+  background: transparent;
+  position: absolute;
+  right: 15px;
+  top: 15.7px;
+}
+#teamSearchTable thead {
+  border-bottom: 2px solid #662d91;
+}
+#teamSearchTable thead th {
+  padding-bottom: 0.5rem !important;
+  padding-left: 0.5rem !important;
+}
+#teamSearchTable tbody td {
+  padding-top: 0.5rem !important;
 }
 @media (min-width: 576px) {
   .main-slider .slick-list {

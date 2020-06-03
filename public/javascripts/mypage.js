@@ -323,8 +323,9 @@ function fnSearchTeam() {
         } else {
           let tr = document.createElement("tr");
           let td = document.createElement("td");
-          td.setAttribute("colspan", 3);
-          td.innerText = "해당 코드로 찾은 팀이 없습니다.";
+          td.className = "text-center";
+          td.setAttribute("colspan", 4);
+          td.innerText = "검색 결과가 없습니다.";
           tr.appendChild(td);
           tbody.appendChild(tr);
         }

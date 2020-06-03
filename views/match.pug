@@ -29,27 +29,29 @@ block content
           a.btn.btn-neutral.text-primary.p-0.mx-3.my-0.d-inline-block(href='https://map.kakao.com/link/to/' + match_info.ground_info.groundName + ',' + match_info.ground_info.mapInfo.Lat + ',' + match_info.ground_info.mapInfo.Lng, target='_blank') 길찾기
           button.btn.btn-neutral.text-primary.p-0.my-0(type='button', name='toggle_theway') 공유하기
           .row
-            .col
-              p.text-black.mt-1 #{match_date.getFullYear()}년 #{match_date.getMonth() + 1}월 #{match_date.getDate()}일 #{day_list[match_date.getDay()]}요일 #{match_info.match_time}
-            .col.my-auto.pb-1
-              .match-price-wrap
-                h6 참가비
-                h5 #{new Intl.NumberFormat('ko').format(match_info.match_price)}원
+            .col-md-12
+              p.text-black.mt-1(data-role='match-date') #{match_date.getFullYear()}년 #{match_date.getMonth() + 1}월 #{match_date.getDate()}일 #{day_list[match_date.getDay()]}요일 #{match_info.match_time}
+            
           .row
-            .col-md-6.my-auto
-              div
-                span.notoB.text-primary.pl-1 #{match_info.ground_info.groundName}
-                span.notnM 의
+            .col-6.col-md-6.my-auto
+              span.notoB.text-primary.pl-1 #{match_info.ground_info.groundName}
+              span.notnM 의
               a.btn.btn-round.text-white.btn-primary.m-0.px-1(href='/ground/' + match_info.ground_info._id, target='_blank')
                 .notoR 더 많은 경기 보러가기
                 img(src='/assets/svg/play_icon.svg', width='100%')
-            .col-md-6.text-right
-              if(user_info)
-                - var isFavorite = favorite_ground.favorite_ground.toString().indexOf(ground_id) > -1
-                button(name='btnFavoriteGround', data-toggle=isFavorite?'true':'false', data-id=ground_id.toString()) 
-                  i.fa.fa-star
-                  i.fa.fa-star-o
-              button.btn.btn-primary.btn-join(onclick='fnApplyGame()') 참가하기
+            .col-6.col-md-6.text-right
+              .row
+                .col-12.my-auto.pb-1
+                  .match-price-wrap
+                    h6 참가비
+                    h5 #{new Intl.NumberFormat('ko').format(match_info.match_price)}원
+                .col-12
+                  if(user_info)
+                    - var isFavorite = favorite_ground.favorite_ground.toString().indexOf(ground_id) > -1
+                    button(name='btnFavoriteGround', data-toggle=isFavorite?'true':'false', data-id=ground_id.toString()) 
+                      i.fa.fa-star
+                      i.fa.fa-star-o
+                  button.btn.btn-primary.btn-join(onclick='fnApplyGame()') 참가하기
         .section
           p.text-black 구장 편의시설
           .my-3
@@ -70,7 +72,7 @@ block content
           a.btn.btn-neutral.text-primary(href='https://map.kakao.com/link/to/' + match_info.ground_info.groundName + ',' + match_info.ground_info.mapInfo.Lat + ',' + match_info.ground_info.mapInfo.Lng, target='_blank') 가는 길 보기
           button.btn.btn-neutral.text-primary(name='toggle_theway', data-visible='false') 가는 길 보기
   #bottomBtnWrap.container-fluid.bg-white.d-fixed.py-3
-    .container
+    .container.px-0
       .row
         .col-md-6
           .col-wrap

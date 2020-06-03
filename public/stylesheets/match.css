@@ -184,7 +184,16 @@ button[name="btnFavoriteGround"][data-toggle="true"] i.fa-star-o {
   z-index: 10;
   border-top: 1px solid #ccc;
 }
-
+#nav-tab {
+  margin-bottom: 0.5rem;
+}
+#nav-tab a {
+  border: none;
+}
+#nav-tab a.active,
+#nav-tab a:hover {
+  border-bottom: 2px solid #662d91;
+}
 @media screen and (max-width: 575px) {
   .detail_img_wrap {
     height: 25vh;
@@ -198,5 +207,8 @@ button[name="btnFavoriteGround"][data-toggle="true"] i.fa-star-o {
   }
   #kakao_map {
     margin: 1rem 0;
+  }
+  .btn-join {
+    width: 110px;
   }
 }

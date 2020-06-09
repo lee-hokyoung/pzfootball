@@ -97,7 +97,7 @@ h6.title {
 .skill-btn-wrap button.btn:focus,
 .skill-btn-wrap button.btn[data-toggle="true"] {
   background-color: rgb(102, 45, 145) !important;
-  color: black !important;
+  color: white !important;
   font-weight: bold;
 }
 .sns-btn-wrap {
@@ -157,6 +157,8 @@ button[name="btnCertify"] {
   font-family: scdream5;
   font-size: 15px;
   height: 40px;
+  white-space: nowrap;
+  padding: 0 15px;
 }
 .profile-desc {
   font-family: scdream5;

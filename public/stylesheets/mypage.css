@@ -561,6 +561,59 @@ button[name="btnRemoveFavorite"] {
   margin: auto 0;
   color: white;
 }
+button[name="btnReqRefund"] {
+  font-family: NotoSansR;
+  font-weight: normal;
+  font-size: 15px;
+}
+.teamwork-wrap {
+  flex: 1;
+  margin: 1px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+.teamwork-wrap p {
+  color: black;
+  margin-bottom: 0.1rem;
+  font-size: 14px;
+}
+.teamwork-wrap .border {
+  padding: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  height: 85px;
+}
+.teamwork-wrap .border .img-wrap {
+  flex: 3;
+}
+.teamwork-wrap .border img {
+  max-width: 37px;
+  max-height: 37px;
+  margin: 8px auto;
+  align-items: center;
+}
+.teamwork-wrap:nth-child(2) .border img {
+  margin: 13px auto;
+}
+.teamwork-wrap .border span {
+  flex: 1;
+}
+.info-wrap {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 0.5rem;
+}
+.info-wrap p {
+  margin-bottom: 0.25rem;
+  text-align: center;
+}
+.desc-wrap {
+  text-align: center;
+}
+.desc-wrap h4 {
+  margin: 1rem;
+}
 @media (max-width: 768px) {
   .card.profile-card .card-body {
     padding: 1rem 0.5rem;

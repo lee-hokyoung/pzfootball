@@ -1,0 +1,42 @@
+#teamworkModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="teamworkModalLabel" aria-hidden="true")
+  .modal-dialog
+    .modal-content
+      .modal-header
+        h6 퍼즐 팀워크
+        button(data-dismiss='modal')
+          img(src='/images/icon-close.png')
+      .modal-body
+        .d-flex
+          .teamwork-wrap
+            p 100~91p
+            .border
+              .img-wrap
+                img(src='/images/icon-teamwork1.png')
+              span 좋음
+          .teamwork-wrap
+            p 90~81p
+            .border
+              .img-wrap
+                img(src='/images/icon-teamwork2.png')
+              span 주의
+          .teamwork-wrap
+            p 80~71p
+            .border
+              .img-wrap
+                img(src='/images/icon-teamwork3.png')
+              span 경고
+          .teamwork-wrap
+            p 70p 이하
+            .border
+              .img-wrap
+                img(src='/images/icon-teamwork4.png')
+              span 퇴장
+      .info-wrap
+        p.text-black
+          span.text-danger 매너
+          | 가 없다면 퍼즐풋볼은 완성되지 않습니다.
+        p.text-black
+          span.text-primary 팀워크
+          | 가 훌륭한 퍼즐풋볼을 만들어갑시다.
+      .desc-wrap
+        h4 퍼즐 팀워크 규정  

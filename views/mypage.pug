@@ -49,7 +49,8 @@ block content
                   .row-wrap.justify-content-around
                     .col-wrap
                       .img-wrap
-                        img(src='/images/icon-teamwork.png', height='30px')
+                        a(href='#', data-toggle='modal', data-target='#teamworkModal')
+                          img(src='/images/icon-teamwork.png', height='30px')
                         span #{100 - parseInt(point)}
                       p.description 퍼즐 팀워크 점수
                     .col-wrap
@@ -292,35 +293,28 @@ block content
                     col(width='200')
                     col(width='100')
                   tbody
-                    each item in favorite_ground
+                    if(favorite_ground.length > 0)
+                      each item in favorite_ground
+                        tr
+                          td
+                            .form-check.check-custom-wrap
+                              label.form-check-label.pl-3
+                                input.form-check-input(type="checkbox", name='ground-item', data-id=item._id)
+                                span.form-check-sign
+                          - var addr = item.groundAddress.jibun.split(' ')
+                          td !{addr[0]} !{addr[1]}
+                          td !{item.groundName}
+                          td(name='apply-game') 
+                            if(item.count > 0)
+                              | 신청가능&nbsp;
+                              a(href='/ground/' + item._id) !{item.count}건
+                            else
+                              | 경기 없음
+                    else
                       tr
-                        td
-                          .form-check.check-custom-wrap
-                            label.form-check-label.pl-3
-                              input.form-check-input(type="checkbox", name='ground-item', data-id=item._id)
-                              span.form-check-sign
-                        - var addr = item.groundAddress.jibun.split(' ')
-                        td !{addr[0]} !{addr[1]}
-                        td !{item.groundName}
-                        td(name='apply-game') 
-                          if(item.count > 0)
-                            | 신청가능&nbsp;
-                            a(href='/ground/' + item._id) !{item.count}건
-                          else
-                            | 경기 없음
-              .text-right
-                button.btn.btn-round(type='button', name='btnRemoveFavorite') 선택삭제
-                //- .ground-wrap(data-id=r._id)
-                //-   .d-flex.justify-content-between
-                //-     h5 #{r.name}
-                //-     button.btn.btn-success.btn-sm(type='button', data-role='all', data-id=r._id, data-toggle='true') 전체선택
-                //-   .d-flex.justify-content-start
-                //-     - var my_ground = user.favorite_ground.join(',')
-                //-     each ground in r.list
-                //-       button.btn.btn-primary.btn-round.btn-sm.mr-1.px-3(type='button', data-id=ground._id, data-toggle=my_ground.toString().indexOf(ground._id.toString()) > -1 ? "true":"false", data-role='ground') #{ground.groundName}
-                //- if(idx + 1 < region_group.length)
-                //-   hr
-              //- button.btn.btn-success.w-100.m-0(type='button', data-role='saveGround') 적용
+                        td(colspan='4') 즐겨찾는 구장이 없습니다.
+              .text-right.mt-3
+                button.btn.btn-round.py-1.px-2(type='button', name='btnRemoveFavorite') 선택삭제
           .card.profile-card
             .card-body
               h6.title.text-left 포인트 및 예약현황
@@ -412,12 +406,10 @@ block content
   include modals/chargePoint
   include modals/searchTeam
   include modals/refund
+  include modals/teamwork
 block append_js
   script(src='/public_js/mypage.js')
   script(src='/public_js/charge.js')
   script.
     console.log('waiting_club : ', !{JSON.stringify(waiting_club)})
     console.log('user : ', !{JSON.stringify(user)})
-    console.log('_match_time : ', !{JSON.stringify(_match_time.toISOString())})
-    console.log('t_list : ', !{JSON.stringify(t_list)})
-    

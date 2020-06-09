@@ -694,6 +694,9 @@ button[data-dismiss="modal"] {
 #teamSearchTable tbody td {
   padding-top: 0.5rem !important;
 }
+.modal-content .modal-header h6 {
+  font-size: 17px;
+}
 @media (min-width: 576px) {
   .main-slider .slick-list {
     /* border-radius: 2rem;

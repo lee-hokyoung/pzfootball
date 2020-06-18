@@ -230,7 +230,7 @@ function fnGenerateGroundList(res, currentSlide) {
 
       //  경기 상세 설명 부분(2,3파 매치, 성별, 실력)
       inner_col = document.createElement("div");
-      inner_col.className = "col-md-4";
+      inner_col.className = "col-md-4 col-9";
       let flex = document.createElement("div");
       flex.className = "d-flex justify-content-start";
       //    match-wrap
@@ -246,7 +246,7 @@ function fnGenerateGroundList(res, currentSlide) {
       flex.appendChild(inner_div);
       //    text-left.text-dark
       inner_div = document.createElement("div");
-      inner_div.className = "text-left text-dark";
+      inner_div.className = "text-left";
       let small = document.createElement("small");
       small.className = "pl-3 tagList";
       //  + (game.sex === "1" ? " male text-primary" : game.sex === "2" ? " female text-danger" : " mix");
@@ -277,7 +277,7 @@ function fnGenerateGroundList(res, currentSlide) {
       row.appendChild(col);
 
       inner_col = document.createElement("div");
-      inner_col.className = "col-md-2 text-right";
+      inner_col.className = "col-md-2 col-3 text-right";
       b = document.createElement("b");
       b.innerText = game.apply_member.length + " / " + game.personnel.max;
       inner_col.appendChild(b);

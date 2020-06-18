@@ -2,17 +2,19 @@
   .modal-dialog
     .modal-content
       .modal-header
-        span.title 팀코드로 찾기
+        h6 팀코드로 찾기
+        button(data-dismiss='modal')
+          img(src='/images/icon-close.png')
       .modal-body.px-3
         form(onsubmit='return fnSearchTeam();')
-          .form-group
+          .d-flex.justify-content-between
             input.form-control(type='text', name='team_code', placeholder='팀 코드를 입력하세요')
-            button.btn.btn-primary(type='submit') 검색
-            label.ml-3 대소문자 구분합니다. 정확하게 입력해주세요
+            button.btn.btn-primary.btn-sm.my-0.ml-1.text-nowrap(type='submit') 검색
+          label.m-2 대소문자 구분합니다. 정확하게 입력해주세요
         table#teamSearchTable.table
           colgroup
-            col(width='150')
-            col(width='auto')
+            col(width='100')
+            col(width='100')
             col(width='100')
             col(width='60')
           thead.text-primary

@@ -21,7 +21,7 @@ select.form-control:focus {
 #login-page h5.title {
   text-align: center;
 }
-#login-page img,
+/* #login-page img, */
 #login-page ul.local-login {
   max-width: 220px;
   margin: auto;
@@ -37,38 +37,63 @@ select.form-control:focus {
 /* #join-page {
   max-width: 1110px;
 } */
-hr,
 #login-page .d-flex.justify-content-between .vertical-line {
   border-color: rgb(89, 89, 89);
 }
 #login-page input.form-control {
   border-radius: 0px;
-  font-family: scdream5;
+  font-family: NotoSansR;
   font-weight: normal;
-  color: rgb(127, 127, 127);
+  color: #666666;
   font-size: 14px;
 }
-#login-page button[type="submit"] {
+#login-page button[type="submit"],
+#join-page button[type="submit"] {
   background-color: #662d91;
   color: #fff;
-  font-family: scdream6;
+  font-family: NotoSansM;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 16px;
+  border-radius: 6px;
+  margin-bottom: 12px !important;
+  padding: 0.8rem;
 }
 #login-page .form-check-label,
+#join-page .form-check-label {
+  font-family: NotoSansR;
+  font-size: 12px;
+  padding-left: 20px;
+  color: #000;
+  line-height: 14px;
+}
+#login-page .form-check-label .form-check-sign::before,
+#login-page .form-check-label .form-check-sign::after,
+#join-page .form-check-label .form-check-sign::before,
+#join-page .form-check-label .form-check-sign::after {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  background-color: #eee;
+  border: 1px solid #ddd;
+}
+#login-page .form-check-label .form-check-sign::after,
+#sign-page .form-check-label .form-check-sign::after {
+  font-size: 12px;
+  color: black;
+}
 h6.title {
-  font-family: scdream5;
-  font-weight: bold;
+  font-family: NotoSansM;
+  font-size: 16px;
+}
+#login-page .d-flex.justify-content-around a {
+  font-family: NotoSansM;
   font-size: 14px;
+  color: #666666;
 }
-#login-page .d-flex.justify-content-between a {
-  font-family: scdream5;
-  font-weight: bold;
-}
-#login-page .d-flex.justify-content-between a:hover {
+#login-page .d-flex.justify-content-around a:hover {
   color: #662d91;
 }
-#login-page .d-flex.justify-content-between .vertical-line {
+#login-page .d-flex.justify-content-around .vertical-line {
   margin: 4px 0;
   width: 1px;
   border-width: 1px;
@@ -81,14 +106,16 @@ h6.title {
   flex: 1;
 }
 .row-wrap .form-group label {
-  font-family: scdream5;
+  font-family: NotoSansM;
   font-size: 14px;
 }
 .skill-btn-wrap button {
-  margin: 0;
-  width: 33.3%;
-  background-color: #ccc;
-  font-family: scdream5;
+  margin: 0 1px;
+  width: calc(33.3% - 2px);
+  background-color: transparent;
+  border: 1px solid #ddd;
+  font-family: NotoSansB;
+  font-size: 14px;
   font-weight: bold;
   color: rgb(127, 127, 127);
   height: 40px;
@@ -96,9 +123,8 @@ h6.title {
 .skill-btn-wrap button.btn:hover,
 .skill-btn-wrap button.btn:focus,
 .skill-btn-wrap button.btn[data-toggle="true"] {
-  background-color: rgb(102, 45, 145) !important;
-  color: black !important;
-  font-weight: bold;
+  background-color: #eee !important;
+  color: #662d91 !important;
 }
 .sns-btn-wrap {
   width: 100%;
@@ -139,9 +165,10 @@ h6.title {
   width: 30px;
 }
 a[data-role="login"] {
-  font-family: scdream5;
+  font-family: NotoSansR;
   font-weight: bold;
   text-decoration: underline;
+  font-size: 12px;
 }
 select[name="position"] {
   font-family: scdream5;
@@ -154,9 +181,12 @@ button[type="submit"] {
 }
 button[name="btnSendCertify"],
 button[name="btnCertify"] {
-  font-family: scdream5;
-  font-size: 15px;
+  font-family: NotoSansM;
+  font-size: 14px;
   height: 40px;
+  white-space: nowrap;
+  padding: 0 15px;
+  border-radius: 6px !important;
 }
 .profile-desc {
   font-family: scdream5;
@@ -164,7 +194,8 @@ button[name="btnCertify"] {
   color: rgb(255, 0, 0);
 }
 .term-wrap .form-check-sign {
-  font-size: 14px;
+  font-size: 12px;
+  font-family: NotoSansR;
 }
 #loadingPage {
   position: fixed;
@@ -179,6 +210,37 @@ button[name="btnCertify"] {
   justify-content: center;
   align-items: center;
   height: 100%;
+}
+.new-pz-logo span {
+  font-size: 25px;
+}
+.new-pz-logo span.text-primary {
+  font-family: scdream6;
+}
+.new-pz-logo h4 {
+  margin: 0;
+  text-align: right;
+  font-size: 40px;
+  font-family: scdream6;
+}
+span.sns-text {
+  text-align: center;
+  display: block;
+  color: #666;
+  font-family: NotoSansR;
+  font-size: 14px;
+}
+.sns-img-small-wrap {
+  margin: 0.5rem;
+  display: flex;
+  justify-content: center;
+}
+.certify-input-wrap button {
+  padding: 0.2rem 1rem;
+  height: 30px;
+  position: absolute;
+  right: 5px;
+  top: 5px;
 }
 @media (max-width: 768px) {
   /* #join-page {

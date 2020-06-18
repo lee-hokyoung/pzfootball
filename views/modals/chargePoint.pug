@@ -3,6 +3,8 @@
     .modal-content
       .modal-header
         h6 결제
+        button(data-dismiss='modal')
+          img(src='/images/icon-close.png')
       .modal-body
         .form-group
           label 보유 포인트
@@ -23,6 +25,5 @@
             button(type='button', name='chargeType', value='realtime', data-toggle="false") 실시간 계좌이체
             button(type='button', name='chargeType', value='credit', data-toggle="false") 신용카드
             button(type='button', name='chargeType', value='kakao', data-toggle="false") 카카오페이
-      .modal-footer
-        button.btn.btn-primary(onclick='fnConfirmChargePoint()') 확인
-        button.btn.btn-danger(data-dismiss='modal') 취소
+        button.btn.btn-primary.d-block.mx-auto.mt-4.w-50(onclick='fnConfirmChargePoint()') 결제하기
+  

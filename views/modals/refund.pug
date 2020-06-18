@@ -3,13 +3,14 @@
     .modal-content
       .modal-header
         h6 포인트 환불신청
+        button(data-dismiss='modal')
+          img(src='/images/icon-close.png')
       .modal-body
         .form-group
           label 환불 포인트 입력
-          input.form-control(type='number', name='requestRefundPoint' placeholder='환불할 포인트를 입력해 주세요')
-          label.text-info 요청 가능 포인트는 
-            span.text-danger #{new Intl.NumberFormat('ko').format(user.point) || 0}
+          input.form-control(type='number', name='requestRefundPoint' placeholder='0')
+          label.text-dark 요청 가능 포인트는 
+            span.text-primary #{new Intl.NumberFormat('ko').format(user.point) || 0}P
             | 입니다.
-      .modal-footer
-        button.btn.btn-danger.m-0(onclick='fnReqRefund()') 환불신청
+        button.btn.btn-primary.d-block.mx-auto.rounded-0.my-0.w-50(onclick='fnReqRefund()', name='btnReqRefund') 환불신청
         input(type='hidden', name='inpRefund', value=user.point)

@@ -127,7 +127,9 @@ h6,
 /* 노토산스 R 16pt */
 p,
 span,
-.notoR {
+.notoR,
+li,
+a {
   font-family: NotoSansM, sans-serif;
   font-weight: lighter;
 }

@@ -30,23 +30,26 @@ block content
           //-     span.form-check-sign 개인정보 취급위탁 안내 &nbsp;
           //-       small.text-danger (필수) 
           //-   textarea.form-control(rows='5')
-      .rainbow_font_wrap
-        span 함
-        span 께
-        span 하
-        span 는
-        span
-        span 스
-        span 포
-        span 츠
-        span 퍼즐풋볼
+      .new-pz-logo
+        span.text-primary.pl-3 함께하는
+        span.pl-1 스포츠
+        h4.pr-3 PZ SPORT
+
+      .pt-4
+        span.sns-text SNS계정으로 간편 회원가입
+      .sns-img-small-wrap
+        a.mr-3(href='/auth/naver')
+          img(src='/images/naver-login-circle.png')
+        a(href='/auth/kakao')
+          img(src='/images/kakao-login-circle.png')
+      hr.my-5
       .profile-wrap
         .fileinput.fileinput-new.position-relative.d-block(data-provides="fileinput")
           .fileinput-new.thumbnail.img-circle
             img(src="/assets/img/placeholder.jpg" alt="...")
           .fileinput-preview.fileinput-exists.thumbnail.img-circle
           .position-absolute
-            span.btn.btn-round.btn-rose.btn-file
+            span.btn.btn-round.btn-rose.btn-file.btn-primary
               span.fileinput-new
                 i.nc-icon.nc-simple-add
               span.fileinput-exists
@@ -60,18 +63,19 @@ block content
       .row-wrap
         .form-group
           label 이메일(아이디)
-          input.form-control(type='text', name='user_id')
+          input.form-control(type='text', name='user_id', placeholder='이메일')
       .row-wrap
-        .form-group.mr-1
+        .form-group
           label 비밀번호
-          input.form-control(type='password', name='user_pw')
-        .form-group.ml-1
+          input.form-control(type='password', name='user_pw', placeholder='비밀번호')
+      .row-wrap
+        .form-group
           label 비밀번호 확인
-          input.form-control(type='password', name='user_pw_chk')
+          input.form-control(type='password', name='user_pw_chk', placeholder='비밀번호 확인')
       .row-wrap
         .form-group.mr-1
           label 이름
-          input.form-control(type='text', name='user_name')
+          input.form-control(type='text', name='user_name', placeholder='이름')
         .form-group.ml-1
           label 성별
           select.form-control(name='gender')
@@ -115,7 +119,7 @@ block content
       .row-wrap
         .form-group
           label 인증번호 입력
-          .d-flex
+          .certify-input-wrap.position-relative
             input.form-control(type='text', name='certifiedNumber')
             button.btn.btn-primary.rounded-0.m-0.ml-1(type='button', name='btnCertify') 확인
       .row-wrap
@@ -134,17 +138,18 @@ block content
             button.btn.rounded-0(type='button', name='skill', data-value='3', data-toggle='false') 고급
       .row-wrap.term-wrap
         .form-check
-          label.form-check-label.pl-4
+          label.form-check-label
             input.form-check-input(type="checkbox", name='chkAllTerms', data-toggle='false')
             span.form-check-sign.pl-1
               a.text-primary.font-weight-bold(data-toggle='modal', data-target='#modalPersonal') 개인정보 처리방침 
-              | 및
+              | 및 
               a.text-primary.font-weight-bold(data-toggle='modal', data-target='#modalTerms') 퍼즐풋볼 이용약관
               | 에 동의합니다. 
       .row-wrap
-        button.btn.btn-primary.w-100.py-3(type='submit') 가입완료
-      .row-wrap
-        a.text-primary.mx-auto(href='/users/login', data-role='login') 이미 아이디가 있다면 여기에서 로그인하세요
+        button.btn.btn-primary.w-100.py-3(type='submit') 회원가입
+      .d-block.text-center
+        span(style='font-size:12px;') 이미 아이디가 있으신가요? 
+        a.text-primary(href='/users/login', data-role='login') 로그인
   #modalJoin.modal.fade(tabindex="-1" role="dialog" aria-labelledby="joinModalLabel" aria-hidden="true")
     .modal-dialog
       .modal-content

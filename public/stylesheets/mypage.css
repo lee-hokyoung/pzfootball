@@ -109,6 +109,9 @@ b {
   flex-direction: column;
   padding-bottom: 1rem;
 }
+#mypage-wrap {
+  padding: 0;
+}
 #mypage-wrap .point-wrap p {
   font-size: 30px;
   margin: 0;
@@ -122,7 +125,7 @@ b {
   border-radius: 50px;
   font-size: 0.7rem;
   margin: 0 0.25rem;
-  padding: 0.25rem 1rem;
+  padding: 0.25rem 0.5rem;
 }
 .fileinput.fileinput-new span.btn.btn-round,
 .fileinput.fileinput-exists span.btn.btn-round {
@@ -163,6 +166,7 @@ span.fileinput-exists i.nc-icon {
   border-bottom: 1px solid white;
   color: white;
   font-size: 12px;
+  min-width: 80px;
 }
 
 .user-info-wrap table tr:first-child th,
@@ -201,7 +205,7 @@ span.fileinput-exists i.nc-icon {
   padding: 0 0.5rem;
 }
 .card.profile-card p.description {
-  font-size: 0.8rem;
+  font-size: 0.68rem;
   margin: 0;
 }
 
@@ -320,7 +324,7 @@ span.fileinput-exists i.nc-icon {
 
 .guide_wrap p {
   margin: 0;
-  font-size: 0.85rem;
+  font-size: 0.7rem;
   font-weight: bold;
 }
 
@@ -474,11 +478,13 @@ hr {
   font: bold normal normal 12px/1 "nucleo-icons";
   /* background: #555; */
 }
-#favorite-table td {
-  padding: 0.5rem 0 !important;
+#favorite-table td,
+#table-reservation td {
+  padding: 0.5rem !important;
   border-bottom: 1px solid #ccc;
   font-size: 0.8rem;
   text-align: center;
+  white-space: nowrap;
 }
 #favorite-table td .check-custom-wrap.form-check .form-check-sign::before,
 #favorite-table td .check-custom-wrap.form-check .form-check-sign::after,
@@ -549,13 +555,68 @@ button[name="btnRemoveFavorite"] {
 }
 .team-card-wrap span {
   font-size: 12px;
+  color: white;
 }
 .team-card-wrap i {
   margin: auto 0;
+  color: white;
+}
+button[name="btnReqRefund"] {
+  font-family: NotoSansR;
+  font-weight: normal;
+  font-size: 15px;
+}
+.teamwork-wrap {
+  flex: 1;
+  margin: 1px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+.teamwork-wrap p {
+  color: black;
+  margin-bottom: 0.1rem;
+  font-size: 14px;
+}
+.teamwork-wrap .border {
+  padding: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  height: 85px;
+}
+.teamwork-wrap .border .img-wrap {
+  flex: 3;
+}
+.teamwork-wrap .border img {
+  max-width: 37px;
+  max-height: 37px;
+  margin: 8px auto;
+  align-items: center;
+}
+.teamwork-wrap:nth-child(2) .border img {
+  margin: 13px auto;
+}
+.teamwork-wrap .border span {
+  flex: 1;
+}
+.info-wrap {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 0.5rem;
+}
+.info-wrap p {
+  margin-bottom: 0.25rem;
+  text-align: center;
+}
+.desc-wrap {
+  text-align: center;
+}
+.desc-wrap h4 {
+  margin: 1rem;
 }
 @media (max-width: 768px) {
   .card.profile-card .card-body {
-    padding: 0.5rem;
+    padding: 1rem 0.5rem;
   }
 }
 

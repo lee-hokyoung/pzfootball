@@ -1,6 +1,7 @@
 extends layout
 block append_css
   link(rel="stylesheet", href="/public_css/main_screen.css")
+  link(rel="stylesheet", href="/public_css/match.css")
 block content
   .full-cover-pzfutball
   .container.p-0.mb-5
@@ -24,18 +25,18 @@ block content
           - var n = 0
           each list in match_list       
             ul.list-group.list-group-flush
-              h6.mt-3 #{list._id}
-              p.match-count 총 #{list.list.length || 0}매치
+              h6.px-3 #{list._id}
+              span.px-3.py-1 총 #{list.list.length || 0}매치
               each match in list.list
                 li.list-group-item(data-id=match._id)
-                  .row
-                    .col-md-10.col-8.my-auto
+                  .d-flex
+                    .col-md-10.col-8.my-auto.px-0
                       .row
                         .col-md-6
                           .time-ground-wrap.d-flex.justify-content-start
                             p.pl-5 #{match.match_time}
                             p.pl-5 #{ground_info.groundName}
-                        .col-md-4
+                        .col-md-4.col-9.pl-4
                           .d-flex.justify-content-start
                             .match-wrap.text-center.pt-1
                               b #{match.match_type}파
@@ -62,9 +63,9 @@ block content
                             if(match.ladder===1)
                               .ladder_icon.ml-2(data-title='승점')
                               b (+#{match.match_score})
-                        .col-md-2.text-right
+                        .col-md-2.col-3.text-right
                           b #{match.apply_member.length} / #{match.personnel.max}
-                    .col-md-2.col-4
+                    .col-md-2.col-4.pr-0
                       - var status ='available';
                       - var statusText = '';
                       - var remains = match.personnel.max - (match.apply_member.length || 0);

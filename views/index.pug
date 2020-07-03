@@ -9,23 +9,7 @@ block content
   .container-fluid
     .container.px-0
       include include/nav
-  .container-fluid.px-0
-    .main-slider
-      .d-flex.justify-content-center
-        .d-none.d-sm-block.main-slide-item(style='background-image:url(/images/banner/main_banner1_pc.png)')
-        .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/banner/main_banner1_mobile.png)')
-      .d-flex.justify-content-center
-        .d-none.d-sm-block.main-slide-item(style='background-image:url(/images/banner/main_banner2_pc.png)')
-        .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/banner/main_banner2_mobile.png)')
-      .d-flex.justify-content-center
-        .d-none.d-sm-block.main-slide-item(style='background:url(/images/banner/main_banner3_pc.png)')
-        .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/banner/main_banner3_mobile.png)')
-      .d-flex.justify-content-center
-        .d-none.d-sm-block.main-slide-item(style='background:url(/images/banner/main_banner_point_pc.png)')
-        .mobile_slide.w-100.d-block.d-sm-none(style='background:url(/images/banner/main_banner_point_mobile.png)')
-      each notice in notice_list
-        .d-none.d-sm-block.main-slide-item(style='background-image:url(' + notice.notice_img + ')')
-          //- img(src=notice.notice_img, alt='pc')
+  include include/main-slider
   //  날짜 선택 slick-slider
   - var size = 28;
   - var day = ['일', '월', '화', '수', '목', '금', '토'];
@@ -53,7 +37,7 @@ block content
                 class=d===1?'active':'',
                 class=date.getDay()===0?'text-danger':date.getDay()===6?'text-primary':'text-black',
                 class=d===1?'btn-primary':'', data-date=year + '-' + month + '-' + days)
-                  .h6.mb-3 #{days}
+                  .h6.mb-3 #{date.getDate()}
                   .small #{day[date.getDay()]}
         //  경기 필터링 부분
         .container.filter-wrap
@@ -124,3 +108,4 @@ block append_js
   script.
     let body = !{JSON.stringify(body)}
     let favorite_ground = !{JSON.stringify(favorite_ground)}
+    console.log("list : ", !{JSON.stringify(list)})

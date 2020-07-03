@@ -1,290 +1,295 @@
+.input-group .input-group-prepend .input-group-text,
+.form-group .form-control,
+.input-group .form-control {
+	padding: 5px 10px;
+}
 ul.list-group li.list-group-item {
-  font-size: 0.85rem;
+	font-size: 0.85rem;
 }
 .map_wrap,
 .map_wrap * {
-  margin: 0;
-  padding: 0;
-  font-family: "Malgun Gothic", dotum, "돋움", sans-serif;
-  font-size: 12px;
+	margin: 0;
+	padding: 0;
+	font-family: "Malgun Gothic", dotum, "돋움", sans-serif;
+	font-size: 12px;
 }
 .map_wrap a,
 .map_wrap a:hover,
 .map_wrap a:active {
-  color: #000;
-  text-decoration: none;
+	color: #000;
+	text-decoration: none;
 }
 .map_wrap {
-  position: relative;
-  width: 100%;
-  height: 500px;
+	position: relative;
+	width: 100%;
+	height: 500px;
 }
 #menu_wrap {
-  position: absolute;
-  top: 80px;
-  left: 20px;
-  bottom: 0;
-  width: 300px;
-  margin: 30px 0;
-  padding: 5px;
-  overflow-y: auto;
-  background: rgba(255, 255, 255, 0.7);
-  z-index: 1;
-  font-size: 12px;
-  border-radius: 10px;
-  height: 600px;
+	position: absolute;
+	top: 80px;
+	left: 20px;
+	bottom: 0;
+	width: 300px;
+	margin: 30px 0;
+	padding: 5px;
+	overflow-y: auto;
+	background: rgba(255, 255, 255, 0.7);
+	z-index: 1;
+	font-size: 12px;
+	border-radius: 10px;
+	height: 600px;
 }
 .bg_white {
-  background: #fff;
+	background: #fff;
 }
 #menu_wrap hr {
-  display: block;
-  height: 1px;
-  border: 0;
-  border-top: 2px solid #5f5f5f;
-  margin: 3px 0;
+	display: block;
+	height: 1px;
+	border: 0;
+	border-top: 2px solid #5f5f5f;
+	margin: 3px 0;
 }
 #menu_wrap .option {
-  text-align: center;
+	text-align: center;
 }
 #menu_wrap .option p {
-  margin: 10px 0;
+	margin: 10px 0;
 }
 #menu_wrap .option button {
-  margin-left: 5px;
+	margin-left: 5px;
 }
 #placesList li {
-  list-style: none;
+	list-style: none;
 }
 #placesList .item {
-  position: relative;
-  border-bottom: 1px solid #888;
-  overflow: hidden;
-  cursor: pointer;
-  min-height: 65px;
+	position: relative;
+	border-bottom: 1px solid #888;
+	overflow: hidden;
+	cursor: pointer;
+	min-height: 65px;
 }
 #placesList .item span {
-  display: block;
-  margin-top: 4px;
+	display: block;
+	margin-top: 4px;
 }
 #placesList .item h5,
 #placesList .item .info {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 }
 #placesList .item .info {
-  padding: 10px 0 10px 40px;
+	padding: 10px 0 10px 40px;
 }
 #placesList .info .gray {
-  color: #8a8a8a;
+	color: #8a8a8a;
 }
 #placesList .info .jibun {
-  padding-left: 26px;
-  background: url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;
+	padding-left: 26px;
+	background: url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;
 }
 #placesList .info .tel {
-  color: #009900;
+	color: #009900;
 }
 #placesList .item .markerbg {
-  float: left;
-  position: absolute;
-  width: 36px;
-  height: 37px;
-  margin: 10px 0 0 5px;
-  background: url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;
+	float: left;
+	position: absolute;
+	width: 36px;
+	height: 37px;
+	margin: 10px 0 0 5px;
+	background: url(http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;
 }
 #placesList .item .marker_1 {
-  background-position: 0 -10px;
+	background-position: 0 -10px;
 }
 #placesList .item .marker_2 {
-  background-position: 0 -56px;
+	background-position: 0 -56px;
 }
 #placesList .item .marker_3 {
-  background-position: 0 -102px;
+	background-position: 0 -102px;
 }
 #placesList .item .marker_4 {
-  background-position: 0 -148px;
+	background-position: 0 -148px;
 }
 #placesList .item .marker_5 {
-  background-position: 0 -194px;
+	background-position: 0 -194px;
 }
 #placesList .item .marker_6 {
-  background-position: 0 -240px;
+	background-position: 0 -240px;
 }
 #placesList .item .marker_7 {
-  background-position: 0 -286px;
+	background-position: 0 -286px;
 }
 #placesList .item .marker_8 {
-  background-position: 0 -332px;
+	background-position: 0 -332px;
 }
 #placesList .item .marker_9 {
-  background-position: 0 -378px;
+	background-position: 0 -378px;
 }
 #placesList .item .marker_10 {
-  background-position: 0 -423px;
+	background-position: 0 -423px;
 }
 #placesList .item .marker_11 {
-  background-position: 0 -470px;
+	background-position: 0 -470px;
 }
 #placesList .item .marker_12 {
-  background-position: 0 -516px;
+	background-position: 0 -516px;
 }
 #placesList .item .marker_13 {
-  background-position: 0 -562px;
+	background-position: 0 -562px;
 }
 #placesList .item .marker_14 {
-  background-position: 0 -608px;
+	background-position: 0 -608px;
 }
 #placesList .item .marker_15 {
-  background-position: 0 -654px;
+	background-position: 0 -654px;
 }
 #pagination {
-  margin: 10px auto;
-  text-align: center;
+	margin: 10px auto;
+	text-align: center;
 }
 #pagination a {
-  display: inline-block;
-  margin-right: 10px;
+	display: inline-block;
+	margin-right: 10px;
 }
 #pagination .on {
-  font-weight: bold;
-  cursor: default;
-  color: #777;
+	font-weight: bold;
+	cursor: default;
+	color: #777;
 }
 .card label {
-  font-size: 0.8rem;
-  float: left;
+	font-size: 0.8rem;
+	float: left;
 }
 .fileinput .thumbnail {
-  max-width: 400px;
+	max-width: 400px;
 }
 .fileinput .thumbnail.fileinput-new,
 .fileinput .thumbnail.fileinput-exists {
-  max-width: 200px;
+	max-width: 200px;
 }
 #mvp_user {
-  font-size: 0.75rem;
+	font-size: 0.75rem;
 }
 #mvp_user select {
-  padding: 0.3rem;
-  font-size: 0.75rem;
-  height: 2rem;
+	padding: 0.3rem;
+	font-size: 0.75rem;
+	height: 2rem;
 }
 #user_list li {
-  padding: 0.5rem 1rem;
+	padding: 0.5rem 1rem;
 }
 #user_list li button {
-  margin: 0;
+	margin: 0;
 }
 #user_list li button[data-toggle="true"] {
 }
 #user_list li div[class*="col-"] {
-  margin: auto 0;
+	margin: auto 0;
 }
 #config-page .card .card-body {
-  height: 400px;
-  overflow-y: auto;
+	height: 400px;
+	overflow-y: auto;
 }
 #config-page table.table td {
-  font-size: 0.75rem;
-  padding: 0;
+	font-size: 0.75rem;
+	padding: 0;
 }
 #config-page table.table input {
-  font-size: 0.75rem;
-  margin: 0.5rem 0;
+	font-size: 0.75rem;
+	margin: 0.5rem 0;
 }
 .bootstrap-select .hidden {
-  display: none;
+	display: none;
 }
 .bs-searchbox {
-  padding: 6px 8px;
+	padding: 6px 8px;
 }
 .bs-searchbox input.form-control {
-  border-bottom: 1px solid #ddd;
-  border-radius: 5px;
+	border-bottom: 1px solid #ddd;
+	border-radius: 5px;
 }
 .bs-searchbox input.form-control:focus {
-  border-bottom: 1px solid #9a9a9a;
+	border-bottom: 1px solid #9a9a9a;
 }
 .picture input[type="file"] {
-  cursor: pointer;
-  display: block;
-  height: 100%;
-  left: 0;
-  opacity: 0 !important;
-  position: absolute;
-  top: 0;
-  width: 100%;
+	cursor: pointer;
+	display: block;
+	height: 100%;
+	left: 0;
+	opacity: 0 !important;
+	position: absolute;
+	top: 0;
+	width: 100%;
 }
 /*  경기 일정 등록 테이블 컬럼 길이 css */
 ul#match-register li .row .col[data-title="#"] {
-  max-width: 30px;
+	max-width: 30px;
 }
 ul#match-register li .row .col[data-title="match_time"] {
-  max-width: 100px;
+	max-width: 100px;
 }
 ul#match-register li .row .col[data-title="match_type"] {
-  min-width: 180px;
+	min-width: 180px;
 }
 ul#match-register li .row .col[data-title="match_grade"],
 ul#match-register li .row .col[data-title="match_score"] {
-  max-width: 250px;
+	max-width: 250px;
 }
 ul#match-register li .row .col[data-title="sex"] {
-  min-width: 250px;
+	min-width: 250px;
 }
 ul#match-register li .row .col[data-title="personnel"] {
-  max-width: 150px;
+	max-width: 150px;
 }
 ul#match-register li .row .col[data-title="match_price"] {
-  max-width: 130px;
+	max-width: 130px;
 }
 ul#match-register li .row .col[data-title="buttons"] {
-  min-width: 100px;
+	min-width: 100px;
 }
 ul#match-register li .row .col[data-title="personnel"] .form-group {
-  display: flex;
-  justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 }
 ul#match-register li .row .col[data-title="personnel"] input {
-  width: 50px;
+	width: 50px;
 }
 .grade-group[data-view="false"] {
-  display: none;
+	display: none;
 }
 .grade-group[data-view="true"] {
-  display: block;
+	display: block;
 }
 .bootstrap-select.show::after {
-  content: "";
+	content: "";
 }
 button[data-role="activeNotice"][data-toggle="true"] {
-  color: #28a745 !important;
+	color: #28a745 !important;
 }
 button[data-role="activeNotice"][data-toggle="false"] {
-  color: #dc3545 !important;
+	color: #dc3545 !important;
 }
 #config-page table#manner-table tbody td {
-  padding: 0.25rem 0.5rem;
+	padding: 0.25rem 0.5rem;
 }
 #config-page table#manner-table tbody td input {
-  padding: 0.5rem;
+	padding: 0.5rem;
 }
 .table th,
 .table td {
-  white-space: nowrap;
+	white-space: nowrap;
 }
 
 .table select {
-  min-width: 130px;
+	min-width: 130px;
 }
 #datatable_wrapper .dataTables_filter {
-  width: 50%;
-  float: right;
+	width: 50%;
+	float: right;
 }
 @media (min-width: 992px) {
-  .modal-lg {
-    max-width: 1200px;
-  }
+	.modal-lg {
+		max-width: 1200px;
+	}
 }

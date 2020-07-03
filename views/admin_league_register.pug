@@ -1,0 +1,30 @@
+extends admin_layout
+block content
+  .content
+    .row
+      .col-12
+        .card
+          .card-header
+            h4.card-title 리그 생성
+          .card-body
+            .row
+              .col-md-4.col-9
+                .form-group
+                  label 리그 타이틀
+                  input.form-control(type='text', name='league_title')
+              .col-md-2.col-3
+                .form-group
+                  label 라운드 수
+                  input.form-control(type='number', name='round_cnt')
+            .row
+              .col-md-3
+                .form-group
+                  label 지역
+                  select.form-control
+                    option(value='', disabled, selected) 지역을 선택해 주세요.
+                    each opt in region
+                      option(val=opt._id) #{opt.name}
+          .card-footer
+            button.btn.btn-primary(type='button') 생성하기
+    script.
+      console.log('region : ', !{JSON.stringify(region)})

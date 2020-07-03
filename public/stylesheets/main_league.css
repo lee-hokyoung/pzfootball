@@ -1,18 +1,41 @@
 #season-wrap button {
-  width: 45%;
-  padding: 1rem;
-  border-radius: 0.65rem;
-  background-color: #ccc;
-  color: gray;
+	width: 45%;
+	padding: 1rem;
+	border-radius: 0.65rem;
+	color: gray;
 }
 #season-wrap button.active,
 #season-wrap button:hover,
 #season-wrap button:focus,
 button[name="btnRanking"]:hover,
 button[name="btnRanking"]:focus {
-  background-color: #662d91 !important;
+	background-color: #662d91 !important;
 }
-#season-wrap button img {
+#season-wrap {
+	display: flex;
+	width: 700px;
+}
+#season-wrap select.form-control {
+	margin: 0 0.25rem;
+	height: 36px;
+	font-family: NotoSansR;
+}
+#season-wrap button.btn.btn-outline-default {
+	border-radius: 0;
+	margin: 0.3rem 0.2rem;
+	padding: 0;
+	max-width: 40px;
+	border: 1px solid #ddd !important;
+	font-family: NotoSansM;
+	color: black;
+}
+/* #season-wrap button.btn.btn-outline-default:focus, */
+/* #season-wrap button.btn.btn-outline-default:hover {
+	background-color: transparent !important;
+	color: gray !important;
+} */
+
+/* #season-wrap button img {
   margin-right: 0.5rem;
 }
 #season-wrap button span {
@@ -23,103 +46,343 @@ button[name="btnRanking"]:focus {
   display: flex;
 }
 #season-wrap .search-league-wrap select {
+} */
+#nav-tab a {
+	border-bottom: 3px solid transparent;
 }
-#nav-tab button.active,
-#nav-tab button:focus,
-#nav-tab button:hover {
-  color: #662d91 !important;
-  text-decoration: underline;
+#nav-tab a.active,
+#nav-tab a:focus,
+#nav-tab a:hover {
+	color: black !important;
+	font-weight: bold;
+	border-bottom: 3px solid #662d91;
+	border-radius: 0;
+	transition: none;
+	padding: 0.5rem 0;
+	margin: 0 1rem;
 }
 #nav-tab .vertical-line {
-  margin: 3px 0;
-  width: 1px;
-  border-width: 1px;
-  border-style: solid;
-  border-left: none;
-  border-top: none;
-  border-bottom: none;
+	margin: 10px 0 13px 0;
+	width: 1px;
+	border-width: 1px;
+	border-style: solid;
+	border-left: none;
+	border-top: none;
+	border-bottom: none;
+	color: #ccc;
 }
-#round-wrap {
-  width: 90%;
-  margin: 0 auto;
+.round-wrap {
+	width: 92%;
+	margin: 0 auto;
 }
-#round-wrap button.btn {
-  background-color: #ccc;
-  width: 95%;
+.round-wrap li.nav-item {
+	position: relative;
 }
-#round-wrap .slick-prev:before {
-  content: "\ea3a";
-  font-family: "nucleo-icons";
+.round-wrap li.nav-item::after {
+	content: "|";
+	color: #aaa;
+	position: absolute;
+	right: -1px;
+	top: 1rem;
 }
-#round-wrap .slick-next:before {
-  content: "\ea3b";
-  font-family: "nucleo-icons";
+.round-wrap .slick-slide:nth-child(7n) li.nav-item::after {
+	content: "";
+}
+
+.round-wrap button.btn {
+	background-color: transparent !important;
+	color: black !important;
+	padding: 1.2rem 0.25rem 1rem 0.25rem;
+	margin: 0;
+	border-bottom: 5px solid transparent;
+	font-weight: normal;
+	font-size: 14px;
+	font-family: NotoSansR;
+}
+.round-wrap button.btn.active,
+.round-wrap button.btn:hover {
+	border-bottom: 5px solid #662d91;
+	border-radius: 0;
+	font-weight: bold;
+	font-family: NotoSansB;
+	background-color: transparent !important;
+	color: black !important;
+}
+.round-wrap button.btn:active:hover {
+	background-color: transparent !important;
+	color: black !important;
+}
+.round-wrap .slick-prev:before {
+	content: "\ea3a";
+	font-family: "nucleo-icons";
+}
+.round-wrap .slick-next:before {
+	content: "\ea3b";
+	font-family: "nucleo-icons";
+}
+h3 {
+	font-family: NotoSansB;
+	font-size: 25px;
 }
 h5 {
-  font-family: scdream5;
-  font-weight: normal;
+	font-family: scdream5;
+	font-weight: normal;
+}
+h6 {
+	font-family: NotoSansB;
+	font-size: 18px;
+	margin: 1rem;
 }
 #filter-wrap {
 }
 #filter-wrap .form-group button {
-  margin: 0;
-  padding: 0 1.5rem 0 0;
-}
-#league-list-wrap {
-  border-top: 1px solid #111;
-}
-#league-list-wrap .row {
-  padding: 0.5rem 0;
-}
-#league-list-wrap div[data-col] {
-  padding: 0 1rem;
-}
-#league-list-wrap div[data-col="date"] {
-  margin: auto 0 auto 15px;
-}
-#league-list-wrap div[data-col="date"] h5 {
-  margin: 0;
-}
-#league-list-wrap div[data-col="time"] {
-  text-align: center;
-  margin: auto 0;
-}
-#league-list-wrap div[data-col="time"] h6 {
-  font-size: 19px;
-  font-family: scdream5;
-  margin: 0;
-}
-#league-list-wrap div[data-col="time"] span {
-  font-family: scdream5;
-  font-size: 12px;
-}
-#league-list-wrap div[data-col="match-result"] {
-  display: flex;
-  justify-content: center;
-  flex: 1;
-}
-#league-list-wrap div[data-col="match-result"] img,
-#league-list-wrap div[data-col="match-result"] .col-wrap,
-#league-list-wrap div[data-col="match-result"] .point-wrap {
-  margin: auto 0.5rem;
-}
-#league-list-wrap div[data-col="match-result"] img {
-  width: 50px;
-}
-#league-list-wrap div[data-col="match-result"] .col-wrap h5 {
-  margin: 0;
-}
-#league-list-wrap div[data-col="match-result"] .point-wrap span {
-  font-size: 30px;
-  font-weight: 300;
-  font-family: NotoSansR;
-}
-#league-list-wrap div[data-col="btn-detail"] {
-  margin-right: 15px;
+	margin: 0;
+	padding: 0 1.5rem 0 0;
 }
 button[name="btnRanking"] {
-  background-color: #662d91;
-  font-size: 20px;
-  border-radius: 0.5rem;
-  font-family: scdream6;
+	background-color: #662d91;
+	font-size: 20px;
+	border-radius: 0.5rem;
+	font-family: scdream6;
+}
+
+/* 라운드 css */
+#league-list-wrap {
+	display: block;
+}
+#league-list-wrap .league-match-wrap {
+	border: 1px solid #ddd;
+	padding: 1.3rem;
+	display: inline-flex;
+	width: calc(50% - 26px);
+	margin: 10px 13px;
+	/* margin-left: 5px; */
+	position: relative;
+}
+#league-list-wrap .league-match-wrap:hover:before {
+	content: "";
+	border-left: 5px solid #662d91;
+	position: absolute;
+	width: 5px;
+	height: 187px;
+	left: 0px;
+	top: 0;
+}
+#league-list-wrap .league-match-wrap .team-wrap {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	align-items: center;
+}
+#league-list-wrap .league-match-wrap .team-wrap .emblem {
+	width: 110px;
+	height: 110px;
+	background-size: 60px;
+	border-radius: 50%;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-color: #eee;
+	border: 1px solid #eee;
+}
+#league-list-wrap .league-match-wrap .team-wrap label {
+	padding-top: 0.5rem;
+	margin: 0;
+	font-size: 18px;
+	font-family: NotoSansB;
+}
+#league-list-wrap .league-match-wrap .info-wrap {
+	flex: 2;
+	text-align: center;
+	margin: auto 0;
+}
+#league-list-wrap .league-match-wrap .info-wrap p {
+	margin-bottom: 0.6rem;
+	font-family: NotoSansM;
+	color: black;
+	font-size: 12px;
+}
+#league-list-wrap .league-match-wrap .info-wrap span {
+	font-size: 28px;
+	font-family: NotoSansB;
+}
+#league-list-wrap .league-match-wrap .info-wrap span.win {
+	color: #662d91;
+}
+#league-list-wrap .league-match-wrap .status-wrap {
+	font-size: 10px;
+	height: 25px;
+	display: block;
+	line-height: 25px;
+}
+#league-list-wrap .league-match-wrap .status-wrap span {
+	font-size: 12px;
+}
+#league-list-wrap .league-match-wrap .status-wrap span:nth-child(2) {
+	font-size: 12px;
+	border: 1px solid #ddd;
+	padding: 0.1rem 0.35rem;
+	border-radius: 14px;
+	margin: 0 0.45rem;
+}
+/* 라운드 css 끝 */
+h5.rank-title {
+	margin: 1rem;
+	font-family: NotoSansB;
+	font-size: 20px;
+}
+#rank table.table {
+	display: inline-table;
+}
+#rank table.table thead {
+	background-color: #eee;
+	border-top: 1px solid #aaa;
+}
+#rank table.table thead th:nth-child(3) {
+	background-color: rgba(102, 45, 145, 0.1);
+	font-family: NotoSansB;
+	color: #662d91;
+}
+#rank table.table thead tr th:first-child,
+#rank table.table tbody tr td:first-child {
+	font-family: NotoSansB;
+}
+#rank table.table tbody tr {
+	border-top: 1px solid #ccc;
+	border-left: 3px solid transparent;
+}
+#rank table.table tbody tr:hover {
+	background-color: #eee;
+	border-left: 3px solid #662d91;
+}
+#rank table.table tbody td {
+	padding: 10px 5px;
+}
+#rank table.table th:nth-child(2),
+#rank table.table tbody tr td:nth-child(2) {
+	text-align: left;
+}
+#rank table.table tbody tr td:nth-child(3) {
+	background-color: rgba(102, 45, 145, 0.1);
+	font-family: NotoSansB;
+}
+#rank table.table tbody .team-emblem {
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	display: inline-block;
+	background-size: 16px;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-color: #ddd;
+	margin-right: 10px;
+}
+#rank table.table tbody td[name="team"] span {
+	height: 30px;
+	line-height: 30px;
+	display: inline-block;
+	vertical-align: top;
+}
+#rank-tab li {
+	border: 1px solid #ccc;
+	width: 90px;
+	text-align: center;
+	font-size: 12px;
+	font-family: NotoSansR;
+}
+#rank-tab li a.active {
+	background-color: #eee;
+	font-weight: bold;
+}
+#rank-tab li:last-child {
+	border-left: none;
+}
+#personal table.table thead th:nth-child(3) {
+	background-color: inherit;
+	color: inherit;
+	text-align: left;
+	font-weight: inherit;
+}
+#personal table.table thead th:nth-child(4) {
+	background-color: rgba(102, 45, 145, 0.1);
+	font-family: NotoSansB;
+	color: #662d91;
+}
+#personal table.table tbody tr td:nth-child(3) {
+	background-color: inherit;
+	text-align: left;
+	font-size: 10px;
+	font-family: NotoSansR;
+	color: #666;
+}
+#personal table.table tbody tr td:nth-child(4) {
+	background-color: rgba(102, 45, 145, 0.1);
+	font-family: NotoSansB;
+}
+
+@media screen and (max-width: 575px) {
+	#league-list-wrap .league-match-wrap {
+		padding: 0.5rem;
+		display: flex;
+		width: 100%;
+		margin: 5px 0px;
+		position: relative;
+	}
+	#league-list-wrap .league-match-wrap:hover:before {
+		content: "";
+		height: 106px;
+	}
+	#league-list-wrap .league-match-wrap .team-wrap {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		text-align: center;
+		align-items: center;
+	}
+	#league-list-wrap .league-match-wrap .team-wrap .emblem {
+		width: 60px;
+		height: 60px;
+		background-size: 30px;
+		border-radius: 50%;
+	}
+	#league-list-wrap .league-match-wrap .team-wrap label {
+		font-size: 14px;
+	}
+	#league-list-wrap .league-match-wrap .info-wrap {
+		flex: 2;
+		text-align: center;
+		margin: auto 0;
+	}
+	#league-list-wrap .league-match-wrap .info-wrap p {
+		font-size: 11px;
+	}
+	#league-list-wrap .league-match-wrap .info-wrap span {
+		font-size: 22px;
+		font-family: NotoSansB;
+	}
+	#league-list-wrap .league-match-wrap .info-wrap span.win {
+		color: #662d91;
+	}
+	#league-list-wrap .league-match-wrap .status-wrap {
+		font-size: 10px;
+		height: 25px;
+		display: block;
+		line-height: 25px;
+	}
+	#league-list-wrap .league-match-wrap .status-wrap span {
+		font-size: 10px;
+	}
+	#league-list-wrap .league-match-wrap .status-wrap span:nth-child(2) {
+		font-size: 10px;
+		border: 1px solid #ddd;
+		padding: 0.1rem 0.35rem;
+		border-radius: 15px;
+		margin: 0 0.45rem;
+	}
+	#season-wrap {
+		width: 100%;
+	}
+	#rank table.table {
+		display: block;
+	}
 }

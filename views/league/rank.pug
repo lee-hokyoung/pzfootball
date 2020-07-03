@@ -1,0 +1,87 @@
+.tab-pane#rank(role='tabpanel', aria-labelledby='rank-tab')
+  .container.tab-content
+    ul.nav#rank-tab(role='tablist')
+      li.nat-item
+        a.nav-link.active#team-tab(data-toggle='tab', href='#team', role='tab', aria-controls='team', aria-selected='true') 팀 순위
+      li.nat-item
+        a.nav-link#personal-tab(data-toggle='tab', href='#personal', role='tab', aria-controls='personal', aria-selected='true') 개인 순위
+    .tab-pane.active#team(role='tabpanel', aria-labelledby='rankDetail-tab')
+      h5.rank-title 팀 전체 순위
+      table.table.table-responsive.text-nowrap.text-center
+        colgroup
+          col(width='100')
+          col(width='auto')
+          col(width='70')
+          col(width='70')
+          col(width='70')
+          col(width='70')
+          col(width='70')
+          col(width='70')
+          col(width='70')
+          col(width='70')
+        thead
+          th 순위
+          th 팀
+          th 승점
+          th 경기
+          th 승
+          th 무
+          th 패
+          th 득
+          th 실
+          th 득실차
+        tbody
+          - var team_rank = [{rank:1, team_name:'아스날 FC', team_emblem:'/images/logo_black.png', win:31, tie:1, defeat:3, plus:100, minus:23}, {rank:2, team_name:'첼시', team_emblem:'/images/logo_black.png', win:28, tie:2, defeat:6, plus:75, minus:33}]
+          each item in team_rank
+            tr
+              td #{item.rank}
+              td(name='team')
+                .team-emblem(style='background-image:url(' + (item.team_emblem?item.team_emblem:"/images/logo_black.png") + ')')
+                span #{item.team_name}
+              td #{item.win * 3 + item.tie}
+              td #{item.win + item.tie + item.defeat}
+              td #{item.win}
+              td #{item.tie}
+              td #{item.defeat}
+              td #{item.plus}
+              td #{item.minus}
+              td #{item.plus - item.minus}
+
+    .tab-pane#personal(role='tabpanel', aria-labelledby='rankDetail-tab')
+      h5.rank-title 개인 전체 순위
+      table.table.table-responsive.text-nowrap.text-center
+        colgroup
+          col(width='100')
+          col(width='150')
+          col(width='auto')
+          col(width='70')
+          col(width='70')
+          col(width='70')
+          col(width='70')
+          col(width='70')
+        thead
+          th 순위
+          th 선수
+          th 팀
+          th 득점
+          th MOM
+          th 경기
+          th 경고
+          th 퇴장
+        tbody
+          - var team_rank = [{rank:1, user_name:'아구에로',user_team:'맨체스터 시티', profile_image:'/images/logo_black.png', score:30, mom:10, play:23, yellow:12, red:2}, {rank:2, user_name:'반 페르시', user_team:'아스날 FC', profile_image:'/images/logo_black.png', score:24, mom:7, play:26, yellow:5, red:0}]
+          each item in team_rank
+            tr
+              td #{item.rank}
+              td(name='team')
+                .team-emblem(style='background-image:url(' + (item.profile_image?item.profile_image:"/images/logo_black.png") + ')')
+                span #{item.user_name}
+              td #{item.user_team}
+              td #{item.score}
+              td #{item.mom}
+              td #{item.play}
+              td #{item.yellow}
+              td #{item.red}
+                    
+
+

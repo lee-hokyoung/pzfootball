@@ -1,0 +1,35 @@
+.tab-pane#schedule(role='tabpanel', aria-labelledby='schedule-tab')
+  .container
+    ul.nav.border-bottom
+      .round-wrap#schedule-wrap
+        - var n = 0;
+        while n < 21
+          li.nav-item.text-center
+            button.btn(class=n===0?'active':'') #{++n}R
+    //- 라운드 정보
+    #league-list-wrap
+      - var round_list = [{date:'7R 06.06. 토요일', match_list:[{home_image:'', home_name:'IK FC', away_image:'', away_name:'PZ FC', ground_name:'전주 에이스 풋살장', state:1, result:[9,2]},{home_image:'', home_name:'IK FC', away_image:'', away_name:'PZ FC', ground_name:'전주 에이스 풋살장', state:0, match_time:'18:00'}, {home_image:'', home_name:'IK FC', away_image:'', away_name:'PZ FC', ground_name:'전주 에이스 풋살장', state:0, match_time:'18:00'}]}]
+      each item in round_list
+        h6.text-left.pl-3.mt-3(style='font-weight:bold') #{item.date}
+        each round in item.match_list
+          .league-match-wrap
+            .team-wrap
+              .emblem(style='background-image:' + (round.home_image?round.home_image:'url(/images/logo_black.png)'))
+              label #{round.home_name}
+            .info-wrap
+              .match_result
+                if(round.state===1)
+                  span(class=round.result[0]>round.result[1]?'win':'lose') #{round.result[0]}
+                  span &nbsp;:&nbsp;
+                  span(class=round.result[0]<round.result[1]?'win':'lose') #{round.result[1]}
+                else
+                  span.match_time #{round.match_time}
+              p #{round.ground_name}
+              .status-wrap
+                span HOME
+                span #{round.state===1?'경기 종료':'경기 전'}
+                span AWAY
+            .team-wrap
+              .emblem(style='background-image:' + (round.home_image?round.home_image:'url(/images/logo_black.png)'))
+              label #{round.away_name}
+        hr

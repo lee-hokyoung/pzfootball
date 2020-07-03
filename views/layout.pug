@@ -35,7 +35,7 @@ html
         //-   i.fas.fa-arrow-left
         .sidebar-header
           a(href='/')
-            img(src='/images/pz_logo.png')
+            img(src='/images/logo_color_horizon.png' width='120px')
         ul.list-unstyled.components.p-3
           li
             a(href="#about") 
@@ -76,7 +76,8 @@ html
       .container.px-0
         .d-flex.justify-content-between.px-3
           //- img.py-2(src='/images/pz_logo.png', style='cursor:pointer; z-index:10; width:70px', onclick='location.href="/"', alt='퍼즐풋볼 메인 로고')
-          a.py-3.font-weight-bold(href='/') PZ SPORT
+          a.py-3.font-weight-bold(href='/')
+            img(src='/images/logo_color_horizon.png' width='100px')
           .nav-button-wrap.my-auto
             if(user_info)
               span.text-black
@@ -90,7 +91,7 @@ html
               span
                 //- a.text-primary(href='#' data-toggle='modal', data-target='#loginModal') 로그인
                 a.text-primary(href='/users/login') 로그인
-              span.text-black.px-2 또는
+              span.text-black.px-2(style='font-family:NotoSansL') 또는
               span
                 //- a.text-primary(href='#', data-toggle='modal', data-target='#joinModal') 회원가입
                 //- a.text-primary(href='#', data-toggle='modal', data-target='#beforeJoinModal') 회원가입

@@ -1,0 +1,37 @@
+.tab-pane.active#result(role='tabpanel', aria-labelledby='result-tab')
+  .container
+    ul.nav.border-bottom
+      .round-wrap#round-wrap
+        - var n = 0;
+        while n < 21
+          li.nav-item.text-center
+            button.btn(class=n===0?'active':'') #{++n}R
+    //- 라운드 정보
+    h6.text-center.mt-3(style='font-weight:bold') 06.06. 토요일
+    #league-list-wrap
+      - var round_list = [{home_image:'', home_name:'IK FC', away_image:'', away_name:'PZ FC', ground_name:'전주 에이스 풋살장', state:1, result:[9,2]},{home_image:'', home_name:'IK FC', away_image:'', away_name:'PZ FC', ground_name:'전주 에이스 풋살장', state:0, match_time:'18:00'}, {home_image:'', home_name:'IK FC', away_image:'', away_name:'PZ FC', ground_name:'전주 에이스 풋살장', state:0, match_time:'18:00'}]
+      each round, idx in round_list
+        .league-match-wrap
+          .team-wrap
+            .emblem(style='background-image:' + (round.home_image?round.home_image:'url(/images/logo_black.png)'))
+            label #{round.home_name}
+          .info-wrap
+            .match_result
+              if(round.state===1)
+                span(class=round.result[0]>round.result[1]?'win':'lose') #{round.result[0]}
+                span &nbsp;:&nbsp;
+                span(class=round.result[0]<round.result[1]?'win':'lose') #{round.result[1]}
+              else
+                span.match_time #{round.match_time}
+            p #{round.ground_name}
+            .status-wrap
+              span HOME
+              span #{round.state===1?'경기 종료':'경기 전'}
+              span AWAY
+          .team-wrap
+            .emblem(style='background-image:' + (round.home_image?round.home_image:'url(/images/logo_black.png)'))
+            label #{round.away_name}
+    //- .row
+    //-   .col.text-center
+    //-     button.btn(type='button', name='btnRanking') 순위표 바로 가기
+  //  필터링 할 때 loading 이미지 띄우기

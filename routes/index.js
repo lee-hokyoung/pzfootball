@@ -344,11 +344,4 @@ router.post("/filter", async (req, res) => {
 		});
 	}
 });
-
-//  리그 매치 화면
-router.get("/league", async (req, res) => {
-	res.render("league", {
-		active: "league",
-	});
-});
 module.exports = router;

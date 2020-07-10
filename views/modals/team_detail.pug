@@ -1,0 +1,46 @@
+#teamDetailModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="teamDetailLabel" aria-hidden="true")
+  .modal-dialog.modal-lg
+    .modal-content(style='border-radius:30px;')
+      .modal-header.px-3
+        h6#team_name
+        p#team_desc
+      .modal-body.px-3
+        .row
+          .col-md-6
+            .form-group
+              label 팀메일
+              input.form-control(type='text', name='team_email', readonly)
+          .col-md-6
+            .form-group
+              label 팀 연락처
+              input.form-control(type='text', name='team_phone', readonly)
+          .col-md-4
+            .form-group
+              label 성별
+              input.form-control(type='text', name='team_gender', readonly)
+          .col-md-3
+            .form-group
+              label 상의
+              input.form-control(type='text', name='uniform_top', readonly)
+          .col-md-3
+            .form-gorup
+              label 하의
+              input.form-control(type='text', name='uniform_bottom', readonly)
+        table.table.text-center
+          colgroup
+            col(width='70')
+            col(width='200')
+            col(width='auto')
+            col(width='100')
+            col(width='100')
+            col(width='100')
+            col(width='100')
+          thead
+            th #
+            th.text-left ID
+            th.text-left 이름
+            th 성별
+            th 키
+            th 몸무게
+            th 포지션
+          tbody#userTable

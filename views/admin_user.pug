@@ -9,6 +9,7 @@ block content
             .table-responsive
               table#datatable.table.table-striped.table-bordered.text-center(cellspacing='0', width='100%')
                 colgroup
+                  col(width='150')
                   col(width='50', about='No')
                   col(width='150', about='소속 필터')
                   col(width='200', about='아이디(이메일)')
@@ -24,6 +25,7 @@ block content
                   col(width='200', about='회원정보 관리')
                 thead
                   tr
+                    th _id
                     th No
                     th 
                       select.form-control(name="depart")
@@ -90,6 +92,7 @@ block content
                           if(penalty_list.toString().indexOf(m._id) > -1)
                             - penalty = penalty + m.point
                     tr
+                      td #{user._id}
                       td #{idx + 1}
                       td  
                         if(user.club_info) 

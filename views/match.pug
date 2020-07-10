@@ -15,11 +15,11 @@ block content
             .detail_img_wrap(style='background-image:url("' + ground_images.ground_images_2 + '")')
           if(ground_images.ground_images_3)
             .detail_img_wrap(style='background-image:url("' + ground_images.ground_images_3 + '")')
-        #theway-slider(data-visible='false')
-          if(match_info.ground_info.pathname)
-            - var theway = match_info.ground_info.pathname.split(',')
-            each item in theway
-              .theway_images(style='background-image:url("/upload/' + item + '")')
+        //- #theway-slider(data-visible='false')
+        //-   if(match_info.ground_info.pathname)
+        //-     - var theway = match_info.ground_info.pathname.split(',')
+        //-     each item in theway
+        //-       .theway_images(style='background-image:url("/upload/' + item + '")')
       .px-3.bg-white
         .section#scrollPosition
           - day_list = ['일', '월', '화', '수', '목', '금', '토'];

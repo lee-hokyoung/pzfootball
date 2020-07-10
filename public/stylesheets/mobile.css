@@ -72,4 +72,7 @@
 	#matchFilter {
 		padding: 0 0.5rem;
 	}
+	.modal .modal-dialog {
+		max-width: inherit !important;
+	}
 }

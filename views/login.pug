@@ -1,15 +1,16 @@
 extends layout
 block append_css
   link(rel='stylesheet', href='/public_css/login.css')
+  link(rel='stylesheet', href='/nm/spinkit/spinkit.min.css')
 block content
   .container-fluid.pb-5
     .container#login-page
       .page-wrap
         form(onsubmit='return fnSubmitLoginPage()')
           .new-pz-logo
-            span.text-primary.pl-3 함께하는
-            span.pl-1 스포츠
-            h4.pr-3 PZ SPORT
+            //- span.text-primary.pl-3 함께하는
+            //- span.pl-1 스포츠
+            //- h4.pr-3 PZ SPORT
           //- .rainbow_font_wrap(style='font-size:18.75px')
           //-   span 함
           //-   span 께
@@ -51,8 +52,13 @@ block content
   include modals/findId
   include modals/findPw
   #loadingPage.d-none
-    .d-flex
-      img(src='/nm/slick-slider/slick/ajax-loader.gif')
+    .sk-chase
+      .sk-chase-dot
+      .sk-chase-dot
+      .sk-chase-dot
+      .sk-chase-dot
+      .sk-chase-dot
+      .sk-chase-dot
 block append_js
   script(src='/public_js/login.js')
   script(src='/public_js/mail.js')

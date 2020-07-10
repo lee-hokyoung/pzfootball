@@ -1,249 +1,331 @@
 .form-group input.form-control,
 .form-group select.form-control {
-  border-radius: 0;
-  padding: 0 0.5rem;
+	border-radius: 0;
+	padding: 0 0.5rem;
 }
 input.form-control:focus,
 select.form-control:focus {
-  border: 2px solid #662d91;
+	border: 2px solid #662d91;
 }
 #login-page,
 #join-page {
-  max-width: 350px;
-  height: calc(100vh - 101px);
-  display: table;
+	max-width: 350px;
+	height: calc(100vh - 101px);
+	display: table;
 }
 #login-page .page-wrap,
 #join-page .page-wrap {
-  display: table-cell;
-  vertical-align: middle;
+	display: table-cell;
+	vertical-align: middle;
 }
 #login-page h5.title {
-  text-align: center;
+	text-align: center;
 }
 /* #login-page img, */
 #login-page ul.local-login {
-  max-width: 220px;
-  margin: auto;
+	max-width: 220px;
+	margin: auto;
 }
 #login-page ul {
-  text-align: center;
-  padding: 0;
+	text-align: center;
+	padding: 0;
 }
 #login-page ul li {
-  list-style-type: none;
-  padding-bottom: 0.5rem;
+	list-style-type: none;
+	padding-bottom: 0.5rem;
 }
 /* #join-page {
   max-width: 1110px;
 } */
 #login-page .d-flex.justify-content-between .vertical-line {
-  border-color: rgb(89, 89, 89);
+	border-color: rgb(89, 89, 89);
 }
 #login-page input.form-control {
-  border-radius: 0px;
-  font-family: NotoSansR;
-  font-weight: normal;
-  color: #666666;
-  font-size: 14px;
+	border-radius: 0px;
+	font-family: NotoSansR;
+	font-weight: normal;
+	color: #666666;
+	font-size: 14px;
 }
 #login-page button[type="submit"],
 #join-page button[type="submit"] {
-  background-color: #662d91;
-  color: #fff;
-  font-family: NotoSansM;
-  font-weight: bold;
-  font-size: 16px;
-  border-radius: 6px;
-  margin-bottom: 12px !important;
-  padding: 0.8rem;
+	background-color: #662d91;
+	color: #fff;
+	font-family: NotoSansM;
+	font-weight: bold;
+	font-size: 16px;
+	border-radius: 6px;
+	margin-bottom: 12px !important;
+	padding: 0.8rem;
 }
 #login-page .form-check-label,
 #join-page .form-check-label {
-  font-family: NotoSansR;
-  font-size: 12px;
-  padding-left: 20px;
-  color: #000;
-  line-height: 14px;
+	font-family: NotoSansR;
+	font-size: 12px;
+	padding-left: 20px;
+	color: #000;
+	line-height: 14px;
 }
 #login-page .form-check-label .form-check-sign::before,
 #login-page .form-check-label .form-check-sign::after,
 #join-page .form-check-label .form-check-sign::before,
 #join-page .form-check-label .form-check-sign::after {
-  width: 14px;
-  height: 14px;
-  border-radius: 3px;
-  background-color: #eee;
-  border: 1px solid #ddd;
+	width: 14px;
+	height: 14px;
+	border-radius: 3px;
+	background-color: #eee;
+	border: 1px solid #ddd;
+	color: #777;
 }
 #login-page .form-check-label .form-check-sign::after,
 #sign-page .form-check-label .form-check-sign::after {
-  font-size: 12px;
-  color: black;
+	font-size: 12px;
+	color: black;
 }
 h6.title {
-  font-family: NotoSansM;
-  font-size: 16px;
+	font-family: NotoSansM;
+	font-size: 16px;
 }
 #login-page .d-flex.justify-content-around a {
-  font-family: NotoSansM;
-  font-size: 14px;
-  color: #666666;
+	font-family: NotoSansM;
+	font-size: 14px;
+	color: #666666;
 }
 #login-page .d-flex.justify-content-around a:hover {
-  color: #662d91;
+	color: #662d91;
 }
 #login-page .d-flex.justify-content-around .vertical-line {
-  margin: 4px 0;
-  width: 1px;
-  border-width: 1px;
-  border-style: solid;
-  border-left: none;
-  border-top: none;
-  border-bottom: none;
+	margin: 4px 0;
+	width: 1px;
+	border-width: 1px;
+	border-style: solid;
+	border-left: none;
+	border-top: none;
+	border-bottom: none;
 }
 .row-wrap .form-group {
-  flex: 1;
+	flex: 1;
 }
 .row-wrap .form-group label {
-  font-family: NotoSansM;
-  font-size: 14px;
+	font-family: NotoSansM;
+	font-size: 14px;
 }
 .skill-btn-wrap button {
-  margin: 0 1px;
-  width: calc(33.3% - 2px);
-  background-color: transparent;
-  border: 1px solid #ddd;
-  font-family: NotoSansB;
-  font-size: 14px;
-  font-weight: bold;
-  color: rgb(127, 127, 127);
-  height: 40px;
+	margin: 0 1px;
+	width: calc(50% - 2px);
+	background-color: transparent;
+	border: 1px solid #ddd;
+	font-family: NotoSansB;
+	font-size: 14px;
+	font-weight: bold;
+	color: rgb(127, 127, 127);
+	height: 40px;
 }
 .skill-btn-wrap button.btn:hover,
 .skill-btn-wrap button.btn:focus,
 .skill-btn-wrap button.btn[data-toggle="true"] {
-  background-color: #eee !important;
-  color: #662d91 !important;
+	background-color: #eee !important;
+	color: #662d91 !important;
 }
 .sns-btn-wrap {
-  width: 100%;
-  padding: 0.75rem;
-  text-align: center;
-  border-radius: 5px;
-  position: relative;
+	width: 100%;
+	padding: 0.75rem;
+	text-align: center;
+	border-radius: 5px;
+	position: relative;
 }
 .sns-btn-wrap[data-role="naver"] {
-  background-color: #2db400;
-  color: white;
+	background-color: #2db400;
+	color: white;
 }
 .sns-btn-wrap[data-role="kakao"] {
-  background-color: #ffe812;
+	background-color: #ffe812;
 }
 .sns-btn-wrap span.sns-font {
-  font-size: 20px;
-  position: absolute;
-  top: 8px;
-  left: 10px;
+	font-size: 20px;
+	position: absolute;
+	top: 8px;
+	left: 10px;
 }
 .profile-wrap .fileinput {
-  text-align: center;
+	text-align: center;
 }
 .rainbow_font_wrap span {
-  font-size: 25px;
+	font-size: 25px;
 }
 .fileinput .thumbnail.img-circle {
-  max-width: 120px;
+	max-width: 120px;
 }
 .profile-wrap .fileinput .position-absolute {
-  bottom: 10px;
-  left: 55%;
+	bottom: 10px;
+	left: 55%;
 }
 .profile-wrap .fileinput .position-absolute span.btn {
-  padding: 7px;
-  margin: 0;
-  width: 30px;
+	padding: 7px;
+	margin: 0;
+	width: 30px;
 }
 a[data-role="login"] {
-  font-family: NotoSansR;
-  font-weight: bold;
-  text-decoration: underline;
-  font-size: 12px;
+	font-family: NotoSansR;
+	font-weight: bold;
+	text-decoration: underline;
+	font-size: 12px;
 }
 select[name="position"] {
-  font-family: scdream5;
-  font-size: 15px;
+	font-family: scdream5;
+	font-size: 15px;
+	padding-left: 15px !important;
 }
 button[type="submit"] {
-  font-family: scdream6;
-  font-size: 20px;
-  font-weight: bold;
+	font-family: scdream6;
+	font-size: 20px;
+	font-weight: bold;
 }
 button[name="btnSendCertify"],
-button[name="btnCertify"] {
-  font-family: NotoSansM;
-  font-size: 14px;
-  height: 40px;
-  white-space: nowrap;
-  padding: 0 15px;
-  border-radius: 6px !important;
+button[name="btnCertify"],
+button[name="btnVerify"] {
+	font-family: NotoSansM;
+	font-size: 14px;
+	height: 40px;
+	white-space: nowrap;
+	padding: 0 15px;
+	border-radius: 6px !important;
 }
 .profile-desc {
-  font-family: scdream5;
-  font-size: 12px;
-  color: rgb(255, 0, 0);
+	font-family: scdream5;
+	font-size: 12px;
+	color: rgb(255, 0, 0);
 }
 .term-wrap .form-check-sign {
-  font-size: 12px;
-  font-family: NotoSansR;
+	font-size: 12px;
+	font-family: NotoSansR;
 }
 #loadingPage {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: transparent;
-  z-index: 1100;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 300px;
+	background-color: transparent;
+	z-index: 1100;
+	margin: auto;
+	width: 60px;
+	height: 60px;
 }
 #loadingPage .d-flex {
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+}
+.new-pz-logo {
+	background-image: url(/images/logo_color_horizon.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	height: 110px;
 }
 .new-pz-logo span {
-  font-size: 25px;
+	font-size: 25px;
 }
 .new-pz-logo span.text-primary {
-  font-family: scdream6;
+	font-family: scdream6;
 }
 .new-pz-logo h4 {
-  margin: 0;
-  text-align: right;
-  font-size: 40px;
-  font-family: scdream6;
+	margin: 0;
+	text-align: right;
+	font-size: 40px;
+	font-family: scdream6;
 }
 span.sns-text {
-  text-align: center;
-  display: block;
-  color: #666;
-  font-family: NotoSansR;
-  font-size: 14px;
+	text-align: center;
+	display: block;
+	color: #666;
+	font-family: NotoSansR;
+	font-size: 14px;
 }
 .sns-img-small-wrap {
-  margin: 0.5rem;
-  display: flex;
-  justify-content: center;
+	margin: 0.5rem;
+	display: flex;
+	justify-content: center;
 }
 .certify-input-wrap button {
-  padding: 0.2rem 1rem;
-  height: 30px;
-  position: absolute;
-  right: 5px;
-  top: 5px;
+	padding: 0.2rem 1rem;
+	height: 30px;
+	position: absolute;
+	right: 5px;
+	top: 5px;
+}
+select[name="position"] {
+	background-size: 10px;
+	background-repeat: no-repeat;
+	background-position: 5px center;
+	background-image: url("/images/svg/dot_red.svg");
+}
+select[name="position"] option {
+	background-size: 10px;
+	background-repeat: no-repeat;
+	background-position: 5px center;
+}
+select[name="position"] option[value="FW"] {
+	background-image: url("/images/svg/dot_red.svg");
+}
+.bootstrap-select button.btn.btn-position {
+	margin: 0;
+	border: 1px solid #ddd;
+	background-color: transparent !important;
+	color: rgb(127, 127, 127) !important;
+}
+.bootstrap-select button.btn.btn-position:hover,
+.bootstrap-select button.btn.btn-position:focus {
+	background-color: transparent !important;
+	color: rgb(127, 127, 127) !important;
+}
+.bootstrap-select.btn-group .dropdown-menu li,
+.bootstrap-select button.btn.btn-position[title] {
+	background-repeat: no-repeat;
+	background-size: 10px;
+	background-position: 7px center;
+}
+.bootstrap-select button.btn.btn-position[title="FW"],
+.bootstrap-select.btn-group .dropdown-menu li:nth-child(1) {
+	background-image: url(/images/svg/dot_red.svg);
+}
+.bootstrap-select button.btn.btn-position[title="MF"],
+.bootstrap-select.btn-group .dropdown-menu li:nth-child(2) {
+	background-image: url(/images/svg/dot_green.svg);
+}
+.bootstrap-select button.btn.btn-position[title="DF"],
+.bootstrap-select.btn-group .dropdown-menu li:nth-child(3) {
+	background-image: url(/images/svg/dot_blue.svg);
+}
+.bootstrap-select button.btn.btn-position[title="GK"],
+.bootstrap-select.btn-group .dropdown-menu li:nth-child(4) {
+	background-image: url(/images/svg/dot_yellow.svg);
+}
+.bootstrap-select.btn-group .dropdown-menu li a {
+	padding: 5px 25px;
+	font-size: 12px;
+}
+.modal-body button[role="button"] {
+	width: 200px;
+	height: 45px;
+	border-radius: 0;
+	margin: 1.5rem 0 0.5rem;
+	font-size: 1rem;
+}
+.modal-header .close {
+	padding: 1rem;
+}
+#findIdResult input.form-control[readonly] {
+	background-color: transparent;
+	border-left: none;
+	border-right: none;
+}
+#findId-wrap label {
+	font-weight: bold;
 }
 @media (max-width: 768px) {
-  /* #join-page {
+	/* #join-page {
     max-width: 100%;
   } */
 }

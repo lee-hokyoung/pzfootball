@@ -4,27 +4,139 @@ block content
     .row
       .col-12
         .card
-          .card-header
-            h4.card-title 리그 생성
-          .card-body
-            .row
-              .col-md-4.col-9
-                .form-group
-                  label 리그 타이틀
-                  input.form-control(type='text', name='league_title')
-              .col-md-2.col-3
-                .form-group
-                  label 라운드 수
-                  input.form-control(type='number', name='round_cnt')
-            .row
-              .col-md-3
-                .form-group
-                  label 지역
-                  select.form-control
-                    option(value='', disabled, selected) 지역을 선택해 주세요.
-                    each opt in region
-                      option(val=opt._id) #{opt.name}
-          .card-footer
-            button.btn.btn-primary(type='button') 생성하기
+          input(type='hidden', name='league_id', value=doc?doc._id.toString():'')
+          form(name='leagueForm', method='post', onSubmit='return fnSubmit("' + (doc?"put":"post") + '");')
+            .card-header
+              h4.card-title 리그 생성
+            .card-body
+              .row
+                .col-md-6
+                  .form-group
+                    label 리그 타이틀
+                    input.form-control(type='text', name='league_title', value=doc?doc.league_title:'')
+                    span.text-danger 리그 타이틀은 필수 입력 값입니다.
+                .col-md-3.col-6
+                  .form-group
+                    label 라운드 수
+                    input.form-control(type='number', name='round_cnt', value=doc?doc.round_cnt:'')
+                    span.text-danger 라운드 수는 필수 입력 값입니다.
+                .col-md-3.col-6
+                  .form-group
+                    label 참가팀 수
+                    input.form-control(type='number', name='team_cnt', value=doc?doc.team_cnt:'')
+                    span.text-danger 참가팀 수는 필수 입력 값입니다.
+              .row
+                .col-md-2
+                  .form-group
+                    label 지역
+                    select.form-control(name='league_region')
+                      option(value='', selected, disabled) 지역을 선택해 주세요.
+                      each opt in region
+                        option(value=opt._id, selected=doc?doc.league_region.toString()===opt._id.toString():false) #{opt.name}
+                    span.text-danger 지역은 필수 입력 값입니다.
+                .col-md-3
+                  .form-group
+                    label 구장
+                    select.form-control(name='league_ground')
+                      - if (doc)
+                        each item in ground_list
+                          option(value=item._id, selected=item._id.toString()===doc.league_ground.toString()) #{item.groundName}
+                    span.text-danger 구장은 필수 입력 값입니다.
+                .col-md-2
+                  .form-group
+                    label 리그
+                    select.form-control(name='league_type')
+                      option(value='PZ-K', selected=doc?doc.league_type==='PZ-K':false) PZ-K
+                      option(value='PZ-Q', selected=doc?doc.league_type==='PZ-Q':false) PZ-Q
+                    span.text-danger 리그는 필수 입력 값입니다.
+                .col-md-2
+                  .form-group
+                    label 시즌
+                    input.form-control(type='text', name='season', value=doc?doc.season:'')
+                    span.text-danger 시즌은 필수 입력 값입니다.
+                .col-md-3
+                  .form-group
+                    label 매치 시작일
+                    input.form-control#matchBegin(type='text', name='match_begin', value=doc?doc.match_begin:'')
+                    span.text-danger 매치 시작일은 필수 입력 값입니다.
+              .row
+                .col-md-3
+                  .form-group
+                    label 상금
+                    input.form-control(type='text', name='reward', value=doc?doc.reward:'')
+                    span.text-danger 상금은 필수 입력 값입니다.
+                .col-md-3
+                  .form-group
+                    label 매치 요일
+                    - var date = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일']
+                    select.form-control(name='match_date')
+                      each item, idx in date
+                        option(value=idx, selected=(doc?doc.match_date===idx.toString():idx===5)) #{item}
+                    span.text-danger 매치 요일은 필수 입력 값입니다.
+                .col-md-3
+                  .form-group
+                    label 1경기 매치 시간
+                    input.form-control#matchTime1(type='text', name='match_time_1', value=doc?doc.match_time_1:'20:00')
+                    span.text-danger 매치 시간은 필수 입력 값입니다.
+                .col-md-3
+                  .form-group
+                    label 2경기 매치 시간
+                    input.form-control#matchTime2(type='text', name='match_time_2', value=doc?doc.match_time_2:'21:00')
+                    span.text-danger 매치 시간은 필수 입력 값입니다.
+            .card-footer
+              button.btn.btn-primary(type='submit') #{doc?'수정하기':'생성하기'}
+              a.btn.btn-info.ml-3(href='/admin/league') 목록으로
+        - if(doc)
+          .card
+            .card-header
+              h6.card-title 참가신청 팀 리스트 ( #{doc.club_list.length} / #{doc.team_cnt} )
+            .card-body
+              table.table.text-center
+                colgroup
+                  col(width='100')
+                  col(width='auto')
+                  col(width='100')
+                  col(width='100')
+                  col(width='100')
+                thead
+                  th #
+                  th.text-left 팀 이름
+                  th 팀 인원
+                  th 팀 성별
+                  th
+                tbody
+                  each team, idx in doc.club_list
+                    tr(data-id=team._id)
+                      td #{idx + 1}
+                      td.text-left #{team.club_name}
+                      td #{team.club_member.length}
+                      td #{team.team_gender==='male'?'남성':'여성'}
+                      td
+                        button.btn.btn-info(type='button', data-id=team._id.toString(), data-role='showDetail') 상세정보
+              if(doc.club_list.length === doc.team_cnt)
+                button.btn.btn-primary(type='button', onClick='createRound("' + doc._id.toString() + '")') 라운드 생성
+        - if(round_info)
+          //- .card.px-5
+          //-   .card-header
+          //-     h4.card-title 라운드 정보
+          //-   .card-body
+          //-     .row
+          //-       each round in round_info
+          //-         .col-6
+          //-           h4 !{round.round_no} 라운드
+          //-           each match, idx in round.round_list
+          //-             h5 !{idx + 1} 경기
+          //-             .row
+          //-               each game, idx in match
+          //-                 .col-6
+          //-                   h6 !{idx + 1} 구장
+          //-                   each team in game
+          //-                     p !{team.club_name}
+
+  //- 팀 상세 정보 모달창
+  include modals/team_detail
+    script(src='/public_js/admin_league.js')
     script.
-      console.log('region : ', !{JSON.stringify(region)})
+      console.log('doc : ', !{JSON.stringify(doc)})
+      console.log('ground list : ', !{JSON.stringify(ground_list)})
+      console.log('round_info : ', !{JSON.stringify(round_info)})

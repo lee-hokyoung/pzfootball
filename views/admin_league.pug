@@ -7,5 +7,69 @@ block content
           .card-header
             h4.card-title 리그 관리
           .card-body
+            table.table.text-center
+              colgroup
+                col(width='auto')
+                col(width='100')
+                col(width='100')
+                col(width='200')
+                col(width='300')
+                col(width='100')
+                col(width='100')
+                col(width='100')
+                col(width='100')
+                col(width='100')
+                col(width='100')
+                col(width='200')
+              thead
+                th.text-left 리그 타이틀
+                th 라운드 수
+                th 참가팀 수
+                th 지역
+                th 구장
+                th 리그
+                th 시즌
+                th 상금
+                th 매치 요일
+                th 1경기 매치 시간
+                th 2경기 매치 시간
+                th
+              tbody
+                - var date = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일']
+                each item in list
+                  tr
+                    td.text-left #{item.league_title}
+                    td #{item.round_cnt}
+                    td #{item.participate.length} / #{item.team_cnt}
+                    td #{item.region_info[0].name}
+                    td #{item.ground_info[0].groundName}
+                    td #{item.league_type}
+                    td #{item.season}
+                    td #{new Intl.NumberFormat().format(item.reward)}
+                    td #{date[item.match_date]}
+                    td #{item.match_time_1}
+                    td #{item.match_time_2}
+                    td
+                      a.btn.btn-primary.btn-link(href='/admin/league/register/' + item._id) 확인
+                      button.btn.btn-danger.btn-link.ml-3(type='button', data-id=item._id, name='rmLeague') 삭제
             a.btn.btn-primary(href='/admin/league/register') 리그 생성
-    script.
+block append_js
+  script.
+    console.log('list : ', !{JSON.stringify(list)})
+    // 리그 삭제
+    document.querySelectorAll('button[name="rmLeague"]').forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        if (!confirm("삭제하시겠습니까?")) return false;
+        let league_id = this.dataset.id;
+        let xhr = new XMLHttpRequest();
+        xhr.open("DELETE", "/admin/league/" + league_id, true);
+        xhr.onreadystatechange = function () {
+          if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            let res = JSON.parse(this.response);
+            alert(res.message);
+            if (res.code === 1) location.reload();
+          }
+        };
+        xhr.send();
+      });
+    });

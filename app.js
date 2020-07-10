@@ -8,11 +8,34 @@ const passport = require("passport");
 const passportConfig = require("./passport");
 require("dotenv").config();
 
+// firebase 연결
+const firebase = require("firebase/app");
+require("firebase/auth");
+const firebaseConfig = {
+	apiKey: "AIzaSyCWcz5VmsiyfLDmXlaGBSP4bAjmYbCy-nc",
+	authDomain: "pzfutball.firebaseapp.com",
+	databaseURL: "https://pzfutball.firebaseio.com",
+	projectId: "pzfutball",
+	storageBucket: "pzfutball.appspot.com",
+	messagingSenderId: "125366504339",
+	appId: "1:125366504339:web:dd7eaa1911e2f31e847666",
+	measurementId: "G-0H0SH35SVT",
+};
+firebase.initializeApp(firebaseConfig);
+// firebase Admin
+const fbAdmin = require("firebase-admin");
+var serviceAccount = require("./config/pzfutball-firebase-adminsdk-1u2io-d405057a6a.json");
+fbAdmin.initializeApp({
+	credential: fbAdmin.credential.cert(serviceAccount),
+	databaseURL: "https://pzfutball.firebaseio.com",
+});
+
 const indexRouter = require("./routes/index");
 const authRouter = require("./routes/auth");
 const matchRouter = require("./routes/match");
 const usersRouter = require("./routes/users");
 const clubRouter = require("./routes/clubs");
+const leagueRouter = require("./routes/league");
 const adminRouter = require("./routes/admin");
 const adminMatchRouter = require("./routes/admin_match");
 const adminGroundRouter = require("./routes/admin_ground");
@@ -25,6 +48,7 @@ const adminLeagueRouter = require("./routes/admin_league");
 const managerRouter = require("./routes/manager");
 const queryRouter = require("./routes/query");
 const mailRouter = require("./routes/mail");
+const firebaseRouter = require("./routes/firebase");
 const middle = require("./routes/middle");
 
 const app = express();
@@ -75,6 +99,7 @@ app.use("/auth", authRouter);
 app.use("/match", matchRouter);
 app.use("/users", usersRouter);
 app.use("/clubs", clubRouter);
+app.use("/league", leagueRouter);
 app.use("/admin", adminRouter);
 app.use("/admin/match", middle.isAdmin, adminMatchRouter);
 app.use("/admin/ground", middle.isAdmin, adminGroundRouter);
@@ -87,6 +112,7 @@ app.use("/admin/league", middle.isAdmin, adminLeagueRouter);
 app.use("/manager", managerRouter);
 app.use("/mail", mailRouter);
 app.use("/query", queryRouter);
+app.use("/firebase", firebaseRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -39,7 +39,7 @@ block content
                           .img-container
                             img(src=club.club_mark !== "" ? club.club_mark : "\images\pz_logo.png", width="70px")
                         td #{club.club_name}
-                        td #{club.club_region}
+                        td #{club.region_info.name}
                         td #{club.leader_info.user_name}
                         td #{club.club_member.length}
                         if(club.status===1)

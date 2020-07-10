@@ -10,8 +10,8 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: NotoSansB, sans-serif;
-  font-weight: bold;
+	font-family: NotoSansB, sans-serif;
+	font-weight: bold;
 }
 p,
 span,
@@ -21,365 +21,366 @@ input,
 th,
 td,
 b {
-  font-family: NotoSansR;
-  font-weight: normal;
+	font-family: NotoSansR;
+	font-weight: normal;
 }
 .title-wrap {
-  background-color: #662d91;
-  margin-bottom: 0.5rem;
-  padding: 0.1rem;
-  color: white;
-  text-align: center;
-  font-size: 31pt;
-  border-radius: 40px;
+	background-color: #662d91;
+	margin-bottom: 0.5rem;
+	padding: 0.1rem;
+	color: white;
+	text-align: center;
+	font-size: 31pt;
+	border-radius: 40px;
 }
 
 .title-wrap strong {
-  font-family: scdream5;
+	font-family: scdream5;
 }
 
 .title-wrap span {
-  font-family: scdream3;
+	font-family: scdream3;
 }
 .fileinput img {
-  width: 130px;
-  height: 130px;
+	width: 110px;
+	height: 110px;
 }
 .user-name-wrap {
-  margin-bottom: 0.5rem;
-  display: flex;
-  font-size: 33px;
-  justify-content: space-around;
+	margin-bottom: 0.5rem;
+	display: flex;
+	font-size: 33px;
+	justify-content: space-between;
 }
 
 .user-name-wrap b[data-role="user_name"] {
-  width: 100px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 1;
-  font-weight: 300;
+	width: 150px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 1;
+	font-weight: 300;
 }
 
 .card.profile-card {
-  border-radius: 20px;
+	border-radius: 20px;
 }
 
 .card.profile-card .card-header {
 }
 
 .card.profile-card .card-header h6 {
-  font-family: scdream5;
-  font-size: 14pt;
+	font-family: scdream5;
+	font-size: 14pt;
 }
 .card.profile-card .card-header h6.description {
-  /* font-family: scdream3; */
-  font-family: NotoSansR;
-  font-size: 12pt;
-  margin: 0.5rem 0;
+	/* font-family: scdream3; */
+	font-family: NotoSansR;
+	font-size: 12pt;
+	margin: 0.5rem 0;
 }
 .card.profile-card .card-body {
-  padding: 2rem;
+	padding: 2rem;
 }
 
 .card.profile-card .img-wrap {
-  display: flex;
-  font-size: 20px;
+	display: flex;
+	font-size: 20px;
 }
 
 .card.profile-card .img-wrap i {
-  font-size: 20px;
-  margin: auto 0;
+	font-size: 20px;
+	margin: auto 0;
 }
 
 .card.profile-card .img-wrap span {
-  padding-left: 0.7rem;
+	padding-left: 0.7rem;
 }
 .card.profile-card .img-wrap .d-block {
-  color: #555;
-  font-size: 0.8rem;
+	color: #555;
+	font-size: 0.8rem;
 }
 .card.profile-card .card-body h6 {
-  font-size: 20px;
+	font-size: 20px;
 }
 .card.profile-card .col-flex-end {
-  display: flex;
-  justify-content: flex-end;
-  flex-direction: column;
-  padding-bottom: 1rem;
+	display: flex;
+	justify-content: flex-end;
+	flex-direction: column;
+	padding-bottom: 1rem;
+	padding: 0;
 }
 #mypage-wrap {
-  padding: 0;
+	padding: 0;
 }
 #mypage-wrap .point-wrap p {
-  font-size: 30px;
-  margin: 0;
-  font-weight: bold;
+	font-size: 30px;
+	margin: 0;
+	font-weight: bold;
 }
 #mypage-wrap .point-wrap p strong {
-  color: black;
-  font-weight: bold;
+	color: black;
+	font-weight: bold;
 }
 #mypage-wrap .point-wrap button {
-  border-radius: 50px;
-  font-size: 0.7rem;
-  margin: 0 0.25rem;
-  padding: 0.25rem 0.5rem;
+	border-radius: 50px;
+	font-size: 0.7rem;
+	margin: 0 0.25rem;
+	padding: 0.25rem 0.5rem;
 }
 .fileinput.fileinput-new span.btn.btn-round,
 .fileinput.fileinput-exists span.btn.btn-round {
-  width: 20px;
-  height: 20px;
-  padding: 20px;
-  position: relative;
-  top: -55px;
-  left: 90px;
-  background-color: #662d91;
+	width: 20px;
+	height: 20px;
+	padding: 17px;
+	position: relative;
+	top: -50px;
+	left: 80px;
+	background-color: #662d91;
 }
 
 span.fileinput-new i.nc-icon.nc-simple-add,
 span.fileinput-exists i.nc-icon {
-  top: -8px !important;
-  left: -8px !important;
-  font-size: 1rem;
-  /* font-weight: 700; */
+	top: -8px !important;
+	left: -8px !important;
+	font-size: 1rem;
+	/* font-weight: 700; */
 }
 
 .btn-file > input {
 }
 
 .fileinput .thumbnail.img-circle {
-  max-width: 130px;
+	max-width: 130px;
 }
 
 .text-purple {
-  color: #662d91;
+	color: #662d91;
 }
 .user-info-wrap table {
-  margin-bottom: 0.5rem;
+	margin-bottom: 0.5rem;
 }
 .user-info-wrap table th {
-  padding: 7px 10px !important;
-  background-color: #662d91;
-  width: 25%;
-  border-bottom: 1px solid white;
-  color: white;
-  font-size: 12px;
-  min-width: 80px;
+	padding: 7px 10px !important;
+	background-color: #662d91;
+	width: 25%;
+	border-bottom: 1px solid white;
+	color: white;
+	font-size: 12px;
+	min-width: 80px;
 }
 
 .user-info-wrap table tr:first-child th,
 .user-info-wrap table tr:first-child td .form-control {
-  border-top-right-radius: 12px;
-  border-top-left-radius: 12px;
+	border-top-right-radius: 12px;
+	border-top-left-radius: 12px;
 }
 
 .user-info-wrap table tr:last-child th,
 .user-info-wrap table tr:last-child td .form-control {
-  border-bottom-right-radius: 12px;
-  border-bottom-left-radius: 12px;
+	border-bottom-right-radius: 12px;
+	border-bottom-left-radius: 12px;
 }
 
 .user-info-wrap table td {
-  position: relative;
+	position: relative;
 }
 
 .user-info-wrap table td:nth-child(2) {
-  width: 10px;
+	width: 10px;
 }
 
 .user-info-wrap table td:nth-child(3) {
-  width: auto;
-  border-bottom: 1px solid white;
+	width: auto;
+	border-bottom: 1px solid white;
 }
 
 .user-info-wrap table td .form-control {
-  border-radius: 0;
+	border-radius: 0;
 }
 .user-info-wrap table td .form-control,
 .user-info-wrap table td .form-check-label {
-  font-size: 12px;
+	font-size: 12px;
 }
 .user-info-wrap table input[maxlength] {
-  padding: 0 0.5rem;
+	padding: 0 0.5rem;
 }
 .card.profile-card p.description {
-  font-size: 0.68rem;
-  margin: 0;
+	font-size: 0.68rem;
+	margin: 0;
 }
 
 .profile-card h6 {
-  font-weight: bold;
-  margin: 0;
+	font-weight: bold;
+	margin: 0;
 }
 
 .user-info-wrap table td[about="gender"] .form-control[data-toggle] {
-  position: relative;
-  top: 0;
-  right: 0;
+	position: relative;
+	top: 0;
+	right: 0;
 }
 
 .user-info-wrap table td[about="gender"] .form-control[data-toggle="true"],
 .user-info-wrap table td[about="user_phone"] input[data-toggle="true"] {
-  display: flex;
+	display: flex;
 }
 
 .user-info-wrap table td[about="user_phone"] div.form-control[data-toggle="true"] {
-  display: contents;
+	display: contents;
 }
 
 .user-info-wrap table td[about="gender"] .form-control[data-toggle="false"],
 .user-info-wrap table td[about="user_phone"] .form-control[data-toggle="false"] {
-  display: none;
+	display: none;
 }
 
 .user-info-wrap table td .form-control .form-check-radio,
 .user-info-wrap table td .form-control .form-check-radio label {
-  margin: 0;
+	margin: 0;
 }
 
 .form-check-radio .form-check-sign::before,
 .form-check-radio input[type="radio"]:checked + .form-check-sign::after {
-  top: 5px;
-  font-size: 17px;
+	top: 5px;
+	font-size: 17px;
 }
 
 .form-check-radio .form-check-label {
-  display: inline-block;
+	display: inline-block;
 }
 
 .user-info-wrap table td div[data-toggle] {
-  position: absolute;
-  padding: 0;
-  top: -1px;
-  right: 5px;
-  font-size: 13pt;
+	position: absolute;
+	padding: 0;
+	top: -1px;
+	right: 5px;
+	font-size: 13pt;
 }
 
 .user-info-wrap table td div[data-toggle="true"] {
-  display: inline-block;
+	display: inline-block;
 }
 
 .user-info-wrap table td div[data-toggle="false"] {
-  display: none;
+	display: none;
 }
 
 .user-info-wrap table td div[data-toggle] button:active,
 .user-info-wrap table td div[data-toggle] button:focus {
-  background-color: transparent !important;
+	background-color: transparent !important;
 }
 
 .user-info-wrap table td button[data-role="edit"]:active,
 .user-info-wrap table td button[data-role="edit"]:focus,
 .user-info-wrap table td button[data-role="edit"]:hover {
-  color: #51cbce !important;
+	color: #51cbce !important;
 }
 
 .user-info-wrap table td button[data-role="confirm"]:active,
 .user-info-wrap table td button[data-role="confirm"]:focus,
 .user-info-wrap table td button[data-role="confirm"]:hover {
-  color: #44c47d !important;
+	color: #44c47d !important;
 }
 
 .user-info-wrap table td button[data-role="cancel"]:active,
 .user-info-wrap table td button[data-role="cancel"]:focus,
 .user-info-wrap table td button[data-role="cancel"]:hover {
-  color: #ef8157 !important;
+	color: #ef8157 !important;
 }
 
 .user-info-wrap table td button:hover {
-  background-color: transparent !important;
+	background-color: transparent !important;
 }
 
 .table .form-check label .form-check-sign::before,
 .table .form-check label .form-check-sign::after {
-  top: 0;
+	top: 0;
 }
 
 .btn:not(.btn-icon) .nc-icon,
 .navbar .navbar-nav > a.btn:not(.btn-icon) .nc-icon {
-  top: 3px;
+	top: 3px;
 }
 
 .table td,
 .table th {
-  border-top: none;
-  padding: 0 !important;
+	border-top: none;
+	padding: 0 !important;
 }
 .skill-wrap b {
-  display: block;
-  font-size: 12px;
-  margin: 0.25rem 0;
-  font-weight: bold;
+	display: block;
+	font-size: 12px;
+	margin: 0.25rem 0;
+	font-weight: bold;
 }
 .guide_wrap {
-  background-color: #e5e5e5;
-  margin: 1rem 0;
-  padding: 1rem 0.25rem;
-  text-align: center;
-  border-radius: 25px;
-  color: #ccc;
+	background-color: #e5e5e5;
+	margin: 1rem 0;
+	padding: 1rem 0.25rem;
+	text-align: center;
+	border-radius: 25px;
+	color: #ccc;
 }
 
 .guide_wrap p {
-  margin: 0;
-  font-size: 0.7rem;
-  font-weight: bold;
+	margin: 0;
+	font-size: 0.7rem;
+	font-weight: bold;
 }
 
 .find-club-wrap {
-  padding: 0.25rem 1rem;
-  border-radius: 1rem;
-  border: 2px solid #111;
+	padding: 0.25rem 1rem;
+	border-radius: 1rem;
+	border: 2px solid #111;
 }
 
 .find-club-wrap[data-color="red"] {
-  background-color: orangered;
+	background-color: orangered;
 }
 
 .find-club-wrap[data-color="purple"] {
-  background-color: #662d91;
+	background-color: #662d91;
 }
 
 .find-club-wrap[data-color="green"] {
-  background-color: #44c47d;
+	background-color: #44c47d;
 }
 
 .find-club-wrap button {
-  color: black;
-  font-family: Gmarket;
-  font-weight: bold;
+	color: black;
+	font-family: Gmarket;
+	font-weight: bold;
 }
 
 .find-club-wrap p span {
-  color: white;
-  font-weight: bold;
-  font-size: 14pt;
+	color: white;
+	font-weight: bold;
+	font-size: 14pt;
 }
 
 .find-club-wrap .input-wrap {
-  display: flex;
-  justify-content: start;
+	display: flex;
+	justify-content: start;
 }
 
 .find-club-wrap .input-wrap input {
-  margin-right: 0.25rem;
-  font-weight: bold;
+	margin-right: 0.25rem;
+	font-weight: bold;
 }
 
 .find-club-wrap .input-wrap button {
-  white-space: nowrap;
-  background-color: #ef8157;
-  border: 1px solid black;
-  border-radius: 5px;
-  padding: 0.5rem 0.75rem;
+	white-space: nowrap;
+	background-color: #ef8157;
+	border: 1px solid black;
+	border-radius: 5px;
+	padding: 0.5rem 0.75rem;
 }
 
 .find-club-wrap .input-wrap input,
 .find-club-wrap .input-wrap button {
-  height: 40px;
-  margin: auto 0;
+	height: 40px;
+	margin: auto 0;
 }
 
 .table-custom > .table > thead > tr > th,
@@ -388,49 +389,49 @@ span.fileinput-exists i.nc-icon {
 .table-custom > .table > thead > tr > td,
 .table-custom > .table > tbody > tr > td,
 .table-custom > .table > tfoot > tr > td {
-  padding: 10px 2px !important;
-  font-size: 12px;
-  white-space: nowrap;
-  text-align: center;
+	padding: 10px 2px !important;
+	font-size: 12px;
+	white-space: nowrap;
+	text-align: center;
 }
 .table-custom > .table > tbody button.btn {
-  padding: 0.25rem 0.75rem;
-  font-size: 12px;
+	padding: 0.25rem 0.75rem;
+	font-size: 12px;
 }
 .table-custom > .table > tbody > tr > td {
-  border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
 }
 .radio-button-wrap {
-  display: flex;
+	display: flex;
 }
 
 .radio-button-wrap button {
-  flex: 1;
-  border: 1px solid #ccc;
-  border-radius: 15px;
-  margin-right: 3px;
-  font-weight: bold;
-  color: #777;
-  padding: 3.5px 0;
-  cursor: pointer;
+	flex: 1;
+	border: 1px solid #ccc;
+	border-radius: 15px;
+	margin-right: 3px;
+	font-weight: bold;
+	color: #777;
+	padding: 3.5px 0;
+	cursor: pointer;
 }
 
 .radio-button-wrap button:last-child {
-  margin-right: 0;
+	margin-right: 0;
 }
 
 .user-info-wrap .radio-button-wrap button.active,
 .user-info-wrap table td .radio-button-wrap button:hover {
-  background-color: #662d91 !important;
-  color: white;
+	background-color: #662d91 !important;
+	color: white;
 }
 .user-info-wrap .radio-button-wrap button:hover {
-  color: black;
+	color: black;
 }
 .user-info-wrap .radio-button-wrap button[disabled]:hover {
-  background-color: rgb(240, 240, 240) !important;
-  color: #777;
-  cursor: not-allowed;
+	background-color: rgb(240, 240, 240) !important;
+	color: #777;
+	cursor: not-allowed;
 }
 /* .user-info-wrap .radio-button-wrap button[name="skill"] {
   padding-left: 10px;
@@ -458,180 +459,192 @@ span.fileinput-exists i.nc-icon {
   background-image: url("/images/icon-skill-3.png");
 } */
 hr {
-  border-color: #662d91;
-  border-width: 2px;
+	border-color: #662d91;
+	border-width: 2px;
 }
 .check-custom-wrap.form-check .form-check-sign::before,
 .check-custom-wrap.form-check .form-check-sign::after,
 .check-custom-wrap.form-check-label input[type="checkbox"]:checked + .form-check-sign:before {
-  width: 14px;
-  height: 14px;
-  background-color: #eee;
-  top: 7px;
-  border-radius: 3px;
-  box-shadow: 0px 0px 1px 1px #ddd inset;
+	width: 14px;
+	height: 14px;
+	background-color: #eee;
+	top: 7px;
+	border-radius: 3px;
+	box-shadow: 0px 0px 1px 1px #ddd inset;
 }
 .check-custom-wrap.form-check .form-check-sign::after {
-  color: #555;
-  font-size: 12px;
-  content: "\ea21";
-  font: bold normal normal 12px/1 "nucleo-icons";
-  /* background: #555; */
+	color: #555;
+	font-size: 12px;
+	content: "\ea21";
+	font: bold normal normal 12px/1 "nucleo-icons";
+	/* background: #555; */
 }
 #favorite-table td,
 #table-reservation td {
-  padding: 0.5rem !important;
-  border-bottom: 1px solid #ccc;
-  font-size: 0.8rem;
-  text-align: center;
-  white-space: nowrap;
+	padding: 0.5rem !important;
+	border-bottom: 1px solid #ccc;
+	font-size: 0.8rem;
+	text-align: center;
+	white-space: nowrap;
 }
 #favorite-table td .check-custom-wrap.form-check .form-check-sign::before,
 #favorite-table td .check-custom-wrap.form-check .form-check-sign::after,
 #favorite-table
-  td
-  .check-custom-wrap.form-check-label
-  input[type="checkbox"]:checked
-  + .form-check-sign:before {
-  top: -12px;
-  left: 0px;
+	td
+	.check-custom-wrap.form-check-label
+	input[type="checkbox"]:checked
+	+ .form-check-sign:before {
+	top: -12px;
+	left: 0px;
 }
 #favorite-table td[name="apply-game"] a {
-  color: #662d91;
-  font-weight: 700;
+	color: #662d91;
+	font-weight: 700;
 }
 button[name="btnRemoveFavorite"] {
-  margin: 0;
-  background-color: #662d91;
-  padding: 0.5rem 1rem;
-  font-size: 12px;
+	margin: 0;
+	background-color: #662d91;
+	padding: 0.5rem 1rem;
+	font-size: 12px;
 }
 .point-button-wrap {
-  margin-top: auto;
+	margin-top: auto;
 }
 .point-button-wrap button:nth-child(1) {
-  background-color: #662d91;
+	background-color: #662d91;
 }
 .point-button-wrap button:nth-child(2) {
-  background-color: darkred;
+	background-color: darkred;
 }
 .fileinput button[data-view] {
-  margin: 0;
-  padding: 0.5rem 0;
+	margin: 0;
+	padding: 0.5rem 0;
 }
 .fileinput button[data-view="true"] {
-  display: block;
+	display: block;
 }
 .fileinput button[data-view="false"] {
-  display: none;
+	display: none;
 }
 .team-card-wrap {
-  display: flex;
-  width: 250px;
-  margin: 10px auto;
-  border-radius: 15px;
-  padding: 10px;
-  color: white;
-  justify-content: space-between;
+	display: flex;
+	width: 250px;
+	margin: 10px auto;
+	border-radius: 15px;
+	padding: 10px;
+	color: white;
+	justify-content: space-between;
 }
 .team-card-wrap[data-color="purple"] {
-  background-color: #662d91;
+	background-color: #662d91;
 }
 .team-card-wrap[data-color="red"] {
-  background-color: red;
+	background-color: red;
 }
 .team-card-wrap img {
-  margin: auto 0;
-  margin-left: 15px;
+	margin: auto 0;
+	margin-left: 15px;
 }
 .team-card-wrap .col-wrap {
-  margin-right: 15px;
+	margin-right: 15px;
 }
 .team-card-wrap p {
-  margin: 0;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
+	margin: 0;
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
 }
 .team-card-wrap span {
-  font-size: 12px;
-  color: white;
+	font-size: 12px;
+	color: white;
 }
 .team-card-wrap i {
-  margin: auto 0;
-  color: white;
+	margin: auto 0;
+	color: white;
 }
 button[name="btnReqRefund"] {
-  font-family: NotoSansR;
-  font-weight: normal;
-  font-size: 15px;
+	font-family: NotoSansR;
+	font-weight: normal;
+	font-size: 15px;
 }
 .teamwork-wrap {
-  flex: 1;
-  margin: 1px;
-  text-align: center;
-  font-weight: bold;
-  font-size: 14px;
+	flex: 1;
+	margin: 1px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 14px;
 }
 .teamwork-wrap p {
-  color: black;
-  margin-bottom: 0.1rem;
-  font-size: 14px;
+	color: black;
+	margin-bottom: 0.1rem;
+	font-size: 14px;
 }
 .teamwork-wrap .border {
-  padding: 0.25rem;
-  display: flex;
-  flex-direction: column;
-  height: 85px;
+	padding: 0.25rem;
+	display: flex;
+	flex-direction: column;
+	height: 85px;
 }
 .teamwork-wrap .border .img-wrap {
-  flex: 3;
+	flex: 3;
 }
 .teamwork-wrap .border img {
-  max-width: 37px;
-  max-height: 37px;
-  margin: 8px auto;
-  align-items: center;
+	max-width: 37px;
+	max-height: 37px;
+	margin: 8px auto;
+	align-items: center;
 }
 .teamwork-wrap:nth-child(2) .border img {
-  margin: 13px auto;
+	margin: 13px auto;
 }
 .teamwork-wrap .border span {
-  flex: 1;
+	flex: 1;
 }
 .info-wrap {
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  padding: 0.5rem;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	padding: 0.5rem;
 }
 .info-wrap p {
-  margin-bottom: 0.25rem;
-  text-align: center;
+	margin-bottom: 0.25rem;
+	text-align: center;
 }
 .desc-wrap {
-  text-align: center;
+	text-align: center;
 }
 .desc-wrap h4 {
-  margin: 1rem;
+	margin: 1rem;
+}
+.container[name="footer-container"] {
+	background-color: #eeedef !important;
+	width: 100% !important;
+	max-width: 100%;
 }
 @media (max-width: 768px) {
-  .card.profile-card .card-body {
-    padding: 1rem 0.5rem;
-  }
+	.card.profile-card .card-body {
+		padding: 1rem 0.5rem;
+	}
+	.card.profile-card .col-flex-end {
+		padding: 1rem;
+	}
+	.user-name-wrap {
+		padding-left: 1rem;
+		justify-content: space-around;
+	}
 }
 
 @media (min-width: 1200px) {
-  .container {
-    width: 980px !important;
-  }
+	.container {
+		width: 980px !important;
+	}
 }
 @media (min-width: 992px) {
-  .container {
-    width: 980px !important;
-  }
+	.container {
+		width: 980px !important;
+	}
 }
 @media (min-width: 768px) {
-  .container {
-    width: 980px !important;
-  }
+	.container {
+		width: 980px !important;
+	}
 }

@@ -1,0 +1,22 @@
+extends layout
+block append_css
+  link(rel="stylesheet", href="/public_css/main_modal.css")
+  link(rel="stylesheet", href="/public_css/main_screen.css")
+  link(rel="stylesheet", href="/public_css/main_league.css")
+block content
+  .container-fluid
+    .container.px-0
+      include include/nav
+  include include/main-slider
+  .container
+    hr
+    .row
+      .col-md-4
+        select.form-control(name='apply_league')
+          each item in league_list
+            option(value=item._id) !{item.league_title}
+      .col-md-4
+        button.btn.btn-primary.m-0(type='button', onClick='fnApplyLeageu()') 리그 지원하기
+block append_js
+  script(src='/public_js/league_request.js', type='text/javascript')
+    

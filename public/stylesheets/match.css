@@ -1,214 +1,214 @@
 #detail_page {
-  padding-left: 0;
-  padding-right: 0;
-  padding-bottom: 100px;
+	padding-left: 0;
+	padding-right: 0;
+	padding-bottom: 100px;
 }
 #detail_page .section {
-  border-bottom: 1px solid #d0d0d0;
-  padding: 2rem;
+	border-bottom: 1px solid #d0d0d0;
+	padding: 2rem;
 }
 #detail_page .section:last-child {
-  border-bottom: none;
+	border-bottom: none;
 }
 .section h4 a {
-  display: flex;
-  justify-content: center;
+	display: flex;
+	justify-content: center;
 }
 .section h4 a.collapsed[aria-expanded="false"] i.nc-minimal-up,
 .section h4 a[aria-expanded="true"] i.nc-minimal-down {
-  display: none;
+	display: none;
 }
 .section h4 a.collapsed[aria-expanded="false"] i.nc-minimal-down,
 .section h4 a[aria-expanded="true"] i.nc-minimal-up {
-  display: block;
-  font-size: 12px;
-  margin: auto 0.75rem;
-  height: 100%;
+	display: block;
+	font-size: 12px;
+	margin: auto 0.75rem;
+	height: 100%;
 }
 .section h4 a[aria-expanded="true"] {
-  background: white;
-  color: black;
+	background: white;
+	color: black;
 }
 .section h4 a[aria-expanded] span.text-black {
-  font-size: 18px;
+	font-size: 18px;
 }
 .text-purple {
-  color: #662d91;
+	color: #662d91;
 }
 .bg-purple,
 .bg-purple:hover {
-  background-color: #662d91 !important;
+	background-color: #662d91 !important;
 }
 h4 {
-  font-size: 27px;
+	font-size: 27px;
 }
 span {
-  font-size: 12px;
+	font-size: 12px;
 }
 p.text-black {
-  font-size: 18px;
+	font-size: 18px;
 }
 h6.text-secondary {
-  color: #666;
+	color: #666;
 }
 h6 {
-  font-size: 18px;
+	font-size: 18px;
 }
 h4,
 h5,
 h6,
 p,
 span {
-  margin: 0;
+	margin: 0;
 }
 a[target="_blank"] {
-  display: flex;
-  justify-content: start;
-  padding: 0.1rem 0.25rem;
-  width: fit-content;
-  align-items: center;
+	display: flex;
+	justify-content: start;
+	padding: 0.1rem 0.25rem;
+	width: fit-content;
+	align-items: center;
 }
 a[target="_blank"] img {
-  width: 12px;
+	width: 12px;
 }
 div[data-role="collapse"] p {
-  font-size: 12px;
-  color: #000;
+	font-size: 12px;
+	color: #000;
 }
 .section div[data-role="collapse"] h6.title {
-  font-size: 12px;
-  color: #000;
-  padding: 0.5rem 0;
+	font-size: 12px;
+	color: #000;
+	padding: 0.5rem 0;
 }
 .section div[data-role="collapse"] ul {
-  list-style: none;
-  padding: 0;
+	list-style: none;
+	padding: 0;
 }
 .section div[data-role="collapse"] ul li {
-  font-size: 10.5px;
-  color: #666;
+	font-size: 10.5px;
+	color: #666;
 }
 .slick-prev {
-  left: 0;
+	left: 0;
 }
 .slick-prev:before {
-  content: "\ea3a";
+	content: "\ea3a";
 }
 .slick-next:before {
-  content: "\ea3b";
+	content: "\ea3b";
 }
 .slick-prev:before,
 .slick-next:before {
-  font-family: inherit;
-  font-size: 25px;
+	font-family: inherit;
+	font-size: 25px;
 }
 .slick-next {
-  right: 0;
+	right: 0;
 }
 .slick-next,
 .slick-prev {
-  z-index: 1;
-  font: normal normal normal 14px/1 "nucleo-icons";
-  height: 60px;
-  width: 25px;
-  background-color: rgba(0, 0, 0, 0.3);
+	z-index: 1;
+	font: normal normal normal 14px/1 "nucleo-icons";
+	height: 60px;
+	width: 25px;
+	background-color: rgba(0, 0, 0, 0.3);
 }
 .slick-next:hover,
 .slick-prev:hover {
-  background-color: rgba(0, 0, 0, 0.3);
+	background-color: rgba(0, 0, 0, 0.3);
 }
 .section button[name="btnApply"] {
-  font-family: notoM;
-  font-size: 27px;
-  border-radius: 30px;
-  height: 60px;
-  width: 300px;
+	font-family: notoM;
+	font-size: 27px;
+	border-radius: 30px;
+	height: 60px;
+	width: 300px;
 }
 .facility_item {
 }
 .match_item {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  background-color: lightgray;
-  display: inline-block;
-  margin-right: 20px;
+	width: 150px;
+	height: 150px;
+	border-radius: 50%;
+	background-color: lightgray;
+	display: inline-block;
+	margin-right: 20px;
 }
 .btn-join {
-  width: 160px;
-  border-radius: 7px;
-  margin: 0;
-  padding: 0.5rem 0;
+	width: 160px;
+	border-radius: 7px;
+	margin: 0;
+	padding: 0.5rem 0;
 }
 .match-price-wrap {
-  display: flex;
-  justify-content: flex-end;
+	display: flex;
+	justify-content: flex-end;
 }
 .match-price-wrap h6 {
-  font-size: 15px;
-  margin-right: 0.25rem;
-  margin-top: auto;
-  margin-bottom: 0.2rem;
-  color: #666;
+	font-size: 15px;
+	margin-right: 0.25rem;
+	margin-top: auto;
+	margin-bottom: 0.2rem;
+	color: #666;
 }
 .match-price-wrap h5 {
-  font-size: 25px;
+	font-size: 23px;
 }
 button[name="btnFavoriteGround"] {
-  background: transparent;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin: auto 5px;
-  vertical-align: middle;
-  padding: 4px;
-  width: 31px;
-  cursor: pointer;
+	background: transparent;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	margin: auto 5px;
+	vertical-align: middle;
+	padding: 4px;
+	width: 31px;
+	cursor: pointer;
 }
 button[name="btnFavoriteGround"] i {
-  color: #ffce00;
-  font-size: 18px;
+	color: #ffce00;
+	font-size: 18px;
 }
 button[name="btnFavoriteGround"][data-toggle="true"] i.fa-star,
 button[name="btnFavoriteGround"][data-toggle="false"] i.fa-star-o {
-  display: inline-block;
+	display: inline-block;
 }
 button[name="btnFavoriteGround"][data-toggle="false"] i.fa-star,
 button[name="btnFavoriteGround"][data-toggle="true"] i.fa-star-o {
-  display: none;
+	display: none;
 }
 #kakao_map {
-  height: 400px;
-  margin: 3rem 3rem 0rem 3rem;
+	height: 400px;
+	margin: 3rem 3rem 0rem 3rem;
 }
 #bottomBtnWrap {
-  z-index: 10;
-  border-top: 1px solid #ccc;
+	z-index: 10;
+	border-top: 1px solid #ccc;
 }
 #nav-tab {
-  margin-bottom: 0.5rem;
+	margin-bottom: 0.5rem;
 }
 #nav-tab a {
-  border: none;
+	border: none;
 }
 #nav-tab a.active,
 #nav-tab a:hover {
-  border-bottom: 2px solid #662d91;
+	border-bottom: 2px solid #662d91;
 }
 @media screen and (max-width: 575px) {
-  .detail_img_wrap {
-    height: 25vh;
-    border-radius: 0;
-  }
-  #detail_page {
-    padding-bottom: 150px;
-  }
-  #detail_page .section {
-    padding: 1.5rem 0;
-  }
-  #kakao_map {
-    margin: 1rem 0;
-  }
-  .btn-join {
-    width: 110px;
-  }
+	.detail_img_wrap {
+		height: 25vh;
+		border-radius: 0;
+	}
+	#detail_page {
+		padding-bottom: 150px;
+	}
+	#detail_page .section {
+		padding: 1.5rem 0;
+	}
+	#kakao_map {
+		margin: 1rem 0;
+	}
+	.btn-join {
+		width: 110px;
+	}
 }

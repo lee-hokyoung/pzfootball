@@ -31,9 +31,9 @@ block content
           //-       small.text-danger (필수) 
           //-   textarea.form-control(rows='5')
       .new-pz-logo
-        span.text-primary.pl-3 함께하는
-        span.pl-1 스포츠
-        h4.pr-3 PZ SPORT
+        //- span.text-primary.pl-3 함께하는
+        //- span.pl-1 스포츠
+        //- h4.pr-3 PZ SPORT
 
       .pt-4
         span.sns-text SNS계정으로 간편 회원가입
@@ -63,7 +63,9 @@ block content
       .row-wrap
         .form-group
           label 이메일(아이디)
+          //- .certify-input-wrap.position-relative
           input.form-control(type='text', name='user_id', placeholder='이메일')
+            //- button.btn.btn-primary.rounded-0.m-0.ml-1(type='button', name='btnVerify') 인증
       .row-wrap
         .form-group
           label 비밀번호
@@ -125,17 +127,17 @@ block content
       .row-wrap
         .form-group
           label 나의 포지션
-          select.form-control(name='position')
+          select.form-control.selectpicker.p-0(name='position', data-style='btn-position')
             option(value='FW') FW
             option(value='MF') MF
             option(value='DF') DF
-            option(value='GF') GF
+            option(value='GK') GK
         .form-group.ml-1(style='flex:3')
           label 나의 실력
           .skill-btn-wrap
-            button.btn.rounded-0(type='button', name='skill', data-value='1', data-toggle='false') 초급
-            button.btn.rounded-0(type='button', name='skill', data-value='2', data-toggle='false') 중급
-            button.btn.rounded-0(type='button', name='skill', data-value='3', data-toggle='false') 고급
+            button.btn.rounded-0(type='button', name='skill', data-value='normal', data-toggle='false') 일반
+            button.btn.rounded-0(type='button', name='skill', data-value='pro', data-toggle='false') 선수 출신
+            //- button.btn.rounded-0(type='button', name='skill', data-value='3', data-toggle='false') 고급
       .row-wrap.term-wrap
         .form-check
           label.form-check-label

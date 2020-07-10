@@ -55,10 +55,10 @@ block content
                               if(club.club_leader.toString() === user_info.user._id.toString())
                                 if(club.club_leader.toString() !== item._id.toString())
                                   if(user_role==="member")
-                                    button.btn.btn-success.btn-sm(onclick='fnConfigMember("' + item._id + '", "' + club._id + '", "co-leader")') 공동주장 설정
+                                    button.btn.btn-success.btn-sm.px-1(onclick='fnConfigMember("' + item._id + '", "' + club._id + '", "co-leader")') 공동주장 설정
                                   else if(user_role==="co-leader")
-                                    button.btn.btn-success.btn-sm(onclick='fnConfigMember("' + item._id + '", "' + club._id + '", "member")') 일반회원으로
-                                  button.btn.btn-danger.btn-sm(onclick='fnExile("' + item._id + '", "' + club._id + '")') 추방
+                                    button.btn.btn-success.btn-sm.px-1(onclick='fnConfigMember("' + item._id + '", "' + club._id + '", "member")') 일반회원으로
+                                  button.btn.btn-danger.btn-sm.px-1(onclick='fnExile("' + item._id + '", "' + club._id + '")') 추방
                 if(club.waiting_info.length > 0)
                   ul.list-group.list-group-flush
                     li.list-group-item
